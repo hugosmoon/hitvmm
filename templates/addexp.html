@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>添加实验教学</title>
+    <!-- 初始化CSS -->
+    <link href="../static/plugin/swiper.css">
+    <link rel="stylesheet" href="../static/plugin/res.css">
+    <link rel="stylesheet" type="text/css" href="../static/sass/public.css">
+    <link rel="stylesheet" href="../static/plugin/zane-calendar.min.css">
+    <!-- 模块css -->
+    <link rel="stylesheet" type="text/css" href="../static/sass/teacher.css">
+    <style>
+        .navtip4 > a {
+            color: #0055ff !important;
+        }
+    </style>
+
+</head>
+<body>
+<div class="topwall">
+    <div class="top">
+        <img class="l_float logo" src="../static/img/logo.png" alt="">
+        <div class="l_float title">机械制造虚拟实验室</div>
+        <div class="l_float userlog"></div>
+        <div class="l_float username">{{ teachername }}</div>
+        <div class="l_float loginbtn">退出登录</div>
+    </div>
+</div>
+
+<div class="wall">
+    <div class="teachnavbox">
+        <div class="navwall navwall1">
+            <div class="navtop">
+                <div class="navtitname">实验作业</div>
+                <div class="navarrowbox">
+                    <img class="arrow uparrow" src="../static/img/up.png" alt="">
+                    <img class="arrow activearrow activearrow1" src="../static/img/down.png" alt="">
+                </div>
+            </div>
+            <ul class="navcenter navcenter1">
+                <li class="navtip navtip1">
+                    <a href="/undoneteaching/">进行中教学({{ teachingCount.runCount }}个)</a>
+                </li>
+                <li class="navtip navtip2">
+                    <a href="/completedteaching/">已完成教学({{ teachingCount.stopCount }}个)</a>
+                </li>
+                <li class="navtip navtip4 noborder">
+                    <a href="/addexp/">新增实验</a>
+                </li>
+            </ul>
+        </div>
+        <div class="navwall navwall2">
+            <div class="navtop">
+                <div class="navtitname">实验库</div>
+                <div class="navarrowbox">
+                    <img class="arrow uparrow2" src="../static/img/up.png" alt="">
+                    <img class="arrow activearrow activearrow2" src="../static/img/down.png" alt="">
+                </div>
+            </div>
+            <ul class="navcenter navcenter2">
+                <li class="navtip navtip3">
+                    <a href="/allexptea/">全部实验</a>
+                </li>
+                {% for experiment in experimentList %}
+                    <li class="navtip">
+                        <a href="{{ experiment.f_url }}" target="_blank">{{ experiment.f_name }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="navwall navwall3 changepsw">
+            <div class="navtop">
+                <div class="navtitname">修改密码</div>
+            </div>
+
+        </div>
+    </div>
+    <div class="addexpbox">
+        <form id="addexperiment" action="/addexperiment/" method="post" enctype="multipart/form-data">
+            <div class="addbox">
+                <div class="left">
+                    实验名称：
+                </div>
+                <div class="right">
+                    <select class="selctbox selctbox1" name="experimentid">
+                        <option value="0" selected="selected">请选择实验名称</option>
+                        {% for experiment in experimentList %}
+                            <option value="{{ experiment.f_id }}">{{ experiment.f_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="addbox">
+                <div class="left">
+                    报告提交截止日期：
+                </div>
+                <div class="right right2">
+                    <div class="addcalendar" id="addcalendarhtml"></div>
+                    <input id="addcalendar" type="hidden" name="deadline">
+                </div>
+            </div>
+            <div class="addbox">
+                <div class="left">
+                    实验报告模版：
+                </div>
+                <div class="right right2">
+                    <div class="templatebox">
+                        <input value="1" class="rradio uptemplate" checked type="radio" name="templatetype"></input>
+                        <lable>默认模版</lable>
+                    </div>
+                    <div class="templatebox">
+                        <input value="2" class="rradio uptemplate" type="radio" name="templatetype"></input>
+                        <lable>其他模版</lable>
+                    </div>
+                    <div class="btn addepxupdatamod">
+                        上传模版文件
+                        <input class="uploadfile" type="file" name="templatefile"
+                               onchange="publicObj.addepxupdatamodFileup()">
+                    </div>
+                    <p class="filename addepxupdatamodFileupname"></p>
+                </div>
+            </div>
+            <div class="addbox">
+                <div class="left">
+                    实验报告视频：
+                </div>
+                <div class="right right2">
+                    <div class="templatebox">
+                        <input class="rradio" checked type="radio" name="videotype" value="1">
+                        <lable>默认视频</lable>
+                    </div>
+                    <div class="templatebox">
+                        <input class="rradio" type="radio" name="videotype" value="2">
+                        <lable>新增视频</lable>
+                    </div>
+                    <div class="btn changevide">更改预习视频</div>
+                    <input id="videosinputid" type="hidden" name="videos" value="">
+                </div>
+            </div>
+            <div class="addbox">
+                <div class="left">
+                    实验数据：
+                </div>
+                <div class="right right2">
+                    <div class="templatebox">
+                        <input value="1" class="rradio updataradio" checked type="radio" name="datatype"></input>
+                        <lable>稍后上传</lable>
+                    </div>
+                    <div class="templatebox">
+                        <input value="2" class="rradio updataradio" type="radio" name="datatype"></input>
+                        <lable>现在上传</lable>
+                    </div>
+                    <div class="btn addexpupexpdata">
+                        上传实验数据
+                        <input class="uploadfile" type="file" name="datafile" onchange="publicObj.updataradioFileup()">
+                    </div>
+                    <p class="filename updataradioname"></p>
+                </div>
+            </div>
+            <div class="addbox">
+                <div class="left">
+                    学生名单：
+                </div>
+                <div class="right right2">
+                    <div class="btn btn2 addexpteastulist">
+                        上传学生名单
+                        <input class="uploadfile" type="file" name="stulistfile" onchange="publicObj.upstulistFileup()">
+                    </div>
+                    <div class="btn btn2 addexpstudentdown">下载学生名单模板</div>
+                    <p class="filename upstulistname"></p>
+                </div>
+            </div>
+            <div class="addbox">
+                <div class="left">
+                    老师提示：
+                </div>
+                <div class="right ">
+                    <textarea class="txtare" name="point"></textarea>
+                </div>
+            </div>
+            <div class="addbox">
+                <div class="left">
+                    备注(学生不可见)：
+                </div>
+                <div class="right ">
+                    <textarea class="txtare" name="remark"></textarea>
+                </div>
+            </div>
+            <div class="addsurebtn">
+                确认添加
+            </div>
+        </form>
+    </div>
+
+</div>
+<div class="footer">
+    <div class="fbox">
+        <div class="tip1">地址：深圳市南山区桃源街道深圳大学城哈尔滨工业大学校区</div>
+        <div class="tip2">邮编：518055</div>
+        <div class="tip3">网站版权所有 ©2018 哈尔滨工业大学(深圳)</div>
+        <div class="tip4">粤ICP 备15069706号-1</div>
+    </div>
+
+</div>
+</body>
+<!--弹窗-->
+<div class="popupbox">
+    <div class="layer"></div>
+    <!--上传文件-->
+    <div class="popupwall popupwall2 popupwall2_">
+        <div class="popuptop">
+            <img class="logo" src="../static/img/logo.png" alt="">
+            <img class="dele" src="../static/img/dele.png" alt="">
+        </div>
+        <!--提示文案-->
+        <div class="popupmid popupmid1">实验数据必须为EXCEL格式，文件大小在3M以内。</div>
+        <div class="popupmid popupmid2">提交报告必须为WORD格式，文件大小在3M以内。</div>
+        <div class="popupmid popupmid3">学生名单必须为符合名单模板并且为EXCEL格式，文件大小在3M以内。</div>
+        <form action="/cgjxx/fwjl_delete_servlet" method="post" enctype="multipart/form-data">
+            <div class="btn cancle">
+                选择文件
+                <input class="uploadfile" type="file" name="file" onchange="publicObj.fileUpLoad()">
+            </div>
+            <div class="btn sure addexuteasure">确认上传</div>
+
+        </form>
+        <div class="fileuploadname"></div>
+    </div>
+    <!--修改提交日期-->
+    <div class="popupwall popupwall4">
+        <div class="popuptop">
+            <img class="logo" src="../static/img/logo.png" alt="">
+            <img class="dele" src="../static/img/dele.png" alt="">
+        </div>
+        <div id="zane-calendar"></div>
+        <div class="btn cancle addexpcancle">确定</div>
+        <div class="btn sure uteasure">取消</div>
+    </div>
+    <!--更换视频-->
+    <div class="popupwall popupwall5">
+        <img class="dele" src="../static/img/dele.png" alt="">
+        <div class="videowall2">
+            <div class="videowall">
+                <div class="videobox">
+                    个没有我是一个没有 我是一
+                </div>
+                <div class="videobox">
+                    个没有我是一个没有 我是一
+                </div>
+                <div class="videobox">
+                    个没有我是一个没有 我是一
+                </div>
+
+            </div>
+        </div>
+
+        <div class="vbtnbox">
+            <div class="vbtn preadd">前方添加</div>
+            <div class="vbtn changvideo">更改</div>
+            <div class="vbtn cvdele">删除</div>
+            <div class="vbtn behindadd">后方添加</div>
+            <div class="vbtn vbover">完成</div>
+        </div>
+    </div>
+    <!--确认操作-->
+    <div class="popupwall popupwall7">
+        <div class="popuptop">
+            <img class="logo" src="../static/img/logo.png" alt="">
+        </div>
+        <div class="popupmid">
+            你确认要执行这个操作吗？
+        </div>
+        <div class="btn cancle addexpcancle">确定</div>
+        <div class="btn sure uteasure">取消</div>
+    </div>
+    <!--请求失败-->
+    <div class="popupwall popupwall8">
+        <div class="popuptop">
+            <img class="logo" src="../static/img/logo.png" alt="">
+        </div>
+        <div class="popupmid">
+            呀，服务器异常了，请稍后重试！
+        </div>
+        <div class="btn sure">确定</div>
+    </div>
+    <!--观看视频-->
+    <div class="popupwall popupwall9">
+        <img class="dele" src="../static/img/dele.png" alt="">
+        <div class="v_name">我是一个没有名字的视频，我是个没有名字。</div>
+        <div class="vbox"></div>
+        <div class="vchangebox">
+            <div class="vchange">
+                <div class="v_svideo"></div>
+                <div class="v_svideoname">我是一个没有..我是一个没有..</div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- 引用插件 -->
+<script src="../static/plugin/md5.js"></script>
+<script src="../static/plugin/jquery.js"></script>
+<script src="../static/plugin/config.js"></script>
+<script src="../static/plugin/zane-calendar.min.js"></script>
+<script src="../static/plugin/jquery.form.js"></script>
+<script src="../static/plugin/jqCookies.js"></script>
+<script src="../static/js/public.js"></script>
+<script src="../static/plugin/laypage/laypage.js"></script>
+<!-- 模块JS -->
+<script type="text/javascript" src="../static/js/public.js"></script>
+<script>
+    $(".loginbtn").click(function () {
+        $.cookie('teacherid', '', {expires: -1, path: '/'});
+        $.cookie('teachernumber', '', {expires: -1, path: '/'});
+        $.cookie('teachername', '', {expires: -1, path: '/'});
+        $(location).attr('href', '/loginteacher/');
+    });
+
+    function successfun(data, status) {
+        dataObj = data
+        code = dataObj.code;
+        if (code != 0) {
+            alert(dataObj.desc);
+        }
+        else {
+            alert("创建成功！")
+            //window.location = "/undoneteaching/"
+        }
+    }
+
+    function beforeCheck(formData, form, options) {
+    }
+</script>
+</html>

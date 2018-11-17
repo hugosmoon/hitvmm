@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>新增用户</title>
+    <!-- 初始化CSS -->
+    <link href="../static/plugin/swiper.css">
+    <link rel="stylesheet" href="../static/plugin/res.css">
+    <link rel="stylesheet" type="text/css" href="../static/sass/public.css">
+    <!-- 模块css -->
+    <link rel="stylesheet" type="text/css" href="../static/sass/adduser.css">
+
+
+</head>
+<body>
+<div class="topwall">
+    <div class="top">
+        <img class="l_float logo" src="../static/img/logo.png" alt="">
+        <div class="l_float title">机械制造虚拟实验室</div>
+        <div class="l_float userlog"></div>
+        <div class="l_float username">{{ adminname }}</div>
+        <div class="l_float loginbtn">退出登录</div>
+    </div>
+</div>
+<div class="topnav">
+    <div class="adduserbtn btn1 adduserdown">下载导入模版</div>
+    <div class="adduserbtn btn2 adduserup">批量导入用户</div>
+</div>
+
+<div class="userselcbox">
+    <div class="tit">用户身份</div>
+    <div class="users">
+        <div class="templatebox1">
+            <input value="1" class="rradio" type="radio" name="template"/>
+            <lable>学生</lable>
+        </div>
+        <div class="templatebox1">
+            <input value="2" class="rradio" type="radio" name="template"/>
+            <lable>教师</lable>
+        </div>
+        {% if issuperadmin == "1" %}
+            <div class="templatebox1">
+                <input value="3" class="rradio" type="radio" name="template"/>
+                <lable>管理员</lable>
+            </div>
+        {% endif %}
+    </div>
+</div>
+<div class="box2">
+    <div class="imptbox imptbox1">
+        <div class="tip">姓名</div>
+        <input class="inp addname" type="text">
+    </div>
+    <div class="imptbox imptbox2">
+        <div class="tip">编号</div>
+        <input class="inp addnumber" type="text">
+    </div>
+    <div class="imptbox imptbox2 imptbox3" style="display: none">
+        <div class="tip tip2">指导教师姓名</div>
+        <input class="inp addteachername" type="text">
+    </div>
+    <div class="imptbox imptbox2 imptbox4" style="display: none">
+        <div class="tip tip2">指导教师编号</div>
+        <input class="inp addteachernumber" type="text">
+    </div>
+    <div class="btnbox">
+        <div class="btn sure">确认添加</div>
+    </div>
+
+</div>
+
+
+<div class="footer">
+    <div class="fbox">
+        <div class="tip1">地址：深圳市南山区桃源街道深圳大学城哈尔滨工业大学校区</div>
+        <div class="tip2">邮编：518055</div>
+        <div class="tip3">网站版权所有 ©2018 哈尔滨工业大学(深圳)</div>
+        <div class="tip4">粤ICP 备15069706号-1</div>
+    </div>
+
+</div>
+</body>
+<div class="popupbox">
+    <div class="layer"></div>
+
+    <!--上传文件-->
+    <div class="popupwall popupwall2">
+        <div class="popuptop">
+            <img class="logo" src="../static/img/logo.png" alt="">
+            <img class="dele" src="../static/img/dele.png" alt="">
+        </div>
+        <!--提示文案-->
+        <div class="popupmid popupmid3">名单必须为符合名单模板并且为EXCEL格式，文件大小在3M以内。</div>
+        <form action="" method="post" enctype="multipart/form-data">
+            <input id="type" type="hidden" name="type">
+            <div class="btn cancle">
+                选择文件
+                <input class="uploadfile" type="file" name="file" onchange="publicObj.fileUpLoad()">
+            </div>
+            <!--<div class="btn sure fileupload">确认上传</div>-->
+            <input class="btn sure fileupload" type="submit" class="btn btn-default" value="确认上传">
+        </form>
+        <div class="fileuploadname"></div>
+    </div>
+    <!--确认操作-->
+    <div class="popupwall popupwall7">
+        <div class="popuptop">
+            <img class="logo" src="../static/img/logo.png" alt="">
+        </div>
+        <div class="popupmid">
+            你确认要执行这个操作吗？
+        </div>
+        <div class="btn cancle addusercancle">确定</div>
+        <div class="btn sure addusersure">取消</div>
+    </div>
+    <!--请求失败-->
+    <div class="popupwall popupwall8">
+        <div class="popuptop">
+            <img class="logo" src="../static/img/logo.png" alt="">
+        </div>
+        <div class="popupmid">
+            呀，服务器异常了，请稍后重试！
+        </div>
+        <div class="btn sure">确定</div>
+    </div>
+</div>
+<!-- 引用插件 -->
+<script src="../static/plugin/md5.js"></script>
+<script src="../static/plugin/jquery.js"></script>
+<script src="../static/plugin/jqCookies.js"></script>
+<script src="../static/plugin/config.js"></script>
+<script src="../static/plugin/fastclick.js"></script>
+<script src="../static/plugin/laypage/laypage.js"></script>
+<script src="../static/plugin/zane-calendar.min.js"></script>
+<script src="../static/js/public.js"></script>
+<!-- 模块JS -->
+<script type="text/javascript" src="../static/js/index.js"></script>
+<script>
+    $(".loginbtn").click(function () {
+        $.cookie('issuperadmin', '', {expires: -1, path: '/'});
+        $.cookie('adminid', '', {expires: -1, path: '/'});
+        $.cookie('adminname', '', {expires: -1, path: '/'});
+        $(location).attr('href', '/loginadmin/');
+    });
+</script>
+<script>
+    $(".rradio").unbind("click").bind("click", function () {
+        type = $(this).attr("value")
+        $("#type").attr("attr", type)
+        if (type == 1) {
+            $(".imptbox3").show()
+            $(".imptbox4").show()
+        } else {
+            $(".imptbox3").hide()
+            $(".imptbox4").hide()
+        }
+    });
+    $(".sure").unbind("click").bind("click", function () {
+        type = $("#type").attr("attr")
+        action = ""
+        addname = $(".addname").val()
+        addnumber = $(".addnumber").val()
+        addteachername = $(".addteachername").val()
+        addteachernumber = $(".addteachernumber").val()
+        if (addname == undefined || addname == "" || addnumber == undefined || addnumber == "") {
+            alert("填写的信息不能为空！")
+            return
+        }
+        data = {}
+        if (type == "" || type == undefined) {
+            alert("请选择要添加的用户身份！")
+            return
+        } else if (type == 1) {
+            if (addteachername == undefined || addteachername == "" || addteachernumber == undefined || addteachernumber == "") {
+                alert("填写的信息不能为空！")
+                return
+            }
+            data = {
+                studentnum: addnumber,
+                studentname: addname,
+                addteachername: addteachername,
+                addteachernumber: addteachernumber
+            }
+            action = "/addStudent/"
+        } else if (type == 2) {
+            data = {teachernum: addnumber, teachername: addname}
+            action = "/addTeacher/"
+        } else if (type == 3) {
+            data = {teachernum: addnumber, teachername: addname}
+            action = "/addAdmin/"
+        } else {
+            alert("操作异常，请重新添加！")
+            window.location.reload()
+            return
+        }
+
+        $.post(action, data,
+            function (data, status) {
+                dataObj = $.parseJSON(data)
+                code = dataObj.code;
+                if (code != 0) {
+                    alert(dataObj.desc);
+                } else {
+                    alert("添加成功！")
+                    window.location.reload()
+                }
+            });
+
+    })
+</script>
+</html>

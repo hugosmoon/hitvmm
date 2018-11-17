@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>进行中教学</title>
+    <!-- 初始化CSS -->
+    <link rel="stylesheet" href="../static/plugin/res.css">
+    <link rel="stylesheet" type="text/css" href="../static/sass/public.css">
+    <link rel="stylesheet" href="../static/plugin/zane-calendar.min.css">
+    <!-- 模块css -->
+    <link rel="stylesheet" type="text/css" href="../static/sass/teacher.css">
+    <style>
+        .navtip1 > a {
+            color: #0055ff !important;
+        }
+    </style>
+</head>
+<body>
+<div class="topwall">
+    <div class="top">
+        <img class="l_float logo" src="../static/img/logo.png" alt="">
+        <div class="l_float title">机械制造虚拟实验室</div>
+        <div class="l_float userlog"></div>
+        <div class="l_float username">{{ teachername }}</div>
+        <div class="l_float loginbtn">退出登录</div>
+    </div>
+</div>
+<div class="wall">
+    <div class="teachnavbox">
+        <div class="navwall navwall1">
+            <div class="navtop">
+                <div class="navtitname">实验作业</div>
+                <div class="navarrowbox">
+                    <img class="arrow uparrow" src="../static/img/up.png" alt="">
+                    <img class="arrow activearrow activearrow1" src="../static/img/down.png" alt="">
+                </div>
+            </div>
+            <ul class="navcenter navcenter1">
+                <li class="navtip navtip1">
+                    <a href="/undoneteaching/">进行中教学({{ teachingCount.runCount }}个)</a>
+                </li>
+                <li class="navtip navtip2">
+                    <a href="/completedteaching/">已完成教学({{ teachingCount.stopCount }}个)</a>
+                </li>
+                <li class="navtip navtip4 noborder">
+                    <a href="/addexp/">新增实验</a>
+                </li>
+            </ul>
+        </div>
+        <div class="navwall navwall2">
+            <div class="navtop">
+                <div class="navtitname">实验库</div>
+                <div class="navarrowbox">
+                    <img class="arrow uparrow2" src="../static/img/up.png" alt="">
+                    <img class="arrow activearrow activearrow2" src="../static/img/down.png" alt="">
+                </div>
+            </div>
+            <ul class="navcenter navcenter2">
+                <li class="navtip navtip3">
+                    <a href="/allexptea/">全部实验</a>
+                </li>
+                {% for experiment in experimentList %}
+                    <li class="navtip">
+                        <a href="{{ experiment.f_url }}" target="_blank">{{ experiment.f_name }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="navwall navwall3 changepsw">
+            <div class="navtop">
+                <div class="navtitname">修改密码</div>
+            </div>
+
+        </div>
+    </div>
+    <div class="list">
+        <div class="allunitwall">
+            {% for teaching in teachingList %}
+                <div class="unitbox">
+                    <div class="unittopbg">
+                        <div class="desbox">
+                            <div class="title">实验作业：</div>
+                            <div class="txt">{{ teaching.f_experiment_name }}</div>
+                        </div>
+                        <div class="desbox">
+                            <div class="title">报告提交：</div>
+                            <div class="txt">{{ teaching.f_deadline|date:"Y" }}年{{ teaching.f_deadline|date:"m" }}月{{ teaching.f_deadline|date:"d" }}日之前</div>
+                        </div>
+                    </div>
+                    <div class="unitwall">
+                        <div class="desbox">
+                            <div class="title">老师提示：</div>
+                            <div class="txt">{{ teaching.f_point }}</div>
+                        </div>
+                        <div class="desbox">
+                            <div class="title">备注：</div>
+                            <div class="txt">{{ teaching.f_remark }}</div>
+                        </div>
+                    </div>
+
+                    <div class="unitftbg">
+                        <ul class="btnwall">
+                            <li class="uteaupload unitbtn" teachingid="{{ teaching.f_id }}">上传实验数据</li>
+                            <li class="teastulist unitbtn" stulisturl="{{ teaching.f_stulist_url }}">
+                                下载学生名单({{ teaching.stuCount }})
+                            </li>
+                            <li class="updatamod unitbtn" teachingid="{{ teaching.f_id }}"
+                                experimentid="{{ teaching.f_experiment_id }}">实验报告模版更换
+                            </li>
+                            <li class="changevide unitbtn" video="{{ teaching.f_videos }}">更换预习视频</li>
+                            <li class="changedata unitbtn lastbtn" deadline="{{ teaching.f_deadline|date:"Y/m/d" }}"
+                                teachingid="{{ teaching.f_id }}">
+                                报告提交日期更改
+                            </li>
+                            <li class="uteadele unitbtn lastbtn teadele" teachingid="{{ teaching.f_id }}">删除</li>
+                        </ul>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <!--分页-->
+        <div id="pagebox"></div>
+    </div>
+
+</div>
+<div class="footer">
+    <div class="fbox">
+        <div class="tip1">地址：深圳市南山区桃源街道深圳大学城哈尔滨工业大学校区</div>
+        <div class="tip2">邮编：518055</div>
+        <div class="tip3">网站版权所有 ©2018 哈尔滨工业大学(深圳)</div>
+        <div class="tip4">粤ICP 备15069706号-1</div>
+    </div>
+</div>
+<!--弹窗-->
+<div class="popupbox">
+    <div class="layer"></div>
+    <!--上传文件-->
+    <div class="popupwall popupwall2">
+        <div class="popuptop">
+            <img class="logo" src="../static/img/logo.png" alt="">
+            <img class="dele" src="../static/img/dele.png" alt="">
+        </div>
+        <!--提示文案-->
+        <div class="popupmid popupmid1">实验数据必须为EXCEL格式，文件大小在3M以内。</div>
+        <div class="popupmid popupmid2">提交报告必须为WORD格式，文件大小在3M以内。</div>
+        <form id="uploadfile" action="" method="post" enctype="multipart/form-data">
+            <div class="btn cancle">
+                选择文件
+                <input class="uploadfile" type="file" name="file" onchange="publicObj.fileUpLoad()"/>
+            </div>
+            <input class="btn sure fileupload" type="submit" class="btn btn-default" value="确认上传"/>
+            <input id="teachingid" type="hidden" name="teachingid" value=""/>
+            <input id="experimentid" type="hidden" name="experimentid" value=""/>
+        </form>
+        <div class="fileuploadname"></div>
+    </div>
+    <!--修改提交日期-->
+    <div class="popupwall popupwall4">
+        <div class="popuptop">
+            <img class="logo" src="../static/img/logo.png" alt="">
+            <img class="dele" src="../static/img/dele.png" alt="">
+        </div>
+        <div id="zane-calendar"></div>
+        <input type="hidden" id="udpatedeadlineid" value="">
+        <div class="btn cancle updatedeadlinesure">确定</div>
+        <div class="btn sure updatedeadlinecancle">取消</div>
+    </div>
+    <!--更换视频-->
+    <div class="popupwall popupwall5">
+        <img class="dele" src="../static/img/dele.png" alt="">
+        <div class="videowall">
+
+            <div class="videobox">
+                <div class="v_top">我是一个没有我是一个没有</div>
+                <div class="v_mid"></div>
+                <div class="v_bot">
+                    <div class="v_btn v_dele">删除</div>
+                    <div class="v_btn v_change">更换</div>
+                </div>
+            </div>
+            <div class="videobox">
+                <div class="v_top">我是一个没有我是一个没有</div>
+                <div class="v_mid"></div>
+                <div class="v_bot">
+                    <div class="v_btn v_dele">删除</div>
+                    <div class="v_btn v_change">更换</div>
+                </div>
+            </div>
+            <div class="videobox">
+                <div class="v_top">我是一个没有我是一个没有</div>
+                <div class="v_mid"></div>
+                <div class="v_bot">
+                    <div class="v_btn v_dele">删除</div>
+                    <div class="v_btn v_change">更换</div>
+                </div>
+            </div>
+            <div class="videobox">
+                <div class="v_top">我是一个没有我是一个没有</div>
+                <div class="v_mid"></div>
+                <div class="v_bot">
+                    <div class="v_btn v_dele">删除</div>
+                    <div class="v_btn v_change">更换</div>
+                </div>
+            </div>
+            <div class="videobox">
+                <div class="v_top">我是一个没有我是一个没有</div>
+                <div class="v_mid"></div>
+                <div class="v_bot">
+                    <div class="v_btn v_dele">删除</div>
+                    <div class="v_btn v_change">更换</div>
+                </div>
+            </div>
+            <div class="videobox">
+                <div class="v_top">我是一个没有我是一个没有</div>
+                <div class="v_mid"></div>
+                <div class="v_bot">
+                    <div class="v_btn v_dele">删除</div>
+                    <div class="v_btn v_change">更换</div>
+                </div>
+            </div>
+            <div class="videobox">
+                <div class="v_top">我是一个没有我是一个没有</div>
+                <div class="v_mid"></div>
+                <div class="v_bot">
+                    <div class="v_btn v_dele">删除</div>
+                    <div class="v_btn v_change">更换</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--确认操作-->
+    <div class="popupwall popupwall7">
+        <div class="popuptop">
+            <img class="logo" src="../static/img/logo.png" alt="">
+        </div>
+        <div class="popupmid">
+            你确认要执行这个操作吗？
+        </div>
+        <div class="btn cancle uteacancle">确定</div>
+        <div class="btn sure uteasure">取消</div>
+    </div>
+    <!--请求失败-->
+    <div class="popupwall popupwall8">
+        <div class="popuptop">
+            <img class="logo" src="../static/img/logo.png" alt="">
+        </div>
+        <div class="popupmid">
+            呀，服务器异常了，请稍后重试！
+        </div>
+        <div class="btn sure">确定</div>
+    </div>
+    <!--观看视频-->
+    <div class="popupwall popupwall9">
+        <img class="dele" src="../static/img/dele.png" alt="">
+        <div class="v_name">我是一个没有名字的视频，我是个没有名字。</div>
+        <div class="vbox"></div>
+        <div class="vchangebox">
+            <div class="vchange">
+                <div class="v_svideo"></div>
+                <div class="v_svideoname">我是一个没有..我是一个没有..</div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+
+<!-- 引用插件 -->
+<script src="../static/plugin/md5.js"></script>
+<script src="../static/plugin/jquery.js"></script>
+<script src="../static/plugin/jqCookies.js"></script>
+<script src="../static/plugin/zane-calendar.min.js"></script>
+<script src="../static/plugin/config.js"></script>
+<script src="../static/plugin/fastclick.js"></script>
+<script src="../static/plugin/laypage/laypage.js"></script>
+<script src="../static/js/public.js"></script>
+<!-- 模块JS -->
+<script type="text/javascript" src="../static/js/index.js"></script>
+<script>
+    $(".loginbtn").click(function () {
+        $.cookie('teacherid', '', {expires: -1, path: '/'});
+        $.cookie('teachernumber', '', {expires: -1, path: '/'});
+        $.cookie('teachername', '', {expires: -1, path: '/'});
+        $(location).attr('href', '/loginteacher/');
+    });
+    laypage({
+        cont: 'pagebox',
+        pages: {{ countpage }}, //可以叫服务端把总页数放在某一个隐藏域，再获取。假设我们获取到的是18
+        curr: function () { //通过url获取当前页，也可以同上（pages）方式获取
+            var page = location.search.match(/page=(\d+)/);
+            return page ? page[1] : 1;
+        }(),
+        jump: function (e, first) { //触发分页后的回调
+            if (!first) { //一定要加此判断，否则初始时会无限刷新
+                location.href = '?page=' + e.curr;
+            }
+        }
+    });
+</script>
+</html>

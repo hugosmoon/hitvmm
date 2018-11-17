@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>已完成实验</title>
+    <!-- 初始化CSS -->
+    <link href="../static/plugin/swiper.css">
+    <link rel="stylesheet" href="../static/plugin/res.css">
+    <link rel="stylesheet" type="text/css" href="../static/sass/public.css">
+    <!-- 模块css -->
+    <link rel="stylesheet" type="text/css" href="../static/sass/index.css">
+
+
+</head>
+<body>
+<div class="topwall">
+    <div class="top">
+        <img class="l_float logo" src="../static/img/logo.png" alt="">
+        <div class="l_float title">机械制造虚拟实验室</div>
+        <div class="l_float userlog"></div>
+        <div class="l_float username">{{ stuname }}</div>
+        <div class="l_float loginbtn">退出登录</div>
+    </div>
+</div>
+<div class="wall">
+    <div class="navbox">
+        <div class="navwall navwall1">
+            <div class="navtop">
+                <div class="navtitname">实验作业</div>
+                <div class="navarrowbox">
+                    <img class="arrow uparrow" src="../static/img/up.png" alt="">
+                    <img class="arrow activearrow activearrow1" src="../static/img/down.png" alt="">
+                </div>
+            </div>
+            <ul class="navcenter navcenter1">
+                <li class="navtip">
+                    <a href="/index/">未完成实验({{ teachingCount.runCount }}个)</a>
+                </li>
+                <li class="navtip slectnav noborder">
+                    <a href="/completedexp/">完成实验({{ teachingCount.stopCount }}个)</a>
+                </li>
+            </ul>
+        </div>
+        <div class="navwall navwall2">
+            <div class="navtop">
+                <div class="navtitname">实验库</div>
+                <div class="navarrowbox">
+                    <img class="arrow uparrow2" src="../static/img/up.png" alt="">
+                    <img class="arrow activearrow activearrow2" src="../static/img/down.png" alt="">
+                </div>
+            </div>
+            <ul class="navcenter navcenter2">
+                <li class="navtip">
+                    <a href="/allexp/">全部实验</a>
+                </li>
+                {% for experiment in experimentList %}
+                    <li class="navtip">
+                        <a href="{{ experiment.f_url }}" target="_blank">{{ experiment.f_name }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="list">
+        <div class="allunitwall">
+            {% for teaching in teachingList %}
+                <div class="unitbox">
+                    <div class="unittopbg">
+                        <div class="desbox">
+                            <div class="title">实验作业：</div>
+                            <div class="txt">切削用量对切削力的影响</div>
+                        </div>
+                        <div class="desbox">
+                            <div class="title">指导老师：</div>
+                            <div class="txt" teacherid="{{ teaching.f_teacher_id }}">{{ teaching.f_teacher_name }}</div>
+                        </div>
+                    </div>
+                    <div class="unitwall">
+                        <div class="desbox">
+                            <div class="title">报告提交：</div>
+                            <div class="txt">{{ teaching.f_deadline|date:"Y" }}年{{ teaching.f_deadline|date:"m" }}月{{ teaching.f_deadline|date:"d" }}日之前</div>
+                        </div>
+                        <div class="desbox">
+                            <div class="title">老师提示：</div>
+                            <div class="txt">{{ teaching.f_point }}</div>
+                        </div>
+                    </div>
+
+                    <div class="unitftbg unitftbg2">
+                        <div class="desbox desbox2">
+                            {% if teaching.f_report_status != 2 %}
+                                <div class="title">报告状态：</div>
+                                <div class="txt">报告批阅尚未完成</div>
+                            {% else %}
+                                <div class="title">得分：</div>
+                                <div class="txt txt2">{{ teaching.f_score }}分</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <!--分页-->
+        <div id="pagebox"></div>
+    </div>
+
+</div>
+<div class="footer">
+    <div class="fbox">
+        <div class="tip1">地址：深圳市南山区桃源街道深圳大学城哈尔滨工业大学校区</div>
+        <div class="tip2">邮编：518055</div>
+        <div class="tip3">网站版权所有 ©2018 哈尔滨工业大学(深圳)</div>
+        <div class="tip4">粤ICP 备15069706号-1</div>
+    </div>
+
+</div>
+</body>
+
+<!-- 引用插件 -->
+<script src="../static/plugin/md5.js"></script>
+<script src="../static/plugin/jquery.js"></script>
+<script src="../static/plugin/jqCookies.js"></script>
+<script src="../static/plugin/config.js"></script>
+<script src="../static/plugin/fastclick.js"></script>
+<script src="../static/plugin/laypage/laypage.js"></script>
+<script src="../static/plugin/zane-calendar.min.js"></script>
+<script src="../static/js/public.js"></script>
+<!-- 模块JS -->
+<script type="text/javascript" src="../static/js/index.js"></script>
+<script>
+    $(".loginbtn").click(function () {
+        $.cookie('stuid', '', {expires: -1, path: '/'});
+        $.cookie('stuname', '', {expires: -1, path: '/'});
+        $.cookie('stunum', '', {expires: -1, path: '/'});
+        $(location).attr('href', '/login/');
+    });
+    laypage({
+        cont: 'pagebox',
+        pages: {{ countpage }}, //可以叫服务端把总页数放在某一个隐藏域，再获取。假设我们获取到的是18
+        curr: function () { //通过url获取当前页，也可以同上（pages）方式获取
+            var page = location.search.match(/page=(\d+)/);
+            return page ? page[1] : 1;
+        }(),
+        jump: function (e, first) { //触发分页后的回调
+            if (!first) { //一定要加此判断，否则初始时会无限刷新
+                location.href = '?page=' + e.curr;
+            }
+        }
+    });
+</script>
+</html>

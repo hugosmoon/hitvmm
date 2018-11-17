@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>实验操作</title>
+    <!-- 初始化CSS -->
+    <link href="plugin/swiper.css">
+    <link rel="stylesheet" href="plugin/res.css">
+    <link rel="stylesheet" type="text/css" href="sass/public.css">
+    <!-- 模块css -->
+    <link rel="stylesheet" type="text/css" href="sass/teacher.css">
+    <style>
+        .navtip1 >a{
+            color: #0055ff!important;
+        }
+    </style>
+</head>
+<body>
+<div class="topwall">
+    <div class="top">
+        <img class="l_float logo" src="./img/logo.png" alt="">
+        <div class="l_float title">机械制造虚拟实验室</div>
+        <div class="l_float userlog"></div>
+        <div class="l_float username">王小明</div>
+        <div class="l_float loginbtn">退出登录</div>
+    </div>
+</div>
+
+<div class="footer">
+    <div class="fbox">
+        <div class="tip1">地址：深圳市南山区桃源街道深圳大学城哈尔滨工业大学校区</div>
+        <div class="tip2">邮编：518055</div>
+        <div class="tip3">网站版权所有 ©2018 哈尔滨工业大学(深圳)</div>
+        <div class="tip4">粤ICP 备15069706号-1</div>
+    </div>
+
+</div>
+<!--弹窗-->
+<div class="popupbox">
+    <div class="layer"></div>
+    <!--评分弹窗-->
+    <div class="popupwall popupwall1">
+        <div class="name">姓名：王小明</div>
+        <div class="id">学号：2499926794</div>
+        <!--实验报告-->
+        <div class="repotr"></div>
+        <div class="scorebox">
+            <div class="tip">评分</div>
+            <input type="text">
+        </div>
+        <div class="btn cancle">取消</div>
+        <div class="btn sure">确定</div>
+    </div>
+    <!--上传文件-->
+    <div class="popupwall popupwall2">
+        <div class="popuptop">
+            <img class="logo" src="./img/logo.png" alt="">
+            <img class="dele" src="./img/dele.png" alt="">
+        </div>
+        <!--提示文案-->
+        <div class="popupmid popupmid1">提交报告必须为EXCEL格式，文件大小在3M以内。</div>
+        <div class="popupmid popupmid2">提交报告必须为WORD格式，文件大小在3M以内。</div>
+        <div class="popupmid popupmid3">学生名单必须为符合名单模板并且为EXCEL格式，文件大小在3M以内。</div>
+        <div class="btn cancle">选择文件</div>
+        <div class="btn sure">确认上传</div>
+    </div>
+    <!--删除实验教学-->
+    <div class="popupwall popupwall3">
+        <div class="popuptop">
+            <img class="logo" src="./img/logo.png" alt="">
+            <img class="dele" src="./img/dele.png" alt="">
+        </div>
+        <div class="popupmid">教学实验删除后不可恢复，<br>确认删除此实验教学吗？</div>
+        <div class="btn cancle">确定</div>
+        <div class="btn sure">取消</div>
+    </div>
+
+    <!--修改提交日期-->
+    <div class="popupwall popupwall4">
+        <div class="popuptop">
+            <img class="logo" src="./img/logo.png" alt="">
+            <img class="dele" src="./img/dele.png" alt="">
+        </div>
+        <select name="" id="" class="selectbox selectbox1">
+            <option value="">2018年</option>
+            <option value="">2017年</option>
+        </select>
+        <select name="" id="" class="selectbox selectbox2">
+            <option value="">12月</option>
+            <option value="">11月</option>
+        </select>
+        <select name="" id="" class="selectbox selectbox3">
+            <option value="">18日</option>
+            <option value="">17日</option>
+        </select>
+        <div class="btn cancle">确定</div>
+        <div class="btn sure">取消</div>
+    </div>
+    <!--更换视频-->
+    <div class="popupwall popupwall5">
+        <img class="dele" src="./img/dele.png" alt="">
+        <div class="videowall">
+
+            <div class="videobox">
+                <div class="v_top">我是一个没有我是一个没有</div>
+                <div class="v_mid"></div>
+                <div class="v_bot">
+                    <div class="v_btn v_dele">删除</div>
+                    <div class="v_btn v_change">更换</div>
+                </div>
+            </div>
+            <div class="videobox">
+                <div class="v_top">我是一个没有我是一个没有</div>
+                <div class="v_mid"></div>
+                <div class="v_bot">
+                    <div class="v_btn v_dele">删除</div>
+                    <div class="v_btn v_change">更换</div>
+                </div>
+            </div> <div class="videobox">
+            <div class="v_top">我是一个没有我是一个没有</div>
+            <div class="v_mid"></div>
+            <div class="v_bot">
+                <div class="v_btn v_dele">删除</div>
+                <div class="v_btn v_change">更换</div>
+            </div>
+        </div> <div class="videobox">
+            <div class="v_top">我是一个没有我是一个没有</div>
+            <div class="v_mid"></div>
+            <div class="v_bot">
+                <div class="v_btn v_dele">删除</div>
+                <div class="v_btn v_change">更换</div>
+            </div>
+        </div> <div class="videobox">
+            <div class="v_top">我是一个没有我是一个没有</div>
+            <div class="v_mid"></div>
+            <div class="v_bot">
+                <div class="v_btn v_dele">删除</div>
+                <div class="v_btn v_change">更换</div>
+            </div>
+        </div> <div class="videobox">
+            <div class="v_top">我是一个没有我是一个没有</div>
+            <div class="v_mid"></div>
+            <div class="v_bot">
+                <div class="v_btn v_dele">删除</div>
+                <div class="v_btn v_change">更换</div>
+            </div>
+        </div> <div class="videobox">
+            <div class="v_top">我是一个没有我是一个没有</div>
+            <div class="v_mid"></div>
+            <div class="v_bot">
+                <div class="v_btn v_dele">删除</div>
+                <div class="v_btn v_change">更换</div>
+            </div>
+        </div>
+        </div>
+
+    </div>
+    <!--学生提交报告-->
+    <div class="popupwall popupwall6">
+        <div class="popuptop">
+            <img class="logo" src="./img/logo.png" alt="">
+            <img class="dele" src="./img/dele.png" alt="">
+        </div>
+        <!--提示文案-->
+        <div class="popupmid">提交报告必须为PDF格式，文件大小在3M以内。</div>
+        <div class="btn cancle">选择文件</div>
+        <div class="btn sure">确认上传</div>
+    </div>
+    <!--确认操作-->
+    <div class="popupwall popupwall7">
+        <div class="popuptop">
+            <img class="logo" src="./img/logo.png" alt="">
+        </div>
+        <div class="popupmid">
+            你确认要执行这个操作吗？
+        </div>
+        <div class="btn cancle uteacancle">确定</div>
+        <div class="btn sure uteasure">取消</div>
+    </div>
+    <!--请求失败-->
+    <div class="popupwall popupwall8">
+        <div class="popuptop">
+            <img class="logo" src="./img/logo.png" alt="">
+        </div>
+        <div class="popupmid">
+            呀，服务器异常了，请稍后重试！
+        </div>
+        <div class="btn sure">确定</div>
+    </div>
+    <!--观看视频-->
+    <div class="popupwall popupwall9">
+        <img class="dele" src="./img/dele.png" alt="">
+        <div class="v_name">我是一个没有名字的视频，我是个没有名字。</div>
+        <div class="vbox"></div>
+        <div class="vchangebox">
+            <div class="vchange">
+                <div class="v_svideo"></div>
+                <div class="v_svideoname">我是一个没有..我是一个没有..</div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+
+<!-- 引用插件 -->
+<script src="plugin/md5.js"></script>
+<script src="plugin/jquery.js"></script>
+<script src="plugin/config.js"></script>
+<script src="plugin/fastclick.js"></script>
+<script src="js/public.js"></script>
+<!-- 模块JS -->
+<script type="text/javascript" src="js/index.js"></script>
+</html>

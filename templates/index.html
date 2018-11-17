@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>未完成实验</title>
+    <!-- 初始化CSS -->
+    <link href="../static/plugin/swiper.css">
+    <link rel="stylesheet" href="../static/plugin/res.css">
+    <link rel="stylesheet" href="plugin/plyr.css">
+    <link rel="stylesheet" type="text/css" href="../static/sass/public.css">
+    <!-- 模块css -->
+    <link rel="stylesheet" type="text/css" href="../static/sass/index.css">
+</head>
+<body>
+<div class="topwall">
+    <div class="top">
+        <img class="l_float logo" src="../static/img/logo.png" alt="">
+        <div class="l_float title">机械制造虚拟实验室</div>
+        <div class="l_float userlog"></div>
+        <div class="l_float username">{{ stuname }}</div>
+        <div class="l_float loginbtn">退出登录</div>
+    </div>
+</div>
+<div class="wall">
+    <div class="navbox">
+        <div class="navwall navwall1">
+            <div class="navtop">
+                <div class="navtitname">实验作业</div>
+                <div class="navarrowbox">
+                    <img class="arrow uparrow" src="../static/img/up.png" alt="">
+                    <img class="arrow activearrow activearrow1" src=" ../static/img/down.png" alt="">
+                </div>
+            </div>
+            <ul class="navcenter navcenter1">
+                <li class="navtip slectnav">
+                    <a href="/index/">未完成实验({{ teachingCount.runCount }}个)</a>
+                </li>
+                <li class="navtip noborder">
+                    <a href="/completedexp/">完成实验({{ teachingCount.stopCount }}个)</a>
+                </li>
+            </ul>
+        </div>
+        <div class="navwall navwall2">
+            <div class="navtop">
+                <div class="navtitname">实验库</div>
+                <div class="navarrowbox">
+                    <img class="arrow uparrow2" src="../static/img/up.png" alt="">
+                    <img class="arrow activearrow activearrow2" src="../static/img/down.png" alt="">
+                </div>
+            </div>
+            <ul class="navcenter navcenter2">
+                <li class="navtip">
+                    <a href="/allexp/">全部实验</a>
+                </li>
+                {% for experiment in experimentList %}
+                    <li class="navtip">
+                        <a href="{{ experiment.f_url }}" target="_blank">{{ experiment.f_name }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="list">
+        <div id="allunitwall" class="allunitwall">
+            {% for teaching in teachingList %}
+                <div class="unitbox">
+                    <div class="unittopbg">
+                        <div class="desbox">
+                            <div class="title">实验作业：</div>
+                            <div class="txt">{{ teaching.f_experiment_name }}</div>
+                        </div>
+                        <div class="desbox">
+                            <div class="title">指导老师：</div>
+                            <div class="txt" teacherid="{{ teaching.f_teacher_id }}">{{ teaching.f_teacher_name }}</div>
+                        </div>
+                    </div>
+                    <div class="unitwall">
+                        <div class="desbox">
+                            <div class="title">报告提交：</div>
+                            <div class="txt">{{ teaching.f_deadline|date:"Y" }}年{{ teaching.f_deadline|date:"m" }}月{{ teaching.f_deadline|date:"d" }}日之前</div>
+                        </div>
+                        <div class="desbox">
+                            <div class="title">老师提示：</div>
+                            <div class="txt">{{ teaching.f_point }}</div>
+                        </div>
+                    </div>
+
+                    <div class="unitftbg">
+                        <ul class="btnwall">
+                            <li class="unitbtn preview" videos="{{ teaching.videos }}">实验预习</li>
+                            <li class="unitbtn datadownload" dataurl="{{ teaching.f_data_url }}">实验数据下载</li>
+                            <li class="unitbtn operation" experimentid="{{ teaching.f_experiment_url }}">虚拟实验操作</li>
+                            <li class="unitbtn templatedownload" templateid="{{ teaching.f_template_id }}">报告模板下载</li>
+                            {% if teaching.f_report_status == 0 %}
+                                <li class="unitbtn lastbtn submit" reportid="{{ teaching.f_report_id }}">提交实验报告</li>
+                            {% elif teaching.f_report_status == 1 %}
+                                <li class="unitbtn lastbtn submit" reportid="{{ teaching.f_report_id }}">重新提交报告</li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <!--分页-->
+        <div id="pagebox"></div>
+    </div>
+
+</div>
+<div class="footer">
+    <div class="fbox">
+        <div class="tip1">地址：深圳市南山区桃源街道深圳大学城哈尔滨工业大学校区</div>
+        <div class="tip2">邮编：518055</div>
+        <div class="tip3">网站版权所有 ©2018 哈尔滨工业大学(深圳)</div>
+        <div class="tip4">粤ICP 备15069706号-1</div>
+    </div>
+</div>
+<!--弹窗-->
+<div class="popupbox">
+    <div class="layer"></div>
+    <!--学生提交报告-->
+    <div class="popupwall popupwall6">
+        <div class="popuptop">
+            <img class="logo" src="../static/img/logo.png" alt="">
+            <img class="dele" src="../static/img/dele.png" alt="">
+        </div>
+        <!--提示文案-->
+        <div class="popupmid">提交报告必须为PDF格式，文件大小在3M以内。</div>
+        <form action="/submitReport/" method="post" enctype="multipart/form-data">
+            <div class="btn cancle">
+                选择文件
+                <input class="uploadfile" type="file" name="file" onchange="publicObj.fileUpLoad()"/>
+            </div>
+            <!-- <div class="btn sure fileupload">确认上传</div>-->
+            <input class="btn sure fileupload" type="submit" class="btn btn-default" value="确认上传"/>
+            <input class="reportid" type="hidden" name="reportid" value=""/>
+        </form>
+        <div class="fileuploadname"></div>
+    </div>
+    <!--确认操作-->
+    <div class="popupwall popupwall7">
+        <div class="popuptop">
+            <img class="logo" src="../static/img/logo.png" alt="">
+        </div>
+        <div class="popupmid">
+            你确认要执行这个操作吗？
+        </div>
+        <div class="btn cancle indexsure">确定</div>
+        <div class="btn sure indexcancle">取消</div>
+    </div>
+    <!--请求失败-->
+    <div class="popupwall popupwall8">
+        <div class="popuptop">
+            <img class="logo" src="../static/img/logo.png" alt="">
+        </div>
+        <div class="popupmid">
+            呀，服务器异常了，请稍后重试！
+        </div>
+        <div class="btn sure">确定</div>
+    </div>
+    <!--观看视频-->
+    <div class="popupwall popupwall9">
+        <img class="dele" src="../static/img/dele.png" alt="">
+        <div id="videoname" class="v_name">我是一个没有名字的视频，我是个没有名字。</div>
+        <div class="vbox">
+            <div class="videobox">
+                <video id="video" controls>
+                </video>
+            </div>
+        </div>
+        <div class="vchangebox">
+        </div>
+    </div>
+</div>
+</body>
+
+<!-- 引用插件 -->
+<script src="../static/plugin/plyr.js"></script>
+<script src="../static/plugin/jquery.js"></script>
+<script src="../static/plugin/jquery.js"></script>
+<script src="../static/plugin/jqCookies.js"></script>
+<script src="../static/plugin/config.js"></script>
+<script src="../static/plugin/fastclick.js"></script>
+<script src="../static/js/public.js"></script>
+<script src="../static/plugin/laypage/laypage.js"></script>
+<script src="../static/plugin/zane-calendar.min.js"></script>
+<!-- 模块JS -->
+<script type="text/javascript" src="../static/js/index.js"></script>
+<script>
+    $(".loginbtn").click(function () {
+        $.cookie('stuid', '', {expires: -1, path: '/'});
+        $.cookie('stuname', '', {expires: -1, path: '/'});
+        $.cookie('stunum', '', {expires: -1, path: '/'});
+        $(location).attr('href', '/login/');
+    });
+    $(".pageindex").click(function () {
+
+    });
+    laypage({
+        cont: 'pagebox',
+        pages: {{ countpage }}, //可以叫服务端把总页数放在某一个隐藏域，再获取。假设我们获取到的是18
+        curr: function () { //通过url获取当前页，也可以同上（pages）方式获取
+            var page = location.search.match(/page=(\d+)/);
+            return page ? page[1] : 1;
+        }(),
+        jump: function (e, first) { //触发分页后的回调
+            if (!first) { //一定要加此判断，否则初始时会无限刷新
+                location.href = '?page=' + e.curr;
+            }
+        }
+    });
+</script>
+</html>

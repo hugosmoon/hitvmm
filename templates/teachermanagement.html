@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>教师用户管理</title>
+    <!-- 初始化CSS -->
+    <link href="../static/plugin/swiper.css">
+    <link rel="stylesheet" href="../static/plugin/res.css">
+    <link rel="stylesheet" type="text/css" href="../static/sass/public.css">
+    <!-- 模块css -->
+    <link rel="stylesheet" type="text/css" href="../static/sass/management.css">
+
+
+</head>
+<body>
+<div class="topwall">
+    <div class="top">
+        <img class="l_float logo" src="../static/img/logo.png" alt="">
+        <div class="l_float title">机械制造虚拟实验室</div>
+        <div class="l_float userlog"></div>
+        <div class="l_float username">{% if adminname != None %}{{ adminname }}{% endif %}</div>
+        <div class="l_float loginbtn">退出登录</div>
+    </div>
+</div>
+<div class="wall2">
+    <div class="m_topnavbox">
+        <ul class="navwall">
+            <li class="topnav"><a href="/studentmanagement/">学生用户</a></li>
+            <li class="topnav "><a class="activetopnav">教师用户</a></li>
+            {% if issuperadmin == "1" %}
+                <li class="topnav"><a href="/adminmanagement/">管理员用户</a></li>
+            {% endif %}
+        </ul>
+        <div class="line line1"></div>
+        <div class="line line2"></div>
+        <div class="adduserbox">
+            <img src="../static/img/addlogo.png" alt="">
+            <text>添加用户</text>
+        </div>
+    </div>
+    <div class="searchbox">
+        <div class="tit tit1">姓名</div>
+        <div class="tit tit2">编号</div>
+        <div class="btn tsearch">搜索</div>
+        <input type="text" class="inp name searchname" value="{% if searchname != None %}{{ searchname }}{% endif %}">
+        <input type="text" class="inp id searchnum" value="{% if stunum != None %}{{ stunum }}{% endif %}">
+    </div>
+    <div class="userlist">
+        <div class="listtop">
+            <ul class="titbox">
+                <li class="tit t_tit1">序号</li>
+                <li class="tit t_tit2">姓名</li>
+                <li class="tit t_tit3">编号</li>
+                <li class="tit t_tit4">添加时间</li>
+            </ul>
+            <ul class="userwall">
+                {% for teacher in teacherList %}
+                    <li class="user">
+                        <div class="txt t_txt1">{{ forloop.counter }}</div>
+                        <div class="txt t_txt2">{{ teacher.f_name }}</div>
+                        <div class="txt t_txt3">{{ teacher.f_number }}</div>
+                        <div class="txt t_txt4">{{ teacher.f_createtime|date:"Y-m-d H:i:s" }}</div>
+                        <div class="txt t_txt5" teacherid="{{ teacher.f_id }}">
+                            <text>重置密码</text>
+                        </div>
+                        <div class="txt t_txt6 deletea" teacherid="{{ teacher.f_id }}">
+                            <text>删除</text>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div id="pagebox"></div>
+
+    </div>
+</div>
+<div class="footer">
+    <div class="fbox">
+        <div class="tip1">地址：深圳市南山区桃源街道深圳大学城哈尔滨工业大学校区</div>
+        <div class="tip2">邮编：518055</div>
+        <div class="tip3">网站版权所有 ©2018 哈尔滨工业大学(深圳)</div>
+        <div class="tip4">粤ICP 备15069706号-1</div>
+    </div>
+
+</div>
+<!--弹窗-->
+<div class="popupbox">
+    <div class="layer"></div>
+    <!--确认操作-->
+    <div class="popupwall popupwall7">
+        <div class="popuptop">
+            <img class="logo" src="./img/logo.png" alt="">
+        </div>
+        <div class="popupmid">
+            你确认要执行这个操作吗？
+        </div>
+        <div class="btn cancle smsure">确定</div>
+        <div class="btn sure smcancle">取消</div>
+    </div>
+</div>
+</body>
+
+<!-- 引用插件 -->
+<script src="../static/plugin/md5.js"></script>
+<script src="../static/plugin/jquery.js"></script>
+<script src="../static/plugin/jqCookies.js"></script>
+<script src="../static/plugin/config.js"></script>
+<script src="../static/plugin/laypage/laypage.js"></script>
+<script src="../static/plugin/zane-calendar.min.js"></script>
+<script src="../static/plugin/fastclick.js"></script>
+<script src="../static/js/public.js"></script>
+<!-- 模块JS -->
+<script type="text/javascript" src="../static/js/index.js"></script>
+<script>
+    $(".loginbtn").click(function () {
+        $.cookie('issuperadmin', '', {expires: -1, path: '/'});
+        $.cookie('adminid', '', {expires: -1, path: '/'});
+        $.cookie('adminname', '', {expires: -1, path: '/'});
+        $(location).attr('href', '/loginadmin/');
+    });
+    laypage({
+        cont: 'pagebox',
+        pages: {{ countpage }}, //可以叫服务端把总页数放在某一个隐藏域，再获取。假设我们获取到的是18
+        curr: function () { //通过url获取当前页，也可以同上（pages）方式获取
+            var page = location.search.match(/page=(\d+)/);
+            return page ? page[1] : 1;
+        }(),
+        jump: function (e, first) { //触发分页后的回调
+            if (!first) { //一定要加此判断，否则初始时会无限刷新
+                location.href = '?page=' + e.curr;
+            }
+        }
+    });
+</script>
+</html>
