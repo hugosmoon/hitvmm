@@ -1,0 +1,26 @@
+Metadata-Version: 2.1
+Name: simplejsonseq
+Version: 0.1.0
+Summary: Simple encoder/decoder for JSON text sequences
+Home-page: https://github.com/alexshpilkin/simplejsonseq
+Author: Alexander Shpilkin
+Author-email: ashpilkin@gmail.com
+License: UNKNOWN
+Platform: UNKNOWN
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: CC0 1.0 Universal (CC0 1.0) Public Domain Dedication
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Description-Content-Type: text/x-rst
+
+simplejsonseq is a simple encoder and decoder for JSON text sequences
+(`RFC 7464`_) with API mirroring that of json and simplejson. Currently
+it only provides two functions, ``dump()`` and ``load()``, that convert
+between a file-like object containing a JSON text sequence and an
+iterable. Detailed documentation is available in the docstrings.
+
+.. _RFC 7464: https://tools.ietf.org/html/rfc7464
+
+
