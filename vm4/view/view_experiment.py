@@ -192,3 +192,4 @@ def cutting_roughness_cal(request):
         corner_radius = float(request.POST.get('corner_radius'))
     R=(random.uniform(1, 1.4))*(math.pow(feed_rate,2)/(8*corner_radius))*(1/((1/(math.tan(tool_cutting_edge_angle)))+(1/(math.tan(tool_minor_cutting_edge_angle)))))*math.pow(cutting_depth,0.04)*(1+1/(math.pow((cutting_speed-30),2)+1))
     return HttpResponse(R)
+
