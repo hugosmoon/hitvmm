@@ -4,13 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <title>实验操作</title>
+    {% load staticfiles %}
     <!-- 初始化CSS -->
-    <link href="../../static/plugin/swiper.css">
-    <link rel="stylesheet" href="../../static//plugin/res.css">
-    <link rel="stylesheet" type="text/css" href="../../static/sass/public.css">
-    <link rel="stylesheet" href="../../static/plugin/zane-calendar.min.css">
+    <link href="{% static 'plugin/swiper.css' %}">
+    <link rel="stylesheet" href="{% static 'plugin/res.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'sass/public.css'%}">
+    <link rel="stylesheet" href="{% static 'plugin/zane-calendar.min.css'%}">
     <!-- 模块css -->
-    <link rel="stylesheet" type="text/css" href="../../static/sass/expsetting.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'sass/expsetting.css'%}">
     <style>
         .navtip4 > a {
             color: #0055ff !important;
