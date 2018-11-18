@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>实验操作</title>
+    <!-- 初始化CSS -->
+    <link href="plugin/swiper.css">
+    <link rel="stylesheet" href="plugin/res.css">
+    <link rel="stylesheet" type="text/css" href="sass/public.css">
+    <link rel="stylesheet" href="plugin/zane-calendar.min.css">
+    <!-- 模块css -->
+    <link rel="stylesheet" type="text/css" href="sass/expsetting.css">
+    <style>
+        .navtip4 > a {
+            color: #0055ff !important;
+        }
+    </style>
+
+</head>
+<body>
+<div class="topwall">
+    <div class="top2">
+        <img class="l_float logo" src="./img/logo.png" alt="">
+        <div class="l_float title">机械制造虚拟实验室</div>
+        <div class="l_float userlog"></div>
+        <div class="l_float username">王小明</div>
+        <div class="l_float loginbtn">退出登录</div>
+    </div>
+</div>
+
+<div class="wall5">
+    <div class="addnewexptit">工件材料对切削力的影响</div>
+    <div class="addnewexpschedulebox">
+        <div class="addnewexpschedule selsct">基础参数设置</div>
+        <div class="line selsct">-></div>
+        <div class="addnewexpschedule selsct">背吃刀量对切削力的影响</div>
+        <div class="line">-></div>
+        <div class="addnewexpschedule">进给量对切削力的影响</div>
+        <div class="line">-></div>
+        <div class="addnewexpschedule">切削速度对切削力的影响</div>
+    </div>
+    <div class="operationbox">
+        <div class="left">
+            <div class="boximg boximg1">
+                <img src="./img/loginbg.png" alt="">
+            </div>
+            <div class="boximg boximg2">
+                <div class="leftboximg">
+                    <img src="./img/loginbg.png" alt="">
+                </div>
+                <div class="rightboximg">
+                    <img src="./img/loginbg.png" alt="">
+                </div>
+            </div>
+            <div class="boximg boximg3">
+                <img src="./img/loginbg.png" alt="">
+            </div>
+        </div>
+        <div class="right">
+            <div class="rtit">控制面板</div>
+            <div class="unitbox">
+                <div class="unit">
+                    <div class="uleft">加工形式  -</div>
+                    <div class="uright">
+                        <div class="utxt">外圆纵车</div>
+                    </div>
+                </div>
+                <div class="unit">
+                    <div class="uleft">工件参数  -</div>
+                    <div class="uright">
+                        <div class="utxt">工件半径：50mm</div>
+                        <div class="utxt">工件长度：700mm</div>
+                    </div>
+                </div>
+                <div class="unit">
+                    <div class="uleft">刀具参数  -</div>
+                    <div class="uright">
+                        <div class="utxt">刀具材料：硬质合金</div>
+                        <div class="utxt">主偏角：45°</div>
+                        <div class="utxt">前角：10°</div>
+                        <div class="utxt">刃倾角：10°</div>
+                        <div class="utxt">刀尖圆弧半径：0.75mm</div>
+                    </div>
+                </div>
+            </div>
+            <!--刻度尺-->
+            <div class="rangebox">
+                <p class="rtit">切削用量</p>
+                <div class="runitbox">
+                    <div class="rutit">机床主轴转速：</div>
+                    <div class="scale">
+                        <em class="blue2">1mm</em>
+                        <form oninput="scaleShow.value=parseInt(scale.value)">
+                            <input type="range" id="scale" max="110"/>
+                            <output name="scaleShow" for="scale"></output>
+                        </form>
+                        <em class="red2">110mm</em>
+                    </div>
+                </div>
+                <div class="runitbox">
+                    <div class="rutit">进给量：</div>
+                    <div class="scale">
+                        <em class="blue2">1mm</em>
+                        <form oninput="scaleShow.value=parseInt(scale.value)">
+                            <input type="range" id="scale" max="110"/>
+                            <output name="scaleShow" for="scale"></output>
+                        </form>
+                        <em class="red2">10omm</em>
+                    </div>
+                </div>
+                <div class="runitbox">
+                    <div class="rutit">背吃刀量（为保证实验效果，请尽可能分散取值）</div>
+                    <p class="runm">(1)</p>
+                    <div class="scale">
+                        <em class="blue2">1mm</em>
+                        <form oninput="scaleShow.value=parseInt(scale.value)">
+                            <input type="range" id="scale" max="110"/>
+                            <output name="scaleShow" for="scale"></output>
+                        </form>
+                        <em class="red2">110mm</em>
+                    </div>
+                    <p class="runm">(2)</p>
+                    <div class="scale">
+                        <em class="blue2">1mm</em>
+                        <form oninput="scaleShow.value=parseInt(scale.value)">
+                            <input type="range" id="scale" max="110"/>
+                            <output name="scaleShow" for="scale"></output>
+                        </form>
+                        <em class="red2">110mm</em>
+                    </div>
+                </div>
+            </div>
+            <div class="obtnbox">
+                <div class="obtn start">开始切削</div>
+                <div class="obtn restart">重启实验</div>
+            </div>
+        </div>
+
+    </div>
+    <div class="btnbox">
+        <div class="btn btnleft">保存实验结果</div>
+        <div class="btn btnright">下一步</div>
+    </div>
+</div>
+<div class="footer">
+    <div class="fbox">
+        <div class="tip1">地址：深圳市南山区桃源街道深圳大学城哈尔滨工业大学校区</div>
+        <div class="tip2">邮编：518055</div>
+        <div class="tip3">网站版权所有 ©2018 哈尔滨工业大学(深圳)</div>
+        <div class="tip4">粤ICP 备15069706号-1</div>
+    </div>
+
+</div>
+</body>
+<!-- 引用插件 -->
+<script src="plugin/md5.js"></script>
+<script src="plugin/jquery.js"></script>
+<script src="plugin/config.js"></script>
+<script src="js/public.js"></script>
+<!-- 模块JS -->
+<script type="text/javascript" src="js/public.js"></script>
+</html>
