@@ -11,6 +11,14 @@ def experiment3(request):
     return render(request,"experiment/experiment3.html")
 def experiment4(request):
     return render(request,"experiment/experiment4.html")
+def expoperation(request):
+    return render(request,"experiment/expoperation.html")
+def expoperation2(request):
+    return render(request,"experiment/expoperation2.html")
+def expsetting(request):
+    return render(request,"experiment/expsetting.html")
+def expsetting2(request):
+    return render(request,"experiment/expsetting2.html")
 
 def expoperation(request):
     return render(request,"experiment/expoperation.html")
