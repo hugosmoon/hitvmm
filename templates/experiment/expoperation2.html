@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>实验操作</title>
+    <!-- 初始化CSS -->
+    <link href="plugin/swiper.css">
+    <link rel="stylesheet" href="plugin/res.css">
+    <link rel="stylesheet" type="text/css" href="sass/public.css">
+    <link rel="stylesheet" href="plugin/zane-calendar.min.css">
+    <!-- 模块css -->
+    <link rel="stylesheet" type="text/css" href="sass/expsetting.css">
+    <style>
+        .navtip4 > a {
+            color: #0055ff !important;
+        }
+    </style>
+
+</head>
+<body>
+<div class="topwall">
+    <div class="top2">
+        <img class="l_float logo" src="./img/logo.png" alt="">
+        <div class="l_float title">机械制造虚拟实验室</div>
+        <div class="l_float userlog"></div>
+        <div class="l_float username">王小明</div>
+        <div class="l_float loginbtn">退出登录</div>
+    </div>
+</div>
+
+<div class="wall5">expsetting.html
+    <div class="addnewexptit">工件材料对切削力的影响</div>
+    <div class="addnewexpschedulebox">
+        <div class="addnewexpschedule selsct">基础参数设置</div>
+        <div class="line selsct">-></div>
+        <div class="addnewexpschedule selsct">背吃刀量对切削力的影响</div>
+        <div class="line">-></div>
+        <div class="addnewexpschedule">进给量对切削力的影响</div>
+        <div class="line">-></div>
+        <div class="addnewexpschedule">切削速度对切削力的影响</div>
+    </div>
+    <div class="operationbox2">
+        <div class="left">
+            <div class="boximg boximg2">
+                <div class="boximg leftboximg">
+                    <select name="" id="" class="operselect">
+                        <option value="">切削力</option>
+                        <option value="">切削力2</option>
+                    </select>
+                    <img src="./img/loginbg.png" alt="">
+                </div>
+                <div class="boximg rightboximg">
+                    <img src="./img/loginbg.png" alt="">
+                    <div class="opertit">右视图</div>
+                </div>
+            </div>
+            <div class="boximg boximg3">
+                <img src="./img/loginbg.png" alt="">
+                <div class="viewbox">
+                    <p>主视图</p>
+                    <p class="changebtn">切换视图</p>
+                </div>
+            </div>
+        </div>
+        <div class="right">
+
+            <!--代加工参数-->
+            <div class="poramsbox">
+                <p class="rutitle">待加工件参数</p>
+                <div class="unitbox">
+                    <div class="u_left">工件材料</div>
+                    <div class="u_right">
+                        <select class="selectcl" name="" id="">
+                            <option value="">45钢</option>
+                            <option value="">45钢1</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="unitbox">
+                    <div class="u_left">工件半径</div>
+                    <div class="u_right">
+                        <input type="text" class="ipt" placeholder="请在5~300内输入数值" min="5" max="400">
+                        <text class="dw">mm</text>
+                    </div>
+                </div>
+                <div class="unitbox">
+                    <div class="u_left">工件直径</div>
+                    <div class="u_right">
+                        <input type="text" class="ipt" placeholder="请在5~300内输入数值" min="5" max="400">
+                        <text class="dw">mm</text>
+                    </div>
+                </div>
+            </div>
+            <!--刻度尺-->
+            <div class="rangebox">
+                <p class="rutitle">加工参数</p>
+                <div class="runitbox">
+                    <div class="rutit">机床主轴转速：</div>
+                    <div class="scale">
+                        <em class="blue2">1mm</em>
+                        <form oninput="scaleShow.value=parseInt(scale.value)">
+                            <input type="range" id="scale" max="110"/>
+                            <output name="scaleShow" for="scale"></output>
+                        </form>
+                        <em class="red2">110mm</em>
+                    </div>
+                </div>
+                <div class="runitbox">
+                    <div class="rutit">进给量：</div>
+                    <div class="scale">
+                        <em class="blue2">1mm</em>
+                        <form oninput="scaleShow.value=parseInt(scale.value)">
+                            <input type="range" id="scale" max="110"/>
+                            <output name="scaleShow" for="scale"></output>
+                        </form>
+                        <em class="red2">10omm</em>
+                    </div>
+                </div>
+                <div class="runitbox">
+                    <div class="rutit">主轴转速：</div>
+                    <div class="scale">
+                        <em class="blue2">1mm</em>
+                        <form oninput="scaleShow.value=parseInt(scale.value)">
+                            <input type="range" id="scale" max="110"/>
+                            <output name="scaleShow" for="scale"></output>
+                        </form>
+                        <em class="red2">110mm</em>
+                    </div>
+                </div>
+            </div>
+            <!--刀具参数-->
+            <div class="djcs">
+                <p class="rutitle">刀具参数</p>
+                <div class="unitbox">
+                    <div class="u_left">刀具材料</div>
+                    <div class="u_right">
+                        <select class="selectcl" name="" id="">
+                            <option value="">45钢</option>
+                            <option value="">45钢1</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="unitbox">
+                    <div class="u_left">主偏角</div>
+                    <div class="u_right">
+                        <select class="selectcl" name="" id="">
+                            <option value="">45钢</option>
+                            <option value="">45钢1</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <!--按钮-->
+            <div class="obtnbox">
+                <div class="obtn start">开始</div>
+                <div class="obtn stop">停止</div>
+            </div>
+        </div>
+
+    </div>
+    <div class="btnbox2">
+        <div class="btn btn2 btn1">背吃力量</div>
+        <div class="btn btn2 btn2">参数2</div>
+        <div class="btn btn2 btn3">参数3</div>
+        <div class="btn btn2 btn4">参数4</div>
+    </div>
+</div>
+<div class="footer">
+    <div class="fbox">
+        <div class="tip1">地址：深圳市南山区桃源街道深圳大学城哈尔滨工业大学校区</div>
+        <div class="tip2">邮编：518055</div>
+        <div class="tip3">网站版权所有 ©2018 哈尔滨工业大学(深圳)</div>
+        <div class="tip4">粤ICP 备15069706号-1</div>
+    </div>
+
+</div>
+</body>
+<!-- 引用插件 -->
+<script src="plugin/md5.js"></script>
+<script src="plugin/jquery.js"></script>
+<script src="plugin/config.js"></script>
+<script src="js/public.js"></script>
+<!-- 模块JS -->
+<script type="text/javascript" src="js/public.js"></script>
+</html>

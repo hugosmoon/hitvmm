@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>实验操作</title>
+    <!-- 初始化CSS -->
+    <link href="plugin/swiper.css">
+    <link rel="stylesheet" href="plugin/res.css">
+    <link rel="stylesheet" type="text/css" href="sass/public.css">
+    <link rel="stylesheet" href="plugin/zane-calendar.min.css">
+    <!-- 模块css -->
+    <link rel="stylesheet" type="text/css" href="sass/expsetting.css">
+    <style>
+        .navtip4 > a {
+            color: #0055ff !important;
+        }
+    </style>
+
+</head>
+<body>
+<div class="topwall">
+    <div class="top">
+        <img class="l_float logo" src="./img/logo.png" alt="">
+        <div class="l_float title">机械制造虚拟实验室</div>
+        <div class="l_float userlog"></div>
+        <div class="l_float username">王小明</div>
+        <div class="l_float loginbtn">退出登录</div>
+    </div>
+</div>
+
+<div class="wall4">
+    <div class="addnewexptit">切削用量对切削力的影响</div>
+    <div class="addnewexpschedulebox">
+        <div class="addnewexpschedule selsct">基础参数设置</div>
+        <div class="line">-></div>
+        <div class="addnewexpschedule">背吃刀量对切削力的影响</div>
+        <div class="line">-></div>
+        <div class="addnewexpschedule">进给量对切削力的影响</div>
+        <div class="line">-></div>
+        <div class="addnewexpschedule">切削速度对切削力的影响</div>
+
+    </div>
+    <div class="addexpbox">
+        <div class="addbox">
+            <div class="left">
+                加工形式
+            </div>
+            <div class="right">
+                <div class="righttxt">外圆纵车</div>
+            </div>
+        </div>
+        <div class="addbox">
+            <div class="left">
+                工件参数
+            </div>
+            <div class="right">
+                <div class="rightbox">
+                    <p class="rightboxleft">工件材料</p>
+                    <select class="selctbox selctbox1" name="" id="">
+                        <option value="">选择材料</option>
+                        <option value="">材料1</option>
+                    </select>
+                </div>
+                <div class="rightbox">
+                    <p class="rightboxleft">工件半径</p>
+                    <div class="scale">
+                        <em class="blue">1mm</em>
+                        <form oninput="scaleShow.value=parseInt(scale.value)">
+                            <input type="range" max="110" id="scale"/>
+                            <output name="scaleShow" for="scale"></output>
+                        </form>
+                        <em class="red">110mm</em>
+                    </div>
+                </div>
+                <div class="rightbox lastrightbox">
+                    <p class="rightboxleft ">工件长度</p>
+                    <div class="scale">
+                        <em class="blue">1mm</em>
+                        <form oninput="scaleShow.value=parseInt(scale.value)">
+                            <input type="range" max="110" id="scale"/>
+                            <output name="scaleShow" for="scale"></output>
+                        </form>
+                        <em class="red">110mm</em>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="addbox">
+            <div class="left">
+                刀具参数
+            </div>
+            <div class="right">
+                <div class="rightbox">
+                    <p class="rightboxleft">刀具材料</p>
+                    <p style="margin-top: 5px">硬质合金</p>
+                </div>
+                <div class="rightbox">
+                    <p class="rightboxleft">主偏角</p>
+                    <select class="selctbox selctbox1" name="" id="">
+                        <option value="">请选择主偏角</option>
+                        <option value="">主偏角1</option>
+                        <option value="">主偏角2</option>
+                    </select>
+                </div>
+                <div class="rightbox">
+                    <p class="rightboxleft">前角</p>
+                    <select class="selctbox selctbox1" name="" id="">
+                        <option value="">请选择前角</option>
+                        <option value="">前角1</option>
+                        <option value="">前角2</option>
+                    </select>
+                </div>
+                <div class="rightbox">
+                    <p class="rightboxleft">刃倾角</p>
+                    <select class="selctbox selctbox1" name="" id="">
+                        <option value="">请选择刃倾角</option>
+                        <option value="">刃倾角1</option>
+                        <option value="">刃倾角2</option>
+                    </select>
+                </div>
+                <div class="rightbox lastrightbox">
+                    <p class="rightboxleft ">刀尖圆弧半径</p>
+                    <select class="selctbox selctbox1" name="" id="">
+                        <option value="">请选择刀尖圆弧半径</option>
+                        <option value="">刀尖圆弧半径1</option>
+                        <option value="">刀尖圆弧半径2</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="addsurebtn">
+            下一步
+        </div>
+    </div>
+
+</div>
+<div class="footer">
+    <div class="fbox">
+        <div class="tip1">地址：深圳市南山区桃源街道深圳大学城哈尔滨工业大学校区</div>
+        <div class="tip2">邮编：518055</div>
+        <div class="tip3">网站版权所有 ©2018 哈尔滨工业大学(深圳)</div>
+        <div class="tip4">粤ICP 备15069706号-1</div>
+    </div>
+
+</div>
+</body>
+<!-- 引用插件 -->
+<script src="plugin/md5.js"></script>
+<script src="plugin/jquery.js"></script>
+<script src="plugin/config.js"></script>
+<script src="js/public.js"></script>
+<!-- 模块JS -->
+<script type="text/javascript" src="js/public.js"></script>
+</html>
