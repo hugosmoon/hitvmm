@@ -3,8 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-3.2.1.js"></script>
 </head>
 <body>
-    实验一的实验操作
+    实验一的实验操作<br>
+    <br>
+    工件材料<br>
+    <input id="workpiece_material" value="45_steel"/>
+    <br>
+    进给量<br>
+    <input id="feed_rate" value=0.6><br>
+    背吃刀量<br>
+    <input id="cutting_depth" value=2><br>
+    切削速度<br>
+    <input id="cutting_speed" value=300><br>
+    主偏角<br>
+    <input id="tool_cutting_edge_angle" value=45><br>
+    副偏角<br>
+    <input id="tool_minor_cutting_edge_angle" value=10><br>
+    刃倾角<br>
+    <input id="tool_cutting_edge_inclination_angle" value=0><br>
+    前角<br>
+    <input id="rake_angle" value=0><br>
+    后角<br>
+    <input id="clearance_angle" value=0><br>
+    副刃后角<br>
+    <input id="minor_clearance_angle" value=0><br>
+    刀尖圆弧半径<br>
+    <input id="corner_radius" value=1><br><br>
+
+
+    <button type="button" id ="c_f_cal">计算切削力</button>
+    <button type="button" id ="c_temp_cal">计算切削温度</button>
+    <button type="button" id ="c_rough_cal">计算表面粗糙度</button>
+    <p></p>
+
+
 </body>
 </html>
+<script>
+
+
+        $('#c_f_cal').click(function () {
+            cutting_cal("{% url 'cutting_force_cal'%}")
+        })
+
+        $('#c_temp_cal').click(function () {
+            cutting_cal("{% url 'cutting_temp_cal'%}")
+        })
+        $('#c_rough_cal').click(function () {
+            cutting_cal("{% url 'cutting_roughness_cal'%}")
+        })
+
+
+
+		function cutting_cal(url){
+
+			var form_data = new FormData();
+			form_data.append('workpiece_material',$('#workpiece_material').val());
+			form_data.append('feed_rate',$('#feed_rate').val());
+			form_data.append('cutting_depth',$('#cutting_depth').val());
+			form_data.append('cutting_speed',$('#cutting_speed').val());
+			form_data.append('tool_cutting_edge_angle',$('#tool_cutting_edge_angle').val());
+			form_data.append('rake_angle',$('#rake_angle').val());
+			form_data.append('tool_cutting_edge_inclination_angle',$('#tool_cutting_edge_inclination_angle').val());
+            form_data.append('corner_radius',$('#corner_radius').val());
+            form_data.append('minor_clearance_angle',$('#minor_clearance_angle').val());
+            form_data.append('clearance_angle',$('#clearance_angle').val());
+            form_data.append('tool_minor_cutting_edge_angle',$('#tool_minor_cutting_edge_angle').val());
+
+
+			$.ajax({
+					url:url,
+					type:'POST',
+					data: form_data,
+					processData: false,  // tell jquery not to process the data
+					contentType: false, // tell jquery not to set contentType
+					success: function(callback)
+                    {
+						console.log(callback)
+						$("p").append(callback);
+						$("p").append('<br>');
+					}
+			});
+
+		}
+</script>
