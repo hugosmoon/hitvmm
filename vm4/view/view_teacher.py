@@ -133,7 +133,7 @@ def v_approval(request):
     teachingid = utils.getParam(request, "teachingid")
     teachername = utils.getCookie(request, "teachername")
     reportList = ReportService.getReportByTeachingid(teachingid)
-    return render(request, "approval.html",
+    return render(request, "../service/approval.html",
                   {"reportList": reportList, "teachername": teachername})
 
 

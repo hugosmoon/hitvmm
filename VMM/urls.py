@@ -76,8 +76,9 @@ urlpatterns = [
     url(r'experiment/experiment2/',view_experiment.experiment2),
     url(r'experiment/experiment3/',view_experiment.experiment3),
     url(r'experiment/experiment4/',view_experiment.experiment4),
+    url(r'experiment/expoperation/',view_experiment.expoperation),
 
-#实现切削力计算
+    #实现切削力计算
     url(r'experiment/cutting_force_cal/',view_experiment.cutting_force_cal,name='cutting_force_cal'),
     #实现切削温度计算
     url(r'experiment/cutting_temp_cal/',view_experiment.cutting_temp_cal,name='cutting_temp_cal'),

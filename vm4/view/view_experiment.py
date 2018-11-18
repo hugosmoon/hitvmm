@@ -12,6 +12,10 @@ def experiment3(request):
 def experiment4(request):
     return render(request,"experiment/experiment4.html")
 
+def expoperation(request):
+    return render(request,"experiment/expoperation.html")
+
+
 
 # 计算切削力
 
