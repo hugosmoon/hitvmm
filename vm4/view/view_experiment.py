@@ -11,6 +11,14 @@ def experiment3(request):
     return render(request,"experiment/experiment3.html")
 def experiment4(request):
     return render(request,"experiment/experiment4.html")
+def expoperation(request):
+    return render(request,"experiment/expoperation.html")
+def expoperation2(request):
+    return render(request,"experiment/expoperation2.html")
+def expsetting(request):
+    return render(request,"experiment/expsetting.html")
+def expsetting2(request):
+    return render(request,"experiment/expsetting2.html")
 
 
 # 计算切削力
@@ -192,3 +200,4 @@ def cutting_roughness_cal(request):
         corner_radius = float(request.POST.get('corner_radius'))
     R=(random.uniform(1, 1.4))*(math.pow(feed_rate,2)/(8*corner_radius))*(1/((1/(math.tan(tool_cutting_edge_angle)))+(1/(math.tan(tool_minor_cutting_edge_angle)))))*math.pow(cutting_depth,0.04)*(1+1/(math.pow((cutting_speed-30),2)+1))
     return HttpResponse(R)
+
