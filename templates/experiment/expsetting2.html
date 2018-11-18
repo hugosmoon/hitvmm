@@ -59,24 +59,20 @@
                 </div>
                 <div class="rightbox">
                     <p class="rightboxleft">工件半径</p>
-                    <div class="scale">
-                        <em class="blue">1mm</em>
-                        <form oninput="scaleShow.value=parseInt(scale.value)">
-                            <input type="range" id="scale"/>
-                            <output name="scaleShow" for="scale"></output>
+                    <div class="scale scale2">
+                        <form oninput="scaleShow.value=parseInt(scale.value||0)">
+                            <input value="0" type="range" id="scale" max="110"/>
+                            <output value="0" name="scaleShow" for="scale">0</output>
                         </form>
-                        <em class="red">110mm</em>
                     </div>
                 </div>
                 <div class="rightbox lastrightbox">
                     <p class="rightboxleft ">工件长度</p>
-                    <div class="scale">
-                        <em class="blue">1mm</em>
-                        <form oninput="scaleShow.value=parseInt(scale.value)">
-                            <input type="range" id="scale"/>
-                            <output name="scaleShow" for="scale"></output>
+                    <div class="scale scale2">
+                        <form oninput="scaleShow.value=parseInt(scale.value||0)">
+                            <input value="0" type="range" id="scale" max="110"/>
+                            <output value="0" name="scaleShow" for="scale">0</output>
                         </form>
-                        <em class="red">110mm</em>
                     </div>
                 </div>
             </div>
