@@ -1,1 +1,325 @@
-.userlist{min-height:200px;margin-top:60px}.userlist .titbox{width:100%;height:42px;line-height:42px;background-color:rgba(0,85,255,.3)}.userlist .userwall{height:546px}.userlist .userwall li:nth-of-type(odd){background-color:#fff}.userlist .userwall li:nth-of-type(even){background-color:#dfe5f1}.userlist .user{width:100%;height:42px}.userlist .tit{float:left;text-align:center;font-size:15px}.userlist .t_tit1{width:50px;margin-left:60px;margin-right:64px}.userlist .t_tit2{width:90px;margin-right:64px}.userlist .t_tit3{width:100px;margin-right:64px}.userlist .t_tit4{width:150px;margin-right:64px}.userlist .t_tit5{width:80px;margin-right:64px}.userlist .t_tit6{width:90px;margin:0}.userlist .txt{float:left;text-align:center;font-size:14px;line-height:42px}.userlist .t_txt1{width:50px;margin-left:60px;margin-right:64px}.userlist .t_txt2{width:90px;margin-right:64px}.userlist .t_txt3{width:100px;margin-right:64px}.userlist .t_txt4{width:150px;margin-right:64px}.userlist .t_txt5{width:80px;margin-right:64px}.userlist .t_txt6{width:90px;color:#05f;cursor:pointer}.userlist .t_txt6:hover{color:#020035;text-decoration:underline}.teachnavbox{width:205px;min-height:600px}.teachnavbox .navwall{width:205px}.teachnavbox .navwall .navtop{width:205px;height:47px;background:url(../img/btnbg2.png);background-size:100% 100%;line-height:47px;color:#fff;position:relative}.teachnavbox .navwall .navtop .navtitname{position:absolute;left:19px;font-size:18px}.teachnavbox .navwall .navtop .navarrowbox{position:absolute;top:21px;right:18px;width:11px;height:7px}.teachnavbox .navwall .navtop .arrow{position:absolute;top:0;left:0;width:100%;height:100%;display:none;cursor:pointer}.teachnavbox .navwall .navtop .activearrow{display:block}.teachnavbox .navwall .navcenter{width:203px;margin:0 auto;background:#f5f6fb}.teachnavbox .navwall .navcenter .navtip{width:90%;position:relative;line-height:48px;height:48px;margin:0 auto;border-bottom:1px solid rgba(0,36,255,.2)}.teachnavbox .navwall .navcenter .slectnav>a{color:#05f!important}.teachnavbox .navwall .navcenter .noborder{border:0}.teachnavbox .navwall .navcenter .navtip>a{color:#020035;font-size:16px}.list .unitbox .desbox .title,.list .unitbox .desbox .txt{font-size:14px;font-stretch:normal;line-height:17px;letter-spacing:1px;color:#020035}.changepsw,.teachnavbox .navwall2{margin-top:20px}.list{width:743px;float:right;margin-left:50px}.list .unitbox{width:743px;margin-bottom:25px}.list .unitbox .desbox{display:-webkit-box;display:-ms-flexbox;display:flex;width:665px;margin:0 auto 13px}.list .unitbox .desbox .title{font-weight:700;width:80px}.list .unitbox .desbox .txt{font-weight:400;width:600px}.list .unitbox .unittopbg{width:743px;height:48px;padding-top:22px;background:url(../img/unittop.png);background-size:100% 100%;overflow:hidden}.list .unitbox .unitftbg{padding-top:1px;width:743px;height:69px;background:url(../img/unitfooter.png);background-size:100% 100%}.list .unitbox .unitftbg2{margin-top:-30px}.list .unitbox .desbox2{margin-top:20px}.list .unitbox .desbox2 .txt2{color:#05f}.list .unitbox .unitwall{padding-top:15px;width:743px;min-height:71px;background:url(../img/unitc.png);background-size:100% 100%;overflow:hidden}.list .unitbox .unitwall2{min-height:0!important;margin-top:-25px}.list .unitbox .btnwall{margin-left:25px;margin-top:15px;position:relative}.list .unitbox .btnwall .unitbtn{cursor:pointer;width:110px;height:32px;line-height:32px;float:left;text-align:center;background:#cbd6ee;border-radius:2px;margin-right:8px;color:#020035;font-size:12px}.list .unitbox .btnwall .lastbtn{margin:0}.list .unitbox .btnwall .teadele{width:58px;margin-left:51px}.list .unitbox .btnwall .otherbtn{width:174px;border-radius:2px;position:absolute;top:-40px;right:10px}.list .unitbox .btnwall .otherbtn1 text{color:#05f!important}.list .unitbox .btnwall .otherbtn2 text{color:#ff0a60}.list .unitbox .btnwall .unitbtn:hover{background:url(../img/btnbg2.png);background-size:100% 100%;color:#fff}.addexpbox{width:721px;height:522px;margin-left:72px}.addexpbox .addsurebtn{text-align:center;width:123px;height:32px;line-height:32px;background-color:#cbd6ee;border-radius:2px;font-size:15px;margin-top:45px}.addexpbox .addbox{display:-webkit-box;display:-ms-flexbox;display:flex;font-size:14px;margin-bottom:15px}.addexpbox .addbox .left{width:130px;line-height:32px}.addexpbox .addbox .right{margin-left:13px}.addexpbox .addbox .right2{display:-webkit-box;display:-ms-flexbox;display:flex}.addexpbox .addbox .selctbox{-webkit-box-sizing:border-box;box-sizing:border-box;height:32px;line-height:32px;outline:0;border-radius:2px;background-color:#f7f7f7;border:1px solid #f0f0f0}.addexpbox .addbox .selctbox1{width:317px}.addexpbox .addbox .selctbox2{width:94px;text-align:center;margin-right:14px}.addexpbox .addbox .radiobox{cursor:pointer;display:-webkit-box;display:-ms-flexbox;display:flex;margin-right:35px;height:32px;line-height:32px}.addexpbox .addbox .radiobox .selc{-webkit-box-sizing:border-box;box-sizing:border-box;width:10px;height:10px;border:1px solid #020035;border-radius:50%;margin-top:11px;margin-right:5px}.addexpbox .addbox .radiobox .active{background:#05f;border:0!important}.addexpbox .addbox .radiobox .activetxt{color:#05f}.addexpbox .addbox .btn{cursor:pointer;width:123px;height:32px;background-color:#cbd6ee;border-radius:2px;line-height:32px;text-align:center;font-size:14px;position:relative}.addexpbox .addbox .btn2{margin:0 25px 0 0}.addexpbox .addbox .txtare{width:573px;height:91px;background-color:#f7f7f7;border-radius:2px;border:1px solid #f0f0f0;outline:0}.addepxupdatamod,.addexpupexpdata{display:none}.filename{width:123px;height:32px;border-radius:2px;line-height:32px;text-align:center;font-size:14px}.userlisttip{margin-right:25px}
+.userlist {
+  min-height: 200px;
+  margin-top: 60px; }
+  .userlist .titbox {
+    width: 100%;
+    height: 42px;
+    line-height: 42px;
+    background-color: rgba(0, 85, 255, 0.3); }
+  .userlist .userwall {
+    height: 546px; }
+  .userlist .userwall li:nth-of-type(odd) {
+    background-color: #fff; }
+  .userlist .userwall li:nth-of-type(even) {
+    background-color: #dfe5f1; }
+  .userlist .user {
+    width: 100%;
+    height: 42px; }
+  .userlist .tit {
+    float: left;
+    text-align: center;
+    font-size: 15px; }
+  .userlist .t_tit1 {
+    width: 50px;
+    margin-left: 60px;
+    margin-right: 64px; }
+  .userlist .t_tit2 {
+    width: 90px;
+    margin-right: 64px; }
+  .userlist .t_tit3 {
+    width: 100px;
+    margin-right: 64px; }
+  .userlist .t_tit4 {
+    width: 150px;
+    margin-right: 64px; }
+  .userlist .t_tit5 {
+    width: 80px;
+    margin-right: 64px; }
+  .userlist .t_tit6 {
+    width: 90px;
+    margin: 0px; }
+  .userlist .txt {
+    float: left;
+    text-align: center;
+    font-size: 14px;
+    line-height: 42px; }
+  .userlist .t_txt1 {
+    width: 50px;
+    margin-left: 60px;
+    margin-right: 64px; }
+  .userlist .t_txt2 {
+    width: 90px;
+    margin-right: 64px; }
+  .userlist .t_txt3 {
+    width: 100px;
+    margin-right: 64px; }
+  .userlist .t_txt4 {
+    width: 150px;
+    margin-right: 64px; }
+  .userlist .t_txt5 {
+    width: 80px;
+    margin-right: 64px; }
+  .userlist .t_txt6 {
+    width: 90px;
+    color: #0055ff;
+    cursor: pointer; }
+  .userlist .t_txt6:hover {
+    color: #020035;
+    text-decoration: underline; }
+
+.teachnavbox {
+  width: 205px;
+  min-height: 600px; }
+  .teachnavbox .navwall {
+    width: 205px; }
+    .teachnavbox .navwall .navtop {
+      width: 205px;
+      height: 47px;
+      background: url("../img/btnbg2.png");
+      background-size: 100% 100%;
+      line-height: 47px;
+      color: #fff;
+      position: relative; }
+      .teachnavbox .navwall .navtop .navtitname {
+        position: absolute;
+        left: 19px;
+        font-size: 18px; }
+      .teachnavbox .navwall .navtop .navarrowbox {
+        position: absolute;
+        top: 21px;
+        right: 18px;
+        width: 11px;
+        height: 7px; }
+      .teachnavbox .navwall .navtop .arrow {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: none;
+        cursor: pointer; }
+      .teachnavbox .navwall .navtop .activearrow {
+        display: block; }
+    .teachnavbox .navwall .navcenter {
+      width: 203px;
+      margin: 0 auto;
+      background: #f5f6fb; }
+      .teachnavbox .navwall .navcenter .navtip {
+        width: 90%;
+        position: relative;
+        line-height: 48px;
+        height: 48px;
+        margin: 0 auto;
+        border-bottom: 1px solid rgba(0, 36, 255, 0.2); }
+      .teachnavbox .navwall .navcenter .slectnav > a {
+        color: #0055ff !important; }
+      .teachnavbox .navwall .navcenter .noborder {
+        border: 0; }
+      .teachnavbox .navwall .navcenter .navtip > a {
+        color: #020035;
+        font-size: 16px; }
+  .teachnavbox .navwall2 {
+    margin-top: 20px; }
+
+.changepsw {
+  margin-top: 20px; }
+
+.list {
+  width: 743px;
+  float: right;
+  margin-left: 50px; }
+  .list .unitbox {
+    width: 743px;
+    margin-bottom: 25px; }
+    .list .unitbox .desbox {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      width: 665px;
+      margin: 0 auto;
+      margin-bottom: 13px; }
+      .list .unitbox .desbox .title {
+        font-size: 14px;
+        font-weight: normal;
+        font-stretch: normal;
+        line-height: 17px;
+        letter-spacing: 1px;
+        color: #020035;
+        font-weight: bold;
+        width: 80px; }
+      .list .unitbox .desbox .txt {
+        font-size: 14px;
+        font-weight: normal;
+        font-stretch: normal;
+        line-height: 17px;
+        letter-spacing: 1px;
+        color: #020035;
+        width: 600px; }
+    .list .unitbox .unittopbg {
+      width: 743px;
+      height: 48px;
+      padding-top: 22px;
+      background: url("../img/unittop.png");
+      background-size: 100% 100%;
+      overflow: hidden; }
+    .list .unitbox .unitftbg {
+      padding-top: 1px;
+      width: 743px;
+      height: 69px;
+      background: url("../img/unitfooter.png");
+      background-size: 100% 100%; }
+    .list .unitbox .unitftbg2 {
+      margin-top: -30px; }
+    .list .unitbox .desbox2 {
+      margin-top: 20px; }
+      .list .unitbox .desbox2 .txt2 {
+        color: #0055ff; }
+    .list .unitbox .unitwall {
+      padding-top: 15px;
+      width: 743px;
+      min-height: 71px;
+      background: url("../img/unitc.png");
+      background-size: 100% 100%;
+      overflow: hidden; }
+    .list .unitbox .unitwall2 {
+      min-height: 0 !important;
+      margin-top: -25px; }
+    .list .unitbox .btnwall {
+      margin-left: 25px;
+      margin-top: 15px;
+      position: relative; }
+      .list .unitbox .btnwall .unitbtn {
+        cursor: pointer;
+        width: 110px;
+        height: 32px;
+        line-height: 32px;
+        float: left;
+        text-align: center;
+        background: #cbd6ee;
+        border-radius: 2px;
+        margin-right: 8px;
+        color: #020035;
+        font-size: 12px; }
+      .list .unitbox .btnwall .lastbtn {
+        margin: 0; }
+      .list .unitbox .btnwall .teadele {
+        width: 58px;
+        margin-left: 51px; }
+      .list .unitbox .btnwall .otherbtn {
+        width: 174px;
+        border-radius: 2px;
+        position: absolute;
+        top: -40px;
+        right: 10px; }
+      .list .unitbox .btnwall .otherbtn1 text {
+        color: #0055ff !important; }
+      .list .unitbox .btnwall .otherbtn2 text {
+        color: #ff0a60; }
+      .list .unitbox .btnwall .unitbtn:hover {
+        background: url("../img/btnbg2.png");
+        background-size: 100% 100%;
+        color: #fff; }
+
+.addexpbox {
+  width: 721px;
+  height: 522px;
+  margin-left: 72px; }
+  .addexpbox .addsurebtn {
+    text-align: center;
+    width: 123px;
+    height: 32px;
+    line-height: 32px;
+    background-color: #cbd6ee;
+    border-radius: 2px;
+    font-size: 15px;
+    margin-top: 45px; }
+  .addexpbox .addbox {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    font-size: 14px;
+    margin-bottom: 15px; }
+    .addexpbox .addbox .left {
+      width: 130px;
+      line-height: 32px; }
+    .addexpbox .addbox .right {
+      margin-left: 13px; }
+    .addexpbox .addbox .right2 {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex; }
+    .addexpbox .addbox .selctbox {
+      -webkit-box-sizing: border-box;
+              box-sizing: border-box;
+      height: 32px;
+      line-height: 32px;
+      outline: none;
+      border-radius: 2px;
+      background-color: #f7f7f7;
+      border: solid 1px #f0f0f0; }
+    .addexpbox .addbox .selctbox1 {
+      width: 317px; }
+    .addexpbox .addbox .selctbox2 {
+      width: 94px;
+      text-align: center;
+      margin-right: 14px; }
+    .addexpbox .addbox .radiobox {
+      cursor: pointer;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      margin-right: 35px;
+      height: 32px;
+      line-height: 32px; }
+      .addexpbox .addbox .radiobox .selc {
+        -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+        width: 10px;
+        height: 10px;
+        border: solid 1px #020035;
+        border-radius: 50%;
+        margin-top: 11px;
+        margin-right: 5px; }
+      .addexpbox .addbox .radiobox .active {
+        background: #0055ff;
+        border: 0 !important; }
+      .addexpbox .addbox .radiobox .activetxt {
+        color: #0055ff; }
+    .addexpbox .addbox .btn {
+      cursor: pointer;
+      width: 123px;
+      height: 32px;
+      background-color: #cbd6ee;
+      border-radius: 2px;
+      text-align: center;
+      line-height: 32px;
+      text-align: center;
+      font-size: 14px;
+      position: relative; }
+    .addexpbox .addbox .btn2 {
+      margin: 0;
+      margin-right: 25px; }
+    .addexpbox .addbox .txtare {
+      width: 573px;
+      height: 91px;
+      background-color: #f7f7f7;
+      border-radius: 2px;
+      border: solid 1px #f0f0f0;
+      outline: none; }
+
+.addepxupdatamod {
+  display: none; }
+
+.addexpupexpdata {
+  display: none; }
+
+.filename {
+  width: 123px;
+  height: 32px;
+  border-radius: 2px;
+  line-height: 32px;
+  text-align: center;
+  font-size: 14px; }
+
+.userlisttip {
+  margin-right: 25px; }

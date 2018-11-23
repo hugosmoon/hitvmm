@@ -24,7 +24,7 @@
 <body>
 <div class="topwall">
     <div class="top">
-        <img class="l_float logo" src="../../static//img/logo.png" alt="">
+        <img class="l_float logo" src="../../static/img/logo.png" alt="">
         <div class="l_float title">机械制造虚拟实验室</div>
         <div class="l_float userlog"></div>
         <div class="l_float username">王小明</div>
@@ -72,21 +72,22 @@
                     <div class="scale">
 
                         <form oninput="scaleShow.value=parseInt(scale.value)">
-                            <input type="range" max="110" id="scale"/>
-                            <output name="scaleShow" for="scale" id="workpiece_r"></output>
+                            <input type="range" min="50" max="100" id="workpiece_r_scale" onchange="$('#workpiece_r').html($('#workpiece_r_scale').val()+'mm')"/>
+
                         </form>
+                        <p name="scaleShow" for="scale" id="workpiece_r">75mm</p>
 
                     </div>
                 </div>
                 <div class="rightbox lastrightbox">
                     <p class="rightboxleft ">工件长度</p>
                     <div class="scale">
-                        <em class="blue">1mm</em>
-                        <form oninput="scaleShow.value=parseInt(scale.value)">
-                            <input type="range" min="50" max="110" id="scale"/>
-                            <output name="scaleShow" for="scale" id="workpiece_l"></output>
+
+                        <form oninput="scaleShow.value=parseInt(scale.value)+'mm'">
+                            <input type="range" min="400" max="800" id="workpiece_l_scale" onchange="$('#workpiece_l').html($('#workpiece_l_scale').val()+'mm')"/>
                         </form>
-                        <em class="red">110mm</em>
+                        <p name="scaleShow" for="scale" id="workpiece_l">600mm</p>
+
                     </div>
                 </div>
             </div>
@@ -180,9 +181,9 @@
                 </div>
             </div>
         </div>
-        <button class="addsurebtn" onclick="next_step()">
+        <div class="addsurebtn" onclick="next_step()">
             下一步
-        </button>
+        </div>
     </div>
 
 </div>
@@ -208,7 +209,7 @@
 <script>
     function next_step() {
         if(set_agu_cookie()){
-            alert("123")
+            $(location).attr('href', "{% url 'expoperation' %}");
         }
 
 
@@ -222,6 +223,8 @@
         $.cookie('clearance_angle',$('#clearance_angle').val());
         $.cookie('minor_clearance_angle',$('#minor_clearance_angle').val());
         $.cookie('corner_radius',$('#corner_radius').val());
+        $.cookie('workpiece_r',$('#workpiece_r_scale').val());
+        $.cookie('workpiece_l',$('#workpiece_l_scale').val());
 
         return 1;
 
