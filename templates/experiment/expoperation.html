@@ -44,19 +44,19 @@
     <div class="operationbox">
         <div class="left">
             <div class="boximg boximg1">
-                <img src="../../static/img/loginbg.png" alt="">
+                <canvas id="main_view" width="800" height="400" style="border:2px solid #777;"> </canvas>
             </div>
             <div class="boximg boximg2">
                 <div class="leftboximg">
-                    <img src="../../static/img/loginbg.png" alt="">
+                    <canvas id="r_view" width="400" height="400" style="border:2px solid #777;"> </canvas>
                 </div>
                 <div class="rightboximg">
-                    <img src="../../static/img/loginbg.png" alt="">
+                    <canvas id="text" width="400" height="400" style="border:2px solid #777;"> </canvas>
                 </div>
             </div>
-            <div class="boximg boximg3">
-                <img src="../../static/img/loginbg.png" alt="">
-            </div>
+{#            <div class="boximg boximg3">#}
+{#                <img src="../../static/img/loginbg.png" alt="">#}
+{#            </div>#}
         </div>
         <div class="right">
             <div class="rtit">控制面板</div>
@@ -92,8 +92,8 @@
                     <div class="rutit">机床主轴转速：</div>
                     <div class="scale">
                         <form oninput="scaleShow.value=parseInt(scale.value)">
-                            <input value="0" type="range" id="scale" max="110"/>
-                            <output value="0" name="scaleShow" for="scale"></output>
+                            <input value="0" type="range" id="rot_speed_scale" min="50" max="1600"/>
+{#                            <output value="0" name="scaleShow" for="scale"></output>#}
                         </form>
                         <em class="red2">110mm</em>
                     </div>
@@ -102,8 +102,8 @@
                     <div class="rutit">进给量：</div>
                     <div class="scale">
                         <form oninput="scaleShow.value=parseInt(scale.value)">
-                            <input value="0" type="range" id="scale" max="110"/>
-                            <output value="0" name="scaleShow" for="scale"></output>
+                            <input value="0" type="range" id="feed_rate_scale" min="0.1" max="2"/>
+{#                            <output value="0" name="scaleShow" for="scale"></output>#}
                         </form>
                         <em class="red2">10omm</em>
                     </div>
@@ -113,23 +113,15 @@
                     <p class="runm">(1)</p>
                     <div class="scale">
                         <form oninput="scaleShow.value=parseInt(scale.value)">
-                            <input value="0" type="range" id="scale" max="110"/>
-                            <output value="0" name="scaleShow" for="scale"></output>
+                            <input value="0" type="range" id="cutting_depth_scale" min="1" max="6"/>
+{#                            <output value="0" name="scaleShow" for="scale"></output>#}
                         </form>
                         <em class="red2">110mm</em>
-                    </div>
-                    <p class="runm">(2)</p>
-                    <div class="scale">
-                        <form oninput="scaleShow.value=parseInt(scale.value)">
-                            <input value="0" type="range" id="scale" max="110"/>
-                            <output value="0" name="scaleShow" for="scale"></output>
-                        </form>
                     </div>
                 </div>
             </div>
             <div class="obtnbox">
-                <div class="obtn start">开始切削</div>
-                <div class="obtn restart">重启实验</div>
+                <div id="start" class="obtn start">启动</div>
             </div>
         </div>
 
@@ -150,10 +142,49 @@
 </div>
 </body>
 <!-- 引用插件 -->
-<script src="../../static/plugin/md5.js"></script>
-<script src="../../static/plugin/jquery.js"></script>
-<script src="../../static/plugin/config.js"></script>
-<script src="../../static/js/public.js"></script>
-<!-- 模块JS -->
-<script type="text/javascript" src="../../static/js/public.js"></script>
+<script src="{% static 'js/public.js' %}"></script>
+<script src="{% static 'plugin/config.js' %}"></script>
+<script src="{% static 'plugin/jquery.js' %}"></script>
+<script src="{% static 'plugin/jquery.cookie.js' %}"></script>
+<script src="{% static 'plugin/md5.js' %}"></script>
+<script src="{% static 'js/experiment/main_view.js' %}"></script>
+
+<script src="{% static 'js/experiment/jcanvas.min.js' %}"></script>
+<script src="{% static 'js/experiment/readcookies.js' %}"></script>
+
+<script>
+
+
+    cutting_depth=parseFloat($("#cutting_depth_scale").val());
+    feed_rate=parseFloat($("#feed_rate_scale").val());
+    rot_speed=parseFloat($("#rot_speed_scale").val());
+
+    {#alert(workpiece_material+"~~"+workpiece_r+"~~"+workpiece_l+"~~"+cutting_depth+"~~"+feed_rate+"~~"+rot_speed+"~~"+tool_cutting_edge_angle+"~~"+tool_minor_cutting_edge_angle+"~~"+tool_cutting_edge_inclination_angle+"~~"+rake_angle+"~~"+clearance_angle+"~~"+minor_clearance_angle+"~~"+corner_radius);#}
+
+
+    start_render('expoeration_0',workpiece_material,workpiece_r,workpiece_l,cutting_depth,feed_rate,rot_speed,tool_cutting_edge_angle,tool_minor_cutting_edge_angle,tool_cutting_edge_inclination_angle,rake_angle,clearance_angle,minor_clearance_angle,corner_radius);
+    stop_render('expoeration_0',workpiece_material,workpiece_r,workpiece_l,cutting_depth,feed_rate,rot_speed,tool_cutting_edge_angle,tool_minor_cutting_edge_angle,tool_cutting_edge_inclination_angle,rake_angle,clearance_angle,minor_clearance_angle,corner_radius);
+
+    //按钮绑定事件
+    var button_status=1;
+    $('#start').on("click",function(){
+        cutting_depth=parseFloat($("#cutting_depth_scale").val());
+        feed_rate=parseFloat($("#feed_rate_scale").val());
+        rot_speed=parseFloat($("#rot_speed_scale").val());
+
+
+        if (button_status==1){
+            $('#start').text("停止");
+            button_status=0;
+            start_render('expoeration_0',workpiece_material,workpiece_r,workpiece_l,cutting_depth,feed_rate,rot_speed,tool_cutting_edge_angle,tool_minor_cutting_edge_angle,tool_cutting_edge_inclination_angle,rake_angle,clearance_angle,minor_clearance_angle,corner_radius);
+        }
+        else {
+            $('#start').text("启动");
+            button_status=1;
+            stop_render('expoeration_0',workpiece_material,workpiece_r,workpiece_l,cutting_depth,feed_rate,rot_speed,tool_cutting_edge_angle,tool_minor_cutting_edge_angle,tool_cutting_edge_inclination_angle,rake_angle,clearance_angle,minor_clearance_angle,corner_radius);
+
+        }
+
+    });
+</script>
 </html>

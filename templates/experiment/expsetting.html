@@ -215,16 +215,16 @@
 
         }
     function set_agu_cookie() {
-        $.cookie('workpiece_material',$('#workpiece_material').val());
-        $.cookie('tool_cutting_edge_angle',$('#tool_cutting_edge_angle').val());
-        $.cookie('tool_minor_cutting_edge_angle',$('#tool_minor_cutting_edge_angle').val());
-        $.cookie('tool_cutting_edge_inclination_angle',$('#tool_cutting_edge_inclination_angle').val());
-        $.cookie('rake_angle',$('#rake_angle').val());
-        $.cookie('clearance_angle',$('#clearance_angle').val());
-        $.cookie('minor_clearance_angle',$('#minor_clearance_angle').val());
-        $.cookie('corner_radius',$('#corner_radius').val());
-        $.cookie('workpiece_r',$('#workpiece_r_scale').val());
-        $.cookie('workpiece_l',$('#workpiece_l_scale').val());
+        $.cookie('workpiece_material',$('#workpiece_material').val(),{ expires: 7, path: '/', secure: false });
+        $.cookie('tool_cutting_edge_angle',$('#tool_cutting_edge_angle').val(),{ expires: 7, path: '/', secure: false });
+        $.cookie('tool_minor_cutting_edge_angle',$('#tool_minor_cutting_edge_angle').val(),{ expires: 7, path: '/', secure: false });
+        $.cookie('tool_cutting_edge_inclination_angle',$('#tool_cutting_edge_inclination_angle').val(),{ expires: 7, path: '/', secure: false });
+        $.cookie('rake_angle',$('#rake_angle').val(),{ expires: 7, path: '/', secure: false });
+        $.cookie('clearance_angle',$('#clearance_angle').val(),{ expires: 7, path: '/', secure: false });
+        $.cookie('minor_clearance_angle',$('#minor_clearance_angle').val(),{ expires: 7, path: '/', secure: false });
+        $.cookie('corner_radius',$('#corner_radius').val(),{ expires: 7, path: '/', secure: false });
+        $.cookie('workpiece_r',$('#workpiece_r_scale').val(),{ expires: 7, path: '/', secure: false });
+        $.cookie('workpiece_l',$('#workpiece_l_scale').val(),{ expires: 7, path: '/', secure: false });
 
         return 1;
 
