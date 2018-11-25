@@ -1,4 +1,4 @@
-workpiece_material=parseFloat($.cookie('workpiece_material'));
+workpiece_material=($.cookie('workpiece_material'));
 workpiece_r=parseFloat($.cookie('workpiece_r'));
 workpiece_l=parseFloat($.cookie('workpiece_l'));
 
@@ -8,7 +8,7 @@ tool_cutting_edge_inclination_angle=parseInt($.cookie('tool_cutting_edge_inclina
 rake_angle=parseInt($.cookie('rake_angle'));
 clearance_angle=parseInt($.cookie('clearance_angle'));
 minor_clearance_angle=parseInt($.cookie('minor_clearance_angle'));
-corner_radius=parseInt($.cookie('corner_radius'));
+corner_radius=parseFloat($.cookie('corner_radius'));
 // try {
 //     cutting_depth=$.cookie('cutting_depth');
 // }

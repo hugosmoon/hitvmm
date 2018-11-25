@@ -54,9 +54,9 @@
                     <canvas id="text" width="400" height="400" style="border:2px solid #777;"> </canvas>
                 </div>
             </div>
-{#            <div class="boximg boximg3">#}
-{#                <img src="../../static/img/loginbg.png" alt="">#}
-{#            </div>#}
+            <div class="boximg boximg3">
+                <canvas id="cal" width="800" height="300" style="border:2px solid #777;"> </canvas>
+            </div>
         </div>
         <div class="right">
             <div class="rtit">控制面板</div>
@@ -91,8 +91,9 @@
                 <div class="runitbox">
                     <div class="rutit">机床主轴转速：</div>
                     <div class="scale">
-                        <form oninput="scaleShow.value=parseInt(scale.value)">
-                            <input value="0" type="range" id="rot_speed_scale" min="50" max="1600"/>
+{#                        <form oninput="scaleShow.value=parseInt(scale.value)">#}
+                        <form>
+                            <input value="0" type="range" id="rot_speed_scale" step="10" min="50" max="1600"/>
 {#                            <output value="0" name="scaleShow" for="scale"></output>#}
                         </form>
                         <em class="red2">110mm</em>
@@ -101,8 +102,9 @@
                 <div class="runitbox">
                     <div class="rutit">进给量：</div>
                     <div class="scale">
-                        <form oninput="scaleShow.value=parseInt(scale.value)">
-                            <input value="0" type="range" id="feed_rate_scale" min="0.1" max="2"/>
+{#                        <form oninput="scaleShow.value=parseInt(scale.value)">#}
+                            <form>
+                            <input value="0" type="range" id="feed_rate_scale" step="0.05" min="0.05" max="1"/>
 {#                            <output value="0" name="scaleShow" for="scale"></output>#}
                         </form>
                         <em class="red2">10omm</em>
@@ -112,10 +114,11 @@
                     <div class="rutit">背吃刀量（为保证实验效果，请尽可能分散取值）</div>
                     <p class="runm">(1)</p>
                     <div class="scale">
-                        <form oninput="scaleShow.value=parseInt(scale.value)">
-                            <input value="0" type="range" id="cutting_depth_scale" min="1" max="6"/>
+{#                        <form oninput="scaleShow.value=parseInt(scale.value)">#}
+                            <form>
+                            <input value="0" type="range" id="cutting_depth_scale" step="0.1" min="1" max="6"/>
 {#                            <output value="0" name="scaleShow" for="scale"></output>#}
-                        </form>
+                            </form>
                         <em class="red2">110mm</em>
                     </div>
                 </div>
@@ -142,9 +145,10 @@
 </div>
 </body>
 <!-- 引用插件 -->
-<script src="{% static 'js/public.js' %}"></script>
-<script src="{% static 'plugin/config.js' %}"></script>
 <script src="{% static 'plugin/jquery.js' %}"></script>
+<script src="{% static 'plugin/config.js' %}"></script>
+
+
 <script src="{% static 'plugin/jquery.cookie.js' %}"></script>
 <script src="{% static 'plugin/md5.js' %}"></script>
 <script src="{% static 'js/experiment/main_view.js' %}"></script>
@@ -152,7 +156,10 @@
 <script src="{% static 'js/experiment/jcanvas.min.js' %}"></script>
 <script src="{% static 'js/experiment/readcookies.js' %}"></script>
 
+
 <script>
+
+    cut_cal_status="temp";
 
 
     cutting_depth=parseFloat($("#cutting_depth_scale").val());
@@ -165,8 +172,12 @@
     start_render('expoeration_0',workpiece_material,workpiece_r,workpiece_l,cutting_depth,feed_rate,rot_speed,tool_cutting_edge_angle,tool_minor_cutting_edge_angle,tool_cutting_edge_inclination_angle,rake_angle,clearance_angle,minor_clearance_angle,corner_radius);
     stop_render('expoeration_0',workpiece_material,workpiece_r,workpiece_l,cutting_depth,feed_rate,rot_speed,tool_cutting_edge_angle,tool_minor_cutting_edge_angle,tool_cutting_edge_inclination_angle,rake_angle,clearance_angle,minor_clearance_angle,corner_radius);
 
-    //按钮绑定事件
+
+
+
+
     var button_status=1;
+    var cut_cal;
     $('#start').on("click",function(){
         cutting_depth=parseFloat($("#cutting_depth_scale").val());
         feed_rate=parseFloat($("#feed_rate_scale").val());
@@ -174,11 +185,16 @@
 
 
         if (button_status==1){
+            cut_cal = setInterval("get_cal(cut_cal_status)", 200);
             $('#start').text("停止");
             button_status=0;
             start_render('expoeration_0',workpiece_material,workpiece_r,workpiece_l,cutting_depth,feed_rate,rot_speed,tool_cutting_edge_angle,tool_minor_cutting_edge_angle,tool_cutting_edge_inclination_angle,rake_angle,clearance_angle,minor_clearance_angle,corner_radius);
+
         }
         else {
+            if (cut_cal){
+                clearInterval(cut_cal);
+            }
             $('#start').text("启动");
             button_status=1;
             stop_render('expoeration_0',workpiece_material,workpiece_r,workpiece_l,cutting_depth,feed_rate,rot_speed,tool_cutting_edge_angle,tool_minor_cutting_edge_angle,tool_cutting_edge_inclination_angle,rake_angle,clearance_angle,minor_clearance_angle,corner_radius);
@@ -186,5 +202,50 @@
         }
 
     });
+
+
+    function get_cal(cal_order){
+            //设置全局变量，告诉渲染器应该显示切削力还是温度或者粗糙
+            url="{% url 'cutting_roughness_cal'%}";
+            if (cal_order=="force") {
+                url="{% url 'cutting_force_cal'%}";
+            }
+            if (cal_order=="temp") {
+                url="{% url 'cutting_temp_cal'%}"
+            }
+            var form_data = new FormData();
+			form_data.append('workpiece_material',workpiece_material);
+			form_data.append('feed_rate',feed_rate);
+			form_data.append('cutting_depth',cutting_depth);
+			form_data.append('cutting_speed',rot_speed*6.28*workpiece_r/1000);
+			form_data.append('tool_cutting_edge_angle',tool_cutting_edge_angle);
+			form_data.append('rake_angle',rake_angle);
+			form_data.append('tool_cutting_edge_inclination_angle',tool_cutting_edge_inclination_angle);
+            form_data.append('corner_radius',corner_radius);
+            form_data.append('minor_clearance_angle',minor_clearance_angle);
+            form_data.append('clearance_angle',clearance_angle);
+            form_data.append('tool_minor_cutting_edge_angle',tool_minor_cutting_edge_angle);
+            $.ajax({
+                url:url,
+                type:'POST',
+                data: form_data,
+                processData: false,  // tell jquery not to process the data
+                contentType: false, // tell jquery not to set contentType
+                success: function(callback)
+                {
+                    console.log(callback);
+                    if (cal_order=="force") {
+                        cutting_force = callback;
+                    }
+                    if (cal_order=="temp") {
+                        cutting_temp = callback;
+                    }
+                    else {
+                        cutting_r = callback;
+                    }
+                }
+            });
+
+}
 </script>
 </html>
