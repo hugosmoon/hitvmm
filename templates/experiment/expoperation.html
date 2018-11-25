@@ -35,11 +35,8 @@
     <div class="addnewexpschedulebox">
         <div class="addnewexpschedule selsct">基础参数设置</div>
         <div class="line selsct">-></div>
-        <div class="addnewexpschedule selsct">背吃刀量对切削力的影响</div>
-        <div class="line">-></div>
-        <div class="addnewexpschedule">进给量对切削力的影响</div>
-        <div class="line">-></div>
-        <div class="addnewexpschedule">切削速度对切削力的影响</div>
+        <div class="addnewexpschedule selsct">切削用量对切削力的影响</div>
+
     </div>
     <div class="operationbox">
         <div class="left">
@@ -51,15 +48,15 @@
                     <canvas id="r_view" width="400" height="400" style="border:2px solid #777;"> </canvas>
                 </div>
                 <div class="rightboximg">
-                    <canvas id="text" width="400" height="400" style="border:2px solid #777;"> </canvas>
+                    <canvas id="text" width="400" height="400" style="border:2px solid #777;" download='exp_data.png'> </canvas>
                 </div>
             </div>
             <div class="boximg boximg3">
-                <canvas id="cal" width="800" height="300" style="border:2px solid #777;"> </canvas>
+{#                <canvas id="cal" width="800" height="300" style="border:2px solid #777;"> </canvas>#}
             </div>
         </div>
         <div class="right">
-            <div class="rtit">控制面板</div>
+            <div class="rutit">基础参数</div>
             <div class="unitbox">
                 <div class="unit">
                     <div class="uleft">加工形式  -</div>
@@ -70,61 +67,65 @@
                 <div class="unit">
                     <div class="uleft">工件参数  -</div>
                     <div class="uright">
-                        <div class="utxt">工件半径：50mm</div>
-                        <div class="utxt">工件长度：700mm</div>
+                        <div class="utxt">工件材料：<a id="workpiece_material_text"></a></div>
+                        <div class="utxt">工件半径：<a id="workpiece_r_text"></a> mm</div>
+                        <div class="utxt">工件长度：<a id="workpiece_l_text"></a> mm</div>
                     </div>
                 </div>
                 <div class="unit">
                     <div class="uleft">刀具参数  -</div>
                     <div class="uright">
-                        <div class="utxt">刀具材料：硬质合金</div>
-                        <div class="utxt">主偏角：45°</div>
-                        <div class="utxt">前角：10°</div>
-                        <div class="utxt">刃倾角：10°</div>
-                        <div class="utxt">刀尖圆弧半径：0.75mm</div>
+                        <div class="utxt">刀具材料：硬质合金(YT15)</div>
+                        <div class="utxt">主偏角：<a id="tool_cutting_edge_angle_text"></a>°</div>
+                        <div class="utxt">副偏角：<a id="tool_minor_cutting_edge_angle_text"></a>°</div>
+                        <div class="utxt">刃倾角：<a id="tool_cutting_edge_inclination_angle_text"></a>°</div>
+                        <div class="utxt">前角：<a id="rake_angle_text"></a>°</div>
+                        <div class="utxt">后角：<a id="clearance_angle_text"></a>°</div>
+                        <div class="utxt">副刃后角：<a id="minor_clearance_angle_text"></a>°</div>
+                        <div class="utxt">刀尖圆弧半径：<a id="corner_radius_text"></a> mm</div>
                     </div>
                 </div>
-            </div>
+            </div><br><br>
             <!--刻度尺-->
             <div class="rangebox">
-                <p class="rtit">切削用量</p>
+                <p class="rutit">切削用量</p>
                 <div class="runitbox">
-                    <div class="rutit">机床主轴转速：</div>
+                    <div class="rtit">机床主轴转速：</div><br>
                     <div class="scale">
-{#                        <form oninput="scaleShow.value=parseInt(scale.value)">#}
+
                         <form>
-                            <input value="0" type="range" id="rot_speed_scale" step="10" min="50" max="1600"/>
-{#                            <output value="0" name="scaleShow" for="scale"></output>#}
+                            <input type="range" value="825" step="10" min="50" max="1600" id="rot_speed_scale" onchange="range()"/>
+
                         </form>
-                        <em class="red2">110mm</em>
+                        <p name="scaleShow" for="scale" id="rot_speed">830 r/min</p>
                     </div>
                 </div>
                 <div class="runitbox">
-                    <div class="rutit">进给量：</div>
+                    <div class="rtit">进给量：</div><br>
                     <div class="scale">
-{#                        <form oninput="scaleShow.value=parseInt(scale.value)">#}
-                            <form>
-                            <input value="0" type="range" id="feed_rate_scale" step="0.05" min="0.05" max="1"/>
-{#                            <output value="0" name="scaleShow" for="scale"></output>#}
+
+                        <form>
+                            <input type="range" value="0.55" step="0.05" min="0.05" max="1" id="feed_rate_scale" onchange="range()"/>
+
                         </form>
-                        <em class="red2">10omm</em>
+                        <p name="scaleShow" for="scale" id="feed_rate">0.55 mm/r</p>
                     </div>
                 </div>
                 <div class="runitbox">
-                    <div class="rutit">背吃刀量（为保证实验效果，请尽可能分散取值）</div>
-                    <p class="runm">(1)</p>
+                    <div class="rtit">背吃刀量</div><br>
                     <div class="scale">
-{#                        <form oninput="scaleShow.value=parseInt(scale.value)">#}
-                            <form>
-                            <input value="0" type="range" id="cutting_depth_scale" step="0.1" min="1" max="6"/>
-{#                            <output value="0" name="scaleShow" for="scale"></output>#}
-                            </form>
-                        <em class="red2">110mm</em>
+
+                        <form>
+                            <input type="range" value="3.5" step="0.1" min="1" max="6" id="cutting_depth_scale" onchange="range()"/>
+
+                        </form>
+                        <p name="scaleShow" for="scale" id="cutting_depth">3.5 mm</p>
                     </div>
                 </div>
             </div>
             <div class="obtnbox">
                 <div id="start" class="obtn start">启动</div>
+                <div id="save_img" class="obtn start">保存数据</div>
             </div>
         </div>
 
@@ -158,8 +159,28 @@
 
 
 <script>
+    range();
+    function range() {
+        $('#cutting_depth').html($('#cutting_depth_scale').val()+'mm');
+        $('#feed_rate').html($('#feed_rate_scale').val()+'mm');
+        $('#rot_speed').html($('#rot_speed_scale').val()+'mm');
 
-    cut_cal_status="temp";
+    }
+    $("#workpiece_material_text").html(workpiece_material)
+    $("#workpiece_r_text").html(workpiece_r)
+    $("#workpiece_l_text").html(workpiece_l)
+    $("#tool_cutting_edge_angle_text").html(tool_cutting_edge_angle)
+    $("#tool_minor_cutting_edge_angle_text").html(tool_minor_cutting_edge_angle)
+    $("#tool_cutting_edge_inclination_angle_text").html(tool_cutting_edge_inclination_angle)
+    $("#rake_angle_text").html(rake_angle)
+    $("#clearance_angle_text").html(clearance_angle)
+    $("#minor_clearance_angle_text").html(minor_clearance_angle)
+    $("#corner_radius_text").html(corner_radius)
+
+
+
+    //可是化显示那种参数force、temp、r
+    cut_cal_status="force";
 
 
     cutting_depth=parseFloat($("#cutting_depth_scale").val());
@@ -185,7 +206,7 @@
 
 
         if (button_status==1){
-            cut_cal = setInterval("get_cal(cut_cal_status)", 200);
+            cut_cal = setInterval("get_cal(cut_cal_status)", 100);
             $('#start').text("停止");
             button_status=0;
             start_render('expoeration_0',workpiece_material,workpiece_r,workpiece_l,cutting_depth,feed_rate,rot_speed,tool_cutting_edge_angle,tool_minor_cutting_edge_angle,tool_cutting_edge_inclination_angle,rake_angle,clearance_angle,minor_clearance_angle,corner_radius);
@@ -247,5 +268,26 @@
             });
 
 }
+
+$('#save_img').on("click",function(){
+    file_name=(new Date()).valueOf()+".png"
+    exportCanvasAsPNG("text",file_name);
+})
+
+function exportCanvasAsPNG(id, fileName) {
+        var canvasElement = document.getElementById(id);
+        var MIME_TYPE = "image/png";
+        var imgURL = canvasElement.toDataURL(MIME_TYPE);
+        var dlLink = document.createElement('a');
+        dlLink.download = fileName;
+        dlLink.href = imgURL;
+        dlLink.dataset.downloadurl = [MIME_TYPE, dlLink.download, dlLink.href].join(':');
+        document.body.appendChild(dlLink);
+        dlLink.click();
+        document.body.removeChild(dlLink);
+    }
+
+
+
 </script>
 </html>

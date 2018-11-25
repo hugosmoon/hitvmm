@@ -56,7 +56,8 @@
       display: flex;
       margin-bottom: 25px; }
     .addexpbox .addbox .lastrightbox {
-      margin-bottom: 0px; }
+      margin-top: -10px;
+      margin-bottom: 10px; }
     .addexpbox .addbox .rightboxleft {
       font-size: 14px;
       margin-top: 5px;
@@ -142,33 +143,26 @@
   height: 30px;
   position: relative;
   background: url("../img/scalebg.png") no-repeat center;
-  background-position: 62px 29px;
-  background-size: 182px 12px; }
+  background-position: 80px 15px;
+  background-size: 260px 12px; }
 
-.scale {
-  position: relative;
-  width: 100%;
-  padding: 10px 0;
-  height: 30px;
-  position: relative;
-  background: url("../img/scalebg.png") no-repeat center;
-  background-position: 62px 29px;
-  background-size: 182px 12px; }
 
 .scale2 {
   width: 300px;
   margin-top: -10px; }
 
-.scale em {
+.scale p {
   position: absolute;
-  top: 50%;
-  display: block;
-  width: 36px;
-  height: 28px;
-  font-size: 20px;
-  font-style: normal;
   line-height: 28px;
-  margin-top: -14px; }
+  margin-top: -14px;
+  font-size: 14px;
+  left:0px;}
+
+.scale p.setting {
+  position: absolute;
+  line-height: 28px;
+  margin-top: -14px;
+  left:20px;}
 
 .scale em.blue {
   left: 10px;
@@ -187,8 +181,10 @@
   font-size: 12px; }
 
 form {
-  padding: 0 60px;
-  margin-top: -1px; }
+
+  margin-top: -15px;
+  margin-left: 80px;
+  }
 
 input[type="range"] {
   width: 100%;
@@ -200,7 +196,8 @@ input[type="range"] {
   -webkit-box-shadow: 2px 2px 3px 0 rgba(11, 18, 73, 0.4);
   box-shadow: 2px 2px 3px 0 rgba(11, 18, 73, 0.4);
   -webkit-appearance: none;
-  outline: none; }
+  outline: none;
+  }
 
 input[type="range"]::-webkit-slider-thumb {
   width: 14px;
@@ -210,20 +207,9 @@ input[type="range"]::-webkit-slider-thumb {
   -webkit-box-shadow: 0 0 3px 2px rgba(73, 53, 11, 0.2);
   box-shadow: 0 0 3px 2px rgba(73, 53, 11, 0.2);
   -webkit-appearance: none;
-  cursor: default; }
+  cursor: default;
+  S}
 
-output {
-  position: absolute;
-  left: 56px;
-  top: 5px;
-  display: block;
-  height: 40px;
-  width: 40px;
-  color: #222222;
-  text-align: center;
-  line-height: 40px;
-  margin-left: -20px;
-  font-size: 14px; }
 
 .scalebg {
   top: 29px;
@@ -332,8 +318,8 @@ output {
     .operationbox2 .right .rangebox .rtit {
       font-size: 14px; }
     .operationbox2 .right .rangebox .rutitle {
-      font-size: 18px;
-      margin-top: 22px;
+      font-size: 22px;
+      margin-top: 202px;
       margin-bottom: 5px; }
     .operationbox2 .right .rangebox .runm {
       font-size: 12px; }

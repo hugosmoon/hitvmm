@@ -37,11 +37,7 @@
     <div class="addnewexpschedulebox">
         <div class="addnewexpschedule selsct">基础参数设置</div>
         <div class="line">-></div>
-        <div class="addnewexpschedule">背吃刀量对切削力的影响</div>
-        <div class="line">-></div>
-        <div class="addnewexpschedule">进给量对切削力的影响</div>
-        <div class="line">-></div>
-        <div class="addnewexpschedule">切削速度对切削力的影响</div>
+        <div class="addnewexpschedule">切削用量对切削力的影响</div>
 
     </div>
     <div class="addexpbox">
@@ -72,10 +68,10 @@
                     <div class="scale">
 
                         <form oninput="scaleShow.value=parseInt(scale.value)">
-                            <input type="range" min="50" max="100" id="workpiece_r_scale" onchange="$('#workpiece_r').html($('#workpiece_r_scale').val()+'mm')"/>
+                            <input type="range" value="75" step="1" min="50" max="100" id="workpiece_r_scale" onchange="range()"/>
 
                         </form>
-                        <p name="scaleShow" for="scale" id="workpiece_r">75mm</p>
+                        <p class="setting" name="scaleShow" for="scale" id="workpiece_r">75mm</p>
 
                     </div>
                 </div>
@@ -84,9 +80,9 @@
                     <div class="scale">
 
                         <form oninput="scaleShow.value=parseInt(scale.value)+'mm'">
-                            <input type="range" min="400" max="800" id="workpiece_l_scale" onchange="$('#workpiece_l').html($('#workpiece_l_scale').val()+'mm')"/>
+                            <input type="range" value="550" step="10" min="450" max="650" id="workpiece_l_scale" onchange="range()"/>
                         </form>
-                        <p name="scaleShow" for="scale" id="workpiece_l">600mm</p>
+                        <p class="setting" name="scaleShow" for="scale" id="workpiece_l">550mm</p>
 
                     </div>
                 </div>
@@ -207,6 +203,12 @@
 <script type="text/javascript" src="{% static 'js/public.js' %}"></script>
 
 <script>
+    range();
+    function range() {
+        $('#workpiece_l').html($('#workpiece_l_scale').val()+'mm');
+        $('#workpiece_r').html($('#workpiece_r_scale').val()+'mm');
+
+    }
     function next_step() {
         if(set_agu_cookie()){
             $(location).attr('href', "{% url 'expoperation' %}");
