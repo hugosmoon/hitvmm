@@ -140,24 +140,32 @@ var publicObj = {
                 videos = JSON.parse(videostr)
                 videohtml = ""
                 for (index in videos) {
-                    videohtml = videohtml + '<div vaddress="' + videos[index].url + '" class=\"vchange\" videoname=\"' + videos[index].name + '\"><div class=\"v_svideo\"></div><div class=\"v_svideoname\">' + videos[index].name + '</div></div>';
+                    videohtml = videohtml + '<div vaddress="' + videos[index].url + '" class=\"vchange\" videoname=\"' + videos[index].name + '\"><div class=\"v_svideo\"><img src="../static/img/videologo.png" alt=""></div><div class=\"v_svideoname\">' + videos[index].name + '</div></div>';
                     if (index == 0) {
-                        sourceDom = $("<source id=\"videosource\" src=\"" + videos[index].url + "\">");
-                        $("#video").append(sourceDom);
-                        $("#videoname").html(videos[index].name)
+                        if (index == 0) {
+                            var videoStr = ' <div class="videobox">\n' +
+                                '                <video id="video" controls>\n' +
+                                '                    <source src="' + videos[index].url + '" type="video/mp4">\n' +
+                                '                </video>\n' +
+                                '            </div>'
+                            $(".vbox").html(videoStr)
+                            $("#videoname").html(videos[index].name)
+                        }
                     }
                 }
                 $(".vchangebox").html(videohtml)
                 $(".vchange").each(function () {
                     $(this).unbind('click').bind('click', function () {
-                        alert(1)
                         url = $(this).attr("vaddress")
                         videoname = $(this).attr("videoname")
-                        $($("#video").parentNode).removeChild($("#video"))
-                        sourceDom = $("<source id=\"videosource\" src=\"" + url + "\">");
-                        $("#video").append(sourceDom);
+                        var videoStr = ' <div class="videobox">\n' +
+                            '                <video id="video" controls>\n' +
+                            '                    <source src="' + url + '" type="video/mp4">\n' +
+                            '                </video>\n' +
+                            '            </div>'
+                        $(".vbox").html(videoStr)
                         $("#videoname").html(videoname)
-                        //me.hidePopup()
+                        me.hidePopup()
                     })
                 })
             })
@@ -212,30 +220,38 @@ var publicObj = {
     allexpEvent: function () {
         $(".allpreview").each(function () {
             $(this).unbind('click').bind('click', function () {
+                videostr = $(this).attr("videos")
                 $('.popupbox').show()
                 $('.popupwall9').show()
-                videostr = $(this).attr("videos")
                 videos = JSON.parse(videostr)
                 videohtml = ""
                 for (index in videos) {
                     videohtml = videohtml + '<div vaddress="' + videos[index].url + '" class=\"vchange\" videoname=\"' + videos[index].name + '\"><div class=\"v_svideo\"></div><div class=\"v_svideoname\">' + videos[index].name + '</div></div>';
                     if (index == 0) {
-                        sourceDom = $("<source id=\"videosource\" src=\"" + videos[index].url + "\">");
-                        $("#video").append(sourceDom);
-                        $("#videoname").html(videos[index].name)
+                        if (index == 0) {
+                            var videoStr = ' <div class="videobox">\n' +
+                                '                <video id="video" controls>\n' +
+                                '                    <source src="' + url + '" type="video/mp4">\n' +
+                                '                </video>\n' +
+                                '            </div>'
+                            $(".vbox").html(videoStr)
+                            $("#videoname").html(videos[index].name)
+                        }
                     }
                 }
                 $(".vchangebox").html(videohtml)
                 $(".vchange").each(function () {
                     $(this).unbind('click').bind('click', function () {
-                        alert(1)
                         url = $(this).attr("vaddress")
                         videoname = $(this).attr("videoname")
-                        $($("#video").parentNode).removeChild($("#video"))
-                        sourceDom = $("<source id=\"videosource\" src=\"" + url + "\">");
-                        $("#video").append(sourceDom);
+                        var videoStr = ' <div class="videobox">\n' +
+                            '                <video id="video" controls>\n' +
+                            '                    <source src="' + url + '" type="video/mp4">\n' +
+                            '                </video>\n' +
+                            '            </div>'
+                        $(".vbox").html(videoStr)
                         $("#videoname").html(videoname)
-                        //me.hidePopup()
+                        me.hidePopup()
                     })
                 })
             })
@@ -574,8 +590,40 @@ var publicObj = {
     allexpteaEvent: function () {
         $(".allteapreview").each(function () {
             $(this).unbind('click').bind('click', function () {
+                videostr = $(this).attr("videos")
                 $('.popupbox').show()
                 $('.popupwall9').show()
+                videos = JSON.parse(videostr)
+                videohtml = ""
+                for (index in videos) {
+                    videohtml = videohtml + '<div vaddress="' + videos[index].url + '" class=\"vchange\" videoname=\"' + videos[index].name + '\"><div class=\"v_svideo\"><img src="../static/img/videologo.png" alt=""></div><div class=\"v_svideoname\">' + videos[index].name + '</div></div>';
+                    if (index == 0) {
+                        if (index == 0) {
+                            var videoStr = ' <div class="videobox">\n' +
+                                '                <video id="video" controls>\n' +
+                                '                    <source src="' + videos[index].url + '" type="video/mp4">\n' +
+                                '                </video>\n' +
+                                '            </div>'
+                            $(".vbox").html(videoStr)
+                            $("#videoname").html(videos[index].name)
+                        }
+                    }
+                }
+                $(".vchangebox").html(videohtml)
+                $(".vchange").each(function () {
+                    $(this).unbind('click').bind('click', function () {
+                        url = $(this).attr("vaddress")
+                        videoname = $(this).attr("videoname")
+                        var videoStr = ' <div class="videobox">\n' +
+                            '                <video id="video" controls>\n' +
+                            '                    <source src="' + url + '" type="video/mp4">\n' +
+                            '                </video>\n' +
+                            '            </div>'
+                        $(".vbox").html(videoStr)
+                        $("#videoname").html(videoname)
+                        me.hidePopup()
+                    })
+                })
             })
         });
 
@@ -693,7 +741,12 @@ var publicObj = {
             $('.popupwall').hide()
             $('.fileuploadname').html('')
             me.dataObjKind = 0;
-            video.pause()
+            try {
+                video.pause()
+            } catch (e) {
+
+            }
+            $(".vbox").html("")
         })
     },
     //选择文件
@@ -903,7 +956,7 @@ var publicObj = {
                     })
                 });
             } else {
-                alert('请先选择视频')
+                alert('请先选中一个视频！')
             }
         })
         $(".behindadd").unbind('click').bind('click', function () {
@@ -919,7 +972,7 @@ var publicObj = {
                     })
                 });
             } else {
-                alert('请先选择视频')
+                alert('请先选中一个视频！')
             }
         })
         $('.cvdele').unbind('click').bind('click', function () {
@@ -928,7 +981,10 @@ var publicObj = {
             $(".popupwall7").show()
         })
         $(".vbover").unbind('click').bind("click", function () {
-            alert($(this).text())
+            videoitemlist = $(".videowall").children()
+            for (var i = 0; i < videoitemlist.length; i++) {
+                alert(videoitemlist[i].getAttribute("videoid"))
+            }
         })
     }
 
