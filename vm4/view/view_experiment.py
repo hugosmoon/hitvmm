@@ -20,6 +20,10 @@ def expsetting(request):
 def expsetting2(request):
     return render(request,"experiment/expsetting2.html")
 
+def expoperation(request):
+    return render(request,"experiment/expoperation.html")
+
+
 
 # 计算切削力
 
@@ -191,13 +195,16 @@ def cutting_temp_cal(request):
 def cutting_roughness_cal(request):
     # 接收基础参数
     if request.method == 'POST':
-        workpiece_material = request.POST.get('workpiece_material')
         feed_rate = float(request.POST.get('feed_rate'))
         cutting_depth = float(request.POST.get('cutting_depth'))
         cutting_speed = float(request.POST.get('cutting_speed'))
         tool_cutting_edge_angle = float(request.POST.get('tool_cutting_edge_angle'))
         tool_minor_cutting_edge_angle = float(request.POST.get('tool_minor_cutting_edge_angle'))
         corner_radius = float(request.POST.get('corner_radius'))
-    R=(random.uniform(1, 1.4))*(math.pow(feed_rate,2)/(8*corner_radius))*(1/((1/(math.tan(tool_cutting_edge_angle)))+(1/(math.tan(tool_minor_cutting_edge_angle)))))*math.pow(cutting_depth,0.04)*(1+1/(math.pow((cutting_speed-30),2)+1))
-    return HttpResponse(R)
+
+        R=(random.uniform(1, 1.4))*(math.pow(feed_rate, 2)/(8*corner_radius))*(1/((1/(math.tan(tool_cutting_edge_angle)))+(1/(math.tan(tool_minor_cutting_edge_angle)))))*math.pow(cutting_depth, 0.04)*(1+1/(math.pow((cutting_speed-30), 2)+1))
+        # R=(random.uniform(1, 1.4))*(math.pow(feed_rate, 2)/(8*corner_radius))
+        # R=corner_radius
+
+        return HttpResponse(R)
 

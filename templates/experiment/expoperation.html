@@ -4,13 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <title>实验操作</title>
+    {% load staticfiles %}
     <!-- 初始化CSS -->
-    <link href="../../static/plugin/swiper.css">
-    <link rel="stylesheet" href="../../static//plugin/res.css">
-    <link rel="stylesheet" type="text/css" href="../../static/sass/public.css">
-    <link rel="stylesheet" href="../../static/plugin/zane-calendar.min.css">
+    <link href="{% static 'plugin/swiper.css' %}">
+    <link rel="stylesheet" href="{% static 'plugin/res.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'sass/public.css'%}">
+    <link rel="stylesheet" href="{% static 'plugin/zane-calendar.min.css'%}">
     <!-- 模块css -->
-    <link rel="stylesheet" type="text/css" href="../../static/sass/expsetting.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'sass/expsetting.css'%}">
     <style>
         .navtip4 > a {
             color: #0055ff !important;
@@ -34,31 +35,28 @@
     <div class="addnewexpschedulebox">
         <div class="addnewexpschedule selsct">基础参数设置</div>
         <div class="line selsct">-></div>
-        <div class="addnewexpschedule selsct">背吃刀量对切削力的影响</div>
-        <div class="line">-></div>
-        <div class="addnewexpschedule">进给量对切削力的影响</div>
-        <div class="line">-></div>
-        <div class="addnewexpschedule">切削速度对切削力的影响</div>
+        <div class="addnewexpschedule selsct">切削用量对切削力的影响</div>
+
     </div>
     <div class="operationbox">
         <div class="left">
             <div class="boximg boximg1">
-                <img src="../../static/img/loginbg.png" alt="">
+                <canvas id="main_view" width="800" height="400" style="border:2px solid #777;"> </canvas>
             </div>
             <div class="boximg boximg2">
                 <div class="leftboximg">
-                    <img src="../../static/img/loginbg.png" alt="">
+                    <canvas id="r_view" width="400" height="400" style="border:2px solid #777;"> </canvas>
                 </div>
                 <div class="rightboximg">
-                    <img src="../../static/img/loginbg.png" alt="">
+                    <canvas id="text" width="400" height="400" style="border:2px solid #777;" download='exp_data.png'> </canvas>
                 </div>
             </div>
             <div class="boximg boximg3">
-                <img src="../../static/img/loginbg.png" alt="">
+{#                <canvas id="cal" width="800" height="300" style="border:2px solid #777;"> </canvas>#}
             </div>
         </div>
         <div class="right">
-            <div class="rtit">控制面板</div>
+            <div class="rutit">基础参数</div>
             <div class="unitbox">
                 <div class="unit">
                     <div class="uleft">加工形式  -</div>
@@ -69,66 +67,65 @@
                 <div class="unit">
                     <div class="uleft">工件参数  -</div>
                     <div class="uright">
-                        <div class="utxt">工件半径：50mm</div>
-                        <div class="utxt">工件长度：700mm</div>
+                        <div class="utxt">工件材料：<a id="workpiece_material_text"></a></div>
+                        <div class="utxt">工件半径：<a id="workpiece_r_text"></a> mm</div>
+                        <div class="utxt">工件长度：<a id="workpiece_l_text"></a> mm</div>
                     </div>
                 </div>
                 <div class="unit">
                     <div class="uleft">刀具参数  -</div>
                     <div class="uright">
-                        <div class="utxt">刀具材料：硬质合金</div>
-                        <div class="utxt">主偏角：45°</div>
-                        <div class="utxt">前角：10°</div>
-                        <div class="utxt">刃倾角：10°</div>
-                        <div class="utxt">刀尖圆弧半径：0.75mm</div>
+                        <div class="utxt">刀具材料：硬质合金(YT15)</div>
+                        <div class="utxt">主偏角：<a id="tool_cutting_edge_angle_text"></a>°</div>
+                        <div class="utxt">副偏角：<a id="tool_minor_cutting_edge_angle_text"></a>°</div>
+                        <div class="utxt">刃倾角：<a id="tool_cutting_edge_inclination_angle_text"></a>°</div>
+                        <div class="utxt">前角：<a id="rake_angle_text"></a>°</div>
+                        <div class="utxt">后角：<a id="clearance_angle_text"></a>°</div>
+                        <div class="utxt">副刃后角：<a id="minor_clearance_angle_text"></a>°</div>
+                        <div class="utxt">刀尖圆弧半径：<a id="corner_radius_text"></a> mm</div>
                     </div>
                 </div>
-            </div>
+            </div><br><br>
             <!--刻度尺-->
             <div class="rangebox">
-                <p class="rtit">切削用量</p>
+                <p class="rutit">切削用量</p>
                 <div class="runitbox">
-                    <div class="rutit">机床主轴转速：</div>
+                    <div class="rtit">机床主轴转速：</div><br>
                     <div class="scale">
-                        <form oninput="scaleShow.value=parseInt(scale.value)">
-                            <input value="0" type="range" id="scale" max="110"/>
-                            <output value="0" name="scaleShow" for="scale"></output>
+
+                        <form>
+                            <input type="range" value="825" step="10" min="50" max="1600" id="rot_speed_scale" onchange="range()"/>
+
                         </form>
-                        <em class="red2">110mm</em>
+                        <p name="scaleShow" for="scale" id="rot_speed">830 r/min</p>
                     </div>
                 </div>
                 <div class="runitbox">
-                    <div class="rutit">进给量：</div>
+                    <div class="rtit">进给量：</div><br>
                     <div class="scale">
-                        <form oninput="scaleShow.value=parseInt(scale.value)">
-                            <input value="0" type="range" id="scale" max="110"/>
-                            <output value="0" name="scaleShow" for="scale"></output>
+
+                        <form>
+                            <input type="range" value="0.55" step="0.05" min="0.05" max="1" id="feed_rate_scale" onchange="range()"/>
+
                         </form>
-                        <em class="red2">10omm</em>
+                        <p name="scaleShow" for="scale" id="feed_rate">0.55 mm/r</p>
                     </div>
                 </div>
                 <div class="runitbox">
-                    <div class="rutit">背吃刀量（为保证实验效果，请尽可能分散取值）</div>
-                    <p class="runm">(1)</p>
+                    <div class="rtit">背吃刀量</div><br>
                     <div class="scale">
-                        <form oninput="scaleShow.value=parseInt(scale.value)">
-                            <input value="0" type="range" id="scale" max="110"/>
-                            <output value="0" name="scaleShow" for="scale"></output>
+
+                        <form>
+                            <input type="range" value="3.5" step="0.1" min="1" max="6" id="cutting_depth_scale" onchange="range()"/>
+
                         </form>
-                        <em class="red2">110mm</em>
-                    </div>
-                    <p class="runm">(2)</p>
-                    <div class="scale">
-                        <form oninput="scaleShow.value=parseInt(scale.value)">
-                            <input value="0" type="range" id="scale" max="110"/>
-                            <output value="0" name="scaleShow" for="scale"></output>
-                        </form>
+                        <p name="scaleShow" for="scale" id="cutting_depth">3.5 mm</p>
                     </div>
                 </div>
             </div>
             <div class="obtnbox">
-                <div class="obtn start">开始切削</div>
-                <div class="obtn restart">重启实验</div>
+                <div id="start" class="obtn start">启动</div>
+                <div id="save_img" class="obtn start">保存数据</div>
             </div>
         </div>
 
@@ -149,10 +146,148 @@
 </div>
 </body>
 <!-- 引用插件 -->
-<script src="../../static/plugin/md5.js"></script>
-<script src="../../static/plugin/jquery.js"></script>
-<script src="../../static/plugin/config.js"></script>
-<script src="../../static/js/public.js"></script>
-<!-- 模块JS -->
-<script type="text/javascript" src="../../static/js/public.js"></script>
+<script src="{% static 'plugin/jquery.js' %}"></script>
+<script src="{% static 'plugin/config.js' %}"></script>
+
+
+<script src="{% static 'plugin/jquery.cookie.js' %}"></script>
+<script src="{% static 'plugin/md5.js' %}"></script>
+<script src="{% static 'js/experiment/main_view.js' %}"></script>
+
+<script src="{% static 'js/experiment/jcanvas.min.js' %}"></script>
+<script src="{% static 'js/experiment/readcookies.js' %}"></script>
+
+
+<script>
+    range();
+    function range() {
+        $('#cutting_depth').html($('#cutting_depth_scale').val()+'mm');
+        $('#feed_rate').html($('#feed_rate_scale').val()+'mm');
+        $('#rot_speed').html($('#rot_speed_scale').val()+'mm');
+
+    }
+    $("#workpiece_material_text").html(workpiece_material)
+    $("#workpiece_r_text").html(workpiece_r)
+    $("#workpiece_l_text").html(workpiece_l)
+    $("#tool_cutting_edge_angle_text").html(tool_cutting_edge_angle)
+    $("#tool_minor_cutting_edge_angle_text").html(tool_minor_cutting_edge_angle)
+    $("#tool_cutting_edge_inclination_angle_text").html(tool_cutting_edge_inclination_angle)
+    $("#rake_angle_text").html(rake_angle)
+    $("#clearance_angle_text").html(clearance_angle)
+    $("#minor_clearance_angle_text").html(minor_clearance_angle)
+    $("#corner_radius_text").html(corner_radius)
+
+
+
+    //可是化显示那种参数force、temp、r
+    cut_cal_status="force";
+
+
+    cutting_depth=parseFloat($("#cutting_depth_scale").val());
+    feed_rate=parseFloat($("#feed_rate_scale").val());
+    rot_speed=parseFloat($("#rot_speed_scale").val());
+
+    {#alert(workpiece_material+"~~"+workpiece_r+"~~"+workpiece_l+"~~"+cutting_depth+"~~"+feed_rate+"~~"+rot_speed+"~~"+tool_cutting_edge_angle+"~~"+tool_minor_cutting_edge_angle+"~~"+tool_cutting_edge_inclination_angle+"~~"+rake_angle+"~~"+clearance_angle+"~~"+minor_clearance_angle+"~~"+corner_radius);#}
+
+
+    start_render('expoeration_0',workpiece_material,workpiece_r,workpiece_l,cutting_depth,feed_rate,rot_speed,tool_cutting_edge_angle,tool_minor_cutting_edge_angle,tool_cutting_edge_inclination_angle,rake_angle,clearance_angle,minor_clearance_angle,corner_radius);
+    stop_render('expoeration_0',workpiece_material,workpiece_r,workpiece_l,cutting_depth,feed_rate,rot_speed,tool_cutting_edge_angle,tool_minor_cutting_edge_angle,tool_cutting_edge_inclination_angle,rake_angle,clearance_angle,minor_clearance_angle,corner_radius);
+
+
+
+
+
+    var button_status=1;
+    var cut_cal;
+    $('#start').on("click",function(){
+        cutting_depth=parseFloat($("#cutting_depth_scale").val());
+        feed_rate=parseFloat($("#feed_rate_scale").val());
+        rot_speed=parseFloat($("#rot_speed_scale").val());
+
+
+        if (button_status==1){
+            cut_cal = setInterval("get_cal(cut_cal_status)", 100);
+            $('#start').text("停止");
+            button_status=0;
+            start_render('expoeration_0',workpiece_material,workpiece_r,workpiece_l,cutting_depth,feed_rate,rot_speed,tool_cutting_edge_angle,tool_minor_cutting_edge_angle,tool_cutting_edge_inclination_angle,rake_angle,clearance_angle,minor_clearance_angle,corner_radius);
+
+        }
+        else {
+            if (cut_cal){
+                clearInterval(cut_cal);
+            }
+            $('#start').text("启动");
+            button_status=1;
+            stop_render('expoeration_0',workpiece_material,workpiece_r,workpiece_l,cutting_depth,feed_rate,rot_speed,tool_cutting_edge_angle,tool_minor_cutting_edge_angle,tool_cutting_edge_inclination_angle,rake_angle,clearance_angle,minor_clearance_angle,corner_radius);
+
+        }
+
+    });
+
+
+    function get_cal(cal_order){
+            //设置全局变量，告诉渲染器应该显示切削力还是温度或者粗糙
+            url="{% url 'cutting_roughness_cal'%}";
+            if (cal_order=="force") {
+                url="{% url 'cutting_force_cal'%}";
+            }
+            if (cal_order=="temp") {
+                url="{% url 'cutting_temp_cal'%}"
+            }
+            var form_data = new FormData();
+			form_data.append('workpiece_material',workpiece_material);
+			form_data.append('feed_rate',feed_rate);
+			form_data.append('cutting_depth',cutting_depth);
+			form_data.append('cutting_speed',rot_speed*6.28*workpiece_r/1000);
+			form_data.append('tool_cutting_edge_angle',tool_cutting_edge_angle);
+			form_data.append('rake_angle',rake_angle);
+			form_data.append('tool_cutting_edge_inclination_angle',tool_cutting_edge_inclination_angle);
+            form_data.append('corner_radius',corner_radius);
+            form_data.append('minor_clearance_angle',minor_clearance_angle);
+            form_data.append('clearance_angle',clearance_angle);
+            form_data.append('tool_minor_cutting_edge_angle',tool_minor_cutting_edge_angle);
+            $.ajax({
+                url:url,
+                type:'POST',
+                data: form_data,
+                processData: false,  // tell jquery not to process the data
+                contentType: false, // tell jquery not to set contentType
+                success: function(callback)
+                {
+                    console.log(callback);
+                    if (cal_order=="force") {
+                        cutting_force = callback;
+                    }
+                    if (cal_order=="temp") {
+                        cutting_temp = callback;
+                    }
+                    else {
+                        cutting_r = callback;
+                    }
+                }
+            });
+
+}
+
+$('#save_img').on("click",function(){
+    file_name=(new Date()).valueOf()+".png"
+    exportCanvasAsPNG("text",file_name);
+})
+
+function exportCanvasAsPNG(id, fileName) {
+        var canvasElement = document.getElementById(id);
+        var MIME_TYPE = "image/png";
+        var imgURL = canvasElement.toDataURL(MIME_TYPE);
+        var dlLink = document.createElement('a');
+        dlLink.download = fileName;
+        dlLink.href = imgURL;
+        dlLink.dataset.downloadurl = [MIME_TYPE, dlLink.download, dlLink.href].join(':');
+        document.body.appendChild(dlLink);
+        dlLink.click();
+        document.body.removeChild(dlLink);
+    }
+
+
+
+</script>
 </html>

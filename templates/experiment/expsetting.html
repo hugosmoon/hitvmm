@@ -4,13 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <title>实验操作</title>
+
+    {% load staticfiles %}
     <!-- 初始化CSS -->
-    <link href="../../static/plugin/swiper.css">
-    <link rel="stylesheet" href="../../static/plugin/res.css">
-    <link rel="stylesheet" type="text/css" href="../../static/sass/public.css">
-    <link rel="stylesheet" href="../../static/plugin/zane-calendar.min.css">
+    <link href="{% static 'plugin/swiper.css' %}">
+    <link rel="stylesheet" href="{% static 'plugin/res.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'sass/public.css'%}">
+    <link rel="stylesheet" href="{% static 'plugin/zane-calendar.min.css'%}">
     <!-- 模块css -->
-    <link rel="stylesheet" type="text/css" href="../../static/sass/expsetting.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'sass/expsetting.css'%}">
+
     <style>
         .navtip4 > a {
             color: #0055ff !important;
@@ -21,7 +24,7 @@
 <body>
 <div class="topwall">
     <div class="top">
-        <img class="l_float logo" src="../../static//img/logo.png" alt="">
+        <img class="l_float logo" src="../../static/img/logo.png" alt="">
         <div class="l_float title">机械制造虚拟实验室</div>
         <div class="l_float userlog"></div>
         <div class="l_float username">王小明</div>
@@ -34,11 +37,7 @@
     <div class="addnewexpschedulebox">
         <div class="addnewexpschedule selsct">基础参数设置</div>
         <div class="line">-></div>
-        <div class="addnewexpschedule">背吃刀量对切削力的影响</div>
-        <div class="line">-></div>
-        <div class="addnewexpschedule">进给量对切削力的影响</div>
-        <div class="line">-></div>
-        <div class="addnewexpschedule">切削速度对切削力的影响</div>
+        <div class="addnewexpschedule">切削用量对切削力的影响</div>
 
     </div>
     <div class="addexpbox">
@@ -57,27 +56,34 @@
             <div class="right">
                 <div class="rightbox">
                     <p class="rightboxleft">工件材料</p>
-                    <select class="selctbox selctbox1" name="" id="">
-                        <option value="">选择材料</option>
-                        <option value="">材料1</option>
+                    <select class="selctbox selctbox1" name="" id="workpiece_material">
+                        <option value="45_steel">45钢</option>
+                        <option value="stainless_steel">不锈钢</option>
+                        <option value="gray_iron">灰铸铁</option>
+                        <option value="malleable_cast_iron">可锻铸铁</option>
                     </select>
                 </div>
-               <div class="rightbox">
+                <div class="rightbox">
                     <p class="rightboxleft">工件半径</p>
-                    <div class="scale scale2">
-                        <form oninput="scaleShow.value=parseInt(scale.value||0)">
-                            <input value="0" type="range" id="scale" max="110"/>
-                            <output value="0" name="scaleShow" for="scale">0</output>
+                    <div class="scale">
+
+                        <form oninput="scaleShow.value=parseInt(scale.value)">
+                            <input type="range" value="75" step="1" min="50" max="100" id="workpiece_r_scale" onchange="range()"/>
+
                         </form>
+                        <p class="setting" name="scaleShow" for="scale" id="workpiece_r">75mm</p>
+
                     </div>
                 </div>
                 <div class="rightbox lastrightbox">
                     <p class="rightboxleft ">工件长度</p>
-                    <div class="scale scale2">
-                        <form oninput="scaleShow.value=parseInt(scale.value||0)">
-                            <input value="0" type="range" id="scale" max="110"/>
-                            <output value="0" name="scaleShow" for="scale">0</output>
+                    <div class="scale">
+
+                        <form oninput="scaleShow.value=parseInt(scale.value)+'mm'">
+                            <input type="range" value="550" step="10" min="450" max="650" id="workpiece_l_scale" onchange="range()"/>
                         </form>
+                        <p class="setting" name="scaleShow" for="scale" id="workpiece_l">550mm</p>
+
                     </div>
                 </div>
             </div>
@@ -89,43 +95,89 @@
             <div class="right">
                 <div class="rightbox">
                     <p class="rightboxleft">刀具材料</p>
-                    <p style="margin-top: 5px">硬质合金</p>
+                    <p style="margin-top: 5px">YT15硬质合金</p>
                 </div>
                 <div class="rightbox">
                     <p class="rightboxleft">主偏角</p>
-                    <select class="selctbox selctbox1" name="" id="">
-                        <option value="">请选择主偏角</option>
-                        <option value="">主偏角1</option>
-                        <option value="">主偏角2</option>
+                    <select class="selctbox selctbox1" name="" id="tool_cutting_edge_angle">
+
+                        <option value="45">45°</option>
+                        <option value="60">60°</option>
+                        <option value="75">75°</option>
+                        <option value="90">90°</option>
                     </select>
                 </div>
                 <div class="rightbox">
-                    <p class="rightboxleft">前角</p>
-                    <select class="selctbox selctbox1" name="" id="">
-                        <option value="">请选择前角</option>
-                        <option value="">前角1</option>
-                        <option value="">前角2</option>
+                    <p class="rightboxleft">副偏角</p>
+                    <select class="selctbox selctbox1" name="" id="tool_minor_cutting_edge_angle">
+
+                        <option value="5">5°</option>
+                        <option value="15">15°</option>
+                        <option value="25">25°</option>
+                        <option value="35">35°</option>
                     </select>
                 </div>
+
                 <div class="rightbox">
                     <p class="rightboxleft">刃倾角</p>
-                    <select class="selctbox selctbox1" name="" id="">
-                        <option value="">请选择刃倾角</option>
-                        <option value="">刃倾角1</option>
-                        <option value="">刃倾角2</option>
+                    <select class="selctbox selctbox1" name="" id="tool_cutting_edge_inclination_angle">
+
+                        <option value="5">5°</option>
+                        <option value="0">0°</option>
+                        <option value="-5">-5°</option>
+                        <option value="-10">-10°</option>
+                        <option value="-15">-15°</option>
                     </select>
                 </div>
+
+                <div class="rightbox">
+                    <p class="rightboxleft">前角</p>
+                    <select class="selctbox selctbox1" name="" id="rake_angle">
+
+                        <option value="-15">-15°</option>
+                        <option value="-10">-10°</option>
+                        <option value="0">0°</option>
+                        <option value="10">10°</option>
+                        <option value="20">20°</option>
+                    </select>
+                </div>
+
+                <div class="rightbox">
+                    <p class="rightboxleft">后角</p>
+                    <select class="selctbox selctbox1" name="" id="clearance_angle">
+
+                        <option value="0">0°</option>
+                        <option value="10">10°</option>
+                        <option value="20">20°</option>
+                    </select>
+                </div>
+
+                <div class="rightbox">
+                    <p class="rightboxleft">副刃后角</p>
+                    <select class="selctbox selctbox1" name="" id="minor_clearance_angle">
+
+                        <option value="0">0°</option>
+                        <option value="10">10°</option>
+                        <option value="20">20°</option>
+                    </select>
+                </div>
+
+
                 <div class="rightbox lastrightbox">
                     <p class="rightboxleft ">刀尖圆弧半径</p>
-                    <select class="selctbox selctbox1" name="" id="">
-                        <option value="">请选择刀尖圆弧半径</option>
-                        <option value="">刀尖圆弧半径1</option>
-                        <option value="">刀尖圆弧半径2</option>
+                    <select class="selctbox selctbox1" name="" id="corner_radius">
+
+                        <option value="0.25">0.25mm</option>
+                        <option value="0.5">0.5mm</option>
+                        <option value="0.75">0.75mm</option>
+                        <option value="1">1mm</option>
+                        <option value="1.5">1.5mm</option>
+                        <option value="2">2mm</option>
                     </select>
                 </div>
             </div>
         </div>
-        <div class="addsurebtn">
+        <div class="addsurebtn" onclick="next_step()">
             下一步
         </div>
     </div>
@@ -142,10 +194,42 @@
 </div>
 </body>
 <!-- 引用插件 -->
-<script src="../../static/plugin/md5.js"></script>
-<script src="../../static/plugin/jquery.js"></script>
-<script src="../../static/plugin/config.js"></script>
-<script src="../../static/js/public.js"></script>
+<script src="{% static 'plugin/md5.js' %}"></script>
+<script src="{% static 'plugin/jquery.js' %}"></script>
+<script src="{% static 'plugin/jquery.cookie.js' %}"></script>
+<script src="{% static 'plugin/config.js' %}"></script>
+<script src="{% static 'js/public.js' %}"></script>
 <!-- 模块JS -->
-<script type="text/javascript" src="../../static/js/public.js"></script>
+<script type="text/javascript" src="{% static 'js/public.js' %}"></script>
+
+<script>
+    range();
+    function range() {
+        $('#workpiece_l').html($('#workpiece_l_scale').val()+'mm');
+        $('#workpiece_r').html($('#workpiece_r_scale').val()+'mm');
+
+    }
+    function next_step() {
+        if(set_agu_cookie()){
+            $(location).attr('href', "{% url 'expoperation' %}");
+        }
+
+
+        }
+    function set_agu_cookie() {
+        $.cookie('workpiece_material',$('#workpiece_material').val(),{ expires: 7, path: '/', secure: false });
+        $.cookie('tool_cutting_edge_angle',$('#tool_cutting_edge_angle').val(),{ expires: 7, path: '/', secure: false });
+        $.cookie('tool_minor_cutting_edge_angle',$('#tool_minor_cutting_edge_angle').val(),{ expires: 7, path: '/', secure: false });
+        $.cookie('tool_cutting_edge_inclination_angle',$('#tool_cutting_edge_inclination_angle').val(),{ expires: 7, path: '/', secure: false });
+        $.cookie('rake_angle',$('#rake_angle').val(),{ expires: 7, path: '/', secure: false });
+        $.cookie('clearance_angle',$('#clearance_angle').val(),{ expires: 7, path: '/', secure: false });
+        $.cookie('minor_clearance_angle',$('#minor_clearance_angle').val(),{ expires: 7, path: '/', secure: false });
+        $.cookie('corner_radius',$('#corner_radius').val(),{ expires: 7, path: '/', secure: false });
+        $.cookie('workpiece_r',$('#workpiece_r_scale').val(),{ expires: 7, path: '/', secure: false });
+        $.cookie('workpiece_l',$('#workpiece_l_scale').val(),{ expires: 7, path: '/', secure: false });
+
+        return 1;
+
+    }
+</script>
 </html>
