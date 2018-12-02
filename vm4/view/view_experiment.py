@@ -23,6 +23,8 @@ def expsetting2(request):
 def expoperation(request):
     return render(request,"experiment/expoperation.html")
 
+def image_draw(request):
+    return render(request,"experiment/image_draw.html")
 
 
 # 计算切削力

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图像绘制</title>
+    {% load staticfiles %}
+</head>
+<body>
+<div id="appendDevelopmentNumber"></div>
+<div> <button onclick="addDevelopmentNumber()">添加</button></div>
+<br>
+<button onclick="display()">绘制图像</button><br>
+<input name="CoordinateSystemType" type="radio" value="0" onclick="CoordinateSystemType=0"/>普通坐标系
+<input name="CoordinateSystemType" type="radio" value="1" onclick="CoordinateSystemType=1"/>双对数标系
+<br>
+<canvas id="CoordinateSystem" width="800" height="800" style="border:0.5px solid #777;"></canvas>
+</body>
+<!-- 引用插件 -->
+<script src="{% static 'plugin/jquery.js' %}"></script>
+<script src="{% static 'js/experiment/jcanvas.js' %}"></script>
+
+<script type="text/javascript">
+
+
+number=0;
+
+CoordinateSystemType=$('input[name="CoordinateSystemType"]:checked').val();
+
+addDevelopmentNumber();
+PlotCoordinateSystem();
+
+//添加
+function addDevelopmentNumber() {
+    $("#appendDevelopmentNumber").append(
+        '<div>'+
+        '   X: <input name="x" id=x"'+number+'"/>' +
+        '   Y: <input name="y" id=y"'+number+'"/>' +
+        '   <button onclick="delDevelopmentNumber(this)">' + '删除</button>\n'+
+        '</div>'
+    )
+    number+=1;
+}
+
+//移除
+function delDevelopmentNumber(e) {
+   
+    $(e).parent().remove();
+    number-=1;
+}
+
+//展示
+function display(){
+    var xArray=new Array();
+    var yArray=new Array();
+    //取值状态，0为失败，1为成功
+    x_status=1;
+    y_status=1;
+    i=0;
+    $("#appendDevelopmentNumber input[name=x]").each(function () {
+
+        if(isNaN(this.value)||this.value==""){
+
+            x_status=0;
+        }
+        xArray[i]=(parseFloat(this.value));
+        i+=1;
+
+
+ });
+    j=0;
+    $("#appendDevelopmentNumber input[name=y]").each(function () {
+
+        if(isNaN(this.value)||this.value==""){
+
+            y_status=0;
+        }
+        yArray[j]=(parseFloat(this.value));
+        j+=1;
+ })
+    if (x_status&&y_status) {
+        PlotCoordinateSystem();
+        x_min = Math.min.apply(null, xArray);
+        x_max = Math.max.apply(null, xArray);
+
+        y_min = Math.min.apply(null, yArray);
+        y_max = Math.max.apply(null, yArray);
+
+        if (CoordinateSystemType == 0) {
+            x_dis = x_max - x_min;
+            y_dis = y_max - y_min;
+            for (n = 0; n < xArray.length; n += 1) {
+                $('#CoordinateSystem').drawArc({
+
+                    fillStyle: 'blue',
+                    strokeWidth: 2,
+                    x: 50 + (xArray[n] - x_min) * 700 / x_dis, y: 750 - (yArray[n] - y_min) * 700 / y_dis,
+                    radius: 4,
+
+                });
+            }
+        }
+
+        else {
+
+
+            if (x_min <= 0 || y_min <= 0) {
+                alert("只有正数才有对数~");
+                return false;
+            }
+            x_dis = x_max / x_min;
+            y_dis = y_max / y_min;
+            x_nu = Math.ceil(Math.log(x_dis) / Math.log(10));
+            y_nu = Math.ceil(Math.log(y_dis) / Math.log(10));
+            for (var m = 0; m <= x_nu-1; m += 1) {
+                $('#CoordinateSystem').drawVector({
+                    strokeStyle: '#000',
+                    strokeWidth: 0.5,
+                    x: 50 + m * (700 / x_nu), y: 750,
+                    a1: 0, l1: 700
+                });
+                for (var n = 0; n < 10; n += 1) {
+                    $('#CoordinateSystem').drawVector({
+                        strokeStyle: '#000',
+                        strokeWidth: 0.3,
+                        x: 50 + (((Math.log(n + 1) / Math.log(10))) +m) * (700 / x_nu), y: 750,
+                        a1: 0, l1: 700
+                    });
+                }
+
+            }
+            for (var m = 0; m <= y_nu-1; m += 1) {
+                $('#CoordinateSystem').drawVector({
+                    strokeStyle: '#000',
+                    strokeWidth: 0.5,
+                    x: 50 , y: 750- m * (700 / y_nu),
+                    a1: 90, l1: 700
+                });
+                for (var n = 0; n < 10; n += 1) {
+                    $('#CoordinateSystem').drawVector({
+                        strokeStyle: '#000',
+                        strokeWidth: 0.3,
+                        x: 50 , y: 750- (((Math.log(n + 1) / Math.log(10))) +m) * (700 / y_nu),
+                        a1: 90, l1: 700
+                    });
+                }
+
+            }
+            //绘制点
+            for (n = 0; n < xArray.length; n += 1) {
+                $('#CoordinateSystem').drawArc({
+
+                    fillStyle: 'blue',
+                    strokeWidth: 2,
+                    x: 50 + (((Math.log(xArray[n]/x_min))/Math.log(10))/ x_nu)*700, y: 750 - (((Math.log(yArray[n]/y_min))/Math.log(10))/ y_nu)*700,
+                    radius: 4,
+
+                });
+            }
+        }
+    }
+    else {
+        alert("输入必须全部为数字");
+
+    }
+
+
+
+
+}
+
+
+//绘制坐标轴
+    function PlotCoordinateSystem() {
+            $('#CoordinateSystem').clearCanvas().drawPath({
+              strokeStyle: '#000',
+              strokeWidth: 1,
+
+              p1: {
+                type: 'line',
+                rounded: true,
+                endArrow: true,
+                arrowRadius: 10,
+                arrowAngle: 90,
+                x1: 50, y1: 750,
+                x2: 780, y2: 750
+              },
+                p2: {
+                type: 'line',
+                rounded: true,
+                endArrow: true,
+                arrowRadius: 10,
+                arrowAngle: 90,
+                x1: 50, y1: 750,
+                x2: 50, y2: 20
+              }
+            });
+//绘制网格-普通坐标系
+        if (CoordinateSystemType==0){
+            for (var s = 50;s <=750;s=s+7) {
+                $('#CoordinateSystem').drawVector({
+                  strokeStyle: '#000',
+                  strokeWidth: 0.1,
+                  x: s, y: 750,
+                  a1: 0, l1: 700
+                });
+                $('#CoordinateSystem').drawVector({
+                  strokeStyle: '#000',
+                  strokeWidth: 0.2,
+                  x: 50, y: s,
+                  a1: 90, l1: 700
+                });
+            }
+            for (var s = 50;s <=750;s=s+70) {
+                $('#CoordinateSystem').drawVector({
+                  strokeStyle: '#000',
+                  strokeWidth: 0.3,
+                  x: s, y: 750,
+                  a1: 0, l1: 700
+                });
+                $('#CoordinateSystem').drawVector({
+                  strokeStyle: '#000',
+                  strokeWidth: 0.3,
+                  x: 50, y: s,
+                  a1: 90, l1: 700
+                });
+            }
+        }
+
+    }
+
+</script>
+</html>
