@@ -4,16 +4,58 @@
     <meta charset="UTF-8">
     <title>图像绘制</title>
     {% load staticfiles %}
+    <!-- 初始化CSS -->
+    <link href="{% static 'plugin/swiper.css' %}">
+    <link rel="stylesheet" href="{% static 'plugin/res.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'sass/public.css'%}">
+    <link rel="stylesheet" href="{% static 'plugin/zane-calendar.min.css'%}">
+    <!-- 模块css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'sass/image_draw.css'%}">
+    <style>
+        .navtip4 > a {
+            color: #0055ff !important;
+        }
+    </style>
+
 </head>
 <body>
-<div id="appendDevelopmentNumber"></div>
-<div> <button onclick="addDevelopmentNumber()">添加</button></div>
-<br>
-<button onclick="display()">绘制图像</button><br>
-<input name="CoordinateSystemType" type="radio" value="0" onclick="CoordinateSystemType=0"/>普通坐标系
-<input name="CoordinateSystemType" type="radio" value="1" onclick="CoordinateSystemType=1"/>双对数标系
-<br>
-<canvas id="CoordinateSystem" width="800" height="800" style="border:0.5px solid #777;"></canvas>
+<div class="topwall">
+    <div class="top2">
+        <img class="l_float logo" src="../../static/img/logo.png" alt="">
+        <div class="l_float title">机械制造虚拟实验室</div>
+        <div class="l_float userlog"></div>
+        <div class="l_float username">王小明</div>
+        <div class="l_float loginbtn">退出登录</div>
+    </div>
+</div>
+<div class="wall5">
+       <div class="addnewexptit">图像绘制</div>
+        <div class="operationbox">
+        <div class="left">
+
+            <div class="boximg boximg1">
+                <canvas id="CoordinateSystem" width="800" height="800" style="border:0.5px solid #777;"></canvas>
+            </div>
+        </div>
+        <div class="right">
+            <div>
+            X轴-<input id="x_name" /> 单位：<input id="x_unit"/>
+            Y轴-<input id="y_name" /> 单位：<input id="y_unit" />
+            </div><br><br>
+            添加变量：
+            <div id="appendDevelopmentNumber"></div>
+            <div> <button onclick="addDevelopmentNumber()">添加</button></div><br>
+            <div>
+            <input name="CoordinateSystemType" type="radio" value="0" onclick="CoordinateSystemType=0"/>普通坐标系
+            <input name="CoordinateSystemType" type="radio" value="1" onclick="CoordinateSystemType=1"/>双对数标系
+            </div>
+            <div><button onclick="display()">绘制图像</button>  <button id="save_img">保存图象</button></div>
+        </div>
+        </div>
+</div>
+
+
+
 </body>
 <!-- 引用插件 -->
 <script src="{% static 'plugin/jquery.js' %}"></script>
@@ -97,6 +139,19 @@ function display(){
                     radius: 4,
 
                 });
+                $('#CoordinateSystem').drawText({
+                  text: 'X:'+xArray[n]+'\nY:'+yArray[n],
+                  x: 45 + (xArray[n] - x_min) * 700 / x_dis, y: 770 - (yArray[n] - y_min) * 700 / y_dis,
+                     fillStyle: '#000',
+                      fontStyle: 'bold',
+                      fontSize: '8pt',
+                      fontFamily: 'Trebuchet MS, sans-serif',
+                      align: 'left',
+                      respectAlign: true,
+                      maxWidth: 300,
+
+
+                });
             }
         }
 
@@ -155,6 +210,19 @@ function display(){
                     radius: 4,
 
                 });
+                 $('#CoordinateSystem').drawText({
+                  text: 'X:'+xArray[n]+'\nY:'+yArray[n],
+                  x: 45 + (((Math.log(xArray[n]/x_min))/Math.log(10))/ x_nu)*700, y: 770 - (((Math.log(yArray[n]/y_min))/Math.log(10))/ y_nu)*700,
+                     fillStyle: '#000',
+                      fontStyle: 'bold',
+                      fontSize: '8pt',
+                      fontFamily: 'Trebuchet MS, sans-serif',
+                      align: 'left',
+                      respectAlign: true,
+                      maxWidth: 300,
+
+
+                });
             }
         }
     }
@@ -193,7 +261,43 @@ function display(){
                 x1: 50, y1: 750,
                 x2: 50, y2: 20
               }
-            });
+            }).drawText({
+                  text: '黄慧宇 1090810518',
+                  x: 750, y: 30,
+                     fillStyle: '#37c',
+                      fontStyle: 'bold',
+                      fontSize: '10pt',
+                      fontFamily: 'Trebuchet MS, sans-serif',
+                      align: 'right',
+                      respectAlign: true,
+                      maxWidth: 500,
+
+
+                }).drawText({
+                  text: 'X:'+$('#x_name').val()+' / '+$('#x_unit').val(),
+                  x: 780, y: 770,
+                     fillStyle: '#000',
+                      fontStyle: 'bold',
+                      fontSize: '10pt',
+                      fontFamily: 'Trebuchet MS, sans-serif',
+                      align: 'right',
+                      respectAlign: true,
+                      maxWidth: 500,
+
+
+                }).drawText({
+                  text: 'Y:'+$('#y_name').val()+' / '+$('#y_unit').val(),
+                  x: 60, y: 30,
+                     fillStyle: '#000',
+                      fontStyle: 'bold',
+                      fontSize: '10pt',
+                      fontFamily: 'Trebuchet MS, sans-serif',
+                      align: 'left',
+                      respectAlign: true,
+                      maxWidth: 500,
+
+
+                });
 //绘制网格-普通坐标系
         if (CoordinateSystemType==0){
             for (var s = 50;s <=750;s=s+7) {
@@ -227,6 +331,24 @@ function display(){
         }
 
     }
+$('#save_img').on("click",function(){
+    file_name=(new Date()).valueOf()+".png"
+    exportCanvasAsPNG("CoordinateSystem",file_name);
+})
+
+function exportCanvasAsPNG(id, fileName) {
+        var canvasElement = document.getElementById(id);
+        var MIME_TYPE = "image/png";
+        var imgURL = canvasElement.toDataURL(MIME_TYPE);
+        var dlLink = document.createElement('a');
+        dlLink.download = fileName;
+        dlLink.href = imgURL;
+        dlLink.dataset.downloadurl = [MIME_TYPE, dlLink.download, dlLink.href].join(':');
+        document.body.appendChild(dlLink);
+        dlLink.click();
+        document.body.removeChild(dlLink);
+    }
+
 
 </script>
 </html>
