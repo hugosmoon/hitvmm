@@ -1,17 +1,19 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-cmn-Hans">
 
 <head>
     <meta charset="UTF-8">
     <title>实验操作</title>
     {% load staticfiles %}
+    <link rel="shortcut icon" href="{% static 'img/hit.ico' %}" type="image/x-icon" />
+    <link rel="icon" href="{% static 'img/hit.ico' %}" type="image/gif">
     <!-- 初始化CSS -->
     <link href="{% static 'plugin/swiper.css' %}">
-    <link rel="stylesheet" href="{% static 'plugin/res.css'%}">
-    <link rel="stylesheet" type="text/css" href="{% static 'sass/public.css'%}">
-    <link rel="stylesheet" href="{% static 'plugin/zane-calendar.min.css'%}">
+    <link rel="stylesheet" href="{% static 'plugin/res.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'sass/public.css' %}">
+    <link rel="stylesheet" href="{% static 'plugin/zane-calendar.min.css' %}">
     <!-- 模块css -->
-    <link rel="stylesheet" type="text/css" href="{% static 'sass/expsetting.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'sass/expsetting.css' %}">
     <style>
         .navtip4 > a {
             color: #0055ff !important;
@@ -22,7 +24,7 @@
 <body>
 <div class="topwall">
     <div class="top2">
-        <img class="l_float logo" src="../../static/img/logo.png" alt="">
+        <img class="l_float logo" src="../../../static/img/logo.png" alt="">
         <div class="l_float title">机械制造虚拟实验室</div>
         <div class="l_float userlog"></div>
         <div class="l_float username">王小明</div>
@@ -35,7 +37,7 @@
     <div class="addnewexpschedulebox">
         <div class="addnewexpschedule selsct">基础参数设置</div>
         <div class="line selsct">-></div>
-        <div class="addnewexpschedule selsct">切削用量对切削力的影响</div>
+        <div class="addnewexpschedule selsct">工件材料对切削力的影响</div>
 
     </div>
     <div class="operationbox">
@@ -67,9 +69,16 @@
                 <div class="unit">
                     <div class="uleft">工件参数  -</div>
                     <div class="uright">
-                        <div class="utxt">工件材料：<a id="workpiece_material_text"></a></div>
                         <div class="utxt">工件半径：<a id="workpiece_r_text"></a> mm</div>
                         <div class="utxt">工件长度：<a id="workpiece_l_text"></a> mm</div>
+                    </div>
+                </div>
+                <div class="unit">
+                    <div class="uleft">切削用量  -</div>
+                    <div class="uright">
+                        <div class="utxt">机床转速：<a id="rot_speed_text"></a> r/min</div>
+                        <div class="utxt">背吃刀量：<a id="cutting_depth_text"></a> mm</div>
+                        <div class="utxt">进给量：<a id="feed_rate_text"></a> mm/r</div>
                     </div>
                 </div>
                 <div class="unit">
@@ -87,45 +96,24 @@
                 </div>
             </div><br><br>
             <!--刻度尺-->
-            <div class="rangebox">
-                <p class="rutit">切削用量</p>
-                <div class="runitbox">
-                    <div class="rtit">机床主轴转速：</div><br>
-                    <div class="scale">
-
-                        <form>
-                            <input type="range" value="825" step="10" min="50" max="1600" id="rot_speed_scale" onchange="range()"/>
-
-                        </form>
-                        <p name="scaleShow" for="scale" id="rot_speed">830 r/min</p>
-                    </div>
+        <div class="addexpbox">
+            <div class="addbox">
+            <div class="rightbox">
+                    <p class="rightboxleft">工件材料</p>
+                    <select class="selctbox selctbox1" name="" id="workpiece_material">
+                        <option value="45_steel">45钢</option>
+                        <option value="stainless_steel">不锈钢</option>
+                        <option value="gray_iron">灰铸铁</option>
+                        <option value="malleable_cast_iron">可锻铸铁</option>
+                    </select>
                 </div>
-                <div class="runitbox">
-                    <div class="rtit">进给量：</div><br>
-                    <div class="scale">
+                 </div>
 
-                        <form>
-                            <input type="range" value="0.55" step="0.05" min="0.05" max="1" id="feed_rate_scale" onchange="range()"/>
-
-                        </form>
-                        <p name="scaleShow" for="scale" id="feed_rate">0.55 mm/r</p>
-                    </div>
+                <div class="obtnbox">
+                    <div id="start" class="obtn start">启动</div>
+                    <div id="save_img" class="obtn start">保存数据</div>
+                    <div id="save_img" class="obtn start" onclick="goto_draw();">图象绘制</div>
                 </div>
-                <div class="runitbox">
-                    <div class="rtit">背吃刀量</div><br>
-                    <div class="scale">
-
-                        <form>
-                            <input type="range" value="3.5" step="0.1" min="1" max="6" id="cutting_depth_scale" onchange="range()"/>
-
-                        </form>
-                        <p name="scaleShow" for="scale" id="cutting_depth">3.5 mm</p>
-                    </div>
-                </div>
-            </div>
-            <div class="obtnbox">
-                <div id="start" class="obtn start">启动</div>
-                <div id="save_img" class="obtn start">保存数据</div>
             </div>
         </div>
 
@@ -152,20 +140,17 @@
 
 <script src="{% static 'plugin/jquery.cookie.js' %}"></script>
 <script src="{% static 'plugin/md5.js' %}"></script>
-<script src="{% static 'js/experiment/main_view.js' %}"></script>
-
 <script src="{% static 'js/experiment/jcanvas.js' %}"></script>
 <script src="{% static 'js/experiment/readcookies.js' %}"></script>
+<script src="{% static 'js/experiment/main_view.js' %}"></script>
+
+
+
 
 
 <script>
-    range();
-    function range() {
-        $('#cutting_depth').html($('#cutting_depth_scale').val()+'mm');
-        $('#feed_rate').html($('#feed_rate_scale').val()+'mm');
-        $('#rot_speed').html($('#rot_speed_scale').val()+'mm');
 
-    }
+
     $("#workpiece_material_text").html(workpiece_material)
     $("#workpiece_r_text").html(workpiece_r)
     $("#workpiece_l_text").html(workpiece_l)
@@ -176,18 +161,15 @@
     $("#clearance_angle_text").html(clearance_angle)
     $("#minor_clearance_angle_text").html(minor_clearance_angle)
     $("#corner_radius_text").html(corner_radius)
+    $("#feed_rate_text").html(feed_rate)
+    $("#cutting_depth_text").html(cutting_depth)
+    $("#rot_speed_text").html(rot_speed)
 
 
 
     //可是化显示那种参数force、temp、r
     cut_cal_status="force";
 
-
-    cutting_depth=parseFloat($("#cutting_depth_scale").val());
-    feed_rate=parseFloat($("#feed_rate_scale").val());
-    rot_speed=parseFloat($("#rot_speed_scale").val());
-
-    {#alert(workpiece_material+"~~"+workpiece_r+"~~"+workpiece_l+"~~"+cutting_depth+"~~"+feed_rate+"~~"+rot_speed+"~~"+tool_cutting_edge_angle+"~~"+tool_minor_cutting_edge_angle+"~~"+tool_cutting_edge_inclination_angle+"~~"+rake_angle+"~~"+clearance_angle+"~~"+minor_clearance_angle+"~~"+corner_radius);#}
 
 
     start_render('expoeration_0',workpiece_material,workpiece_r,workpiece_l,cutting_depth,feed_rate,rot_speed,tool_cutting_edge_angle,tool_minor_cutting_edge_angle,tool_cutting_edge_inclination_angle,rake_angle,clearance_angle,minor_clearance_angle,corner_radius);
@@ -200,9 +182,7 @@
     var button_status=1;
     var cut_cal;
     $('#start').on("click",function(){
-        cutting_depth=parseFloat($("#cutting_depth_scale").val());
-        feed_rate=parseFloat($("#feed_rate_scale").val());
-        rot_speed=parseFloat($("#rot_speed_scale").val());
+        workpiece_material=($("#workpiece_material").val());
 
 
         if (button_status==1){
@@ -286,7 +266,9 @@ function exportCanvasAsPNG(id, fileName) {
         dlLink.click();
         document.body.removeChild(dlLink);
     }
-
+function goto_draw(){
+        window.open("{% url 'image_draw' %}");
+    }
 
 
 </script>

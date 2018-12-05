@@ -36,8 +36,7 @@ var center_wheel_r=120;
  //夹盘宽度
 var d=20;
 
-//背吃刀量
-cutting_depth=0;
+
 
 //主切削力
 cutting_force=0;

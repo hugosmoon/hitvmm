@@ -4,15 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <title>实验操作</title>
-
     {% load staticfiles %}
+    <link rel="shortcut icon" href="{% static 'img/hit.ico' %}" type="image/x-icon" />
+    <link rel="icon" href="{% static 'img/hit.ico' %}" type="image/gif">
     <!-- 初始化CSS -->
     <link href="{% static 'plugin/swiper.css' %}">
-    <link rel="stylesheet" href="{% static 'plugin/res.css'%}">
-    <link rel="stylesheet" type="text/css" href="{% static 'sass/public.css'%}">
-    <link rel="stylesheet" href="{% static 'plugin/zane-calendar.min.css'%}">
+    <link rel="stylesheet" href="{% static 'plugin/res.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'sass/public.css' %}">
+    <link rel="stylesheet" href="{% static 'plugin/zane-calendar.min.css' %}">
     <!-- 模块css -->
-    <link rel="stylesheet" type="text/css" href="{% static 'sass/expsetting.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'sass/expsetting.css' %}">
 
     <style>
         .navtip4 > a {
@@ -23,8 +24,8 @@
 </head>
 <body>
 <div class="topwall">
-    <div class="top">
-        <img class="l_float logo" src="../../static/img/logo.png" alt="">
+    <div class="top2">
+        <img class="l_float logo" src="../../../static/img/logo.png" alt="">
         <div class="l_float title">机械制造虚拟实验室</div>
         <div class="l_float userlog"></div>
         <div class="l_float username">王小明</div>
@@ -63,7 +64,7 @@
                         <option value="malleable_cast_iron">可锻铸铁</option>
                     </select>
                 </div>
-                <div class="rightbox">
+                <div class="rightbox lastrightbox">
                     <p class="rightboxleft">工件半径</p>
                     <div class="scale">
 
@@ -211,7 +212,7 @@
     }
     function next_step() {
         if(set_agu_cookie()){
-            $(location).attr('href', "{% url 'expoperation' %}");
+            $(location).attr('href', "{% url 'expoperation' 1 %}");
         }
 
 

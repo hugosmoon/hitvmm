@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-cmn-Hans">
 <head>
     <meta charset="UTF-8">
     <title>图像绘制</title>
     {% load staticfiles %}
+    <link rel="shortcut icon" href="{% static 'img/hit.ico' %}" type="image/x-icon" />
+    <link rel="icon" href="{% static 'img/hit.ico' %}" type="image/gif">
     <!-- 初始化CSS -->
     <link href="{% static 'plugin/swiper.css' %}">
     <link rel="stylesheet" href="{% static 'plugin/res.css'%}">
@@ -38,18 +40,39 @@
             </div>
         </div>
         <div class="right">
-            <div>
-            X轴-<input id="x_name" /> 单位：<input id="x_unit"/>
-            Y轴-<input id="y_name" /> 单位：<input id="y_unit" />
-            </div><br><br>
-            添加变量：
-            <div id="appendDevelopmentNumber"></div>
-            <div> <button onclick="addDevelopmentNumber()">添加</button></div><br>
-            <div>
-            <input name="CoordinateSystemType" type="radio" value="0" onclick="CoordinateSystemType=0"/>普通坐标系
-            <input name="CoordinateSystemType" type="radio" value="1" onclick="CoordinateSystemType=1"/>双对数标系
+            <div class="div1">
+                <p class="title01">X轴</p>
+                <div class="box-left">名称：<input class="input1" id="x_name" /></div>
+                <div class="box-right">单位：<input class="input1"  id="x_unit"/></div>
+                <div style="clear:both;"></div>
+
             </div>
-            <div><button onclick="display()">绘制图像</button>  <button id="save_img">保存图象</button></div>
+            <div class="div1">
+                <p class="title01">Y轴</p>
+               <div class="box-left">名称：<input class="input1" id="y_name" /></div>
+                <div class="box-right">单位：<input class="input1"  id="y_unit"/></div>
+                <div style="clear:both;"></div>
+            </div>
+            <br>
+            <p class="title01">添加数据</p>
+            <div id="appendDevelopmentNumber"></div>
+            <div> <button class="bun_add" onclick="addDevelopmentNumber()">添加</button></div><br>
+
+            <div class="div1">
+                <p class="title01">选择坐标系类型</p>
+               <div class="box-left"><input name="CoordinateSystemType" type="radio" value="0" onclick="CoordinateSystemType=0" checked/> 普通坐标系</div>
+                <div class="box-right"><input name="CoordinateSystemType" type="radio" value="1" onclick="CoordinateSystemType=1"/> 双对数标系</div>
+                <div style="clear:both;"></div>
+            </div>
+
+            <div>
+
+
+            </div>
+            <div  class="div1">
+                <div class="box-left"><button class="bun_draw"  onclick="display()">绘制图像</button></div>
+                <div class="box-left"><button class="bun_save" id="save_img">保存图象</button></div>
+            </div>
         </div>
         </div>
 </div>
@@ -69,16 +92,18 @@ number=0;
 CoordinateSystemType=$('input[name="CoordinateSystemType"]:checked').val();
 
 addDevelopmentNumber();
+addDevelopmentNumber();
+addDevelopmentNumber();
 PlotCoordinateSystem();
 
 //添加
 function addDevelopmentNumber() {
     $("#appendDevelopmentNumber").append(
-        '<div>'+
-        '   X: <input name="x" id=x"'+number+'"/>' +
-        '   Y: <input name="y" id=y"'+number+'"/>' +
-        '   <button onclick="delDevelopmentNumber(this)">' + '删除</button>\n'+
-        '</div>'
+        '<div class="div1">'+
+        '   <div class="box-left">X 值：<input class="input1" name="x" id=x"'+number+'"/></div>' +
+        '   <div class="box-left">Y 值：<input class="input1" name="y" id=y"'+number+'"/></div>' +
+        '   <button class="bun_del" onclick="delDevelopmentNumber(this)">' + '删除</button>\n'+
+        '<div style="clear:both;"></div></div>'
     )
     number+=1;
 }
