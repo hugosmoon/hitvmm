@@ -33,11 +33,11 @@
 </div>
 
 <div class="wall5">
-    <div class="addnewexptit">工件材料对切削力的影响</div>
+    <div class="addnewexptit">刀具几何参数对切削力的影响</div>
     <div class="addnewexpschedulebox">
         <div class="addnewexpschedule selsct">基础参数设置</div>
         <div class="line selsct">-></div>
-        <div class="addnewexpschedule selsct">工件材料对切削力的影响</div>
+        <div class="addnewexpschedule selsct">刀具几何参数对切削力的影响</div>
 
     </div>
     <div class="operationbox">
@@ -69,6 +69,7 @@
                 <div class="unit">
                     <div class="uleft">工件参数  -</div>
                     <div class="uright">
+                        <div class="utxt">工件材料：<a id="workpiece_material_text"></a></div>
                         <div class="utxt">工件半径：<a id="workpiece_r_text"></a> mm</div>
                         <div class="utxt">工件长度：<a id="workpiece_l_text"></a> mm</div>
                     </div>
@@ -81,37 +82,107 @@
                         <div class="utxt">进给量：<a id="feed_rate_text"></a> mm/r</div>
                     </div>
                 </div>
-                <div class="unit">
-                    <div class="uleft">刀具参数  -</div>
-                    <div class="uright">
-                        <div class="utxt">刀具材料：硬质合金(YT15)</div>
-                        <div class="utxt">主偏角：<a id="tool_cutting_edge_angle_text"></a>°</div>
-                        <div class="utxt">副偏角：<a id="tool_minor_cutting_edge_angle_text"></a>°</div>
-                        <div class="utxt">刃倾角：<a id="tool_cutting_edge_inclination_angle_text"></a>°</div>
-                        <div class="utxt">前角：<a id="rake_angle_text"></a>°</div>
-                        <div class="utxt">后角：<a id="clearance_angle_text"></a>°</div>
-                        <div class="utxt">副刃后角：<a id="minor_clearance_angle_text"></a>°</div>
-                        <div class="utxt">刀尖圆弧半径：<a id="corner_radius_text"></a> mm</div>
-                    </div>
-                </div>
+
             </div><br><br>
             <!--刻度尺-->
         <div class="addexpbox">
-            <div class="addbox">
-            <div class="rightbox">
-                <div>
-                    <p  style="font-weight: bold; font-size: 22px;" >工件材料</p>
+            <div class="rangebox">
+                <p class="rutit">切削用量</p>
+                <div class="runitbox">
+                    <div class="rtit"><div class="div1-exp3">主偏角：</div>
+                    <div class="div2-exp3">
+                        <select class="sel-ex3" name="" id="tool_cutting_edge_angle">
+                            <option value="45">45°</option>
+                            <option value="60">60°</option>
+                            <option value="75">75°</option>
+                            <option value="90">90°</option>
+                        </select>
+                    </div>
+                    <div style="clear:both;"></div>
+                    </div>
                 </div>
-                <div>
-                    <select class="selctbox selctbox3" name="" id="workpiece_material">
-                        <option value="45_steel">45钢</option>
-                        <option value="stainless_steel">不锈钢</option>
-                        <option value="gray_iron">灰铸铁</option>
-                        <option value="malleable_cast_iron">可锻铸铁</option>
+                <div class="runitbox">
+                    <div class="rtit"><div class="div1-exp3">副偏角：</div>
+                    <div class="div2-exp3">
+                        <select class="sel-ex3" name="" id="tool_minor_cutting_edge_angle">
+                        <option value="5">5°</option>
+                        <option value="15">15°</option>
+                        <option value="25">25°</option>
+                        <option value="35">35°</option>
+                        </select>
+                    </div>
+                    <div style="clear:both;"></div>
+                    </div>
+                </div>
+                <div class="runitbox">
+                    <div class="rtit"><div class="div1-exp3">刃倾角：</div>
+                    <div class="div2-exp3">
+                        <select class="sel-ex3" name="" id="tool_cutting_edge_inclination_angle">
+                            <option value="5">5°</option>
+                            <option value="0">0°</option>
+                            <option value="-5">-5°</option>
+                            <option value="-10">-10°</option>
+                            <option value="-15">-15°</option>
+                        </select>
+                    </div>
+                    <div style="clear:both;"></div>
+                    </div>
+                </div>
+                <div class="runitbox">
+                    <div class="rtit"><div class="div1-exp3">前角：</div>
+                    <div class="div2-exp3">
+                        <select class="sel-ex3" name="" id="rake_angle">
+                            <option value="-15">-15°</option>
+                            <option value="-10">-10°</option>
+                            <option value="0">0°</option>
+                            <option value="10">10°</option>
+                            <option value="20">20°</option>
+                        </select>
+                    </div>
+                    <div style="clear:both;"></div>
+                    </div>
+                </div>
+                <div class="runitbox">
+                    <div class="rtit"><div class="div1-exp3">后角：</div>
+                    <div class="div2-exp3">
+                    <select class="sel-ex3" name="" id="clearance_angle">
+                        <option value="0">0°</option>
+                        <option value="10">10°</option>
+                        <option value="20">20°</option>
                     </select>
+                    </div>
+                    <div style="clear:both;"></div>
+                    </div>
                 </div>
+                <div class="runitbox">
+                    <div class="rtit"><div class="div1-exp3">副刃后角：</div>
+                    <div class="div2-exp3">
+                    <select class="sel-ex3" name="" id="minor_clearance_angle">
+                        <option value="0">0°</option>
+                        <option value="10">10°</option>
+                        <option value="20">20°</option>
+                    </select>
+                    </div>
+                    <div style="clear:both;"></div>
+                    </div>
                 </div>
-                 </div>
+                <div class="runitbox">
+                    <div class="rtit"><div class="div1-exp3">刀尖圆弧半径：</div>
+                    <div class="div2-exp3">
+                    <select class="sel-ex3" name="" id="corner_radius">
+                        <option value="0.25">0.25mm</option>
+                        <option value="0.5">0.5mm</option>
+                        <option value="0.75">0.75mm</option>
+                        <option value="1">1mm</option>
+                        <option value="1.5">1.5mm</option>
+                        <option value="2">2mm</option>
+                    </select>
+                    </div>
+                    <div style="clear:both;"></div>
+                </div>
+
+            </div>
+                <br>
                 <div class="obtnbox">
                     <div id="start" class="obtn bunt start" >启动</div>
                 </div>
@@ -152,7 +223,6 @@
 
 <script>
 
-
     $("#workpiece_material_text").html(workpiece_material)
     $("#workpiece_r_text").html(workpiece_r)
     $("#workpiece_l_text").html(workpiece_l)
@@ -184,7 +254,15 @@
     var button_status=1;
     var cut_cal;
     $('#start').on("click",function(){
-        workpiece_material=($("#workpiece_material").val());
+        tool_cutting_edge_angle=parseInt($("#tool_cutting_edge_angle").val());
+        tool_minor_cutting_edge_angle=parseInt($("#tool_minor_cutting_edge_angle").val());
+        tool_cutting_edge_inclination_angle=parseInt($("#tool_cutting_edge_inclination_angle").val());
+        rake_angle=parseInt($("#rake_angle").val());
+        clearance_angle=parseInt($("#clearance_angle").val());
+        minor_clearance_angle=parseInt($("#minor_clearance_angle").val());
+        corner_radius=parseFloat($("#corner_radius").val());
+
+        //alert(workpiece_material+"~~"+workpiece_r+"~~"+workpiece_l+"~~"+cutting_depth+"~~"+feed_rate+"~~"+rot_speed+"~~"+tool_cutting_edge_angle+"~~"+tool_minor_cutting_edge_angle+"~~"+tool_cutting_edge_inclination_angle+"~~"+rake_angle+"~~"+clearance_angle+"~~"+minor_clearance_angle+"~~"+corner_radius);
 
 
         if (button_status==1){

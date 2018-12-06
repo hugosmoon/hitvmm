@@ -34,11 +34,11 @@
 </div>
 
 <div class="wall4">
-    <div class="addnewexptit">切削用量对切削力的影响</div>
+    <div class="addnewexptit">切削用量对切削温度的影响</div>
     <div class="addnewexpschedulebox">
         <div class="addnewexpschedule selsct">基础参数设置</div>
         <div class="line">-></div>
-        <div class="addnewexpschedule">切削用量对切削力的影响</div>
+        <div class="addnewexpschedule">切削用量对切削温度的影响</div>
 
     </div>
     <div class="addexpbox">
@@ -219,7 +219,7 @@
 
     function next_step() {
         if(set_agu_cookie()){
-            $(location).attr('href', "{% url 'expoperation' 1 %}");
+            $(location).attr('href', "{% url 'expoperation' 4 %}");
         }
 
 

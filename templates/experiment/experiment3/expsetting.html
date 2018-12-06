@@ -34,16 +34,16 @@
 </div>
 
 <div class="wall4">
-    <div class="addnewexptit">工件材料对切削力的影响</div>
+    <div class="addnewexptit">刀具几何参数对切削力的影响</div>
     <div class="addnewexpschedulebox">
         <div class="addnewexpschedule selsct">基础参数设置</div>
         <div class="line">-></div>
-        <div class="addnewexpschedule">工件材料对切削力的影响</div>
+        <div class="addnewexpschedule">刀具几何参数对切削力的影响</div>
 
     </div>
     <div class="addexpbox">
         <div class="addbox">
-            <div class="left"  style="font-weight: bold;">
+            <div class="left" style="font-weight: bold;">
                 加工形式
             </div>
             <div class="right">
@@ -51,10 +51,19 @@
             </div>
         </div>
         <div class="addbox">
-            <div class="left"  style="font-weight: bold;">
+            <div class="left" style="font-weight: bold;">
                 工件参数
             </div>
             <div class="right">
+                <div class="rightbox">
+                    <p class="rightboxleft">工件材料</p>
+                    <select class="selctbox selctbox1" name="" id="workpiece_material">
+                        <option value="45_steel">45钢</option>
+                        <option value="stainless_steel">不锈钢</option>
+                        <option value="gray_iron">灰铸铁</option>
+                        <option value="malleable_cast_iron">可锻铸铁</option>
+                    </select>
+                </div>
 
                 <div class="rightbox">
                     <p class="rightboxleft">工件半径</p>
@@ -82,7 +91,7 @@
             </div>
         </div>
         <div class="addbox">
-            <div class="left"  style="font-weight: bold;">
+            <div class="left" style="font-weight: bold;">
                 切削用量
             </div>
             <div class="right">
@@ -125,95 +134,7 @@
                 </div>
             </div>
         </div>
-        <div class="addbox">
-            <div class="left"  style="font-weight: bold;">
-                刀具参数
-            </div>
-            <div class="right">
-                <div class="rightbox">
-                    <p class="rightboxleft">刀具材料</p>
-                    <p style="margin-top: 5px">YT15硬质合金</p>
-                </div>
-                <div class="rightbox">
-                    <p class="rightboxleft">主偏角</p>
-                    <select class="selctbox selctbox1" name="" id="tool_cutting_edge_angle">
 
-                        <option value="45">45°</option>
-                        <option value="60">60°</option>
-                        <option value="75">75°</option>
-                        <option value="90">90°</option>
-                    </select>
-                </div>
-                <div class="rightbox">
-                    <p class="rightboxleft">副偏角</p>
-                    <select class="selctbox selctbox1" name="" id="tool_minor_cutting_edge_angle">
-
-                        <option value="5">5°</option>
-                        <option value="15">15°</option>
-                        <option value="25">25°</option>
-                        <option value="35">35°</option>
-                    </select>
-                </div>
-
-                <div class="rightbox">
-                    <p class="rightboxleft">刃倾角</p>
-                    <select class="selctbox selctbox1" name="" id="tool_cutting_edge_inclination_angle">
-
-                        <option value="5">5°</option>
-                        <option value="0">0°</option>
-                        <option value="-5">-5°</option>
-                        <option value="-10">-10°</option>
-                        <option value="-15">-15°</option>
-                    </select>
-                </div>
-
-                <div class="rightbox">
-                    <p class="rightboxleft">前角</p>
-                    <select class="selctbox selctbox1" name="" id="rake_angle">
-
-                        <option value="-15">-15°</option>
-                        <option value="-10">-10°</option>
-                        <option value="0">0°</option>
-                        <option value="10">10°</option>
-                        <option value="20">20°</option>
-                    </select>
-                </div>
-
-                <div class="rightbox">
-                    <p class="rightboxleft">后角</p>
-                    <select class="selctbox selctbox1" name="" id="clearance_angle">
-
-                        <option value="0">0°</option>
-                        <option value="10">10°</option>
-                        <option value="20">20°</option>
-                    </select>
-                </div>
-
-                <div class="rightbox">
-                    <p class="rightboxleft">副刃后角</p>
-                    <select class="selctbox selctbox1" name="" id="minor_clearance_angle">
-
-                        <option value="0">0°</option>
-                        <option value="10">10°</option>
-                        <option value="20">20°</option>
-                    </select>
-                </div>
-
-
-                <div class="rightbox lastrightbox">
-                    <p class="rightboxleft ">刀尖圆弧半径</p>
-                    <select class="selctbox selctbox1" name="" id="corner_radius">
-
-                        <option value="0.25">0.25mm</option>
-                        <option value="0.5">0.5mm</option>
-                        <option value="0.75">0.75mm</option>
-                        <option value="1">1mm</option>
-                        <option value="1.5">1.5mm</option>
-                        <option value="2">2mm</option>
-                    </select>
-                </div>
-            </div>
-        </div>
         <div class="addsurebtn" onclick="next_step()">
             下一步
         </div>
@@ -259,7 +180,7 @@
     }
     function next_step() {
         if(set_agu_cookie()){
-            $(location).attr('href', "{% url 'expoperation' 2 %}");
+            $(location).attr('href', "{% url 'expoperation' 3 %}");
         }
 
 
@@ -269,13 +190,7 @@
         $.cookie('feed_rate',$('#feed_rate_scale').val(),{ expires: 7, path: '/', secure: false });
         $.cookie('rot_speed',$('#rot_speed_scale').val(),{ expires: 7, path: '/', secure: false });
 
-        $.cookie('tool_cutting_edge_angle',$('#tool_cutting_edge_angle').val(),{ expires: 7, path: '/', secure: false });
-        $.cookie('tool_minor_cutting_edge_angle',$('#tool_minor_cutting_edge_angle').val(),{ expires: 7, path: '/', secure: false });
-        $.cookie('tool_cutting_edge_inclination_angle',$('#tool_cutting_edge_inclination_angle').val(),{ expires: 7, path: '/', secure: false });
-        $.cookie('rake_angle',$('#rake_angle').val(),{ expires: 7, path: '/', secure: false });
-        $.cookie('clearance_angle',$('#clearance_angle').val(),{ expires: 7, path: '/', secure: false });
-        $.cookie('minor_clearance_angle',$('#minor_clearance_angle').val(),{ expires: 7, path: '/', secure: false });
-        $.cookie('corner_radius',$('#corner_radius').val(),{ expires: 7, path: '/', secure: false });
+        $.cookie('workpiece_material',$('#workpiece_material').val(),{ expires: 7, path: '/', secure: false });
         $.cookie('workpiece_r',$('#workpiece_r_scale').val(),{ expires: 7, path: '/', secure: false });
         $.cookie('workpiece_l',$('#workpiece_l_scale').val(),{ expires: 7, path: '/', secure: false });
 
