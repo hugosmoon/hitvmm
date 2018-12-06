@@ -61,7 +61,7 @@
                     <div class="scale1">
 
                         <form oninput="scaleShow.value=parseInt(scale.value)" class="input-scale" >
-                            <input type="range" value="75" step="1" min="50" max="100" id="workpiece_r_scale" onchange="range()"/>
+                            <input class="input-ex-2"  type="range" value="75" step="1" min="50" max="100" id="workpiece_r_scale" onchange="range()"/>
 
                         </form>
                         <p class="setting1" name="scaleShow" for="scale" id="workpiece_r">75mm</p>
@@ -73,7 +73,7 @@
                     <div class="scale1">
 
                         <form oninput="scaleShow.value=parseInt(scale.value)+'mm'" class="input-scale" >
-                            <input type="range" value="550" step="10" min="450" max="650" id="workpiece_l_scale" onchange="range()"/>
+                            <input class="input-ex-2"  type="range" value="550" step="1" min="450" max="650" id="workpiece_l_scale" onchange="range()"/>
                         </form>
                         <p class="setting1" name="scaleShow" for="scale" id="workpiece_l">550mm</p>
 
@@ -92,7 +92,7 @@
                     <div class="scale1">
 
                         <form class="input-scale" >
-                            <input type="range" value="825" step="10" min="50" max="1600" id="rot_speed_scale" onchange="range()"/>
+                            <input class="input-ex-2" type="range" value="825" step="1" min="50" max="1600" id="rot_speed_scale" onchange="range()"/>
 
                         </form>
                         <p class="setting1"  name="scaleShow" for="scale" id="rot_speed">830 r/min</p>
@@ -104,7 +104,7 @@
                     <div class="scale1">
 
                          <form class="input-scale" >
-                            <input type="range" value="0.55" step="0.05" min="0.05" max="1" id="feed_rate_scale" onchange="range()"/>
+                            <input class="input-ex-2"  type="range" value="0.55" step="0.05" min="0.05" max="1" id="feed_rate_scale" onchange="range()"/>
 
                         </form>
                         <p class="setting1"  name="scaleShow" for="scale" id="feed_rate">0.55 mm/r</p>
@@ -116,7 +116,7 @@
                     <div class="scale1">
 
                         <form class="input-scale" >
-                            <input type="range" value="3.5" step="0.1" min="1" max="6" id="cutting_depth_scale" onchange="range()"/>
+                            <input class="input-ex-2"  type="range" value="3.5" step="0.1" min="1" max="6" id="cutting_depth_scale" onchange="range()"/>
 
                         </form>
                         <p class="setting1"  name="scaleShow" for="scale" id="cutting_depth">3.5 mm</p>
@@ -240,7 +240,15 @@
 <script type="text/javascript" src="{% static 'js/public.js' %}"></script>
 
 <script>
+    //页面加载时匹配文字和滑条值
     range();
+
+    //监听range的变化
+    $('#workpiece_l_scale').bind('input propertychange', range);
+    $('#workpiece_r_scale').bind('input propertychange', range);
+    $('#cutting_depth_scale').bind('input propertychange', range);
+    $('#feed_rate_scale').bind('input propertychange', range);
+    $('#rot_speed_scale').bind('input propertychange', range);
     function range() {
         $('#workpiece_l').html($('#workpiece_l_scale').val()+'mm');
         $('#workpiece_r').html($('#workpiece_r_scale').val()+'mm');

@@ -81,7 +81,7 @@
                     <div class="scale">
 
                         <form oninput="scaleShow.value=parseInt(scale.value)+'mm'">
-                            <input type="range" value="550" step="10" min="450" max="650" id="workpiece_l_scale" onchange="range()"/>
+                            <input type="range" value="550" step="1" min="450" max="650" id="workpiece_l_scale" onchange="range()"/>
                         </form>
                         <p class="setting" name="scaleShow" for="scale" id="workpiece_l">550mm</p>
 
@@ -204,12 +204,19 @@
 <script type="text/javascript" src="{% static 'js/public.js' %}"></script>
 
 <script>
+    //页面加载时匹配文字和滑条值
     range();
+
+    //监听range的变化
+    $('#workpiece_l_scale').bind('input propertychange', range);
+    $('#workpiece_r_scale').bind('input propertychange', range);
+
     function range() {
         $('#workpiece_l').html($('#workpiece_l_scale').val()+'mm');
         $('#workpiece_r').html($('#workpiece_r_scale').val()+'mm');
 
     }
+
     function next_step() {
         if(set_agu_cookie()){
             $(location).attr('href', "{% url 'expoperation' 1 %}");

@@ -87,7 +87,7 @@
                         <div class="utxt">刀尖圆弧半径：<a id="corner_radius_text"></a> mm</div>
                     </div>
                 </div>
-            </div><br><br>
+            </div><br>
             <!--刻度尺-->
             <div class="rangebox">
                 <p class="rutit">切削用量</p>
@@ -96,7 +96,7 @@
                     <div class="scale">
 
                         <form>
-                            <input type="range" value="825" step="10" min="50" max="1600" id="rot_speed_scale" onchange="range()"/>
+                            <input type="range" value="825" step="1" min="50" max="1600" id="rot_speed_scale"/>
 
                         </form>
                         <p name="scaleShow" for="scale" id="rot_speed">830 r/min</p>
@@ -107,7 +107,7 @@
                     <div class="scale">
 
                         <form>
-                            <input type="range" value="0.55" step="0.05" min="0.05" max="1" id="feed_rate_scale" onchange="range()"/>
+                            <input type="range" value="0.55" step="0.01" min="0.05" max="1" id="feed_rate_scale"/>
 
                         </form>
                         <p name="scaleShow" for="scale" id="feed_rate">0.55 mm/r</p>
@@ -118,7 +118,7 @@
                     <div class="scale">
 
                         <form>
-                            <input type="range" value="3.5" step="0.1" min="1" max="6" id="cutting_depth_scale" onchange="range()"/>
+                            <input type="range" value="3.5" step="0.1" min="1" max="6" id="cutting_depth_scale" />
 
                         </form>
                         <p name="scaleShow" for="scale" id="cutting_depth">3.5 mm</p>
@@ -126,17 +126,16 @@
                 </div>
             </div>
             <div class="obtnbox">
-                <div id="start" class="obtn start">启动</div>
-                <div id="save_img" class="obtn start">保存数据</div>
-                <div id="save_img" class="obtn start" onclick="goto_draw()");">图象绘制</div>
+                <div id="start" class="obtn bunt start" style="background:#0099FF;color:#FFFFFF;">启动</div>
+            </div>
+        <div class="obtnbox">
+                <div id="save_img" class="obtn bunt save">保存数据</div>
+                <div id="save_img" class="obtn bunt draw" onclick="goto_draw()");">图象绘制</div>
             </div>
         </div>
 
     </div>
-    <div class="btnbox">
-        <div class="btn btnleft">保存实验结果</div>
-        <div class="btn btnright">下一步</div>
-    </div>
+
 </div>
 <div class="footer">
     <div class="fbox">
@@ -162,13 +161,21 @@
 
 
 <script>
+    //页面加载时匹配文字和滑条值
     range();
+
+    //监听range的变化
+    $('#cutting_depth_scale').bind('input propertychange', range);
+    $('#feed_rate_scale').bind('input propertychange', range);
+    $('#rot_speed_scale').bind('input propertychange', range);
+
     function range() {
         $('#cutting_depth').html($('#cutting_depth_scale').val()+'mm');
         $('#feed_rate').html($('#feed_rate_scale').val()+'mm/r');
         $('#rot_speed').html($('#rot_speed_scale').val()+'r/min');
-
     }
+
+
     $("#workpiece_material_text").html(workpiece_material)
     $("#workpiece_r_text").html(workpiece_r)
     $("#workpiece_l_text").html(workpiece_l)

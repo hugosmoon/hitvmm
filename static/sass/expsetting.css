@@ -26,7 +26,8 @@
     width: 123px;
     height: 32px;
     line-height: 32px;
-    background-color: #cbd6ee;
+    background-color: #96a2ff;
+    color: #ffffff;
     border-radius: 2px;
     font-size: 15px;
     margin-top: 45px;
@@ -80,6 +81,9 @@
       width: 94px;
       text-align: center;
       margin-right: 14px; }
+    .addexpbox .addbox .selctbox3 {
+      width: 238px;
+      margin-left: -40px; }
     .addexpbox .addbox .radiobox {
       cursor: pointer;
       display: -webkit-box;
@@ -146,7 +150,7 @@
   position: relative;
   background: url("../img/scalebg.png") no-repeat center;
   background-position: 80px 12px;
-  background-size: 260px 12px; }
+  background-size: 258px 12px; }
 
 .scale1 {
   position: relative;
@@ -156,7 +160,7 @@
   position: relative;
   background: url("../img/scalebg.png") no-repeat center;
   background-position: 100px 12px;
-  background-size: 232px 12px; }
+  background-size: 240px 12px; }
 .scale2 {
   width: 300px;
   margin-top: -10px; }
@@ -181,21 +185,6 @@ p.setting1{
   left:20px;
 }
 
-.scale em.blue {
-  left: 10px;
-  font-size: 14px; }
-
-.scale em.blue2 {
-  left: 0px;
-  font-size: 12px; }
-
-.scale em.red {
-  right: 10px;
-  font-size: 14px; }
-
-.scale em.red2 {
-  right: 10px;
-  font-size: 12px; }
 
 form {
 
@@ -204,7 +193,7 @@ form {
   }
 
 input[type="range"] {
-  width: 100%;
+  width: 255px;
   height: 2px;
   background: url(../img/logo.png) no-repeat center;
   background-position: 0 10px;
@@ -215,17 +204,18 @@ input[type="range"] {
   -webkit-appearance: none;
   outline: none;
   }
-
-input[type="range"]::-webkit-slider-thumb {
-  width: 14px;
-  height: 14px;
-  background: #ffffff;
-  border-radius: 50%;
-  -webkit-box-shadow: 0 0 3px 2px rgba(73, 53, 11, 0.2);
-  box-shadow: 0 0 3px 2px rgba(73, 53, 11, 0.2);
+input.input-ex-2{
+  width: 238px;
+  height: 2px;
+  background: url(../img/logo.png) no-repeat center;
+  background-position: 0 10px;
+  background-size: 100% 9px;
+  border-radius: 5px;
+  -webkit-box-shadow: 2px 2px 3px 0 rgba(11, 18, 73, 0.4);
+  box-shadow: 2px 2px 3px 0 rgba(11, 18, 73, 0.4);
   -webkit-appearance: none;
-  cursor: default;
-  S}
+  outline: none;
+}
 
 
 
@@ -246,7 +236,7 @@ input[type="range"]::-webkit-slider-thumb {
     width: 800px;
     height: 100%; }
   .operationbox .right {
-    width: 300px;
+    width: 400px;
     min-height: 600px;
     margin-left: 20px; }
     .operationbox .right .rtit {
@@ -280,6 +270,23 @@ input[type="range"]::-webkit-slider-thumb {
         cursor: pointer; }
       .operationbox .right .obtnbox .restart {
         margin-left: 50px; }
+      .operationbox .right .obtnbox .bunt{
+        width: 150px;
+        margin-top: -10px;
+        margin-left: 0px;
+        margin-right: 10px;
+        color:#FFFFFF;
+        }
+      .operationbox .right .obtnbox .bunt.start{
+        background:#96a2ff;
+      }
+      .operationbox .right .obtnbox .bunt.save{
+        background:#00CC33;
+      }
+      .operationbox .right .obtnbox .bunt.draw{
+        background:#00CC33;
+      }
+
       .operationbox .right .obtnbox .stop {
         margin-left: 50px; }
 
