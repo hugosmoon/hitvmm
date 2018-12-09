@@ -28,6 +28,8 @@ def expsetting(request,id):
         return render(request, "experiment/experiment5/expsetting.html")
     elif id == '6':
         return render(request, "experiment/experiment6/expsetting.html")
+    elif id == '8':
+        return render(request, "experiment/experiment8/expsetting.html")
 
 def expsetting2(request):
     return render(request,"experiment/expsetting2.html")
@@ -45,6 +47,8 @@ def expoperation(request,id):
         return render(request, "experiment/experiment5/expoperation.html")
     elif id == '6':
         return render(request, "experiment/experiment6/expoperation.html")
+    elif id == '8':
+        return render(request, "experiment/experiment8/expoperation.html")
 
 def image_draw(request):
     return render(request,"experiment/image_draw.html")
