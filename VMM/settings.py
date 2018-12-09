@@ -73,21 +73,17 @@ WSGI_APPLICATION = 'VMM.wsgi.application'
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #    'ENGINE': 'django.db.backends.sqlite3',
-    #    'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    # }
-    # 'default':{
-    #    'ENGINE':'django.db.backends.mysql',
-    #    'NAME':'vmm',
-    #    'USER':'root',
-    #    'PASSWORD':'1234',
-    #    'HOST':'127.0.0.1',
-    #    'PORT':'3306',
-    #    'OPTIONS':{
-    #        'autocommit':False,
-    #    },
-    # }
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'vmm',
+        'USER': 'root',
+        'PASSWORD': '1234',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
+        'OPTIONS': {
+            'autocommit': False,
+        },
+    }
 }
 
 # Password validation
@@ -130,7 +126,5 @@ STATICFILES_DIRS = (
 LANGUAGE_CODE = 'zh-hans'
 
 TIME_ZONE = 'Asia/Shanghai'
-
-#FILE_CHARSET = 'gb18030'
 
 DEFAULT_CHARSET = 'utf-8'

@@ -60,13 +60,13 @@
                 {% for student in studentList %}
                     <li class="user">
                         <div class="txt s_txt1">{{ forloop.counter }}</div>
-                        <div class="txt s_txt2">{{ student.f_name }}</div>
-                        <div class="txt s_txt3">{{ student.f_number }}</div>
-                        <div class="txt s_txt4">{{ student.f_teacher_name }}</div>
-                        <div class="txt s_txt5">{{ student.f_teacher_number }}</div>
-                        <div class="txt s_txt6">{{ student.f_createtime|date:"Y-m-d H:i:s" }}</div>
+                        <div class="txt s_txt2">{{ student.name }}</div>
+                        <div class="txt s_txt3">{{ student.number }}</div>
+                        <div class="txt s_txt4">{{ student.teachername }}</div>
+                        <div class="txt s_txt5">{{ student.teachernumber }}</div>
+                        <div class="txt s_txt6">{{ student.createtime|date:"Y-m-d H:i:s" }}</div>
                         <div class="txt s_txt7">
-                            <text class="deleuser" studentid="{{ student.f_id }}">删除</text>
+                            <text class="deleuser" studentid="{{ student.id }}">删除</text>
                         </div>
                     </li>
                 {% endfor %}

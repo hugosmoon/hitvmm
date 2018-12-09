@@ -56,7 +56,7 @@
                 </li>
                 {% for experiment in experimentList %}
                     <li class="navtip">
-                        <a href="{{ experiment.f_url }}" target="_blank">{{ experiment.f_name }}</a>
+                        <a href="{{ experiment.url }}" target="_blank">{{ experiment.name }}</a>
                     </li>
                 {% endfor %}
             </ul>
@@ -69,7 +69,7 @@
                     <div class="unittopbg">
                         <div class="desbox">
                             <div class="title">实验名称：</div>
-                            <div class="txt">{{ experiment.f_name }}</div>
+                            <div class="txt">{{ experiment.name }}</div>
                         </div>
 
                     </div>
@@ -77,15 +77,15 @@
 
                         <div class="desbox">
                             <div class="title">老师提示：</div>
-                            <div class="txt">{{ experiment.f_desc }}</div>
+                            <div class="txt">{{ experiment.desc }}</div>
                         </div>
                     </div>
 
                     <div class="unitftbg">
                         <ul class="btnwall">
                             <li class="unitbtn allpreview" videos="{{ experiment.videos }}">实验预习</li>
-                            <li class="unitbtn alloperation" experimentid="{{ experiment.f_url }}">实验操作</li>
-                            <li class="unitbtn alldownload" templateid="{{ experiment.f_template_id }}">默认报告模板下载</li>
+                            <li class="unitbtn alloperation" experimentid="{{ experiment.url }}">实验操作</li>
+                            <li class="unitbtn alldownload" templateid="{{ experiment.templateid }}">默认报告模板下载</li>
                         </ul>
                     </div>
                 </div>

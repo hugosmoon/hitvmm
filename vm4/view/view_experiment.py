@@ -2,6 +2,8 @@
 from django.shortcuts import render,HttpResponse
 import math
 import random
+from vm4.models import Student
+
 
 def experiment1(request):
     return render(request,"experiment/experiment1.html")

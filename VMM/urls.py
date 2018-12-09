@@ -51,6 +51,8 @@ urlpatterns = [
     url(r'addexperiment/',view_teacher.addexperiment),
     url(r'getVideoById/',view_teacher.getVideoById),
     url(r'downloadReportScoreList/',view_teacher.downloadReportScoreList),
+    url(r'uploadVideo/',view_teacher.uploadVideo),
+
 
 
 

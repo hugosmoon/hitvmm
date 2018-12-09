@@ -51,8 +51,8 @@
                         <div class="txt txt1">{{ forloop.counter }}</div>
                         <div class="txt txt2">{{ admin.f_name }}</div>
                         <div class="txt txt3">{{ admin.f_number }}</div>
-                        <div class="txt txt4">{{ admin.f_createtime|date:"Y-m-d H:i:s" }}</div>
-                        <div class="txt txt5 deleadmin" adminid="{{ admin.f_id }}">删除</div>
+                        <div class="txt txt4">{{ admin.createtime|date:"Y-m-d H:i:s" }}</div>
+                        <div class="txt txt5 deleadmin" adminid="{{ admin.id }}">删除</div>
                     </li>
                 {% endfor %}
             </ul>

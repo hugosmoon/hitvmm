@@ -4,88 +4,96 @@ import datetime
 from vm4.context import CONSTANTS
 from vm4.view import utils
 from vm4.service import StudentService
+from vm4.models import *
 
 
 # 根据报告id获取报告
 def getReportById(reportid):
-    reportDao = getReportDao()
-    return reportDao.select_pk(primary_key=reportid)
+    try:
+        report = Report.objects.get(id=reportid)
+    except:
+        return None
+    else:
+        return report
 
 
 # 根据学生id获取报告列表
 def getReportByStuId(stuId):
-    reportDao = getReportDao()
-    filter = {
-        "f_stu_id": stuId,
-    }
-    return reportDao.select_all(None, filter)
+    try:
+        reportList = Report.objects.all().filter(stuid=stuId)
+    except:
+        return None
+    else:
+        return reportList
 
 
 # 根据实验教学id获取报告列表
 def getReportByTeachingid(teachingid):
-    reportDao = getReportDao()
-    filter = {
-        "f_teaching_id": teachingid,
-        "orderby": "f_createtime",
-    }
-    reportList = reportDao.select_all(None, filter)
-    for report in reportList:
-        student = StudentService.getStudentById(report["f_stu_id"])
-        report["stuname"] = student["f_name"]
-        report["stunumber"] = student["f_number"]
-    return reportList
+    try:
+        reportList = Report.objects.filter(teachingid=teachingid).order_by("createtime").all()
+    except:
+        return None
+    else:
+        reportDictList=[]
+        for report in reportList:
+            reportDict={
+                "id":report.id,
+                "stuid":report.stuid,
+                "teachingid":report.teachingid,
+                "url":report.url,
+                "score":report.score,
+                "status":report.status,
+                "isdelete":report.isdelete,
+                "createtime":report.createtime,
+                "updatetime":report.updatetime
+            }
+            student = StudentService.getStudentById(report.stuid)
+            reportDict["stuname"] = student.name
+            reportDict["stunumber"] = student.number
+            reportDictList.append(reportDict)
+        return reportDictList
 
 
 # 根据实验教学id获取学生总数
 def getCountStuByTeachingid(teachingid):
-    reportDao = getReportDao()
-    filter = {
-        "f_teaching_id": teachingid
-    }
-    return reportDao.count(None, filter)
+    try:
+        count = Report.objects.filter(teachingid=teachingid, isdelete=CONSTANTS.ISDELETE_NOT).count()
+    except:
+        return 0
+    else:
+        return count
 
 
 # 根据实验教学id和实验教学状态获取学生总数
 def getCountStuByTeachingidAndStatus(teachingid, status):
-    reportDao = getReportDao()
-    filter = {
-        "f_teaching_id": teachingid,
-        "f_status": status
-    }
-    return reportDao.count(None, filter)
-
-
-# 根据实验教学id删除报告
-def deleteReportByTeachingid(teachingids):
-    reportDao = getReportDao()
+    try:
+        count = Report.objects.filter(teachingid=teachingid, status=status, isdelete=CONSTANTS.ISDELETE_NOT).count()
+    except:
+        return 0
+    else:
+        return count
 
 
 # 提交报告
 def submintReport(reportid, filename):
-    reportDao = getReportDao()
-    report = {"f_id": reportid}
-    report["f_url"] = filename
-    report["f_status"] = CONSTANTS.REPORT_STATUS_SUBMIT
-    report["f_updatetime"] = utils.getNowStr()
-    return reportDao.update_by_primarikey_selective(None, report)
+    report = Report.objects.filter(id=reportid, status=CONSTANTS.REPORT_STATUS_PENDING).update(url=filename,
+                                                                                               status=CONSTANTS.REPORT_STATUS_SUBMIT,
+                                                                                               updatetime=utils.getNow())
+    return report
 
 
 # 批阅报告
 def scoreReport(reportid, score):
-    reportDao = getReportDao()
-    report = {"f_id": reportid, "f_score": score, "f_status": CONSTANTS.REPORT_STATUS_SCORE}
-    report["f_updatetime"] = utils.getNowStr()
-    reportDao.update_by_primarikey_selective(None, report)
+    report = Report.objects.filter(id=reportid, status=CONSTANTS.REPORT_STATUS_SUBMIT).update(score=score,
+                                                                                              status=CONSTANTS.REPORT_STATUS_SCORE,
+                                                                                              updatetime=utils.getNow())
+    return report
 
 
 # 添加报告
 def addReport(teachingid, stunid):
-    reportDao = getReportDao()
-    now = utils.getNowStr()
-    report = {
-        "f_stu_id": stunid,
-        "f_teaching_id": teachingid,
-        "f_createtime": now,
-        "f_updatetime": now,
-    }
-    return reportDao.save(None, report)
+    now = utils.getNow()
+    report = Report(stuid=stunid, teachingid=teachingid, isdelete=CONSTANTS.ISDELETE_NOT, createtime=now,
+                    updatetime=now)
+    report.save()
+    return report.id

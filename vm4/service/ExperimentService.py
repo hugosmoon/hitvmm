@@ -2,30 +2,50 @@
 from vm4.dao.ExperimentDao import getExperimentDao
 from vm4.service import VideoService
 import json
+from vm4.models import *
+from vm4.context import CONSTANTS
 
 
 def getAllExperiment():
-    experimentDao = getExperimentDao()
-    experimentlist = experimentDao.select_all(None)
-    for experiment in experimentlist:
-        videoids = experiment["f_videos"].split(",")
-        videos = []
-        for id in videoids:
-            video = VideoService.getVideoById(id)
-            video["f_url"] = "/getVideoById/?videourl=" + video["f_url"]
-            videoobj = {
-                "url": video["f_url"],
-                "name": video["f_name"]
+    try:
+        experimentlist = Experiment.objects.all()
+    except:
+        return None
+    else:
+        experimentDictList = []
+        for experiment in experimentlist:
+            experimentDict = {
+                "id": experiment.id,
+                "name": experiment.name,
+                "desc": experiment.desc,
+                "videos": experiment.videos,
+                "url": experiment.url,
+                "templateid": experiment.templateid,
+                "isdelete": experiment.isdelete,
+                "createtime": experiment.createtime,
+                "updatetime": experiment.updatetime
             }
-            videos.append(videoobj)
-        experiment["videos"] = json.dumps(videos)
+            videoids = experiment.videos.split(",")
+            videos = []
+            for id in videoids:
+                video = VideoService.getVideoById(id)
+                video.url = "/getVideoById/?videourl=" + video.url
+                videoobj = {
+                    "id": id,
+                    "url": video.url,
+                    "name": video.name
+                }
+                videos.append(videoobj)
+            experimentDict["videos"] = json.dumps(videos)
+            experimentDictList.append(experimentDict)
 
-    return experimentlist
+        return experimentDictList
 
 
 def getExperimentById(expId):
-    experimentDao = getExperimentDao()
-    filters = {
-        "f_id": expId
-    }
-    return experimentDao.select_one(None, filters)
+    try:
+        experiment = Experiment.objects.filter(id=expId, isdelete=CONSTANTS.ISDELETE_NOT).get()
+    except:
+        return None
+    else:
+        return experiment

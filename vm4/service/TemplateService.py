@@ -2,25 +2,23 @@
 from vm4.dao.TemplateDao import getTemplateDao
 from vm4.view import utils
 from vm4.context import CONSTANTS
+from vm4.models import *
 
-#根据id获得模板
+
+# 根据id获得模板
 def getTemplateById(id):
-    templateDao = getTemplateDao()
-    filters = {
-        "f_id": id
-    }
-    return templateDao.select_one(None, filters)
+    try:
+        template = Template.objects.filter(id=id, isdelete=CONSTANTS.ISDELETE_NOT).get()
+    except:
+        return None
+    else:
+        return template
 
-#添加模板
+
+# 添加模板
 def addTemplate(experimentid, templateurl):
-    templateDao = getTemplateDao()
-    timenow = utils.getNowStr()
-    template = {
-        "f_experiment_id": experimentid,
-        "f_url":templateurl,
-        "f_is_delete": CONSTANTS.ISDELETE_NOT,
-        "f_createtime":timenow,
-        "f_updatetime":timenow,
-    }
-    resulttuple = templateDao.save(None,template)
-    return resulttuple[0][0]
+    now = utils.getNow()
+    template = Template(experimentid=experimentid, url=templateurl, isdelete=CONSTANTS.ISDELETE_NOT, createtime=now,
+                        updatetime=now)
+    template.save()
+    return template.id

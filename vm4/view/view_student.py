@@ -26,9 +26,9 @@ def stulogin(request):
     if student != None:
         responseReturn = Response(None, None)
         response = HttpResponse(responseReturn.__str__())
-        utils.setCookie(response, "stuid", student.get("f_id"))
-        utils.setCookie(response, "stuname", student.get("f_name"))
-        utils.setCookie(response, "stunum", student.get("f_number"))
+        utils.setCookie(response, "stuid", str(student.id))
+        utils.setCookie(response, "stuname", student.name)
+        utils.setCookie(response, "stunum", student.number)
         return response
     else:
         responseReturn = Response("-1", "登录失败")
@@ -120,7 +120,7 @@ def downloadData(request):
     filesuffix = os.path.splitext(filename)[1]
     response = FileResponse(file)
     response['Content-Type'] = 'application/octet-stream'
-    response['Content-Disposition'] = 'attachment;filename="实验数据'+filesuffix+'"'
+    response['Content-Disposition'] = 'attachment;filename="实验数据' + filesuffix + '"'
     return response
 
 
@@ -130,7 +130,7 @@ def downloadTemplate(request):
     if (templateid is None) or templateid == "":
         return HttpResponse()
     template = TemplateService.getTemplateById(templateid)
-    fileurl = CONSTANTS.TEMPLATEURL_PRE + template["f_url"]
+    fileurl = CONSTANTS.TEMPLATEURL_PRE + template.url
     if os.path.exists(fileurl) != True:
         return HttpResponse("未找到文件")
     file = open(fileurl, "rb")
@@ -138,7 +138,7 @@ def downloadTemplate(request):
     filesuffix = os.path.splitext(filename)[1]
     response = FileResponse(file)
     response['Content-Type'] = 'application/octet-stream'
-    response['Content-Disposition'] = 'attachment;filename="实验模板'+filesuffix+'"'
+    response['Content-Disposition'] = 'attachment;filename="实验模板' + filesuffix + '"'
     return response
 
 

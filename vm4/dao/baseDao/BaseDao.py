@@ -1,5 +1,4 @@
 # -*- coding: UTF-8 -*-
-
 import time
 import logging
 import pymysql
@@ -7,7 +6,6 @@ import pymysql
 from DBUtils.PooledDB import PooledDB
 from vm4.dao.baseDao.page import Page
 from vm4.dao.baseDao import DB_config as Config
-
 
 class BaseDao(object):
     __pool = None;

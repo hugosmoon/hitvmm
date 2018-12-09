@@ -65,7 +65,7 @@
                 </li>
                 {% for experiment in experimentList %}
                     <li class="navtip">
-                        <a href="{{ experiment.f_url }}" target="_blank">{{ experiment.f_name }}</a>
+                        <a href="{{ experiment.url }}" target="_blank">{{ experiment.name }}</a>
                     </li>
                 {% endfor %}
             </ul>
@@ -88,42 +88,42 @@
                         </div>
                         <div class="desbox">
                             <div class="title">报告提交：</div>
-                            <div class="txt">{{ teaching.f_deadline|date:"Y" }}年{{ teaching.f_deadline|date:"m" }}月{{ teaching.f_deadline|date:"d" }}日之前</div>
+                            <div class="txt">{{ teaching.deadline|date:"Y" }}年{{ teaching.deadline|date:"m" }}月{{ teaching.deadline|date:"d" }}日之前</div>
                         </div>
                     </div>
                     <div class="unitwall">
                         <div class="desbox">
                             <div class="title">老师提示：</div>
-                            <div class="txt">{{ teaching.f_point }}</div>
+                            <div class="txt">{{ teaching.point }}</div>
                         </div>
                         <div class="desbox">
                             <div class="title">备注：</div>
-                            <div class="txt">{{ teaching.f_remark }}</div>
+                            <div class="txt">{{ teaching.remark }}</div>
                         </div>
                     </div>
 
                     <div class="unitftbg">
                         <ul class="btnwall">
-                            <li class="uteadownload unitbtn" dataurl="{{ teaching.f_data_url }}">下载实验数据</li>
-                            <li class="teastulist unitbtn" stulisturl="{{ teaching.f_stulist_url }}">
+                            <li class="uteadownload unitbtn" dataurl="{{ teaching.dataurl }}">下载实验数据</li>
+                            <li class="teastulist unitbtn" stulisturl="{{ teaching.stulisturl }}">
                                 下载学生名单({{ teaching.stuCount }})
                             </li>
-                            <li class="downloaddatamod unitbtn" templateid="{{ teaching.f_template_id }}">下载实验报告模版</li>
-                            <li class="changevide unitbtn" video="{{ teaching.f_videos }}">预习视频</li>
-                            <li class="changedata unitbtn " deadline="{{ teaching.f_deadline|date:"Y/m/d" }}"
-                                teachingid="{{ teaching.f_id }}">报告提交日期更改
+                            <li class="downloaddatamod unitbtn" templateid="{{ teaching.templateid }}">下载实验报告模版</li>
+                            <li class="changevide unitbtn" video="{{ teaching.videos }}">预习视频</li>
+                            <li class="changedata unitbtn " deadline="{{ teaching.deadline|date:"Y/m/d" }}"
+                                teachingid="{{ teaching.id }}">报告提交日期更改
                             </li>
                             {% if teaching.f_report_status == 2 %}
-                                <li class="downloadscore unitbtn lastbtn" teachingid="{{ teaching.f_id }}">下载学生成绩</li>
+                                <li class="downloadscore unitbtn lastbtn" teachingid="{{ teaching.id }}">下载学生成绩</li>
                                 <li class="unitbtn otherbtn otherbtn1">
-                                    <a href="/approval/?teachingid={{ teaching.f_id }}">
+                                    <a href="/approval/?teachingid={{ teaching.id }}">
                                         <text>已批阅完</text>
                                         实验报告({{ teaching.complapprepcount }}/{{ teaching.stuCount }})
                                     </a>
                                 </li>
                             {% else %}
                                 <li class="unitbtn otherbtn otherbtn2">
-                                    <a href="/approval/?teachingid={{ teaching.f_id }}">
+                                    <a href="/approval/?teachingid={{ teaching.id }}">
                                         <text>未批阅完</text>
                                         实验报告({{ teaching.complapprepcount }}/{{ teaching.stuCount }})
                                         <a/>

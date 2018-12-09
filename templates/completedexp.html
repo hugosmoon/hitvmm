@@ -56,7 +56,7 @@
                 </li>
                 {% for experiment in experimentList %}
                     <li class="navtip">
-                        <a href="{{ experiment.f_url }}" target="_blank">{{ experiment.f_name }}</a>
+                        <a href="{{ experiment.url }}" target="_blank">{{ experiment.name }}</a>
                     </li>
                 {% endfor %}
             </ul>
@@ -79,11 +79,11 @@
                     <div class="unitwall">
                         <div class="desbox">
                             <div class="title">报告提交：</div>
-                            <div class="txt">{{ teaching.f_deadline|date:"Y" }}年{{ teaching.f_deadline|date:"m" }}月{{ teaching.f_deadline|date:"d" }}日之前</div>
+                            <div class="txt">{{ teaching.deadline|date:"Y" }}年{{ teaching.deadline|date:"m" }}月{{ teaching.deadline|date:"d" }}日之前</div>
                         </div>
                         <div class="desbox">
                             <div class="title">老师提示：</div>
-                            <div class="txt">{{ teaching.f_point }}</div>
+                            <div class="txt">{{ teaching.point }}</div>
                         </div>
                     </div>
 
