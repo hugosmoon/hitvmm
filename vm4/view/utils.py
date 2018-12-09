@@ -4,16 +4,16 @@ import datetime
 
 def getParam(request, name):
     if request.method == 'GET':
-        return request.GET.get(name, '').encode("utf-8")
+        return request.GET.get(name, '')
     else:
-        return request.POST.get(name, '').encode("utf-8")
+        return request.POST.get(name, '')
 
 
 def getCookie(request, name):
-    return request.COOKIES.get(name)
+    return request.COOKIES.get(name).encode("iso-8859-1").decode('utf8')
 
 def setCookie(response , name ,value):
-    response.set_cookie(name, value,max_age=60*60*2)
+    response.set_cookie(name, bytes(value, 'utf-8').decode('ISO-8859-1'),max_age=60*60*2)
 
 def getNowStr():
     return datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')

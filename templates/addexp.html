@@ -65,7 +65,7 @@
                 </li>
                 {% for experiment in experimentList %}
                     <li class="navtip">
-                        <a href="{{ experiment.f_url }}" target="_blank">{{ experiment.f_name }}</a>
+                        <a href="{{ experiment.url }}" target="_blank">{{ experiment.name }}</a>
                     </li>
                 {% endfor %}
             </ul>
@@ -84,10 +84,11 @@
                     实验名称：
                 </div>
                 <div class="right">
-                    <select class="selctbox selctbox1" name="experimentid">
+                    <select id="experimentid" class="selctbox selctbox1" name="experimentid">
                         <option value="0" selected="selected">请选择实验名称</option>
                         {% for experiment in experimentList %}
-                            <option value="{{ experiment.f_id }}">{{ experiment.f_name }}</option>
+                            <option value="{{ experiment.id }}" videos="{{ experiment.videos }}"
+                                    videoids="{{ experiment.videos }}">{{ experiment.name }}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -136,7 +137,7 @@
                         <lable>新增视频</lable>
                     </div>
                     <div class="btn changevide">更改预习视频</div>
-                    <input id="videosinputid" type="hidden" name="videos" value="">
+                    <input id="videosinputid" type="hidden" name="videos"/>
                 </div>
             </div>
             <div class="addbox">
@@ -212,7 +213,7 @@
     <div class="popupwall popupwall2 popupwall2_">
         <div class="popuptop">
             <img class="logo" src="../static/img/logo.png" alt="">
-            <img class="dele" src="../static/img/dele.png" alt="">
+            <img class="videodele" src="../static/img/dele.png" alt="">
         </div>
         <!--提示文案-->
         <div class="popupmid popupmid1">实验数据必须为EXCEL格式，文件大小在3M以内。</div>
@@ -243,16 +244,6 @@
         <img class="dele" src="../static/img/dele.png" alt="">
         <div class="videowall2">
             <div class="videowall">
-                <div class="videobox">
-                    个没有我是一个没有 我是一
-                </div>
-                <div class="videobox">
-                    个没有我是一个没有 我是一
-                </div>
-                <div class="videobox">
-                    个没有我是一个没有 我是一
-                </div>
-
             </div>
         </div>
 
@@ -264,6 +255,7 @@
             <div class="vbtn vbover">完成</div>
         </div>
     </div>
+
     <!--确认操作-->
     <div class="popupwall popupwall7">
         <div class="popuptop">
@@ -285,18 +277,31 @@
         </div>
         <div class="btn sure">确定</div>
     </div>
-    <!--观看视频-->
-    <div class="popupwall popupwall9">
-        <img class="dele" src="../static/img/dele.png" alt="">
-        <div class="v_name">我是一个没有名字的视频，我是个没有名字。</div>
-        <div class="vbox"></div>
-        <div class="vchangebox">
-            <div class="vchange">
-                <div class="v_svideo"></div>
-                <div class="v_svideoname">我是一个没有..我是一个没有..</div>
-            </div>
-
+    <!--修改视频时上传文件-->
+    <div class="popupwall popupwall2_2">
+        <div class="popuptop">
+            <img class="logo" src="../static/img/logo.png" alt="">
+            <img class="changevdele" src="../static/img/dele.png" alt="">
         </div>
+        <!--提示文案-->
+        <div class="popupmid ">视频名称</div>
+        <input type="hidden" id="addvideotype" value="0">
+        <form id="addvideo" action="/addexperiment/" method="post" enctype="multipart/form-data">
+            <input id="videoexperimentid" type="hidden" name="experimentid" value=""/>
+            <!--说明框-->
+            <textarea class="shuomingbox" name="name"></textarea>
+            <!--提交-->
+            <div class="btn changevideofile">
+                选择文件
+                <input class="uploadfile" type="file" name="file" onchange="publicObj.updataChangeVideo()">
+            </div>
+            <div class="btn cancle changvideocancle">
+                取消
+            </div>
+            <div class="btn sure changvideosure">确认上传</div>
+
+            <div class="videofileuploadname"></div>
+        </form>
     </div>
 </div>
 <!-- 引用插件 -->
@@ -318,19 +323,8 @@
         $(location).attr('href', '/loginteacher/');
     });
 
-    function successfun(data, status) {
-        dataObj = data
-        code = dataObj.code;
-        if (code != 0) {
-            alert(dataObj.desc);
-        }
-        else {
-            alert("创建成功！")
-            //window.location = "/undoneteaching/"
-        }
-    }
-
-    function beforeCheck(formData, form, options) {
+    function beforeCheck() {
+        return
     }
 </script>
 </html>

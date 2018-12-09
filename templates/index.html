@@ -54,7 +54,7 @@
                 </li>
                 {% for experiment in experimentList %}
                     <li class="navtip">
-                        <a href="{{ experiment.f_url }}" target="_blank">{{ experiment.f_name }}</a>
+                        <a href="{{ experiment.url }}" target="_blank">{{ experiment.name }}</a>
                     </li>
                 {% endfor %}
             </ul>
@@ -77,20 +77,20 @@
                     <div class="unitwall">
                         <div class="desbox">
                             <div class="title">报告提交：</div>
-                            <div class="txt">{{ teaching.f_deadline|date:"Y" }}年{{ teaching.f_deadline|date:"m" }}月{{ teaching.f_deadline|date:"d" }}日之前</div>
+                            <div class="txt">{{ teaching.deadline|date:"Y" }}年{{ teaching.deadline|date:"m" }}月{{ teaching.deadline|date:"d" }}日之前</div>
                         </div>
                         <div class="desbox">
                             <div class="title">老师提示：</div>
-                            <div class="txt">{{ teaching.f_point }}</div>
+                            <div class="txt">{{ teaching.point }}</div>
                         </div>
                     </div>
 
                     <div class="unitftbg">
                         <ul class="btnwall">
                             <li class="unitbtn preview" videos="{{ teaching.videos }}">实验预习</li>
-                            <li class="unitbtn datadownload" dataurl="{{ teaching.f_data_url }}">实验数据下载</li>
+                            <li class="unitbtn datadownload" dataurl="{{ teaching.dataurl }}">实验数据下载</li>
                             <li class="unitbtn operation" experimentid="{{ teaching.f_experiment_url }}">虚拟实验操作</li>
-                            <li class="unitbtn templatedownload" templateid="{{ teaching.f_template_id }}">报告模板下载</li>
+                            <li class="unitbtn templatedownload" templateid="{{ teaching.templateid }}">报告模板下载</li>
                             {% if teaching.f_report_status == 0 %}
                                 <li class="unitbtn lastbtn submit" reportid="{{ teaching.f_report_id }}">提交实验报告</li>
                             {% elif teaching.f_report_status == 1 %}
@@ -160,7 +160,7 @@
     <!--观看视频-->
     <div class="popupwall popupwall9">
         <img class="dele" src="../static/img/dele.png" alt="">
-        <div id="videoname" class="v_name">我是一个没有名字的视频，我是个没有名字。</div>
+        <div id="videoname" class="v_name"></div>
         <div class="vbox">
             <div class="videobox">
                 <video id="video" controls>

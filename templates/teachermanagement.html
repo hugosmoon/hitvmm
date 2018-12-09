@@ -58,13 +58,13 @@
                 {% for teacher in teacherList %}
                     <li class="user">
                         <div class="txt t_txt1">{{ forloop.counter }}</div>
-                        <div class="txt t_txt2">{{ teacher.f_name }}</div>
-                        <div class="txt t_txt3">{{ teacher.f_number }}</div>
-                        <div class="txt t_txt4">{{ teacher.f_createtime|date:"Y-m-d H:i:s" }}</div>
-                        <div class="txt t_txt5" teacherid="{{ teacher.f_id }}">
+                        <div class="txt t_txt2">{{ teacher.name }}</div>
+                        <div class="txt t_txt3">{{ teacher.number }}</div>
+                        <div class="txt t_txt4">{{ teacher.createtime|date:"Y-m-d H:i:s" }}</div>
+                        <div class="txt t_txt5" teacherid="{{ teacher.id }}">
                             <text>重置密码</text>
                         </div>
-                        <div class="txt t_txt6 deletea" teacherid="{{ teacher.f_id }}">
+                        <div class="txt t_txt6 deletea" teacherid="{{ teacher.id }}">
                             <text>删除</text>
                         </div>
                     </li>
