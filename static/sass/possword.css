@@ -1,1 +1,58 @@
-.box .tip,.box .tit{font-weight:400;font-stretch:normal}.box .btnbox,.box .imptbox{display:-webkit-box;display:-ms-flexbox;display:flex}.box{width:440px;height:294px;margin:27px auto 0}.box .tit{font-size:18px;line-height:17px;letter-spacing:2px;color:#05f}.box .tip{width:98px;height:15px;font-size:15px;line-height:38px;letter-spacing:10px;color:#020035}.box .tip2{letter-spacing:4px}.box .inp{width:300px;height:38px;padding-left:20px;background-color:#f7f7f7;border-radius:2px;border:1px solid #f0f0f0}.box .imptbox1{margin-top:40px}.box .imptbox2{margin-top:25px}.box .btnbox{margin-top:34px;margin-left:80px}.box .btnbox .btn{border-radius:2px;width:123px;height:38px;line-height:38px;text-align:center;-webkit-box-sizing:border-box;box-sizing:border-box;cursor:pointer}.box .btnbox .cancel{border:1px solid #cbd6ee}.box .btnbox .sure{background:#cbd6ee;margin-left:74px}
+.box {
+  width: 440px;
+  height: 294px;
+  margin: 0 auto;
+  margin-top: 27px; }
+  .box .imptbox {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex; }
+  .box .tit {
+    font-size: 18px;
+    font-weight: normal;
+    font-stretch: normal;
+    line-height: 17px;
+    letter-spacing: 2px;
+    color: #0055ff; }
+  .box .tip {
+    width: 98px;
+    height: 15px;
+    font-size: 15px;
+    font-weight: normal;
+    font-stretch: normal;
+    line-height: 38px;
+    letter-spacing: 10px;
+    color: #020035; }
+  .box .tip2 {
+    letter-spacing: 4px; }
+  .box .inp {
+    width: 300px;
+    height: 38px;
+    padding-left: 20px;
+    background-color: #f7f7f7;
+    border-radius: 2px;
+    border: solid 1px #f0f0f0; }
+  .box .imptbox1 {
+    margin-top: 40px; }
+  .box .imptbox2 {
+    margin-top: 25px; }
+  .box .btnbox {
+    margin-top: 34px;
+    margin-left: 80px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex; }
+    .box .btnbox .btn {
+      border-radius: 2px;
+      width: 123px;
+      height: 38px;
+      line-height: 38px;
+      text-align: center;
+      -webkit-box-sizing: border-box;
+              box-sizing: border-box;
+      cursor: pointer; }
+    .box .btnbox .cancel {
+      border: 1px solid #cbd6ee; }
+    .box .btnbox .sure {
+      background: #cbd6ee;
+      margin-left: 74px; }

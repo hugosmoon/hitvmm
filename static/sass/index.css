@@ -1,1 +1,82 @@
-.list .unitbox .desbox .title,.list .unitbox .desbox .txt{font-stretch:normal;line-height:17px;letter-spacing:1px;color:#020035;font-size:14px}.list{width:721px;float:right;margin-left:72px}.list .unitbox{width:721px;min-height:221px;margin-bottom:20px}.list .unitbox .desbox{display:-webkit-box;display:-ms-flexbox;display:flex;width:665px;margin:0 auto 13px}.list .unitbox .desbox .title{font-weight:700;width:80px}.list .unitbox .desbox .txt{font-weight:400;width:600px}.list .unitbox .unittopbg{width:721px;height:48px;padding-top:22px;background:url(../img/unittop.png);background-size:100% 100%;overflow:hidden}.list .unitbox .unitftbg{width:721px;height:70px;background:url(../img/unitfooter.png);background-size:100% 100%;overflow:hidden}.list .unitbox .unitftbg2{margin-top:-30px}.list .unitbox .desbox2{margin-top:20px}.list .unitbox .desbox2 .txt2{color:#05f}.list .unitbox .unitwall{padding-top:15px;width:721px;min-height:71px;background:url(../img/unitc.png);background-size:100% 100%;overflow:hidden}.list .unitbox .unitwall2{min-height:0!important;margin-top:-25px}.list .unitbox .btnwall{margin-left:22px;margin-top:15px}.list .unitbox .btnwall .unitbtn{cursor:pointer;width:116px;height:32px;line-height:32px;float:left;text-align:center;background:#cbd6ee;border-radius:2px;margin-right:25px;color:#020035;font-size:14px}.list .unitbox .btnwall .lastbtn{margin:0}.list .unitbox .btnwall .unitbtn:hover{background:url(../img/btnbg2.png);background-size:100% 100%;color:#fff}
+.list {
+  width: 721px;
+  float: right;
+  margin-left: 72px; }
+  .list .unitbox {
+    width: 721px;
+    min-height: 221px;
+    margin-bottom: 20px; }
+    .list .unitbox .desbox {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      width: 665px;
+      margin: 0 auto;
+      margin-bottom: 13px; }
+      .list .unitbox .desbox .title {
+        font-size: 14px;
+        font-weight: normal;
+        font-stretch: normal;
+        line-height: 17px;
+        letter-spacing: 1px;
+        color: #020035;
+        font-weight: bold;
+        width: 80px; }
+      .list .unitbox .desbox .txt {
+        font-size: 14px;
+        font-weight: normal;
+        font-stretch: normal;
+        line-height: 17px;
+        letter-spacing: 1px;
+        color: #020035;
+        width: 600px; }
+    .list .unitbox .unittopbg {
+      width: 721px;
+      height: 48px;
+      padding-top: 22px;
+      background: url("../img/unittop.png");
+      background-size: 100% 100%;
+      overflow: hidden; }
+    .list .unitbox .unitftbg {
+      width: 721px;
+      height: 70px;
+      background: url("../img/unitfooter.png");
+      background-size: 100% 100%;
+      overflow: hidden; }
+    .list .unitbox .unitftbg2 {
+      margin-top: -30px; }
+    .list .unitbox .desbox2 {
+      margin-top: 20px; }
+      .list .unitbox .desbox2 .txt2 {
+        color: #0055ff; }
+    .list .unitbox .unitwall {
+      padding-top: 15px;
+      width: 721px;
+      min-height: 71px;
+      background: url("../img/unitc.png");
+      background-size: 100% 100%;
+      overflow: hidden; }
+    .list .unitbox .unitwall2 {
+      min-height: 0 !important;
+      margin-top: -25px; }
+    .list .unitbox .btnwall {
+      margin-left: 22px;
+      margin-top: 15px; }
+      .list .unitbox .btnwall .unitbtn {
+        cursor: pointer;
+        width: 116px;
+        height: 32px;
+        line-height: 32px;
+        float: left;
+        text-align: center;
+        background: #cbd6ee;
+        border-radius: 2px;
+        margin-right: 25px;
+        color: #020035;
+        font-size: 14px; }
+      .list .unitbox .btnwall .lastbtn {
+        margin: 0; }
+      .list .unitbox .btnwall .unitbtn:hover {
+        background: url("../img/btnbg2.png");
+        background-size: 100% 100%;
+        color: #fff; }
