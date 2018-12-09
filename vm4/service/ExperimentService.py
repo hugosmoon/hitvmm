@@ -1,5 +1,4 @@
 # -*- coding: UTF-8 -*-
-from vm4.dao.ExperimentDao import getExperimentDao
 from vm4.service import VideoService
 import json
 from vm4.models import *

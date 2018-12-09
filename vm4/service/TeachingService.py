@@ -1,12 +1,10 @@
 # -*- coding: UTF-8 -*-
-from vm4.dao.TeachingDao import getTeachingDao
 from vm4.service import ReportService
 from vm4.service import ExperimentService
 from vm4.service import VideoService
 from vm4.service import TeacherService
 from vm4.view import utils
 from vm4.context import CONSTANTS
-from vm4.dao.baseDao.page import Page
 import json
 from vm4.models import *
 from django.core.paginator import Paginator

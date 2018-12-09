@@ -1,5 +1,4 @@
 # -*- coding: UTF-8 -*-
-from vm4.dao.VideoDao import getVideoDao
 from vm4.view import utils
 from vm4.context import CONSTANTS
 from vm4.models import *

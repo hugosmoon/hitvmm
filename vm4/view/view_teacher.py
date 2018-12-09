@@ -10,7 +10,6 @@ from vm4.service import ReportService
 from vm4.service import StudentService
 from vm4.service import TemplateService
 from vm4.service import VideoService
-from vm4.dao.baseDao.page import Page
 from vm4.context import CONSTANTS
 from django.http import FileResponse
 import xlrd

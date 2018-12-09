@@ -1,5 +1,4 @@
 # -*- coding: UTF-8 -*-
-from vm4.dao.AdminDao import getAdminDao
 from vm4.service import TeacherService
 from vm4.context import CONSTANTS
 from vm4.view import utils

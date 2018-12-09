@@ -1,5 +1,4 @@
 # -*- coding: UTF-8 -*-
-from vm4.dao.ReportDao import getReportDao
 import datetime
 from vm4.context import CONSTANTS
 from vm4.view import utils

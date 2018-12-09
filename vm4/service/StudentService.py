@@ -1,8 +1,6 @@
 # -*- coding: UTF-8 -*-
-from vm4.dao.StudentDao import getStudentDao
 from vm4.context import CONSTANTS
 from vm4.view import utils
-from vm4.dao.baseDao.page import Page
 from vm4.models import *
 from django.core.paginator import Paginator
 
