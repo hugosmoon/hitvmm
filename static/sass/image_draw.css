@@ -1,0 +1,117 @@
+.addnewexptit {
+  font-size: 24px;
+  color: #000035;
+  margin-top: 30px; }
+
+.operationbox {
+  width: 100%;
+  height: 1200px;
+   margin-top: 15px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex; }
+  .operationbox .left {
+    width: 800px;
+    height: 100%; }
+  .operationbox .right {
+    width: 400px;
+    min-height: 600px;
+    margin-left: 20px; }
+    .operationbox .right .rtit {
+      font-size: 18px;
+      margin-top: 20px; }
+    .operationbox .right .runm {
+      font-size: 12px; }
+    .operationbox .right .unitbox .unit {
+      margin-top: 20px;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      font-size: 14px; }
+      .operationbox .right .unitbox .unit .uright {
+        margin-left: 10px; }
+    .operationbox .right .rangebox .rtit {
+      font-size: 14px; }
+    .operationbox .right .obtnbox {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      margin-top: 35px; }
+      .operationbox .right .obtnbox .obtn {
+        width: 123px;
+        height: 32px;
+        line-height: 32px;
+        text-align: center;
+        background-color: #cbd6ee;
+        border-radius: 2px;
+        font-size: 15px;
+        cursor: pointer; }
+      .operationbox .right .obtnbox .restart {
+        margin-left: 50px; }
+      .operationbox .right .obtnbox .stop {
+        margin-left: 50px; }
+ input.input1{
+   height: 22px;
+   width:100px;
+   border-radius:5px;
+   border-style:solid;
+   border-color:#666;
+   border-width:1px;
+ }
+
+ div.div1{
+   margin-top: 10px;
+   margin-bottom: 15px;
+ }
+ p.title01{
+   font-size:18px;
+   margin-top: 8px;
+   margin-bottom: 8px;
+   font-weight:bold;
+ }
+  .box-left{
+
+   float: left;
+   margin-right: 20px;
+  }
+  .box-right{
+
+    float: left;
+  }
+
+  button.bun_del{
+    border-style:none;
+    height: 22px;
+    width:45px;
+    border-radius:5px;
+    background:#FF6633;
+    color:#FFFFFF;
+    cursor:pointer;
+  }
+  .bun_add{
+    border-style:none;
+    height: 30px;
+    width:100px;
+    border-radius:5px;
+    background:#0099FF;
+    color:#FFFFFF;
+    cursor:pointer;
+  }
+  .bun_draw{
+    border-style:none;
+    height: 30px;
+    width:100px;
+    border-radius:5px;
+    background:#0099FF;
+    color:#FFFFFF;
+    cursor:pointer;
+  }
+  .bun_save{
+    border-style:none;
+    height: 30px;
+    width:100px;
+    border-radius:5px;
+    background:#00CC33;
+    color:#FFFFFF;
+    cursor:pointer;
+  }

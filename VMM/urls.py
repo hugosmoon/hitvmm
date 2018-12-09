@@ -76,10 +76,16 @@ urlpatterns = [
     url(r'experiment/experiment2/',view_experiment.experiment2),
     url(r'experiment/experiment3/',view_experiment.experiment3),
     url(r'experiment/experiment4/',view_experiment.experiment4),
-    url(r'experiment/expoperation/',view_experiment.expoperation,name='expoperation'),
+    # url(r'experiment/expoperation/',view_experiment.expoperation,name='expoperation'),
     url(r'experiment/expoperation2/',view_experiment.expoperation2),
-    url(r'experiment/expsetting/',view_experiment.expsetting),
+    # url(r'experiment/expsetting/',view_experiment.expsetting),
     url(r'experiment/expsetting2/',view_experiment.expsetting2),
+
+
+    #experiment
+    url(r'experiment/expsetting/(?P<id>[0-9]+)$',view_experiment.expsetting,name='expsetting'),
+    url(r'experiment/expoperation/(?P<id>[0-9]+)$', view_experiment.expoperation,name='expoperation'),
+    url(r'experiment/image_draw/', view_experiment.image_draw,name='image_draw'),
 
     #实现切削力计算
     url(r'experiment/cutting_force_cal/',view_experiment.cutting_force_cal,name='cutting_force_cal'),

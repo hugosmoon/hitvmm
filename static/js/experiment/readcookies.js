@@ -9,12 +9,6 @@ rake_angle=parseInt($.cookie('rake_angle'));
 clearance_angle=parseInt($.cookie('clearance_angle'));
 minor_clearance_angle=parseInt($.cookie('minor_clearance_angle'));
 corner_radius=parseFloat($.cookie('corner_radius'));
-// try {
-//     cutting_depth=$.cookie('cutting_depth');
-// }
-// try {
-//     feed_rate=$.cookie('feed_rate');
-// }
-// try {
-//     rot_speed=$.cookie('rot_speed');
-// }
+cutting_depth=parseFloat($.cookie('cutting_depth'));
+feed_rate=parseFloat($.cookie('feed_rate'));
+rot_speed=parseFloat($.cookie('rot_speed'));

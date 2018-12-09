@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+    <title>图像绘制</title>
+    {% load staticfiles %}
+    <link rel="shortcut icon" href="{% static 'img/hit.ico' %}" type="image/x-icon" />
+    <link rel="icon" href="{% static 'img/hit.ico' %}" type="image/gif">
+    <!-- 初始化CSS -->
+    <link href="{% static 'plugin/swiper.css' %}">
+    <link rel="stylesheet" href="{% static 'plugin/res.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'sass/public.css'%}">
+    <link rel="stylesheet" href="{% static 'plugin/zane-calendar.min.css'%}">
+    <!-- 模块css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'sass/image_draw.css'%}">
+    <style>
+        .navtip4 > a {
+            color: #0055ff !important;
+        }
+    </style>
+
+</head>
+<body>
+<div class="topwall">
+    <div class="top2">
+        <img class="l_float logo" src="../../static/img/logo.png" alt="">
+        <div class="l_float title">机械制造虚拟实验室</div>
+        <div class="l_float userlog"></div>
+        <div class="l_float username">王小明</div>
+        <div class="l_float loginbtn">退出登录</div>
+    </div>
+</div>
+<div class="wall5">
+       <div class="addnewexptit">图像绘制</div>
+        <div class="operationbox">
+        <div class="left">
+
+            <div class="boximg boximg1">
+                <canvas id="CoordinateSystem" width="800" height="800" style="border:0.5px solid #777;"></canvas>
+            </div>
+        </div>
+        <div class="right">
+            <div class="div1">
+                <p class="title01">X轴</p>
+                <div class="box-left">名称：<input class="input1" id="x_name" /></div>
+                <div class="box-right">单位：<input class="input1"  id="x_unit"/></div>
+                <div style="clear:both;"></div>
+
+            </div>
+            <div class="div1">
+                <p class="title01">Y轴</p>
+               <div class="box-left">名称：<input class="input1" id="y_name" /></div>
+                <div class="box-right">单位：<input class="input1"  id="y_unit"/></div>
+                <div style="clear:both;"></div>
+            </div>
+            <br>
+            <p class="title01">添加数据</p>
+            <div id="appendDevelopmentNumber"></div>
+            <div> <button class="bun_add" onclick="addDevelopmentNumber()">添加</button></div><br>
+
+            <div class="div1">
+                <p class="title01">选择坐标系类型</p>
+               <div class="box-left"><input name="CoordinateSystemType" type="radio" value="0" onclick="CoordinateSystemType=0" checked/> 普通坐标系</div>
+                <div class="box-right"><input name="CoordinateSystemType" type="radio" value="1" onclick="CoordinateSystemType=1"/> 双对数标系</div>
+                <div style="clear:both;"></div>
+            </div>
+
+            <div>
+
+
+            </div>
+            <div  class="div1">
+                <div class="box-left"><button class="bun_draw"  onclick="display()">绘制图像</button></div>
+                <div class="box-left"><button class="bun_save" id="save_img">保存图象</button></div>
+            </div>
+        </div>
+        </div>
+</div>
+
+
+
+</body>
+<!-- 引用插件 -->
+<script src="{% static 'plugin/jquery.js' %}"></script>
+<script src="{% static 'js/experiment/jcanvas.js' %}"></script>
+
+<script type="text/javascript">
+
+
+number=0;
+
+CoordinateSystemType=$('input[name="CoordinateSystemType"]:checked').val();
+
+addDevelopmentNumber();
+addDevelopmentNumber();
+addDevelopmentNumber();
+PlotCoordinateSystem();
+
+//添加
+function addDevelopmentNumber() {
+    $("#appendDevelopmentNumber").append(
+        '<div class="div1">'+
+        '   <div class="box-left">X 值：<input class="input1" name="x" id=x"'+number+'"/></div>' +
+        '   <div class="box-left">Y 值：<input class="input1" name="y" id=y"'+number+'"/></div>' +
+        '   <button class="bun_del" onclick="delDevelopmentNumber(this)">' + '删除</button>\n'+
+        '<div style="clear:both;"></div></div>'
+    )
+    number+=1;
+}
+
+//移除
+function delDevelopmentNumber(e) {
+   
+    $(e).parent().remove();
+    number-=1;
+}
+
+//展示
+function display(){
+    var xArray=new Array();
+    var yArray=new Array();
+    //取值状态，0为失败，1为成功
+    x_status=1;
+    y_status=1;
+    i=0;
+    $("#appendDevelopmentNumber input[name=x]").each(function () {
+
+        if(isNaN(this.value)||this.value==""){
+
+            x_status=0;
+        }
+        xArray[i]=(parseFloat(this.value));
+        i+=1;
+
+
+ });
+    j=0;
+    $("#appendDevelopmentNumber input[name=y]").each(function () {
+
+        if(isNaN(this.value)||this.value==""){
+
+            y_status=0;
+        }
+        yArray[j]=(parseFloat(this.value));
+        j+=1;
+ })
+    if (x_status&&y_status) {
+        PlotCoordinateSystem();
+        x_min = Math.min.apply(null, xArray);
+        x_max = Math.max.apply(null, xArray);
+
+        y_min = Math.min.apply(null, yArray);
+        y_max = Math.max.apply(null, yArray);
+
+        if (CoordinateSystemType == 0) {
+            x_dis = x_max - x_min;
+            y_dis = y_max - y_min;
+            for (n = 0; n < xArray.length; n += 1) {
+                $('#CoordinateSystem').drawArc({
+
+                    fillStyle: 'blue',
+                    strokeWidth: 2,
+                    x: 50 + (xArray[n] - x_min) * 700 / x_dis, y: 750 - (yArray[n] - y_min) * 700 / y_dis,
+                    radius: 4,
+
+                });
+                $('#CoordinateSystem').drawText({
+                  text: 'X:'+xArray[n]+'\nY:'+yArray[n],
+                  x: 45 + (xArray[n] - x_min) * 700 / x_dis, y: 770 - (yArray[n] - y_min) * 700 / y_dis,
+                     fillStyle: '#000',
+                      fontStyle: 'bold',
+                      fontSize: '8pt',
+                      fontFamily: 'Trebuchet MS, sans-serif',
+                      align: 'left',
+                      respectAlign: true,
+                      maxWidth: 300,
+
+
+                });
+            }
+        }
+
+        else {
+
+
+            if (x_min <= 0 || y_min <= 0) {
+                alert("只有正数才有对数~");
+                return false;
+            }
+            x_dis = x_max / x_min;
+            y_dis = y_max / y_min;
+            x_nu = Math.ceil(Math.log(x_dis) / Math.log(10));
+            y_nu = Math.ceil(Math.log(y_dis) / Math.log(10));
+            for (var m = 0; m <= x_nu-1; m += 1) {
+                $('#CoordinateSystem').drawVector({
+                    strokeStyle: '#000',
+                    strokeWidth: 0.5,
+                    x: 50 + m * (700 / x_nu), y: 750,
+                    a1: 0, l1: 700
+                });
+                for (var n = 0; n < 10; n += 1) {
+                    $('#CoordinateSystem').drawVector({
+                        strokeStyle: '#000',
+                        strokeWidth: 0.3,
+                        x: 50 + (((Math.log(n + 1) / Math.log(10))) +m) * (700 / x_nu), y: 750,
+                        a1: 0, l1: 700
+                    });
+                }
+
+            }
+            for (var m = 0; m <= y_nu-1; m += 1) {
+                $('#CoordinateSystem').drawVector({
+                    strokeStyle: '#000',
+                    strokeWidth: 0.5,
+                    x: 50 , y: 750- m * (700 / y_nu),
+                    a1: 90, l1: 700
+                });
+                for (var n = 0; n < 10; n += 1) {
+                    $('#CoordinateSystem').drawVector({
+                        strokeStyle: '#000',
+                        strokeWidth: 0.3,
+                        x: 50 , y: 750- (((Math.log(n + 1) / Math.log(10))) +m) * (700 / y_nu),
+                        a1: 90, l1: 700
+                    });
+                }
+
+            }
+            //绘制点
+            for (n = 0; n < xArray.length; n += 1) {
+                $('#CoordinateSystem').drawArc({
+
+                    fillStyle: 'blue',
+                    strokeWidth: 2,
+                    x: 50 + (((Math.log(xArray[n]/x_min))/Math.log(10))/ x_nu)*700, y: 750 - (((Math.log(yArray[n]/y_min))/Math.log(10))/ y_nu)*700,
+                    radius: 4,
+
+                });
+                 $('#CoordinateSystem').drawText({
+                  text: 'X:'+xArray[n]+'\nY:'+yArray[n],
+                  x: 45 + (((Math.log(xArray[n]/x_min))/Math.log(10))/ x_nu)*700, y: 770 - (((Math.log(yArray[n]/y_min))/Math.log(10))/ y_nu)*700,
+                     fillStyle: '#000',
+                      fontStyle: 'bold',
+                      fontSize: '8pt',
+                      fontFamily: 'Trebuchet MS, sans-serif',
+                      align: 'left',
+                      respectAlign: true,
+                      maxWidth: 300,
+
+
+                });
+            }
+        }
+    }
+    else {
+        alert("输入必须全部为数字");
+
+    }
+
+
+
+
+}
+
+
+//绘制坐标轴
+    function PlotCoordinateSystem() {
+            $('#CoordinateSystem').clearCanvas().drawPath({
+              strokeStyle: '#000',
+              strokeWidth: 1,
+
+              p1: {
+                type: 'line',
+                rounded: true,
+                endArrow: true,
+                arrowRadius: 10,
+                arrowAngle: 90,
+                x1: 50, y1: 750,
+                x2: 780, y2: 750
+              },
+                p2: {
+                type: 'line',
+                rounded: true,
+                endArrow: true,
+                arrowRadius: 10,
+                arrowAngle: 90,
+                x1: 50, y1: 750,
+                x2: 50, y2: 20
+              }
+            }).drawText({
+                  text: '黄慧宇 1090810518',
+                  x: 750, y: 30,
+                     fillStyle: '#37c',
+                      fontStyle: 'bold',
+                      fontSize: '10pt',
+                      fontFamily: 'Trebuchet MS, sans-serif',
+                      align: 'right',
+                      respectAlign: true,
+                      maxWidth: 500,
+
+
+                }).drawText({
+                  text: 'X:'+$('#x_name').val()+' / '+$('#x_unit').val(),
+                  x: 780, y: 770,
+                     fillStyle: '#000',
+                      fontStyle: 'bold',
+                      fontSize: '10pt',
+                      fontFamily: 'Trebuchet MS, sans-serif',
+                      align: 'right',
+                      respectAlign: true,
+                      maxWidth: 500,
+
+
+                }).drawText({
+                  text: 'Y:'+$('#y_name').val()+' / '+$('#y_unit').val(),
+                  x: 60, y: 30,
+                     fillStyle: '#000',
+                      fontStyle: 'bold',
+                      fontSize: '10pt',
+                      fontFamily: 'Trebuchet MS, sans-serif',
+                      align: 'left',
+                      respectAlign: true,
+                      maxWidth: 500,
+
+
+                });
+//绘制网格-普通坐标系
+        if (CoordinateSystemType==0){
+            for (var s = 50;s <=750;s=s+7) {
+                $('#CoordinateSystem').drawVector({
+                  strokeStyle: '#000',
+                  strokeWidth: 0.1,
+                  x: s, y: 750,
+                  a1: 0, l1: 700
+                });
+                $('#CoordinateSystem').drawVector({
+                  strokeStyle: '#000',
+                  strokeWidth: 0.2,
+                  x: 50, y: s,
+                  a1: 90, l1: 700
+                });
+            }
+            for (var s = 50;s <=750;s=s+70) {
+                $('#CoordinateSystem').drawVector({
+                  strokeStyle: '#000',
+                  strokeWidth: 0.3,
+                  x: s, y: 750,
+                  a1: 0, l1: 700
+                });
+                $('#CoordinateSystem').drawVector({
+                  strokeStyle: '#000',
+                  strokeWidth: 0.3,
+                  x: 50, y: s,
+                  a1: 90, l1: 700
+                });
+            }
+        }
+
+    }
+$('#save_img').on("click",function(){
+    file_name=(new Date()).valueOf()+".png"
+    exportCanvasAsPNG("CoordinateSystem",file_name);
+})
+
+function exportCanvasAsPNG(id, fileName) {
+        var canvasElement = document.getElementById(id);
+        var MIME_TYPE = "image/png";
+        var imgURL = canvasElement.toDataURL(MIME_TYPE);
+        var dlLink = document.createElement('a');
+        dlLink.download = fileName;
+        dlLink.href = imgURL;
+        dlLink.dataset.downloadurl = [MIME_TYPE, dlLink.download, dlLink.href].join(':');
+        document.body.appendChild(dlLink);
+        dlLink.click();
+        document.body.removeChild(dlLink);
+    }
+
+
+</script>
+</html>

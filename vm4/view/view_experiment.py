@@ -12,17 +12,46 @@ def experiment3(request):
 def experiment4(request):
     return render(request,"experiment/experiment4.html")
 def expoperation(request):
-    return render(request,"experiment/expoperation.html")
+    return render(request, "experiment/experiment1/expoperation.html")
 def expoperation2(request):
     return render(request,"experiment/expoperation2.html")
-def expsetting(request):
-    return render(request,"experiment/expsetting.html")
+def expsetting(request,id):
+    if id == '1':
+        return render(request, "experiment/experiment1/expsetting.html")
+    elif id == '2':
+        return render(request, "experiment/experiment2/expsetting.html")
+    elif id == '3':
+        return render(request, "experiment/experiment3/expsetting.html")
+    elif id == '4':
+        return render(request, "experiment/experiment4/expsetting.html")
+    elif id == '5':
+        return render(request, "experiment/experiment5/expsetting.html")
+    elif id == '6':
+        return render(request, "experiment/experiment6/expsetting.html")
+    elif id == '8':
+        return render(request, "experiment/experiment8/expsetting.html")
+
 def expsetting2(request):
     return render(request,"experiment/expsetting2.html")
 
-def expoperation(request):
-    return render(request,"experiment/expoperation.html")
+def expoperation(request,id):
+    if id == '1':
+        return render(request, "experiment/experiment1/expoperation.html")
+    elif id=='2':
+        return render(request, "experiment/experiment2/expoperation.html")
+    elif id=='3':
+        return render(request, "experiment/experiment3/expoperation.html")
+    elif id=='4':
+        return render(request, "experiment/experiment4/expoperation.html")
+    elif id == '5':
+        return render(request, "experiment/experiment5/expoperation.html")
+    elif id == '6':
+        return render(request, "experiment/experiment6/expoperation.html")
+    elif id == '8':
+        return render(request, "experiment/experiment8/expoperation.html")
 
+def image_draw(request):
+    return render(request,"experiment/image_draw.html")
 
 
 # 计算切削力
