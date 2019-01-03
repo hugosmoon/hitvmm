@@ -11,6 +11,7 @@ from vm4.service import TemplateService
 from vm4.context import CONSTANTS
 from django.http import FileResponse
 import os, uuid
+from django.utils.http import urlquote
 
 
 # 登录页面
@@ -120,7 +121,8 @@ def downloadData(request):
     filesuffix = os.path.splitext(filename)[1]
     response = FileResponse(file)
     response['Content-Type'] = 'application/octet-stream'
-    response['Content-Disposition'] = 'attachment;filename="实验数据' + filesuffix + '"'
+    response['Content-Disposition'] = 'attachment;filename="%s"' % (urlquote("实验数据" + filesuffix))
+
     return response
 
 
@@ -138,7 +140,7 @@ def downloadTemplate(request):
     filesuffix = os.path.splitext(filename)[1]
     response = FileResponse(file)
     response['Content-Type'] = 'application/octet-stream'
-    response['Content-Disposition'] = 'attachment;filename="实验模板' + filesuffix + '"'
+    response['Content-Disposition'] = 'attachment;filename="%s"' % (urlquote("实验模板" + filesuffix))
     return response
 
 

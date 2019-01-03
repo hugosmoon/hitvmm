@@ -71,6 +71,9 @@ urlpatterns = [
     url(r'addTeacher/', view_admin.addTeacher),
     url(r'addAdmin/', view_admin.addAdmin),
     url(r'getlisttemplate/', view_admin.getListTemplate),
+    url(r'addBatchStudent/', view_admin.addBatchStudent),
+    url(r'addBatchTeacher/', view_admin.addBatchTeacher),
+    url(r'addBatchAdmin/', view_admin.addBatchAdmin),
 
 
     #experiment

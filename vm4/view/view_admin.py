@@ -8,8 +8,11 @@ from vm4.service import StudentService
 from vm4.view import utils
 from VMM import superadmin
 from vm4.context import CONSTANTS
-import os
+import xlrd
+import xlwt
+import os, uuid, json
 from django.http import FileResponse
+from django.utils.http import urlquote
 
 
 # 管理员登录页
@@ -307,9 +310,115 @@ def getListTemplate(request):
     file = open(templateaddr, "rb")
     response = FileResponse(file)
     response['Content-Type'] = 'application/octet-stream'
-    response['Content-Disposition'] = 'attachment';
-    response['filename'] = filename + '.xlsx'
+    response['Content-Disposition'] = 'attachment;filename="%s"' % (urlquote(filename + '.xlsx'))
     return response;
+
+
+def addBatchStudent(request):
+    file = request.FILES.get('file', None)
+
+    stulistfilename = file.name
+    if file is None:
+        return HttpResponse(
+            "<script>if(confirm('请选择你要上传的学生名单！')){history.go(-1);location.reload()}else{history.go(-1);location.reload()}</script>")
+    stulistfilename = file.name
+    stulistfilesuffix = os.path.splitext(stulistfilename)[1]
+    if stulistfilesuffix != ".xsl" and stulistfilesuffix != ".xlsx":
+        return HttpResponse(
+            "<script>if(confirm('学生名单必须为excel格式！')){history.go(-1);location.reload()}else{history.go(-1);location.reload()}</script>")
+
+    stulistfilename = str(uuid.uuid1()) + stulistfilesuffix
+    fp = open(os.path.join(CONSTANTS.STUDENTLISTURL_PRE + stulistfilename), 'wb+')
+    for chunk in file.chunks():  # 分块写入文件
+        fp.write(chunk)
+    fp.close()
+
+    studentList = getStudentListByExcel(stulistfilename)
+
+    for student in studentList:
+        studentobj = None
+        studentobj = StudentService.getStudentByNum(student["number"])
+        if studentobj is None:
+            StudentService.addStudent(student["name"], student["number"], student["teachername"],
+                                      student["teachernumber"])
+
+    return HttpResponse(
+        "<script>if(confirm('添加成功！')){history.go(-1);location.reload()}else{history.go(-1);location.reload()}</script>")
+
+
+def addBatchTeacher(request):
+    file = request.FILES.get('file', None)
+
+    teacherfilename = file.name
+    if file is None:
+        return HttpResponse(
+            "<script>if(confirm('请选择你要上传的教师名单！')){history.go(-1);location.reload()}else{history.go(-1);location.reload()}</script>")
+    teacherfilename = file.name
+    tealistfilesuffix = os.path.splitext(teacherfilename)[1]
+    if tealistfilesuffix != ".xsl" and tealistfilesuffix != ".xlsx":
+        return HttpResponse(
+            "<script>if(confirm('教师名单必须为excel格式！')){history.go(-1);location.reload()}else{history.go(-1);location.reload()}</script>")
+
+    teacherfilename = str(uuid.uuid1()) + tealistfilesuffix
+    fp = open(os.path.join(CONSTANTS.STUDENTLISTURL_PRE + teacherfilename), 'wb+')
+    for chunk in file.chunks():  # 分块写入文件
+        fp.write(chunk)
+    fp.close()
+
+    teacherlist = getTeacherListByExcel(teacherfilename);
+
+    for teacher in teacherlist:
+        teacherobj = TeacherService.getTeacherByNumber(teacher["number"])
+        if teacherobj is None:
+            TeacherService.addTeacher(teacher["name"], teacher["number"])
+        else:
+            return HttpResponse(
+                "<script>if(confirm('教师已存在，姓名：" + teacher["name"] + "，编号：" + teacher[
+                    "number"] + "')){history.go(-1);location.reload()}else{history.go(-1);location.reload()}</script>")
+    return HttpResponse(
+        "<script>if(confirm('添加成功！')){history.go(-1);location.reload()}else{history.go(-1);location.reload()}</script>")
+
+
+def addBatchAdmin(request):
+    file = request.FILES.get('file', None)
+
+    adminfilename = file.name
+    if file is None:
+        return HttpResponse(
+            "<script>if(confirm('请选择你要上传的管理员名单！')){history.go(-1);location.reload()}else{history.go(-1);location.reload()}</script>")
+    adminfilename = file.name
+    adminlistfilesuffix = os.path.splitext(adminfilename)[1]
+    if adminlistfilesuffix != ".xsl" and adminlistfilesuffix != ".xlsx":
+        return HttpResponse(
+            "<script>if(confirm('管理员名单必须为excel格式！')){history.go(-1);location.reload()}else{history.go(-1);location.reload()}</script>")
+
+    adminfilename = str(uuid.uuid1()) + adminlistfilesuffix
+    fp = open(os.path.join(CONSTANTS.STUDENTLISTURL_PRE + adminfilename), 'wb+')
+    for chunk in file.chunks():  # 分块写入文件
+        fp.write(chunk)
+    fp.close()
+
+    adminlist = getAdminListByExcel(adminfilename)
+
+    for admin in adminlist:
+        teacher = TeacherService.getTeacherByNumber(admin["number"])
+        if teacher is None:
+            return HttpResponse(
+                "<script>if(confirm('此教师" + admin[
+                    "number"] + "不存在，请先添加教师！')){history.go(-1);location.reload()}else{history.go(-1);location.reload()}</script>")
+        if teacher.name != admin["name"]:
+            return HttpResponse(
+                "<script>if(confirm('教师姓名" + admin["name"] + "与教师编号" + admin[
+                    "number"] + "不符，请确认!')){history.go(-1);location.reload()}else{history.go(-1);location.reload()}</script>")
+        adminobj = AdminService.getAdminByTeacherId(teacher.id)
+        if adminobj is not None:
+            return HttpResponse(
+                "<script>if(confirm('此教师" + admin[
+                    "number"] + "已经设置过管理员!')){history.go(-1);location.reload()}else{history.go(-1);location.reload()}</script>")
+        adminid = AdminService.addAdmin(teacher.id)
+
+    return HttpResponse(
+        "<script>if(confirm('添加成功！')){history.go(-1);location.reload()}else{history.go(-1);location.reload()}</script>")
 
 
 # 获取登录页response
@@ -319,3 +428,59 @@ def getloginResponse(request):
     response.delete_cookie("adminid")
     response.delete_cookie("adminname")
     return response
+
+
+# 根据学生名单获取学生列表
+def getStudentListByExcel(filename):
+    studentlist = []
+    book = xlrd.open_workbook(CONSTANTS.STUDENTLISTURL_PRE + filename)
+    sheet0 = book.sheet_by_index(0)
+    nrows = sheet0.nrows  # 获取行总数
+    for i in range(nrows):
+        if i == 0:
+            continue;
+        row_data = sheet0.row_values(i)
+        student = {
+            "name": sheet0.cell_value(i, 0),
+            "number": str(int(sheet0.cell_value(i, 1))),
+            "teachername": sheet0.cell_value(i, 2),
+            "teachernumber": str(int(sheet0.cell_value(i, 3)))
+        }
+        studentlist.append(student)
+    return studentlist
+
+
+# 根据老师名单获取老师列表
+def getTeacherListByExcel(filename):
+    teacherlist = []
+    book = xlrd.open_workbook(CONSTANTS.STUDENTLISTURL_PRE + filename)
+    sheet0 = book.sheet_by_index(0)
+    nrows = sheet0.nrows  # 获取行总数
+    for i in range(nrows):
+        if i == 0:
+            continue;
+        row_data = sheet0.row_values(i)
+        teacher = {
+            "name": sheet0.cell_value(i, 0),
+            "number": sheet0.cell_value(i, 1),
+        }
+        teacherlist.append(teacher)
+    return teacherlist
+
+
+# 根据管理员名单获取管理员列表
+def getAdminListByExcel(filename):
+    adminlist = []
+    book = xlrd.open_workbook(CONSTANTS.STUDENTLISTURL_PRE + filename)
+    sheet0 = book.sheet_by_index(0)
+    nrows = sheet0.nrows  # 获取行总数
+    for i in range(nrows):
+        if i == 0:
+            continue;
+        row_data = sheet0.row_values(i)
+        admin = {
+            "name": sheet0.cell_value(i, 0),
+            "number": sheet0.cell_value(i, 1),
+        }
+        adminlist.append(admin)
+    return adminlist

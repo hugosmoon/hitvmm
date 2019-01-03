@@ -108,7 +108,9 @@
                             <li class="updatamod unitbtn" teachingid="{{ teaching.id }}"
                                 experimentid="{{ teaching.experimentid }}">实验报告模版更换
                             </li>
-                            <li class="changevide unitbtn" video="{{ teaching.videos }}">更换预习视频</li>
+                            <li class="changevide2 unitbtn" teachingid="{{ teaching.id }}"
+                                experimentid="{{ teaching.experimentid }}" videos="{{ teaching.videos }}">更换预习视频
+                            </li>
                             <li class="changedata unitbtn lastbtn" deadline="{{ teaching.deadline|date:"Y/m/d" }}"
                                 teachingid="{{ teaching.id }}">
                                 报告提交日期更改
@@ -169,66 +171,21 @@
     <!--更换视频-->
     <div class="popupwall popupwall5">
         <img class="dele" src="../static/img/dele.png" alt="">
-        <div class="videowall">
-
-            <div class="videobox">
-                <div class="v_top">我是一个没有我是一个没有</div>
-                <div class="v_mid"></div>
-                <div class="v_bot">
-                    <div class="v_btn v_dele">删除</div>
-                    <div class="v_btn v_change">更换</div>
-                </div>
-            </div>
-            <div class="videobox">
-                <div class="v_top">我是一个没有我是一个没有</div>
-                <div class="v_mid"></div>
-                <div class="v_bot">
-                    <div class="v_btn v_dele">删除</div>
-                    <div class="v_btn v_change">更换</div>
-                </div>
-            </div>
-            <div class="videobox">
-                <div class="v_top">我是一个没有我是一个没有</div>
-                <div class="v_mid"></div>
-                <div class="v_bot">
-                    <div class="v_btn v_dele">删除</div>
-                    <div class="v_btn v_change">更换</div>
-                </div>
-            </div>
-            <div class="videobox">
-                <div class="v_top">我是一个没有我是一个没有</div>
-                <div class="v_mid"></div>
-                <div class="v_bot">
-                    <div class="v_btn v_dele">删除</div>
-                    <div class="v_btn v_change">更换</div>
-                </div>
-            </div>
-            <div class="videobox">
-                <div class="v_top">我是一个没有我是一个没有</div>
-                <div class="v_mid"></div>
-                <div class="v_bot">
-                    <div class="v_btn v_dele">删除</div>
-                    <div class="v_btn v_change">更换</div>
-                </div>
-            </div>
-            <div class="videobox">
-                <div class="v_top">我是一个没有我是一个没有</div>
-                <div class="v_mid"></div>
-                <div class="v_bot">
-                    <div class="v_btn v_dele">删除</div>
-                    <div class="v_btn v_change">更换</div>
-                </div>
-            </div>
-            <div class="videobox">
-                <div class="v_top">我是一个没有我是一个没有</div>
-                <div class="v_mid"></div>
-                <div class="v_bot">
-                    <div class="v_btn v_dele">删除</div>
-                    <div class="v_btn v_change">更换</div>
-                </div>
+        <input type="hidden" id="changevideoteachingid" teachingid="">
+        <div class="videowall2">
+            <div class="videowall">
             </div>
         </div>
+
+        <div class="vbtnbox">
+            <div class="vbtn preadd2">前方添加</div>
+            <div class="vbtn changvideo2">更改</div>
+            <div class="vbtn cvdele2">删除</div>
+            <div class="vbtn behindadd2">后方添加</div>
+            <div class="vbtn vbover2">完成</div>
+        </div>
     </div>
+
     <!--确认操作-->
     <div class="popupwall popupwall7">
         <div class="popuptop">
@@ -250,18 +207,31 @@
         </div>
         <div class="btn sure">确定</div>
     </div>
-    <!--观看视频-->
-    <div class="popupwall popupwall9">
-        <img class="dele" src="../static/img/dele.png" alt="">
-        <div class="v_name">我是一个没有名字的视频，我是个没有名字。</div>
-        <div class="vbox"></div>
-        <div class="vchangebox">
-            <div class="vchange">
-                <div class="v_svideo"></div>
-                <div class="v_svideoname">我是一个没有..我是一个没有..</div>
-            </div>
-
+    <!--修改视频时上传文件-->
+    <div class="popupwall popupwall2_2">
+        <div class="popuptop">
+            <img class="logo" src="../static/img/logo.png" alt="">
+            <img class="changevdele" src="../static/img/dele.png" alt="">
         </div>
+        <!--提示文案-->
+        <div class="popupmid ">视频名称</div>
+        <input type="hidden" id="addvideotype" value="0">
+        <form id="addvideo" action="/addexperiment/" method="post" enctype="multipart/form-data">
+            <input id="videoexperimentid" type="hidden" name="experimentid" value=""/>
+            <!--说明框-->
+            <textarea class="shuomingbox" name="name"></textarea>
+            <!--提交-->
+            <div class="btn changevideofile">
+                选择文件
+                <input class="uploadfile" type="file" name="file" onchange="publicObj.updataChangeVideo()">
+            </div>
+            <div class="btn cancle changvideocancle">
+                取消
+            </div>
+            <div class="btn sure changvideosure2">确认上传</div>
+
+            <div class="videofileuploadname"></div>
+        </form>
     </div>
 </div>
 </body>
@@ -273,6 +243,7 @@
 <script src="../static/plugin/zane-calendar.min.js"></script>
 <script src="../static/plugin/config.js"></script>
 <script src="../static/plugin/fastclick.js"></script>
+<script src="../static/plugin/jquery.form.js"></script>
 <script src="../static/plugin/laypage/laypage.js"></script>
 <script src="../static/js/public.js"></script>
 <!-- 模块JS -->
@@ -297,5 +268,9 @@
             }
         }
     });
+
+    function beforeCheck() {
+        return
+    }
 </script>
 </html>
