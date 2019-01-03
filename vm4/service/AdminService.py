@@ -1,52 +1,54 @@
 # -*- coding: UTF-8 -*-
-from vm4.dao.AdminDao import getAdminDao
 from vm4.service import TeacherService
 from vm4.context import CONSTANTS
 from vm4.view import utils
-
-
-def getStudentByNumAndName(stunum, name):
-    adminDao = getAdminDao()
-    filters = {
-        "f_number": stunum,
-        "f_name": name
-    }
-    return adminDao.select_one(None, filters)
+from vm4.models import *
 
 
 def getAdminByTeacherId(teacherid):
-    adminDao = getAdminDao()
-    filter = {
-        "f_teacher_id": teacherid
-    }
-    return adminDao.select_one(None, filter)
+    try:
+        admin = Admin.objects.filter(teacherid=teacherid, isdelete=CONSTANTS.ISDELETE_NOT).get()
+    except:
+        return None
+    else:
+        return admin
 
 
 def getAllAdmin():
-    adminDao = getAdminDao()
-    adminList = adminDao.select_all(None, None)
-    for admin in adminList:
-        teacher = TeacherService.getTeacherById(admin["f_teacher_id"])
-        admin["f_name"] = teacher["f_name"]
-        admin["f_number"] = teacher["f_number"]
-    return adminList
+    try:
+        adminList = Admin.objects.filter(isdelete=CONSTANTS.ISDELETE_NOT).all()
+    except:
+        return None
+    else:
+        adminDictList = []
+        for admin in adminList:
+            adminDict = {
+                "id": admin.id,
+                "teacherid": admin.teacherid,
+                "isdelete": admin.isdelete,
+                "createtime": admin.createtime,
+                "updatetime": admin.updatetime
+            }
+            teacher = Teacher.objects.filter(id=admin.teacherid, isdelete=CONSTANTS.ISDELETE_NOT).get()
+            adminDict['f_name'] = teacher.name
+            adminDict['f_number'] = teacher.number
+            adminDictList.append(adminDict)
+        return adminDictList
 
 
 def deleteAmin(adminid):
-    adminDao = getAdminDao()
-    filter = {
-        "f_id": adminid,
-        "f_is_delete": CONSTANTS.ISDELETE_YES
-    }
-    return adminDao.update_by_primarikey_selective(None, filter);
+    try:
+        admin = Admin.objects.filter(id=adminid, isdelete=CONSTANTS.ISDELETE_NOT)
+    except:
+        return None
+    else:
+        admin.isdelete = CONSTANTS.ISDELETE_YES
+        admin.save()
+        return admin
 
 
 def addAdmin(teacherid):
-    adminDao = getAdminDao()
-    nowtime = utils.getNowStr()
-    admin = {
-        "f_teacher_id": teacherid,
-        "f_createtime": nowtime,
-        "f_updatetime": nowtime
-    }
-    adminDao.save(None, admin)
+    now = utils.getNow()
+    admin = Admin(teacherid=teacherid, isdelete=CONSTANTS.ISDELETE_NOT, createtime=now, updatetime=now)
+    admin.save()
+    return admin.id

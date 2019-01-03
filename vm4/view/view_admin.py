@@ -36,13 +36,13 @@ def adminlogin(request):
     if teacher is None:
         responseReturn = Response("-1", "用户名或密码错误")
         return HttpResponse(responseReturn.__str__())
-    admin = AdminService.getAdminByTeacherId(teacher["f_id"])
+    admin = AdminService.getAdminByTeacherId(teacher.id)
     if admin is not None:
         responseReturn = Response(None, None)
         response = HttpResponse(responseReturn.__str__())
         utils.setCookie(response, "issuperadmin", "0")
-        utils.setCookie(response, "adminid", admin.get("f_id"))
-        utils.setCookie(response, "adminname", teacher.get("f_name"))
+        utils.setCookie(response, "adminid", admin.id)
+        utils.setCookie(response, "adminname", teacher.name)
         return response
     else:
         responseReturn = Response("-1", "登录失败")
@@ -127,7 +127,7 @@ def v_teachermanagement(request):
         countpage = 0
         i = 0
         if count > 0:
-            if count %10 >0:
+            if count % 10 > 0:
                 i = 1
             countpage = count / 10 + i
         teacherList = TeacherService.getTeacherByPage(None, None, page)
@@ -201,7 +201,10 @@ def deleteAdminByid(request):
         responseReturn = Response("-1", "您不是超级管理员，没有删除管理员的权限！")
         return HttpResponse(responseReturn.__str__())
     deleteadminid = utils.getParam(request, "adminid")
-    AdminService.deleteAmin(deleteadminid)
+    admin = AdminService.deleteAmin(deleteadminid)
+    if admin is None:
+        responseReturn = Response("-1", "删除失败！")
+        return HttpResponse(responseReturn.__str__())
     responseReturn = Response(None, None)
     return HttpResponse(responseReturn.__str__())
 
@@ -271,14 +274,14 @@ def addAdmin(request):
     if teacher is None:
         responseReturn = Response("-1", "此教师不存在，请先添加教师！")
         return HttpResponse(responseReturn.__str__())
-    if teacher["f_name"] != teachername:
+    if teacher.name != teachername:
         responseReturn = Response("-1", "教师姓名与教师编号不符，请确认！")
         return HttpResponse(responseReturn.__str__())
-    admin = AdminService.getAdminByTeacherId(teacher["f_id"])
+    admin = AdminService.getAdminByTeacherId(teacher.id)
     if admin is not None:
         responseReturn = Response("-1", "此教师已经设置过管理员！")
         return HttpResponse(responseReturn.__str__())
-    AdminService.addAdmin(teacher["f_id"])
+    adminid = AdminService.addAdmin(teacher.id)
     responseReturn = Response(None, None)
     return HttpResponse(responseReturn.__str__())
 
@@ -304,7 +307,8 @@ def getListTemplate(request):
     file = open(templateaddr, "rb")
     response = FileResponse(file)
     response['Content-Type'] = 'application/octet-stream'
-    response['Content-Disposition'] = 'attachment;filename="' + filename + '.xlsx"'
+    response['Content-Disposition'] = 'attachment';
+    response['filename'] = filename + '.xlsx'
     return response;
 
 

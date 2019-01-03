@@ -9,13 +9,13 @@ from vm4.service import ExperimentService
 from vm4.service import ReportService
 from vm4.service import StudentService
 from vm4.service import TemplateService
-from vm4.dao.baseDao.page import Page
+from vm4.service import VideoService
 from vm4.context import CONSTANTS
 from django.http import FileResponse
 import xlrd
 import xlwt
 import datetime
-import os, uuid
+import os, uuid, json
 
 
 # 教师登录
@@ -28,15 +28,15 @@ def teacherlogin(request):
     number = utils.getParam(request, "teaid")
     passwd = utils.getParam(request, "passwd")
     teacher = TeacherService.getTeacherByNumber(number)
-    if (teacher is None) or (teacher["f_password"] != passwd):
+    if (teacher is None) or (teacher.password != passwd):
         responseReturn = Response("-1", "登录失败")
         return HttpResponse(responseReturn.__str__())
     else:
         responseReturn = Response(None, None)
         response = HttpResponse(responseReturn.__str__())
-        utils.setCookie(response, "teacherid", teacher["f_id"])
-        utils.setCookie(response, "teachernumber", teacher["f_number"])
-        utils.setCookie(response, "teachername", teacher["f_name"])
+        utils.setCookie(response, "teacherid", str(teacher.id))
+        utils.setCookie(response, "teachernumber", teacher.number)
+        utils.setCookie(response, "teachername", teacher.name)
         return response
 
 
@@ -63,7 +63,7 @@ def editpassword(request):
         return HttpResponse(responseReturn)
     teacher["f_password"] = newpwd
     teacher["f_updatetime"] = utils.getNowStr()
-    result = TeacherService.editPassword(teacher)
+    result = TeacherService.editPassword(teacherid, newpwd)
     if result == 1:
         responseReturn = Response(None, None)
     else:
@@ -132,8 +132,8 @@ def v_approval(request):
         return getloginResponse(request)
     teachingid = utils.getParam(request, "teachingid")
     teachername = utils.getCookie(request, "teachername")
-    reportList = ReportService.getReportByTeachingid(teachingid)
-    return render(request, "../service/approval.html",
+    reportList = ReportService.getReportByTeachingid(int(teachingid))
+    return render(request, "approval.html",
                   {"reportList": reportList, "teachername": teachername})
 
 
@@ -196,6 +196,41 @@ def getloginResponse(request):
     response.delete_cookie("teachernumber")
     response.delete_cookie("teachername")
     return response
+
+
+# 上传视频
+def uploadVideo(request):
+    experimentid = utils.getParam(request, "experimentid")
+    file = request.FILES.get('file', None)
+    name = utils.getParam(request, "name")
+    if experimentid == "":
+        responseReturn = Response(-1, "请选择实验！")
+        return HttpResponse(responseReturn.__str__())
+    if file is None:
+        responseReturn = Response(-1, "上传文件为空！")
+        return HttpResponse(responseReturn.__str__())
+    filename = (file.name).encode("utf-8")
+    filesuffix = os.path.splitext(filename)[1]
+    if filesuffix != ".mp4" and filesuffix != ".rmvb":
+        responseReturn = Response(-1, "视屏格式应为MP4、rmvb！")
+        return HttpResponse(responseReturn.__str__())
+    filename = str(uuid.uuid1()) + filesuffix
+    fp = open(os.path.join(CONSTANTS.EXPERIMENTVIDEOURL_PRE, filename), 'wb+')
+    for chunk in file.chunks():  # 分块写入文件
+        fp.write(chunk)
+    fp.close()
+    videoid = VideoService.saveVideo(name, filename, experimentid)
+    if videoid is None:
+        responseReturn = Response(-1, "上传失败，请重试！")
+        return HttpResponse(responseReturn.__str__())
+    video = {
+        "id": videoid,
+        "name": name,
+        "url": filename
+    }
+    responseReturn = Response(None, None)
+    responseReturn.setRes(json.dumps(video))
+    return HttpResponse(responseReturn.__str__())
 
 
 # 更新实验数据
@@ -306,7 +341,7 @@ def downloadReportScoreList(request):
     if teachingid == "":
         return HttpResponse(
             "<script>if(confirm('请重试！')){history.go(-1);location.reload()}else{history.go(-1);location.reload()}</script>")
-    reportlist = ReportService.getReportByTeachingid(teachingid)
+    reportlist = ReportService.getReportByTeachingid(int(teachingid))
     if reportlist is None:
         return HttpResponse(
             "<script>if(confirm('请重试！')){history.go(-1);location.reload()}else{history.go(-1);location.reload()}</script>")
@@ -338,7 +373,7 @@ def downloadReportScoreList(request):
         else:
             txt1 = "批阅完成"
             sheet.write(index, 2, txt1.decode('utf-8'))
-        sheet.write(index,3,report["f_score"])
+        sheet.write(index, 3, report["f_score"])
     book.save(fileurl)
     file = open(fileurl, "rb")
     response = FileResponse(file)
@@ -388,6 +423,7 @@ def addexperiment(request):
     templatetype = utils.getParam(request, "templatetype")
     videotype = utils.getParam(request, "videotype")
     datatype = utils.getParam(request, "datatype")
+    videoids = utils.getParam(request, "videos")
     point = utils.getParam(request, "point")
     remark = utils.getParam(request, "remark")
     '''
@@ -425,7 +461,7 @@ def addexperiment(request):
     if videotype == "1":
         videos = experiment["f_videos"]
     else:
-        videos = ""
+        videos = videoids
 
     '''
         获得实验数据
