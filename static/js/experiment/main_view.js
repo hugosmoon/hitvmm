@@ -30,11 +30,11 @@ var fabrication_length=0;
 var angle_xishu=0.0174533;
 
 //画布高度
-var height=400;
+var height=1600;
 //夹盘中心盘半径
-var center_wheel_r=120;
+var center_wheel_r=480;
  //夹盘宽度
-var d=20;
+var d=80;
 
 
 
@@ -45,7 +45,7 @@ cutting_r=0;
 
 //_______________________________________________________________________________
 //停止渲染
-function stop_render(expoeration_order,workpiece_material,workpiece_r,workpiece_l,cutting_depth,feed_rate,rot_speed,tool_cutting_edge_angle,tool_minor_cutting_edge_angle,tool_cutting_edge_inclination_angle,rake_angle,clearance_angle,minor_clearance_angle,corner_radius){
+function stop_render(expoeration_order,workpiece_material,workpiece_r,workpiece_l,cutting_depth,feed_rate,rot_speed,tool_cutting_edge_angle,tool_minor_cutting_edge_angle,tool_cutting_edge_inclination_angle,rake_angle,clearance_angle,minor_clearance_angle,corner_radius,cutting_fluid){
       machine_status=0;
       count_stop=0;
       shijianchuo=(new Date()).valueOf();
@@ -57,7 +57,7 @@ function stop_render(expoeration_order,workpiece_material,workpiece_r,workpiece_
     //重复调用渲染函数
       function render(){
 
-        rendering(expoeration_order,workpiece_material,workpiece_r,workpiece_l,cutting_depth,feed_rate,rot_speed,tool_cutting_edge_angle,tool_minor_cutting_edge_angle,tool_cutting_edge_inclination_angle,rake_angle,clearance_angle,minor_clearance_angle,corner_radius);
+        rendering(expoeration_order,workpiece_material,workpiece_r,workpiece_l,cutting_depth,feed_rate,rot_speed,tool_cutting_edge_angle,tool_minor_cutting_edge_angle,tool_cutting_edge_inclination_angle,rake_angle,clearance_angle,minor_clearance_angle,corner_radius,cutting_fluid);
 
         if (rot_speed_view<0.001) {
             clearTimeout(brc_stop);
@@ -71,14 +71,14 @@ function stop_render(expoeration_order,workpiece_material,workpiece_r,workpiece_
 
 //_______________________________________________________________________________
 //开始渲染
-function start_render(expoeration_order,workpiece_material,workpiece_r,workpiece_l,cutting_depth,feed_rate,rot_speed,tool_cutting_edge_angle,tool_minor_cutting_edge_angle,tool_cutting_edge_inclination_angle,rake_angle,clearance_angle,minor_clearance_angle,corner_radius){
+function start_render(expoeration_order,workpiece_material,workpiece_r,workpiece_l,cutting_depth,feed_rate,rot_speed,tool_cutting_edge_angle,tool_minor_cutting_edge_angle,tool_cutting_edge_inclination_angle,rake_angle,clearance_angle,minor_clearance_angle,corner_radius,cutting_fluid){
   machine_status=1;
   count=0;
   shijianchuo=(new Date()).valueOf();
 
   //重复调用渲染函数
   function render(){
-    rendering(expoeration_order,workpiece_material,workpiece_r,workpiece_l,cutting_depth,feed_rate,rot_speed,tool_cutting_edge_angle,tool_minor_cutting_edge_angle,tool_cutting_edge_inclination_angle,rake_angle,clearance_angle,minor_clearance_angle,corner_radius);
+    rendering(expoeration_order,workpiece_material,workpiece_r,workpiece_l,cutting_depth,feed_rate,rot_speed,tool_cutting_edge_angle,tool_minor_cutting_edge_angle,tool_cutting_edge_inclination_angle,rake_angle,clearance_angle,minor_clearance_angle,corner_radius,cutting_fluid);
     brc=setTimeout(render,1);
   }
   render();
@@ -87,13 +87,13 @@ function start_render(expoeration_order,workpiece_material,workpiece_r,workpiece
 
 //_______________________________________________________________________________
 //渲染函数
-function rendering(expoeration_order,workpiece_material,workpiece_r,workpiece_l,cutting_depth,feed_rate,rot_speed,tool_cutting_edge_angle,tool_minor_cutting_edge_angle,tool_cutting_edge_inclination_angle,rake_angle,clearance_angle,minor_clearance_angle,corner_radius){
+function rendering(expoeration_order,workpiece_material,workpiece_r,workpiece_l,cutting_depth,feed_rate,rot_speed,tool_cutting_edge_angle,tool_minor_cutting_edge_angle,tool_cutting_edge_inclination_angle,rake_angle,clearance_angle,minor_clearance_angle,corner_radius,cutting_fluid){
   //获取每一帧的参数计算结果 实时转速 加工长度 基准角度
   var frame=frame_cal(feed_rate,rot_speed,workpiece_l);
 
   vertical_view(workpiece_r,workpiece_l,fabrication_length,cutting_depth);
-  right_view(workpiece_r,workpiece_l,fabrication_length,cutting_depth);
-  text_view(expoeration_order,workpiece_material,workpiece_r,workpiece_l,cutting_depth,feed_rate,rot_speed,tool_cutting_edge_angle,tool_minor_cutting_edge_angle,tool_cutting_edge_inclination_angle,rake_angle,clearance_angle,minor_clearance_angle,corner_radius);
+  right_view(workpiece_r*4,workpiece_l*4,fabrication_length*4,cutting_depth*4);
+  text_view(expoeration_order,workpiece_material,workpiece_r,workpiece_l,cutting_depth,feed_rate,rot_speed,tool_cutting_edge_angle,tool_minor_cutting_edge_angle,tool_cutting_edge_inclination_angle,rake_angle,clearance_angle,minor_clearance_angle,corner_radius,cutting_fluid);
 }
 
 //_______________________________________________________________________________
@@ -168,23 +168,23 @@ function vertical_view(workpiece_r,workpiece_l,fabrication_length,cutting_depth)
     fillStyle: 'rgb(20, 20, 30)',
     fromCenter:false,
     x: 0, y: 0,
-    width: 1000,
-    height: 500
+    width: 10000,
+    height: 5000
   });
   //绘制网格
 
-  for (var s = 0;s <1000;s=s+10) {
+  for (var s = 0;s <10000;s=s+40) {
     $('#main_view').drawVector({
       strokeStyle: '#fff',
       strokeWidth: 0.1,
       x: 0, y: s,
-      a1: 90, l1: 1000
+      a1: 90, l1: 10000
     });
     $('#main_view').drawVector({
       strokeStyle: '#fff',
       strokeWidth: 0.1,
       x: s, y: 0,
-      a1: 180, l1: 1000
+      a1: 180, l1: 10000
     });
   }
 
@@ -315,19 +315,19 @@ function vertical_view(workpiece_r,workpiece_l,fabrication_length,cutting_depth)
   }
 
   //绘制夹盘，分成三部分，共100像素宽
-  sanjiajiabanhizhi(90+workpiece_r-center_wheel_r,center_wheel_r,0,'rgb(131, 135, 138)','rgb(211, 215, 218)',50)
-  sanjiajiabanhizhi(70,workpiece_r,50,'rgb(171, 175, 178)','#eee',30)
-  sanjiajiabanhizhi(55,workpiece_r,80,'rgb(171, 175, 178)','#eee',20)
+  sanjiajiabanhizhi(360+workpiece_r*4-center_wheel_r,center_wheel_r,0,'rgb(131, 135, 138)','rgb(211, 215, 218)',200)
+  sanjiajiabanhizhi(280,workpiece_r*4,200,'rgb(171, 175, 178)','#eee',120)
+  sanjiajiabanhizhi(220,workpiece_r*4,320,'rgb(171, 175, 178)','#eee',80)
 
   //绘制尾座
   $('#main_view').drawVector({
     fillStyle:'rgb(131, 135, 138)',
       rounded: true,
-      x: workpiece_l+100, y: height/2,
-      a1: 60, l1: 100,
-      a2: 90, l2: 200,
-      a3: 180, l3: 100,
-      a4: 270, l4: 200,
+      x: workpiece_l*4+400, y: height/2,
+      a1: 60, l1: 400,
+      a2: 90, l2: 800,
+      a3: 180, l3: 400,
+      a4: 270, l4: 800,
   });
 
   //绘制棒料
@@ -343,18 +343,18 @@ function vertical_view(workpiece_r,workpiece_l,fabrication_length,cutting_depth)
         }),
         p1:{
           type:'line',
-          x1: 100, y1: (height/2)-(bangliao_d/2),
-          x2: 100+(bangliao_l-bangliao_c)-0.5*b, y2: (height/2)-(bangliao_d/2),
-          x3: 100+(bangliao_l-bangliao_c)-0.5*b,y3:(height/2)+(bangliao_d/2),
-          x4: 100,y4:(height/2)+(bangliao_d/2),
+          x1: 400, y1: (height/2)-(bangliao_d/2),
+          x2: 400+(bangliao_l-bangliao_c)-0.5*b, y2: (height/2)-(bangliao_d/2),
+          x3: 400+(bangliao_l-bangliao_c)-0.5*b,y3:(height/2)+(bangliao_d/2),
+          x4: 400,y4:(height/2)+(bangliao_d/2),
         },
         p2:{
           type:'line',
 
-          x1: 100+(bangliao_l-bangliao_c), y1: (height/2)-(bangliao_d/2)+b,
-          x2: 100+bangliao_l, y2: (height/2)-(bangliao_d/2)+b,
-          x3: 100+bangliao_l,y3:(height/2)+(bangliao_d/2)-b,
-          x4: 100+(bangliao_l-bangliao_c),y4:(height/2)+(bangliao_d/2)-b,
+          x1: 400+(bangliao_l-bangliao_c), y1: (height/2)-(bangliao_d/2)+b,
+          x2: 400+bangliao_l, y2: (height/2)-(bangliao_d/2)+b,
+          x3: 400+bangliao_l,y3:(height/2)+(bangliao_d/2)-b,
+          x4: 400+(bangliao_l-bangliao_c),y4:(height/2)+(bangliao_d/2)-b,
         }
     });
       if (bangliao_c>0) {
@@ -370,16 +370,16 @@ function vertical_view(workpiece_r,workpiece_l,fabrication_length,cutting_depth)
 
         p1:{
           type:'line',
-          x1: 100+(bangliao_l-bangliao_c)-0.5*b, y1: (height/2)-(bangliao_d/2),
-          x2: 100+(bangliao_l-bangliao_c), y2: (height/2)-(bangliao_d/2)+b,
-          x3: 100+(bangliao_l-bangliao_c),y3:(height/2)+(bangliao_d/2)-b,
-          x4: 100+(bangliao_l-bangliao_c)-0.5*b,y4:(height/2)+(bangliao_d/2),
+          x1: 400+(bangliao_l-bangliao_c)-0.5*b, y1: (height/2)-(bangliao_d/2),
+          x2: 400+(bangliao_l-bangliao_c), y2: (height/2)-(bangliao_d/2)+b,
+          x3: 400+(bangliao_l-bangliao_c),y3:(height/2)+(bangliao_d/2)-b,
+          x4: 400+(bangliao_l-bangliao_c)-0.5*b,y4:(height/2)+(bangliao_d/2),
         },
     });
     }
   }
 
-  bangliaohuizhi(workpiece_r*2,workpiece_l,fabrication_length,cutting_depth)
+  bangliaohuizhi(workpiece_r*8,workpiece_l*4,fabrication_length*4,cutting_depth*4)
 
   //绘制车刀
   function chedao(x,y){
@@ -392,15 +392,15 @@ function vertical_view(workpiece_r,workpiece_l,fabrication_length,cutting_depth)
     rounded: true,
     // closed: true,
     x: x, y: y,
-    a1: 205, l1: 25,
-    a2: 105, l2: 3,
-    a3: 180, l3: 60,
-    a4: 90, l4: 50,
-    a5: 0, l5: 70,
-    a6: 285, l6: 45,
-    a7:180,l7:160,
-    a8:90,l8:43,
-    a9:0,l9:120,
+    a1: 205, l1: 100,
+    a2: 105, l2: 12,
+    a3: 180, l3: 240,
+    a4: 90, l4: 200,
+    a5: 0, l5: 280,
+    a6: 285, l6: 180,
+    a7:180,l7:640,
+    a8:90,l8:172,
+    a9:0,l9:480,
     });
     //绘制刀片
     $('#main_view').drawVector({
@@ -409,14 +409,14 @@ function vertical_view(workpiece_r,workpiece_l,fabrication_length,cutting_depth)
     rounded: true,
     // closed: true,
     x: x, y: y,
-    a1: 205, l1: 25,
-    a2: 105, l2: 25,
-    a3: 25, l3: 25,
+    a1: 205, l1: 100,
+    a2: 105, l2: 100,
+    a3: 25, l3: 100,
     });
 
   }
 
-  chedao((workpiece_l+110-knife_displacement),(height/2+workpiece_r-cutting_depth));
+  chedao((workpiece_l*4+110*4-knife_displacement*4),(height/2+workpiece_r*4-cutting_depth*4));
 
 
 
@@ -433,21 +433,21 @@ function right_view(workpiece_r,workpiece_l,fabrication_length,cutting_depth){
       fillStyle: 'rgb(20, 20, 30)',
       fromCenter:false,
       x: 0, y: 0,
-      width: 1000,
-      height: 500
+      width: 2000,
+      height: 5000
     });
-    for (var s = 0;s <1000;s=s+10) {
+    for (var s = 0;s <2000;s=s+40) {
       $('#r_view').drawVector({
         strokeStyle: '#fff',
         strokeWidth: 0.1,
         x: 0, y: s,
-        a1: 90, l1: 1000
+        a1: 90, l1: 2000
       });
       $('#r_view').drawVector({
         strokeStyle: '#fff',
         strokeWidth: 0.1,
         x: s, y: 0,
-        a1: 180, l1: 1000
+        a1: 180, l1: 2000
       });
     }
     //画夹具中心盘
@@ -458,7 +458,7 @@ function right_view(workpiece_r,workpiece_l,fabrication_length,cutting_depth){
     });
 
     //三爪夹盘
-    h=workpiece_r+40;
+    h=workpiece_r+160;
     o1=(basic_angle-60)* angle_xishu;
     o2=(basic_angle+60)* angle_xishu;
     o3=(basic_angle+180)* angle_xishu;
@@ -467,19 +467,19 @@ function right_view(workpiece_r,workpiece_l,fabrication_length,cutting_depth){
     fillStyle: 'rgb(101, 105, 108)',
     x: height/2+h*Math.sin(o1), y: height/2+h*Math.cos(o1),
     width: d,
-    height: 80,
+    height: 320,
     rotate: (basic_angle-60)*(-1),
     }).drawRect({
     fillStyle: 'rgb(101, 105, 108)',
     x:  height/2+h*Math.sin(o2), y:  height/2+h*Math.cos(o2),
     width: d,
-    height: 80,
+    height: 320,
     rotate: (basic_angle+60)*(-1),
     }).drawRect({
     fillStyle: 'rgb(101, 105, 108)',
     x:   height/2+h*Math.sin(o3), y:  height/2+h*Math.cos(o3),
     width: d,
-    height: 80,
+    height: 320,
     rotate: (basic_angle+180)*(-1),
     });
 
@@ -513,14 +513,14 @@ function right_view(workpiece_r,workpiece_l,fabrication_length,cutting_depth){
       name:'daojia',
       rounded: true,
       // closed: true,
-      x: x-3, y: y+2,
-      a1: 270, l1: 60,
-      a2: 180, l2: 5,
-      a3: 270, l3: 100,
-      a4:180,l4:20,
-      a5:90,l5:100,
-      a6:180,l6:5,
-      a7:90,l7:60,
+      x: x-12, y: y+8,
+      a1: 270, l1: 240,
+      a2: 180, l2: 20,
+      a3: 270, l3: 400,
+      a4:180,l4:80,
+      a5:90,l5:400,
+      a6:180,l6:20,
+      a7:90,l7:240,
       });
       //绘制刀片
       $('#r_view').drawVector({
@@ -529,21 +529,32 @@ function right_view(workpiece_r,workpiece_l,fabrication_length,cutting_depth){
       rounded: true,
       // closed: true,
       x: x, y: y,
-      a1: 270, l1: 25,
-      a2: 180, l2: 6,
-      a3: 90, l3: 25,
+      a1: 270, l1: 100,
+      a2: 180, l2: 24,
+      a3: 90, l3: 100,
       });
     }
 }
 
 //_______________________________________________________________________________
 //文字
-function text_view(expoeration_order,workpiece_material,workpiece_r,workpiece_l,cutting_depth,feed_rate,rot_speed,tool_cutting_edge_angle,tool_minor_cutting_edge_angle,tool_cutting_edge_inclination_angle,rake_angle,clearance_angle,minor_clearance_angle,corner_radius){
+function text_view(expoeration_order,workpiece_material,workpiece_r,workpiece_l,cutting_depth,feed_rate,rot_speed,tool_cutting_edge_angle,tool_minor_cutting_edge_angle,tool_cutting_edge_inclination_angle,rake_angle,clearance_angle,minor_clearance_angle,corner_radius,cutting_fluid){
+    //切削液参数
+     cutting_fluid_arg=0.3;
+    // n_cutting_fluid=cutting_fluid || 0;
+    // if(n_cutting_fluid=='water_based_cutting_fluid'){
+    //     cutting_fluid_arg=0.1
+    // }
+    // else if(n_cutting_fluid=='oil_based_cutting_fluid'){
+    //     cutting_fluid_arg=0.5
+    // }
 
     //只有开始加工时，才会有切削力、温度和表面粗糙度
     if (fabrication_length>0&&(rot_speed-rot_speed_view)<0.01&&knife_displacement<=(workpiece_l-20)) {
         cutting_force=parseFloat(cutting_force).toFixed(1);
+
         cutting_temp=parseFloat(cutting_temp).toFixed(1);
+
         cutting_r=parseFloat(cutting_r).toFixed(3);
     }
     else {
@@ -562,12 +573,35 @@ function text_view(expoeration_order,workpiece_material,workpiece_r,workpiece_l,
         xianshicanshu="表面粗糙度："+cutting_r
     }
 
+
+
     render_text="";
-    render_text+=("\n机床主轴实时转速："+rot_speed_view.toFixed(1)+" r/min\n\n");
-    render_text+=("工件已被加工长度："+fabrication_length.toFixed(1)+" mm\n\n");
+    render_text+=("\n工件已被加工长度："+fabrication_length.toFixed(1)+" mm\n\n");
+    render_text+=("机床主轴实时转速："+rot_speed_view.toFixed(1)+" r/min\n\n");
+    render_text+=("工件材料："+workpiece_material+" \n\n");
     render_text+=("工件半径："+workpiece_r+"mm\n\n");
     render_text+=("进给量："+feed_rate+"mm/r\n\n");
     render_text+=("背吃刀量："+cutting_depth+"mm\n\n");
+    render_text+=("刀具材料："+"硬质合金（YT15） \n\n");
+    render_text+=("刀具主偏角："+tool_cutting_edge_angle+"°\n\n");
+    render_text+=("刀具副偏角："+tool_minor_cutting_edge_angle+"°\n\n");
+    render_text+=("刀具刃倾角："+tool_cutting_edge_inclination_angle+"°\n\n");
+    render_text+=("刀具前角："+rake_angle+"°\n\n");
+    render_text+=("刀具后角："+clearance_angle+"°\n\n");
+    render_text+=("刀具副刃后角："+minor_clearance_angle+"°\n\n");
+    render_text+=("刀具刀尖圆弧半径："+corner_radius+"mm\n\n");
+    if(cutting_fluid=="water_based_cutting_fluid"){
+        render_text+=("加工条件："+"水基切削液\n\n");
+    }
+    else if(cutting_fluid=="oil_based_cutting_fluid"){
+        render_text+=("加工条件："+"油基切削液\n\n");
+    }
+    else {
+        render_text+=("加工条件："+"无切削液\n\n");
+    }
+
+
+
 
     // 清空画布
     $('#text').clearCanvas();
@@ -577,15 +611,15 @@ function text_view(expoeration_order,workpiece_material,workpiece_r,workpiece_l,
       fillStyle: 'rgb(20, 20, 30)',
       fromCenter:false,
       x: 0, y: 0,
-      width: 1000,
-      height: 500
+      width: 2000,
+      height: 2000
     });
     $('#text').drawText({
-    fillStyle: 'rgb(152, 160, 174)',
+    fillStyle: 'rgb(255, 255, 255)',
     fromCenter: false,
     align: 'left',
-        x: 10, y: 10,
-        fontSize: 20,
+        x: 40, y: 40,
+        fontSize: 48,
         fontFamily: "微软雅黑",
         text: render_text,
     });
@@ -593,8 +627,8 @@ function text_view(expoeration_order,workpiece_material,workpiece_r,workpiece_l,
     fillStyle: 'rgb(197, 136, 84)',
     fromCenter: false,
     align: 'left',
-        x: 10, y: 230,
-        fontSize: 30,
+        x: 920, y: 1432,
+        fontSize: 64,
         fontFamily: "微软雅黑",
         text: xianshicanshu,
     });
