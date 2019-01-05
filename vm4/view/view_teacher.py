@@ -16,6 +16,7 @@ import xlrd
 import xlwt
 import datetime
 import os, uuid, json
+from django.utils.http import urlquote
 
 
 # 教师登录
@@ -209,7 +210,7 @@ def uploadVideo(request):
     if file is None:
         responseReturn = Response(-1, "上传文件为空！")
         return HttpResponse(responseReturn.__str__())
-    filename = (file.name).encode("utf-8")
+    filename = file.name
     filesuffix = os.path.splitext(filename)[1]
     if filesuffix != ".mp4" and filesuffix != ".rmvb":
         responseReturn = Response(-1, "视屏格式应为MP4、rmvb！")
@@ -331,7 +332,7 @@ def downloadStudentList(request):
     filesuffix = os.path.splitext(filename)[1]
     response = FileResponse(file)
     response['Content-Type'] = 'application/octet-stream'
-    response['Content-Disposition'] = 'attachment;filename="学生名单' + filesuffix + '"'
+    response['Content-Disposition'] = 'attachment;filename="%s"' % (urlquote("学生名单" + filesuffix))
     return response
 
 
@@ -378,7 +379,7 @@ def downloadReportScoreList(request):
     file = open(fileurl, "rb")
     response = FileResponse(file)
     response['Content-Type'] = 'application/octet-stream'
-    response['Content-Disposition'] = 'attachment;filename="学生成绩.xls"'
+    response['Content-Disposition'] = 'attachment;filename="%s"' % (urlquote("学生成绩.xls"))
     return response
 
 
@@ -409,7 +410,7 @@ def downloadReport(request):
     filesuffix = os.path.splitext(filename)[1]
     response = FileResponse(file)
     response['Content-Type'] = 'application/octet-stream'
-    response['Content-Disposition'] = 'attachment;filename="实验报告' + filesuffix + '"'
+    response['Content-Disposition'] = 'attachment;filename="%s"' % (urlquote("实验报告" + filesuffix))
     return response
 
 

@@ -108,12 +108,19 @@ var publicObj = {
                 $('.popupwall2').show()
                 $(".popupmid").hide()
                 $(".popupmid3").show()
-
+                type = $("#type").attr("attr")
+                if (type == 1) {
+                    $("#uploadfile").attr("action", "/addBatchStudent/")
+                } else if (type == 2) {
+                    $("#uploadfile").attr("action", "/addBatchTeacher/")
+                } else if (type == 3) {
+                    $("#uploadfile").attr("action", "/addBatchAdmin/")
+                }
             })
         });
         $(".adduserdown").each(function () {
             $(this).unbind('click').bind('click', function () {
-                type = $("#type").attr("attr")
+                type = $("#type").attr('attr')
                 if (type == "") {
                     alert("请选择要添加的用户身份！")
                 }
@@ -145,7 +152,7 @@ var publicObj = {
                     if (index == 0) {
                         if (index == 0) {
                             var videoStr = ' <div class="videobox">\n' +
-                                '                <video id="video" controls>\n' +
+                                '                <video id="video" style="width:100%;height:auto" controls>\n' +
                                 '                    <source src="' + videos[index].url + '" type="video/mp4">\n' +
                                 '                </video>\n' +
                                 '            </div>'
@@ -160,7 +167,7 @@ var publicObj = {
                         url = $(this).attr("vaddress")
                         videoname = $(this).attr("videoname")
                         var videoStr = ' <div class="videobox">\n' +
-                            '                <video id="video" controls>\n' +
+                            '                <video id="video" style="width:100%;height:auto" controls>\n' +
                             '                    <source src="' + url + '" type="video/mp4">\n' +
                             '                </video>\n' +
                             '            </div>'
@@ -231,7 +238,7 @@ var publicObj = {
                     if (index == 0) {
                         if (index == 0) {
                             var videoStr = ' <div class="videobox">\n' +
-                                '                <video id="video" controls>\n' +
+                                '                <video id="video" style="width:100%;height:auto" controls>\n' +
                                 '                    <source src="' + videos[index].url + '" type="video/mp4">\n' +
                                 '                </video>\n' +
                                 '            </div>'
@@ -246,7 +253,7 @@ var publicObj = {
                         url = $(this).attr("vaddress")
                         videoname = $(this).attr("videoname")
                         var videoStr = ' <div class="videobox">\n' +
-                            '                <video id="video" controls>\n' +
+                            '                <video id="video" style="width:100%;height:auto" controls>\n' +
                             '                    <source src="' + url + '" type="video/mp4">\n' +
                             '                </video>\n' +
                             '            </div>'
@@ -392,6 +399,51 @@ var publicObj = {
     },
     //进行中的教学
     undoneteachingEvent: function () {
+        var me = this;
+        $(".videobox").each(function () {
+            $(this).unbind('click').bind('click', function () {
+                $('.videobox').removeClass('selectvideobox')
+                $(this).addClass('selectvideobox')
+                me.videoDom = $(this)
+            })
+        });
+        $('.changvideo2').unbind('click').bind('click', function () {
+            me.addvideotype = "1"
+            if (me.videoDom != undefined) {
+                $('.popupbox').show()
+                $('.popupwall2_2').show()
+            } else {
+                alert('请先选择视频')
+            }
+        })
+        $(".preadd2").unbind('click').bind('click', function () {
+            me.addvideotype = "2"
+            if (me.videoDom != undefined) {
+                $('.popupbox').show()
+                $('.popupwall2_2').show()
+            } else {
+                alert('请先选择视频')
+            }
+        })
+        $(".behindadd2").unbind('click').bind('click', function () {
+            me.addvideotype = "3"
+            if (me.videoDom != undefined) {
+                $('.popupbox').show()
+                $('.popupwall2_2').show()
+            } else {
+                alert('请先选择视频')
+            }
+        })
+        $('.cvdele2').unbind('click').bind('click', function () {
+            if (me.videoDom != undefined) {
+                if (confirm("确认要删除此视频么？")) {
+                    me.videoDom.remove()
+                    me.videoDom = undefined
+                }
+            } else {
+                alert('请先选中一个视频！')
+            }
+        })
         $(".uteaupload").each(function () {
             $(this).unbind('click').bind('click', function () {
                 $('.popupbox').show()
@@ -425,8 +477,27 @@ var publicObj = {
                 $("#uploadfile").attr("action", "/updateTeachingTemplate/")
             })
         });
-        $(".changevide").each(function () {
+        $(".changevide2").each(function () {
             $(this).unbind('click').bind('click', function () {
+                $("#videoexperimentid").val($(this).attr("experimentid"))
+                $("#changevideoteachingid").val($(this).attr("teachingid"))
+                var videostr = $(this).attr("videos");
+                $(".videowall").html("")
+                var videos = JSON.parse(videostr)
+                for (var i = 0, len = videos.length; i < len; i++) {
+                    var domStr = ' <div class="videobox" videoid = "' + videos[i].id + '">\n' +
+                        '                   ' + videos[i].name + '\n' +
+                        '                </div>'
+                    $(".videowall").append(domStr)
+                }
+                $(".videobox").each(function () {
+                    $(this).unbind('click').bind('click', function () {
+                        $('.videobox').removeClass('selectvideobox')
+                        $(this).addClass('selectvideobox')
+                        me.videoDom = $(this)
+                    })
+                });
+
                 $('.popupbox').show()
                 $('.popupwall5').show()
 
@@ -515,6 +586,113 @@ var publicObj = {
             $('.popupbox').hide()
             $('.popupwall').hide()
         })
+        $(".changvideosure2").unbind('click').bind("click", function () {
+            $("#addvideotype").val(1)
+            var options = {
+                url: "/uploadVideo/", //提交地址：默认是form的action,如果申明,则会覆盖
+                type: "post",   //默认是form的method（get or post），如果申明，则会覆盖
+                beforeSubmit: beforeCheck, //提交前的回调函数
+                success: successChangeVideo,  //提交成功后的回调函数
+                target: "#addvideo",  //把服务器返回的内容放入id为output的元素中
+                dataType: "json", //html(默认), xml, script, json...接受服务端返回的类型
+                clearForm: false,  //成功提交后，是否清除所有表单元素的值
+                resetForm: false,  //成功提交后，是否重置所有表单元素的值
+                timeout: 3000     //限制请求的时间，当请求大于3秒后，跳出请求
+            };
+            console.log(me.addepxupdatamodObj)
+            console.log(me.addexpteastulistObj)
+            console.log(me.addexpupexpdataObj)
+            console.log(me.videodataObj)
+            console.log(me.dataObjKind)
+            $("#addvideo").ajaxSubmit(options)
+
+            function successChangeVideo(data, status) {
+                if ("success" != status) {
+                    alert("网络异常，请重试！")
+                }
+                dataObj = data
+                code = dataObj.code;
+                if (code != 0) {
+                    alert(dataObj.desc);
+                    return;
+                }
+                var addvideotype = $("#addvideotype").attr("value")
+                if (me.addvideotype == "1") {
+                    if (me.videoDom != undefined) {
+                        result = JSON.parse(dataObj.res);
+                        me.videoDom.attr("videoid", result.id)
+                        me.videoDom.html(result.name)
+                    } else {
+                        alert('请先选中一个视频！')
+                    }
+                    me.changePreVideo()
+                    $('.popupwall2_2').hide()
+                } else if (me.addvideotype == "2") {
+                    result = JSON.parse(dataObj.res);
+                    var domStr = ' <div class="videobox" videoid="' + result.id + '">\n' +
+                        '                   ' + result.name + '\n' +
+                        '                </div>'
+                    if (me.videoDom != undefined) {
+                        me.videoDom.before(domStr)
+                        me.videoDom = undefined
+                        me.changePreVideo()
+                    } else {
+                        alert('请先选中一个视频！')
+                    }
+                    me.changePreVideo()
+                    $('.popupwall2_2').hide()
+                } else if (me.addvideotype == "3") {
+                    result = JSON.parse(dataObj.res);
+                    var domStr = ' <div class="videobox" videoid="' + result.id + '">\n' +
+                        '                   ' + result.name + '\n' +
+                        '                </div>'
+                    if (me.videoDom != undefined) {
+                        me.videoDom.after(domStr)
+                        me.videoDom = undefined
+                    } else {
+                        alert('请先选中一个视频！')
+                    }
+                    me.changePreVideo()
+                    $('.popupwall2_2').hide()
+                } else {
+                    alert("网络异常，请重试！")
+                }
+                me.addvideotype = "0"
+                $(".videofileuploadname").html('')
+                $(".shuomingbox").val('')
+                $('.videobox').removeClass('selectvideobox')
+            }
+        });
+        $(".vbover2").unbind('click').bind("click", function () {
+            videoitemlist = $(".videowall").children()
+            var teachingid = $("#changevideoteachingid").val()
+            var videoids = ""
+            for (var i = 0; i < videoitemlist.length; i++) {
+                if (i == 0) {
+                    videoids = videoids + videoitemlist[i].getAttribute("videoid")
+                } else {
+                    videoids = videoids + "," + videoitemlist[i].getAttribute("videoid")
+                }
+            }
+            $.post("/updateTeachingVideo/",
+                {
+                    teachingid: teachingid,
+                    videos: videoids
+                },
+                function (data, status) {
+                    dataObj = $.parseJSON(data)
+                    code = dataObj.code;
+                    if (code != 0) {
+                        alert(dataObj.desc);
+                        $('.popupbox').hide()
+                        $('.popupwall5').hide()
+                    } else {
+                        $('.popupbox').hide()
+                        $('.popupwall5').hide()
+                        window.location.reload()
+                    }
+                });
+        })
     },
     //已完成教学
     completedteachingEvent: function () {
@@ -542,11 +720,43 @@ var publicObj = {
                 window.open("/downloadtemplate/?templateid=" + templateid);
             })
         });
-        $(".changevide").each(function () {
+        //预览实验
+        $(".preview").each(function () {
             $(this).unbind('click').bind('click', function () {
+                videostr = $(this).attr("videos")
                 $('.popupbox').show()
-                $('.popupwall5').show()
-
+                $('.popupwall9').show()
+                videos = JSON.parse(videostr)
+                videohtml = ""
+                for (index in videos) {
+                    videohtml = videohtml + '<div vaddress="' + videos[index].url + '" class=\"vchange\" videoname=\"' + videos[index].name + '\"><div class=\"v_svideo\"><img src="../static/img/videologo.png" alt=""></div><div class=\"v_svideoname\">' + videos[index].name + '</div></div>';
+                    if (index == 0) {
+                        if (index == 0) {
+                            var videoStr = ' <div class="videobox">\n' +
+                                '                <video id="video" style="width:100%;height:auto" controls>\n' +
+                                '                    <source src="' + videos[index].url + '" type="video/mp4">\n' +
+                                '                </video>\n' +
+                                '            </div>'
+                            $(".vbox").html(videoStr)
+                            $("#videoname").html(videos[index].name)
+                        }
+                    }
+                }
+                $(".vchangebox").html(videohtml)
+                $(".vchange").each(function () {
+                    $(this).unbind('click').bind('click', function () {
+                        url = $(this).attr("vaddress")
+                        videoname = $(this).attr("videoname")
+                        var videoStr = ' <div class="videobox">\n' +
+                            '                <video id="video" style="width:100%;height:auto" controls>\n' +
+                            '                    <source src="' + url + '" type="video/mp4">\n' +
+                            '                </video>\n' +
+                            '            </div>'
+                        $(".vbox").html(videoStr)
+                        $("#videoname").html(videoname)
+                        me.hidePopup()
+                    })
+                })
             })
         });
         $(".changedata").each(function () {
@@ -601,7 +811,7 @@ var publicObj = {
                     if (index == 0) {
                         if (index == 0) {
                             var videoStr = ' <div class="videobox">\n' +
-                                '                <video id="video" controls>\n' +
+                                '                <video id="video" style="width:100%;height:auto" controls>\n' +
                                 '                    <source src="' + videos[index].url + '" type="video/mp4">\n' +
                                 '                </video>\n' +
                                 '            </div>'
@@ -616,7 +826,7 @@ var publicObj = {
                         url = $(this).attr("vaddress")
                         videoname = $(this).attr("videoname")
                         var videoStr = ' <div class="videobox">\n' +
-                            '                <video id="video" controls>\n' +
+                            '                <video id="video" style="width:100%;height:auto" controls>\n' +
                             '                    <source src="' + url + '" type="video/mp4">\n' +
                             '                </video>\n' +
                             '            </div>'
@@ -630,17 +840,15 @@ var publicObj = {
 
         $(".allteaoperation").each(function () {
             $(this).unbind('click').bind('click', function () {
-                window.location.href=$(this).attr("experimenturl")
+                window.location.href = $(this).attr("experimenturl")
             })
         });
-
-        $(".allteadownload").each(function () {
+        $(".downloaddatamod").each(function () {
             $(this).unbind('click').bind('click', function () {
-                $('.popupbox').show()
-                $('.popupwall7').show()
+                templateid = $(this).attr("templateid")
+                window.open("/downloadtemplate/?templateid=" + templateid);
             })
         });
-
         $(".allteacancle").bind("click", function () {
             $('.popupbox').hide()
             $('.popupwall').hide()
@@ -665,7 +873,6 @@ var publicObj = {
                 $("#preportid").attr("value", reportid)
                 var domain = window.location.host
                 PDFObject.embed(domain + "/downloadReport/?reproturl=" + reporturl, "#reportbox");
-                alert(domain)
             })
         });
         $(".approvalcancle").bind("click", function () {
@@ -673,8 +880,8 @@ var publicObj = {
             $('.popupwall').hide()
         })
         $(".approvalsure").bind("click", function () {
-            reportid = $("#preportid").attr("value")
-            score = $("#pscore").val()
+            var reportid = $("#preportid").attr("value")
+            var score = $("#pscore").val()
             if (reportid == undefined || reportid == "") {
                 if (confirm("选择批阅的报告错误，请重新选择")) {
                     $('.popupbox').hide()
@@ -685,7 +892,7 @@ var publicObj = {
                 }
                 return
             }
-            if (score == "0" || score == "") {
+            if (score == "0" || score == "" || score > 100) {
                 alert("打分异常")
                 return
             }
@@ -962,6 +1169,7 @@ var publicObj = {
             })
         });
         $('.changvideo').unbind('click').bind('click', function () {
+            me.addvideotype = "1"
             if (me.videoDom != undefined) {
                 $('.popupbox').show()
                 $('.popupwall2_2').show()

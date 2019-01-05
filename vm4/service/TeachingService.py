@@ -138,6 +138,18 @@ def getTeachingByTea(teaid, type, index):
             teacher = TeacherService.getTeacherById(teaching.teacherid)
             teachingDict["f_teacher_name"] = teacher.name
             teachingDict["f_teacher_id"] = teacher.id
+            videoids = teaching.videos.split(",")
+            videos = []
+            for id in videoids:
+                video = VideoService.getVideoById(id)
+                video.url = "/getVideoById/?videourl=" + video.url
+                videoobj = {
+                    "id":video.id,
+                    "url": video.url,
+                    "name": video.name
+                }
+                videos.append(videoobj)
+            teachingDict["videos"] = json.dumps(videos)
             stuCount = ReportService.getCountStuByTeachingid(teaching.id)
             teachingDict["stuCount"] = stuCount
             complapprepcount = ReportService.getCountStuByTeachingidAndStatus(teaching.id,
@@ -157,43 +169,43 @@ def getTeachingByTea(teaid, type, index):
 def uploadData(teachingid, dataurl):
     now = utils.getNow()
     try:
-        teacher = Teacher.objects.filter(id=teachingid).update(dataurl=dataurl, updatetime=now)
+        teaching = Teaching.objects.filter(id=teachingid).update(dataurl=dataurl, updatetime=now)
     except:
         return None
     else:
-        return teacher
+        return teaching
 
 
 # 上传模板
 def uploadTemplate(teachingid, templateid):
     now = utils.getNow()
     try:
-        teacher = Teacher.objects.filter(id=teachingid).update(templateid=templateid, updatetime=now)
+        teaching = Teaching.objects.filter(id=teachingid).update(templateid=templateid, updatetime=now)
     except:
         return None
     else:
-        return teacher
+        return teaching
 
 
 # 删除实验教学
 def deleteTeachingByid(teachingid):
     try:
-        teacher = Teacher.objects.filter(id=teachingid).update(isdelete=CONSTANTS.ISDELETE_YES)
+        teaching = Teaching.objects.filter(id=teachingid).update(isdelete=CONSTANTS.ISDELETE_YES)
     except:
         return None
     else:
-        return teacher
+        return teaching
 
 
 # 更新实验教学预习视频
 def updateTeachingVideoById(teachingid, videos):
     now = utils.getNow()
     try:
-        teacher = Teacher.objects.filter(id=teachingid).update(videos=videos, updatetime=now)
+        teaching = Teaching.objects.filter(id=teachingid).update(videos=videos, updatetime=now)
     except:
         return None
     else:
-        return teacher
+        return teaching
 
 
 # 更新实验教学报告提交日期

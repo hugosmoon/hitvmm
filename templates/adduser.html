@@ -65,7 +65,7 @@
         <input class="inp addteachernumber" type="text">
     </div>
     <div class="btnbox">
-        <div class="btn sure">确认添加</div>
+        <div class="btn sure sureadd">确认添加</div>
     </div>
 
 </div>
@@ -92,7 +92,7 @@
         </div>
         <!--提示文案-->
         <div class="popupmid popupmid3">名单必须为符合名单模板并且为EXCEL格式，文件大小在3M以内。</div>
-        <form action="" method="post" enctype="multipart/form-data">
+        <form id="uploadfile" action="" method="post" enctype="multipart/form-data">
             <input id="type" type="hidden" name="type">
             <div class="btn cancle">
                 选择文件
@@ -156,7 +156,7 @@
             $(".imptbox4").hide()
         }
     });
-    $(".sure").unbind("click").bind("click", function () {
+    $(".sureadd").unbind("click").bind("click", function () {
         type = $("#type").attr("attr")
         action = ""
         addname = $(".addname").val()
