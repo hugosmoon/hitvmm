@@ -288,7 +288,7 @@ def addAdmin(request):
     responseReturn = Response(None, None)
     return HttpResponse(responseReturn.__str__())
 
-
+#获取列表模板
 def getListTemplate(request):
     type = utils.getParam(request, "type")
     if type is None or type == "":
