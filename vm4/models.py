@@ -38,7 +38,7 @@ class Teacher(models.Model):
     id = models.AutoField(primary_key=True, db_column="f_id")
     name = models.CharField(max_length=50, db_column="f_name")
     number = models.CharField(max_length=50, db_column="f_number")
-    password = models.CharField(max_length=50, db_column="f_password")
+    password = models.CharField(max_length=100, db_column="f_password")
     isdelete = models.BooleanField(default=False, db_column="f_is_delete")
     createtime = models.DateTimeField(default=timezone.now, db_column="f_createtime")
     updatetime = models.DateTimeField(default=timezone.now, db_column="f_updatetime")

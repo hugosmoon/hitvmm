@@ -59,13 +59,13 @@ def editpassword(request):
     newpwd = utils.getParam(request, "newpwd")
     oldpwd = utils.getParam(request, "oldpwd")
     teacher = TeacherService.getTeacherById(teacherid)
-    if oldpwd != teacher["f_password"]:
+    if oldpwd != teacher.password:
         responseReturn = Response("-1", "原密码输入有误")
         return HttpResponse(responseReturn)
-    teacher["f_password"] = newpwd
-    teacher["f_updatetime"] = utils.getNowStr()
+    teacher.password = newpwd
+    teacher.updatetime = utils.getNow()
     result = TeacherService.editPassword(teacherid, newpwd)
-    if result == 1:
+    if result is not None:
         responseReturn = Response(None, None)
     else:
         responseReturn = Response("-1", "网络忙，请稍后重试！")
@@ -93,10 +93,21 @@ def v_undoneteaching(request):
         countpage = count / 10 + i
     teachingList = TeachingService.getTeachingByTea(teacherid, CONSTANTS.TEACHING_IS_RUNNING, page)
     experimentList = ExperimentService.getAllExperiment()
+    # 获取用于菜单的实验列表
+    experimentMenuList = []
+    for experiment in experimentList:
+        experimentTemp = experiment.copy()
+        experimentName = experimentTemp["name"]
+        if len(experimentName) > 8:
+            experimentName = experimentName[0:10] + "..."
+        experimentTemp["name"] = experimentName
+        experimentMenuList.append(experimentTemp)
+
     teachingCount = getTeachingCount(teacherid)
     return render(request, "undoneteaching.html",
                   {"teachingList": teachingList, "countpage": countpage, "experimentList": experimentList,
-                   "teachingCount": teachingCount, "teachername": teachername})
+                   "experimentMenuList": experimentMenuList, "teachingCount": teachingCount,
+                   "teachername": teachername})
 
 
 # 完成教学
@@ -119,11 +130,22 @@ def v_completedteaching(request):
         countpage = count / 10 + i
     teachingList = TeachingService.getTeachingByTea(teacherid, CONSTANTS.TEACHING_IS_STOP, page)
     experimentList = ExperimentService.getAllExperiment()
+    # 获取用于菜单的实验列表
+    experimentMenuList = []
+    for experiment in experimentList:
+        experimentTemp = experiment.copy()
+        experimentName = experimentTemp["name"]
+        if len(experimentName) > 8:
+            experimentName = experimentName[0:10] + "..."
+        experimentTemp["name"] = experimentName
+        experimentMenuList.append(experimentTemp)
+
     teachingCount = getTeachingCount(teacherid)
 
     return render(request, "completedteaching.html",
                   {"teachingList": teachingList, "experimentList": experimentList, "countpage": countpage,
-                   "teachingCount": teachingCount, "teachername": teachername})
+                   "teachingCount": teachingCount, "experimentMenuList": experimentMenuList,
+                   "teachername": teachername})
 
 
 # 批阅报告页面
@@ -164,8 +186,19 @@ def v_allexperiment(request):
     teachername = utils.getCookie(request, "teachername")
     teachingCount = getTeachingCount(teacherid)
     experimentList = ExperimentService.getAllExperiment()
+    # 获取用于菜单的实验列表
+    experimentMenuList = []
+    for experiment in experimentList:
+        experimentTemp = experiment.copy()
+        experimentName = experimentTemp["name"]
+        if len(experimentName) > 8:
+            experimentName = experimentName[0:10] + "..."
+        experimentTemp["name"] = experimentName
+        experimentMenuList.append(experimentTemp)
+
     return render(request, "allexptea.html",
-                  {"experimentList": experimentList, "teachingCount": teachingCount, "teachername": teachername})
+                  {"experimentList": experimentList, "experimentMenuList": experimentMenuList,
+                   "teachingCount": teachingCount, "teachername": teachername})
 
 
 # 添加教学
@@ -434,18 +467,22 @@ def addexperiment(request):
     if experiment is None:
         responseReturn = Response(-1, "选择实验异常！")
         return HttpResponse(responseReturn.__str__())
-    deadline = datetime.datetime.strptime(deadlinestr, "%Y-%m-%d %H:%M:%S")
+    try:
+        deadline = datetime.datetime.strptime(deadlinestr, "%Y-%m-%d %H:%M:%S")
+    except:
+        responseReturn = Response(-1, "请选择报告提交截止日期！")
+        return HttpResponse(responseReturn.__str__())
     '''
         获得模板
     '''
     if templatetype == "1":
-        templateid = experiment["f_template_id"]
+        templateid = experiment.templateid
     else:  # 文件上传
         templatefile = request.FILES.get('templatefile', None)
         if templatefile is None:
             responseReturn = Response(-1, "请选择你要上传的模板文件！")
             return HttpResponse(responseReturn.__str__())
-        filename = (templatefile.name).encode("utf-8")
+        filename = templatefile.name
         filesuffix = os.path.splitext(filename)[1]
         if filesuffix != ".doc" and filesuffix != ".docx":
             responseReturn = Response(-1, "模板必须为word格式！")
@@ -460,7 +497,7 @@ def addexperiment(request):
         获得视频
     '''
     if videotype == "1":
-        videos = experiment["f_videos"]
+        videos = experiment.videos
     else:
         videos = videoids
 
@@ -474,7 +511,7 @@ def addexperiment(request):
         if datafile is None:
             responseReturn = Response(-1, "请选择你要上传的实验数据！")
             return HttpResponse(responseReturn.__str__())
-        filename = (datafile.name).encode("utf-8")
+        filename = datafile.name
         filesuffix = os.path.splitext(filename)[1]
         if filesuffix != ".xsl" and filesuffix != ".xlsx":
             responseReturn = Response(-1, "实验数据必须为excel！")
@@ -492,7 +529,7 @@ def addexperiment(request):
     if stulistfile is None:
         responseReturn = Response(-1, "请选择你要上传的学生名单！")
         return HttpResponse(responseReturn.__str__())
-    stulistfilename = (stulistfile.name).encode("utf-8")
+    stulistfilename = stulistfile.name
     stulistfilesuffix = os.path.splitext(stulistfilename)[1]
     if stulistfilesuffix != ".xsl" and stulistfilesuffix != ".xlsx":
         responseReturn = Response(-1, "学生名单必须为excel格式")
@@ -508,8 +545,8 @@ def addexperiment(request):
     '''
     studentList = getStudentListByExcel(stulistfilename)
     # 添加
-    teachingid = TeachingService.addTeaching(experimentid, deadline, teacherid, point, remark, dataurl, stulistfilename,
-                                             templateid, videos)
+    teachingid = TeachingService.addTeaching(int(experimentid), deadline, teacherid, point, remark, dataurl,
+                                             stulistfilename, templateid, videos)
     if teachingid is None:
         responseReturn = Response(-1, "添加失败，请重试")
         return HttpResponse(responseReturn.__str__())
@@ -520,7 +557,7 @@ def addexperiment(request):
             TeachingService.deleteTeachingByid(teachingid)
             responseReturn = Response(-1, """学生不存在，姓名:%s ，学号:%s""" % (student["name"], student["number"]))
             return HttpResponse(responseReturn.__str__())
-        ReportService.addReport(teachingid, studentobj["f_id"])
+        ReportService.addReport(teachingid, studentobj.id)
 
     responseReturn = Response(0, "添加成功！")
     return HttpResponse(responseReturn.__str__())
@@ -537,7 +574,7 @@ def getStudentListByExcel(filename):
             continue;
         row_data = sheet0.row_values(i)
         student = {
-            "name": (sheet0.cell_value(i, 0)).encode("utf-8"),
+            "name": sheet0.cell_value(i, 0),
             "number": str(int(sheet0.cell_value(i, 1))),
         }
         studentlist.append(student)
@@ -561,6 +598,10 @@ def getVideoById(request):
 
 # 修改实验默认预习视频
 def updateExperimentVideo(request):
+    teacherid = utils.getCookie(request, "teacherid")
+    if (teacherid is None) or teacherid == "":
+        responseReturn = Response(-1, "请登录")
+        return HttpResponse(responseReturn.__str__())
     experimentid = utils.getParam(request, "experimentid")
     videos = utils.getParam(request, "videos")
     if (experimentid is None) or experimentid == "":
@@ -580,18 +621,26 @@ def updateExperimentVideo(request):
 
 # 修改实验默认模板
 def updateExperimentTemplate(request):
+    teacherid = utils.getCookie(request, "teacherid")
+    if (teacherid is None) or teacherid == "":
+        responseReturn = Response(-1, "请登录")
+        return HttpResponse(responseReturn.__str__())
     experimentid = utils.getParam(request, "experimentid")
-    templateid = utils.getParam(request, "templateid")
-    if (experimentid is None) or experimentid == "":
-        responseReturn = Response(-1, "请重新选择实验！")
-        return HttpResponse(responseReturn.__str__())
-    if (videos is None) or videos == "":
-        responseReturn = Response(-1, "修改模板异常！")
-        return HttpResponse(responseReturn.__str__())
-    experiment = ExperimentService.updateExperimentTamplate(experimentid, templateid);
-    if experiment is None:
-        responseReturn = Response(-1, "网络异常，请重试！")
-        return HttpResponse(responseReturn.__str__())
-
-    responseReturn = Response(0, "修改成功！")
-    return HttpResponse(responseReturn.__str__())
+    file = request.FILES.get('file', None)
+    if file is None:
+        return HttpResponse(
+            "<script>if(confirm('上传的文件为空')){history.go(-1);location.reload()}else{history.go(-1);location.reload()}</script>")
+    filename = file.name
+    filesuffix = os.path.splitext(filename)[1]
+    if filesuffix != ".doc" and filesuffix != ".docx":
+        return HttpResponse(
+            "<script>if(confirm('模板必须为word格式')){history.go(-1);location.reload()}else{history.go(-1);location.reload()}</script>")
+    filename = str(uuid.uuid1()) + filesuffix
+    fp = open(os.path.join(CONSTANTS.TEMPLATEURL_PRE, filename), 'wb+')
+    for chunk in file.chunks():  # 分块写入文件
+        fp.write(chunk)
+    fp.close()
+    templateid = TemplateService.addTemplate(experimentid, filename)
+    ExperimentService.updateExperimentTamplate(experimentid, templateid)
+    return HttpResponse(
+        "<script>if(confirm('上传成功')){history.go(-1);location.reload()}else{history.go(-1);location.reload()}</script>")

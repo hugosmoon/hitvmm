@@ -51,7 +51,7 @@ var publicObj = {
             $.post("/login/admin/",
                 {
                     adminid: adminid,
-                    adminpwd: adminpwd
+                    adminpwd: sha256_digest(adminpwd)
                 },
                 function (data, status) {
                     dataObj = $.parseJSON(data)
@@ -1033,6 +1033,17 @@ var publicObj = {
                     }
                 });
         })
+        $(".updatamod").each(function () {
+            $(this).unbind('click').bind('click', function () {
+                $('.popupbox').show()
+                $('.popupwall2').show()
+                $(".popupmid").hide()
+                $(".popupmid2").show()
+                experimentid = $(this).attr("experimentid")
+                $("#experimentid").attr("value", experimentid)
+                $("#uploadfile").attr("action", "/updateExperimentTemplate/")
+            })
+        });
     },
     //审批
     approvalEvent: function () {
@@ -1106,8 +1117,8 @@ var publicObj = {
             }
             $.post("/passwordedit/",
                 {
-                    oldpwd: oldpwd,
-                    newpwd: newpwd
+                    oldpwd: sha256_digest(oldpwd),
+                    newpwd: sha256_digest(newpwd)
                 },
                 function (data, status) {
                     dataObj = $.parseJSON(data)
@@ -1313,7 +1324,8 @@ var publicObj = {
                 dataType: "json", //html(默认), xml, script, json...接受服务端返回的类型
                 clearForm: false,  //成功提交后，是否清除所有表单元素的值
                 resetForm: false,  //成功提交后，是否重置所有表单元素的值
-                timeout: 3000     //限制请求的时间，当请求大于3秒后，跳出请求
+                timeout: 3000,     //限制请求的时间，当请求大于3秒后，跳出请求
+                async: false
             };
             console.log(me.addepxupdatamodObj)
             console.log(me.addexpteastulistObj)

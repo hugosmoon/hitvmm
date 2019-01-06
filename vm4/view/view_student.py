@@ -56,9 +56,19 @@ def v_index(request):
         countpage = count / 10 + i
     teachingRunList = TeachingService.getTeachingByStu(stuid, CONSTANTS.TEACHING_IS_RUNNING, page)
     experimentList = ExperimentService.getAllExperiment()
+    # 获取用于菜单的实验列表
+    experimentMenuList = []
+    for experiment in experimentList:
+        experimentTemp = experiment.copy()
+        experimentName = experimentTemp["name"]
+        if len(experimentName) > 8:
+            experimentName = experimentName[0:10] + "..."
+        experimentTemp["name"] = experimentName
+        experimentMenuList.append(experimentTemp)
+
     teachingCount = getTeachingCount(stuid)
     return render(request, "index.html",
-                  {"teachingList": teachingRunList, "countpage": countpage,
+                  {"teachingList": teachingRunList, "countpage": countpage, "experimentMenuList": experimentMenuList,
                    "experimentList": experimentList, "teachingCount": teachingCount, "stuname": stuname})
 
 
@@ -82,9 +92,19 @@ def v_completedexp(request):
         countpage = count / 10 + i
     teachingRunList = TeachingService.getTeachingByStu(stuid, CONSTANTS.TEACHING_IS_STOP, page)
     experimentList = ExperimentService.getAllExperiment()
+    # 获取用于菜单的实验列表
+    experimentMenuList = []
+    for experiment in experimentList:
+        experimentTemp = experiment.copy()
+        experimentName = experimentTemp["name"]
+        if len(experimentName) > 8:
+            experimentName = experimentName[0:10] + "..."
+        experimentTemp["name"] = experimentName
+        experimentMenuList.append(experimentTemp)
+
     teachingCount = getTeachingCount(stuid)
     return render(request, "completedexp.html",
-                  {"teachingList": teachingRunList, "countpage": countpage,
+                  {"teachingList": teachingRunList, "countpage": countpage, "experimentMenuList": experimentMenuList,
                    "experimentList": experimentList, "teachingCount": teachingCount, "stuname": stuname})
 
 
@@ -96,8 +116,18 @@ def v_allexperiment(request):
     stuname = utils.getCookie(request, "stuname")
     teachingCount = getTeachingCount(stuid)
     experimentList = ExperimentService.getAllExperiment()
-    return render(request, "allexp.html",
-                  {"experimentList": experimentList, "teachingCount": teachingCount, "stuname": stuname})
+    # 获取用于菜单的实验列表
+    experimentMenuList = []
+    for experiment in experimentList:
+        experimentTemp = experiment.copy()
+        experimentName = experimentTemp["name"]
+        if len(experimentName) > 8:
+            experimentName = experimentName[0:10] + "..."
+        experimentTemp["name"] = experimentName
+        experimentMenuList.append(experimentTemp)
+
+    return render(request, "allexp.html", {"experimentList": experimentList, "experimentMenuList": experimentMenuList,
+                                           "teachingCount": teachingCount, "stuname": stuname})
 
 
 # 获取未完成实验和已完成实验数量

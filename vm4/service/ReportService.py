@@ -33,18 +33,18 @@ def getReportByTeachingid(teachingid):
     except:
         return None
     else:
-        reportDictList=[]
+        reportDictList = []
         for report in reportList:
-            reportDict={
-                "id":report.id,
-                "stuid":report.stuid,
-                "teachingid":report.teachingid,
-                "url":report.url,
-                "score":report.score,
-                "status":report.status,
-                "isdelete":report.isdelete,
-                "createtime":report.createtime,
-                "updatetime":report.updatetime
+            reportDict = {
+                "id": report.id,
+                "stuid": report.stuid,
+                "teachingid": report.teachingid,
+                "url": report.url,
+                "score": report.score,
+                "status": report.status,
+                "isdelete": report.isdelete,
+                "createtime": report.createtime,
+                "updatetime": report.updatetime
             }
             student = StudentService.getStudentById(report.stuid)
             reportDict["stuname"] = student.name
@@ -90,7 +90,7 @@ def scoreReport(reportid, score):
 # 添加报告
 def addReport(teachingid, stunid):
     now = utils.getNow()
-    report = Report(stuid=stunid, teachingid=teachingid, isdelete=CONSTANTS.ISDELETE_NOT, createtime=now,
-                    updatetime=now)
+    report = Report(stuid=stunid, teachingid=teachingid, score=0, status=CONSTANTS.REPORT_STATUS_PENDING,
+                    isdelete=CONSTANTS.ISDELETE_NOT, createtime=now, updatetime=now)
     report.save()
     return report.id

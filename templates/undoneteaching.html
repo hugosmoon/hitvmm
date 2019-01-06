@@ -60,7 +60,7 @@
                 <li class="navtip navtip3">
                     <a href="/allexptea/">全部实验</a>
                 </li>
-                {% for experiment in experimentList %}
+                {% for experiment in experimentMenuList %}
                     <li class="navtip">
                         <a href="{{ experiment.url }}" target="_blank">{{ experiment.name }}</a>
                     </li>
@@ -145,7 +145,7 @@
         </div>
         <!--提示文案-->
         <div class="popupmid popupmid1">实验数据必须为EXCEL格式，文件大小在3M以内。</div>
-        <div class="popupmid popupmid2">提交报告必须为WORD格式，文件大小在3M以内。</div>
+        <div class="popupmid popupmid2">报告模板必须为WORD格式，文件大小在3M以内。</div>
         <form id="uploadfile" action="" method="post" enctype="multipart/form-data">
             <div class="btn cancle">
                 选择文件

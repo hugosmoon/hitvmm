@@ -61,7 +61,7 @@
                 <li class="navtip navtip3">
                     <a href="/allexptea/">全部实验</a>
                 </li>
-                {% for experiment in experimentList %}
+                {% for experiment in experimentMenuList %}
                     <li class="navtip">
                         <a href="{{ experiment.url }}" target="_blank">{{ experiment.name }}</a>
                     </li>
@@ -99,7 +99,9 @@
                                 videos="{{ experiment.videos }}">修改实验预习
                             </li>
                             <li class="allteaoperation unitbtn" experimenturl="{{ experiment.url }}">实验操作</li>
-                            <li class="downloaddatamod unitbtn" templateid="{{ experiment.templateid }}">默认报告模板下载</li>
+                            <li class="updatamod unitbtn" experimentid="{{ experiment.id }}"
+                                templateid="{{ experiment.templateid }}">修改默认报告模板
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -139,11 +141,17 @@
             <img class="dele" src="../static/img/dele.png" alt="">
         </div>
         <!--提示文案-->
-        <div class="popupmid popupmid1">提交报告必须为EXCEL格式，文件大小在3M以内。</div>
-        <div class="popupmid popupmid2">提交报告必须为WORD格式，文件大小在3M以内。</div>
-        <div class="popupmid popupmid3">学生名单必须为符合名单模板并且为EXCEL格式，文件大小在3M以内。</div>
-        <div class="btn cancle">选择文件</div>
-        <div class="btn sure">确认上传</div>
+        <div class="popupmid popupmid1">实验数据必须为EXCEL格式，文件大小在3M以内。</div>
+        <div class="popupmid popupmid2">报告模板必须为WORD格式，文件大小在3M以内。</div>
+        <form id="uploadfile" action="" method="post" enctype="multipart/form-data">
+            <div class="btn cancle">
+                选择文件
+                <input class="uploadfile" type="file" name="file" onchange="publicObj.fileUpLoad()"/>
+            </div>
+            <input class="btn sure fileupload" type="submit" class="btn btn-default" value="确认上传"/>
+            <input id="experimentid" type="hidden" name="experimentid" value=""/>
+        </form>
+        <div class="fileuploadname"></div>
     </div>
     <!--删除实验教学-->
     <div class="popupwall popupwall3">

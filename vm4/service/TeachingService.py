@@ -216,7 +216,7 @@ def updateTeachingDeadlineById(teachingid, deadline):
     else:
         status = CONSTANTS.TEACHING_IS_RUNNING
     try:
-        teacher = Teacher.objects.filter(id=teachingid).update(deadline=deadline, status=status, updatetime=now)
+        teacher = Teaching.objects.filter(id=teachingid).update(deadline=deadline, status=status, updatetime=now)
     except:
         return None
     else:
@@ -226,9 +226,9 @@ def updateTeachingDeadlineById(teachingid, deadline):
 # 添加实验教学
 def addTeaching(experimentid, deadline, teacherid, point, remark, dataurl, stulisturl, templateid, videos):
     now = utils.getNow()
-    teaching = Teacher(experimentid=experimentid, deadline=deadline, teacherid=teacherid, point=point, remark=remark,
+    teaching = Teaching(experimentid=experimentid, deadline=deadline, teacherid=teacherid, point=point, remark=remark,
                        dataurl=dataurl, stulisturl=stulisturl, templateid=templateid, videos=videos,
                        status=CONSTANTS.TEACHING_IS_RUNNING, isdelete=CONSTANTS.ISDELETE_NOT, createtime=now,
                        updatetime=now)
-    teacherid.save()
+    teaching.save()
     return teaching.id
