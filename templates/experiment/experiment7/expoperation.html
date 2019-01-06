@@ -33,11 +33,11 @@
 </div>
 
 <div class="wall5">
-    <div class="addnewexptit">工件材料对切削力的影响</div>
+    <div class="addnewexptit">加工条件对切削温度的影响</div>
     <div class="addnewexpschedulebox">
         <div class="addnewexpschedule selsct">基础参数设置</div>
         <div class="line selsct">-></div>
-        <div class="addnewexpschedule selsct">工件材料对切削力的影响</div>
+        <div class="addnewexpschedule selsct">加工条件对切削温度的影响</div>
 
     </div>
     <div class="operationbox">
@@ -69,6 +69,7 @@
                 <div class="unit">
                     <div class="uleft">工件参数  -</div>
                     <div class="uright">
+                         <div class="utxt">工件材料：<a id="workpiece_material_text"></a></div>
                         <div class="utxt">工件半径：<a id="workpiece_r_text"></a> mm</div>
                         <div class="utxt">工件长度：<a id="workpiece_l_text"></a> mm</div>
                     </div>
@@ -100,14 +101,13 @@
             <div class="addbox">
             <div class="rightbox">
                 <div>
-                    <p  style="font-weight: bold; font-size: 22px;" >工件材料</p>
+                    <p  style="font-weight: bold; font-size: 22px;" >加工条件</p>
                 </div>
                 <div>
-                    <select class="selctbox selctbox3" name="" id="workpiece_material">
-                        <option value="45_steel">45钢</option>
-                        <option value="stainless_steel">不锈钢</option>
-                        <option value="gray_iron">灰铸铁</option>
-                        <option value="malleable_cast_iron">可锻铸铁</option>
+                    <select class="selctbox selctbox3" name="" id="cutting_fluid">
+                        <option value="water_based_cutting_fluid">水基切削液</option>
+                        <option value="oil_based_cutting_fluid">油基切削液</option>
+                        <option value="no_cutting_fluid">无切削液</option>
                     </select>
                 </div>
                 </div>
@@ -124,7 +124,6 @@
         </div>
 
     </div>
-
 </div>
 <div class="footer">
     <div class="fbox">
@@ -171,12 +170,13 @@
 
 
     //可是化显示那种参数force、temp、r
-    cut_cal_status="force";
+    cut_cal_status="temp";
+    cutting_fluid=($("#cutting_fluid").val());
 
 
 
-    start_render('expoeration_0',workpiece_material,workpiece_r,workpiece_l,cutting_depth,feed_rate,rot_speed,tool_cutting_edge_angle,tool_minor_cutting_edge_angle,tool_cutting_edge_inclination_angle,rake_angle,clearance_angle,minor_clearance_angle,corner_radius);
-    stop_render('expoeration_0',workpiece_material,workpiece_r,workpiece_l,cutting_depth,feed_rate,rot_speed,tool_cutting_edge_angle,tool_minor_cutting_edge_angle,tool_cutting_edge_inclination_angle,rake_angle,clearance_angle,minor_clearance_angle,corner_radius);
+    start_render('expoeration_0',workpiece_material,workpiece_r,workpiece_l,cutting_depth,feed_rate,rot_speed,tool_cutting_edge_angle,tool_minor_cutting_edge_angle,tool_cutting_edge_inclination_angle,rake_angle,clearance_angle,minor_clearance_angle,corner_radius,cutting_fluid);
+    stop_render('expoeration_0',workpiece_material,workpiece_r,workpiece_l,cutting_depth,feed_rate,rot_speed,tool_cutting_edge_angle,tool_minor_cutting_edge_angle,tool_cutting_edge_inclination_angle,rake_angle,clearance_angle,minor_clearance_angle,corner_radius,cutting_fluid);
 
 
 
@@ -185,14 +185,14 @@
     var button_status=1;
     var cut_cal;
     $('#start').on("click",function(){
-        workpiece_material=($("#workpiece_material").val());
+        cutting_fluid=($("#cutting_fluid").val());
 
 
         if (button_status==1){
             cut_cal = setInterval("get_cal(cut_cal_status)", 100);
             $('#start').text("关闭机床");
             button_status=0;
-            start_render('expoeration_0',workpiece_material,workpiece_r,workpiece_l,cutting_depth,feed_rate,rot_speed,tool_cutting_edge_angle,tool_minor_cutting_edge_angle,tool_cutting_edge_inclination_angle,rake_angle,clearance_angle,minor_clearance_angle,corner_radius);
+            start_render('expoeration_0',workpiece_material,workpiece_r,workpiece_l,cutting_depth,feed_rate,rot_speed,tool_cutting_edge_angle,tool_minor_cutting_edge_angle,tool_cutting_edge_inclination_angle,rake_angle,clearance_angle,minor_clearance_angle,corner_radius,cutting_fluid);
 
         }
         else {
@@ -201,7 +201,7 @@
             }
             $('#start').text("启动机床");
             button_status=1;
-            stop_render('expoeration_0',workpiece_material,workpiece_r,workpiece_l,cutting_depth,feed_rate,rot_speed,tool_cutting_edge_angle,tool_minor_cutting_edge_angle,tool_cutting_edge_inclination_angle,rake_angle,clearance_angle,minor_clearance_angle,corner_radius);
+            stop_render('expoeration_0',workpiece_material,workpiece_r,workpiece_l,cutting_depth,feed_rate,rot_speed,tool_cutting_edge_angle,tool_minor_cutting_edge_angle,tool_cutting_edge_inclination_angle,rake_angle,clearance_angle,minor_clearance_angle,corner_radius,cutting_fluid);
 
         }
 
@@ -229,6 +229,7 @@
             form_data.append('minor_clearance_angle',minor_clearance_angle);
             form_data.append('clearance_angle',clearance_angle);
             form_data.append('tool_minor_cutting_edge_angle',tool_minor_cutting_edge_angle);
+            form_data.append('cutting_fluid',cutting_fluid);
             $.ajax({
                 url:url,
                 type:'POST',
