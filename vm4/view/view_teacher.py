@@ -557,3 +557,41 @@ def getVideoById(request):
     response['Content-Type'] = 'application/octet-stream'
     response['Content-Disposition'] = 'attachment;filename="' + videourl + '"'
     return response
+
+
+# 修改实验默认预习视频
+def updateExperimentVideo(request):
+    experimentid = utils.getParam(request, "experimentid")
+    videos = utils.getParam(request, "videos")
+    if (experimentid is None) or experimentid == "":
+        responseReturn = Response(-1, "请重新选择实验！")
+        return HttpResponse(responseReturn.__str__())
+    if (videos is None) or videos == "":
+        responseReturn = Response(-1, "修改视频异常！")
+        return HttpResponse(responseReturn.__str__())
+    experiment = ExperimentService.updateExperimentVideos(experimentid, videos);
+    if experiment is None:
+        responseReturn = Response(-1, "网络异常，请重试！")
+        return HttpResponse(responseReturn.__str__())
+
+    responseReturn = Response(0, "修改成功！")
+    return HttpResponse(responseReturn.__str__())
+
+
+# 修改实验默认模板
+def updateExperimentTemplate(request):
+    experimentid = utils.getParam(request, "experimentid")
+    templateid = utils.getParam(request, "templateid")
+    if (experimentid is None) or experimentid == "":
+        responseReturn = Response(-1, "请重新选择实验！")
+        return HttpResponse(responseReturn.__str__())
+    if (videos is None) or videos == "":
+        responseReturn = Response(-1, "修改模板异常！")
+        return HttpResponse(responseReturn.__str__())
+    experiment = ExperimentService.updateExperimentTamplate(experimentid, templateid);
+    if experiment is None:
+        responseReturn = Response(-1, "网络异常，请重试！")
+        return HttpResponse(responseReturn.__str__())
+
+    responseReturn = Response(0, "修改成功！")
+    return HttpResponse(responseReturn.__str__())

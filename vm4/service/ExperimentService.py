@@ -3,6 +3,7 @@ from vm4.service import VideoService
 import json
 from vm4.models import *
 from vm4.context import CONSTANTS
+from vm4.view import utils
 
 
 def getAllExperiment():
@@ -44,6 +45,26 @@ def getAllExperiment():
 def getExperimentById(expId):
     try:
         experiment = Experiment.objects.filter(id=expId, isdelete=CONSTANTS.ISDELETE_NOT).get()
+    except:
+        return None
+    else:
+        return experiment
+
+
+def updateExperimentVideos(experimentid, videos):
+    now = utils.getNow()
+    try:
+        experiment = Experiment.objects.filter(id=experimentid).update(videos=videos, updatetime=now)
+    except:
+        return None
+    else:
+        return experiment
+
+
+def updateExperimentTamplate(experimentid, templateid):
+    now = utils.getNow()
+    try:
+        experiment = Experiment.objects.filter(id=experimentid).update(templateid=templateid, updatetime=now)
     except:
         return None
     else:

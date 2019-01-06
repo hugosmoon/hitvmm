@@ -76,7 +76,6 @@ def getCountStuByTeachingidAndStatus(teachingid, status):
 # 提交报告
 def submintReport(reportid, filename):
     report = Report.objects.filter(id=reportid, status=CONSTANTS.REPORT_STATUS_PENDING).update(url=filename,
-                                                                                               status=CONSTANTS.REPORT_STATUS_SUBMIT,
                                                                                                updatetime=utils.getNow())
     return report
 
@@ -84,7 +83,6 @@ def submintReport(reportid, filename):
 # 批阅报告
 def scoreReport(reportid, score):
     report = Report.objects.filter(id=reportid, status=CONSTANTS.REPORT_STATUS_SUBMIT).update(score=score,
-                                                                                              status=CONSTANTS.REPORT_STATUS_SCORE,
                                                                                               updatetime=utils.getNow())
     return report
 

@@ -95,7 +95,9 @@
 
                     <div class="unitftbg">
                         <ul class="btnwall">
-                            <li class="allteapreview unitbtn" videos="{{ experiment.videos }}">实验预习</li>
+                            <li class="changevide2 unitbtn" experimentid="{{ experiment.id }}"
+                                videos="{{ experiment.videos }}">修改实验预习
+                            </li>
                             <li class="allteaoperation unitbtn" experimenturl="{{ experiment.url }}">实验操作</li>
                             <li class="downloaddatamod unitbtn" templateid="{{ experiment.templateid }}">默认报告模板下载</li>
                         </ul>
@@ -153,39 +155,21 @@
         <div class="btn cancle">确定</div>
         <div class="btn sure">取消</div>
     </div>
-
-    <!--修改提交日期-->
-    <div class="popupwall popupwall4">
-        <div class="popuptop">
-            <img class="logo" src="../static/img/logo.png" alt="">
-            <img class="dele" src="../static/img/dele.png" alt="">
-        </div>
-        <select name="" id="" class="selectbox selectbox1">
-            <option value="">2018年</option>
-            <option value="">2017年</option>
-        </select>
-        <select name="" id="" class="selectbox selectbox2">
-            <option value="">12月</option>
-            <option value="">11月</option>
-        </select>
-        <select name="" id="" class="selectbox selectbox3">
-            <option value="">18日</option>
-            <option value="">17日</option>
-        </select>
-        <div class="btn cancle">确定</div>
-        <div class="btn sure">取消</div>
-    </div>
     <!--更换视频-->
     <div class="popupwall popupwall5">
         <img class="dele" src="../static/img/dele.png" alt="">
-        <div id="videoname" class="v_name">我是一个没有名字的视频，我是个没有名字。</div>
-        <div class="vbox">
-            <div class="videobox">
-                <video id="video" controls>
-                </video>
+        <input type="hidden" id="changevideoexperimentid">
+        <div class="videowall2">
+            <div class="videowall">
             </div>
         </div>
-        <div class="vchangebox">
+
+        <div class="vbtnbox">
+            <div class="vbtn preadd2">前方添加</div>
+            <div class="vbtn changvideo2">更改</div>
+            <div class="vbtn cvdele2">删除</div>
+            <div class="vbtn behindadd2">后方添加</div>
+            <div class="vbtn vbover3">完成</div>
         </div>
     </div>
     <!--学生提交报告-->
@@ -233,6 +217,32 @@
         <div class="vchangebox">
         </div>
     </div>
+    <!--修改视频时上传文件-->
+    <div class="popupwall popupwall2_2">
+        <div class="popuptop">
+            <img class="logo" src="../static/img/logo.png" alt="">
+            <img class="changevdele" src="../static/img/dele.png" alt="">
+        </div>
+        <!--提示文案-->
+        <div class="popupmid ">视频名称</div>
+        <input type="hidden" id="addvideotype" value="0">
+        <form id="addvideo" action="/addexperiment/" method="post" enctype="multipart/form-data">
+            <input id="videoexperimentid" type="hidden" name="experimentid" value=""/>
+            <!--说明框-->
+            <textarea class="shuomingbox" name="name"></textarea>
+            <!--提交-->
+            <div class="btn changevideofile">
+                选择文件
+                <input class="uploadfile" type="file" name="file" onchange="publicObj.updataChangeVideo()">
+            </div>
+            <div class="btn cancle changvideocancle">
+                取消
+            </div>
+            <div class="btn sure changvideosure2">确认上传</div>
+
+            <div class="videofileuploadname"></div>
+        </form>
+    </div>
 </div>
 </body>
 
@@ -244,6 +254,7 @@
 <script src="../static/plugin/fastclick.js"></script>
 <script src="../static/plugin/laypage/laypage.js"></script>
 <script src="../static/plugin/zane-calendar.min.js"></script>
+<script src="../static/plugin/jquery.form.js"></script>
 <script src="../static/js/public.js"></script>
 <!-- 模块JS -->
 <script type="text/javascript" src="../static/js/index.js"></script>
@@ -255,5 +266,8 @@
         $(location).attr('href', '/loginteacher/');
     });
 
+    function beforeCheck() {
+        return
+    }
 </script>
 </html>
