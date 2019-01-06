@@ -43,14 +43,14 @@
     <div class="operationbox">
         <div class="left">
             <div class="boximg boximg1">
-                <canvas id="main_view" width="3200" height="1600" style="width: 800px;height: 400px;" style=" border:2px solid #777;"> </canvas>
+                <canvas id="main_view" width="3200" height="1600" style="width: 800px;height: 400px; border:2px solid #777;"> </canvas>
             </div>
             <div class="boximg boximg2">
                 <div class="leftboximg">
-                    <canvas id="r_view" width="1600" height="1600" style="width: 400px;height: 400px;" style="border:2px solid #777;"> </canvas>
+                    <canvas id="r_view" width="1600" height="1600" style="width: 400px;height: 400px; border:2px solid #777;"> </canvas>
                 </div>
                 <div class="rightboximg">
-                    <canvas id="text" width="1600" height="1600" style="width: 400px;height: 400px;" style="border:2px solid #777;" download='exp_data.png'> </canvas>
+                    <canvas id="text" width="1600" height="1600" style="width: 400px;height: 400px; border:2px solid #777;" download='exp_data.png'> </canvas>
                 </div>
             </div>
             <div class="boximg boximg3">
@@ -184,7 +184,8 @@
             </div>
                 <br>
                 <div class="obtnbox">
-                    <div id="start" class="obtn bunt start" >启动</div>
+                    <div id="start" class="obtn bunt start" >启动机床</div>
+                    <div id="re_start" class="obtn bunt start" style="background:#FF0000;color:#FFFFFF;" onclick="location.reload()">实验复位</div>
                 </div>
                 <div class="obtnbox">
                         <div id="save_img" class="obtn bunt save" >保存数据</div>
@@ -261,7 +262,7 @@
 
         if (button_status==1){
             cut_cal = setInterval("get_cal(cut_cal_status)", 100);
-            $('#start').text("停止");
+            $('#start').text("关闭机床");
             button_status=0;
             start_render('expoeration_0',workpiece_material,workpiece_r,workpiece_l,cutting_depth,feed_rate,rot_speed,tool_cutting_edge_angle,tool_minor_cutting_edge_angle,tool_cutting_edge_inclination_angle,rake_angle,clearance_angle,minor_clearance_angle,corner_radius);
 
@@ -270,7 +271,7 @@
             if (cut_cal){
                 clearInterval(cut_cal);
             }
-            $('#start').text("启动");
+            $('#start').text("启动机床");
             button_status=1;
             stop_render('expoeration_0',workpiece_material,workpiece_r,workpiece_l,cutting_depth,feed_rate,rot_speed,tool_cutting_edge_angle,tool_minor_cutting_edge_angle,tool_cutting_edge_inclination_angle,rake_angle,clearance_angle,minor_clearance_angle,corner_radius);
 

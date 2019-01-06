@@ -50,11 +50,11 @@
             </div>
             <ul class="navcenter navcenter2">
                 <li class="navtip">
-                    <a href="/allexp/">全部实验</a>
+                    <a style="font-size: 13px" href="/allexp/">全部实验</a>
                 </li>
                 {% for experiment in experimentList %}
                     <li class="navtip">
-                        <a href="{{ experiment.url }}" target="_blank">{{ experiment.name }}</a>
+                        <a style="font-size: 13px" href="{{ experiment.url }}" target="_blank">{{ experiment.name }}</a>
                     </li>
                 {% endfor %}
             </ul>

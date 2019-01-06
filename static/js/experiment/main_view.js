@@ -140,7 +140,7 @@ function frame_cal(feed_rate,rot_speed,workpiece_l){
       }
       //加工长度
       if(knife_displacement>=10&&(knife_displacement<=(workpiece_l+10))){
-        fabrication_length=knife_displacement-+10
+        fabrication_length=knife_displacement-10
       }
 
 
@@ -173,16 +173,16 @@ function vertical_view(workpiece_r,workpiece_l,fabrication_length,cutting_depth)
   });
   //绘制网格
 
-  for (var s = 0;s <10000;s=s+40) {
+  for (var s = 0;s <10000;s=s+20) {
     $('#main_view').drawVector({
       strokeStyle: '#fff',
-      strokeWidth: 0.1,
+      strokeWidth: 0.5,
       x: 0, y: s,
       a1: 90, l1: 10000
     });
     $('#main_view').drawVector({
       strokeStyle: '#fff',
-      strokeWidth: 0.1,
+      strokeWidth: 0.5,
       x: s, y: 0,
       a1: 180, l1: 10000
     });
@@ -436,16 +436,16 @@ function right_view(workpiece_r,workpiece_l,fabrication_length,cutting_depth){
       width: 2000,
       height: 5000
     });
-    for (var s = 0;s <2000;s=s+40) {
+    for (var s = 0;s <2000;s=s+20) {
       $('#r_view').drawVector({
         strokeStyle: '#fff',
-        strokeWidth: 0.1,
+        strokeWidth: 0.5,
         x: 0, y: s,
         a1: 90, l1: 2000
       });
       $('#r_view').drawVector({
         strokeStyle: '#fff',
-        strokeWidth: 0.1,
+        strokeWidth: 0.5,
         x: s, y: 0,
         a1: 180, l1: 2000
       });
