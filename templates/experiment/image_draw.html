@@ -159,21 +159,21 @@ function display(){
                 $('#CoordinateSystem').drawArc({
 
                     fillStyle: 'blue',
-                    strokeWidth: 2,
-                    x: 50 + (xArray[n] - x_min) * 700 / x_dis, y: 750 - (yArray[n] - y_min) * 700 / y_dis,
-                    radius: 4,
+                    strokeWidth: 8,
+                    x: 200 + (xArray[n] - x_min) * 2800 / x_dis, y: 3000 - (yArray[n] - y_min) * 2800 / y_dis,
+                    radius: 16,
 
                 });
                 $('#CoordinateSystem').drawText({
                   text: 'X:'+xArray[n]+'\nY:'+yArray[n],
-                  x: 45 + (xArray[n] - x_min) * 700 / x_dis, y: 770 - (yArray[n] - y_min) * 700 / y_dis,
+                  x: 180 + (xArray[n] - x_min) * 2800 / x_dis, y: 2080 - (yArray[n] - y_min) * 2800 / y_dis,
                      fillStyle: '#000',
                       fontStyle: 'bold',
-                      fontSize: '8pt',
+                      fontSize: '32pt',
                       fontFamily: 'Trebuchet MS, sans-serif',
                       align: 'left',
                       respectAlign: true,
-                      maxWidth: 300,
+                      maxWidth: 1200,
 
 
                 });
@@ -194,16 +194,16 @@ function display(){
             for (var m = 0; m <= x_nu-1; m += 1) {
                 $('#CoordinateSystem').drawVector({
                     strokeStyle: '#000',
-                    strokeWidth: 0.5,
-                    x: 50 + m * (700 / x_nu), y: 750,
-                    a1: 0, l1: 700
+                    strokeWidth: 2,
+                    x: 200 + m * (2800 / x_nu), y: 3000,
+                    a1: 0, l1: 2800
                 });
                 for (var n = 0; n < 10; n += 1) {
                     $('#CoordinateSystem').drawVector({
                         strokeStyle: '#000',
-                        strokeWidth: 0.3,
-                        x: 50 + (((Math.log(n + 1) / Math.log(10))) +m) * (700 / x_nu), y: 750,
-                        a1: 0, l1: 700
+                        strokeWidth: 1.2,
+                        x: 200 + (((Math.log(n + 1) / Math.log(10))) +m) * (2800 / x_nu), y: 3000,
+                        a1: 0, l1: 2800
                     });
                 }
 
@@ -211,16 +211,16 @@ function display(){
             for (var m = 0; m <= y_nu-1; m += 1) {
                 $('#CoordinateSystem').drawVector({
                     strokeStyle: '#000',
-                    strokeWidth: 0.5,
-                    x: 50 , y: 750- m * (700 / y_nu),
-                    a1: 90, l1: 700
+                    strokeWidth: 2,
+                    x: 200 , y: 3000- m * (2800 / y_nu),
+                    a1: 90, l1: 2800
                 });
                 for (var n = 0; n < 10; n += 1) {
                     $('#CoordinateSystem').drawVector({
                         strokeStyle: '#000',
-                        strokeWidth: 0.3,
-                        x: 50 , y: 750- (((Math.log(n + 1) / Math.log(10))) +m) * (700 / y_nu),
-                        a1: 90, l1: 700
+                        strokeWidth: 1.2,
+                        x: 200 , y: 3000- (((Math.log(n + 1) / Math.log(10))) +m) * (2800 / y_nu),
+                        a1: 90, l1: 2800
                     });
                 }
 
@@ -230,21 +230,21 @@ function display(){
                 $('#CoordinateSystem').drawArc({
 
                     fillStyle: 'blue',
-                    strokeWidth: 2,
-                    x: 50 + (((Math.log(xArray[n]/x_min))/Math.log(10))/ x_nu)*700, y: 750 - (((Math.log(yArray[n]/y_min))/Math.log(10))/ y_nu)*700,
-                    radius: 4,
+                    strokeWidth: 8,
+                    x: 200 + (((Math.log(xArray[n]/x_min))/Math.log(10))/ x_nu)*2800, y: 3000 - (((Math.log(yArray[n]/y_min))/Math.log(10))/ y_nu)*2800,
+                    radius: 16,
 
                 });
                  $('#CoordinateSystem').drawText({
                   text: 'X:'+xArray[n]+'\nY:'+yArray[n],
-                  x: 45 + (((Math.log(xArray[n]/x_min))/Math.log(10))/ x_nu)*700, y: 770 - (((Math.log(yArray[n]/y_min))/Math.log(10))/ y_nu)*700,
+                  x: 180 + (((Math.log(xArray[n]/x_min))/Math.log(10))/ x_nu)*2800, y: 3080 - (((Math.log(yArray[n]/y_min))/Math.log(10))/ y_nu)*2800,
                      fillStyle: '#000',
                       fontStyle: 'bold',
-                      fontSize: '8pt',
+                      fontSize: '32pt',
                       fontFamily: 'Trebuchet MS, sans-serif',
                       align: 'left',
                       respectAlign: true,
-                      maxWidth: 300,
+                      maxWidth: 1200,
 
 
                 });
@@ -261,96 +261,94 @@ function display(){
 
 }
 
-
+///////////////////////////////////////////////////////////////////////
 //绘制坐标轴
     function PlotCoordinateSystem() {
             $('#CoordinateSystem').clearCanvas().drawPath({
               strokeStyle: '#000',
-              strokeWidth: 1,
+              strokeWidth: 4,
 
               p1: {
                 type: 'line',
                 rounded: true,
                 endArrow: true,
-                arrowRadius: 10,
+                arrowRadius: 40,
                 arrowAngle: 90,
-                x1: 50, y1: 750,
-                x2: 780, y2: 750
+                x1: 200, y1: 3000,
+                x2: 3120, y2: 3000
               },
                 p2: {
                 type: 'line',
                 rounded: true,
                 endArrow: true,
-                arrowRadius: 10,
+                arrowRadius: 40,
                 arrowAngle: 90,
-                x1: 50, y1: 750,
-                x2: 50, y2: 20
+                x1: 200, y1: 3000,
+                x2: 200, y2: 40
               }
             }).drawText({
                   text: '黄慧宇 1090810518',
-                  x: 750, y: 30,
+                  x: 3000, y: 120,
                      fillStyle: '#37c',
-                      fontStyle: 'bold',
-                      fontSize: '10pt',
+                      fontSize: '40pt',
                       fontFamily: 'Trebuchet MS, sans-serif',
                       align: 'right',
                       respectAlign: true,
-                      maxWidth: 500,
+                      maxWidth: 2000,
 
 
                 }).drawText({
                   text: 'X:'+$('#x_name').val()+' / '+$('#x_unit').val(),
-                  x: 780, y: 770,
+                  x: 3120, y: 3080,
                      fillStyle: '#000',
-                      fontStyle: 'bold',
-                      fontSize: '10pt',
+                      fontSize: '40pt',
                       fontFamily: 'Trebuchet MS, sans-serif',
                       align: 'right',
                       respectAlign: true,
-                      maxWidth: 500,
+                      maxWidth: 2000,
 
 
                 }).drawText({
                   text: 'Y:'+$('#y_name').val()+' / '+$('#y_unit').val(),
-                  x: 60, y: 30,
+                  x: 240, y: 120,
                      fillStyle: '#000',
                       fontStyle: 'bold',
-                      fontSize: '10pt',
+                      fontSize: '40pt',
                       fontFamily: 'Trebuchet MS, sans-serif',
                       align: 'left',
                       respectAlign: true,
-                      maxWidth: 500,
+                      maxWidth: 2000,
 
 
                 });
 //绘制网格-普通坐标系
         if (CoordinateSystemType==0){
-            for (var s = 50;s <=750;s=s+7) {
+            for (var s = 200;s <=3000;s=s+28) {
                 $('#CoordinateSystem').drawVector({
                   strokeStyle: '#000',
-                  strokeWidth: 0.1,
-                  x: s, y: 750,
-                  a1: 0, l1: 700
+                  strokeWidth: 0.4,
+                  x: s, y: 3000,
+                  a1: 0, l1: 2800
                 });
                 $('#CoordinateSystem').drawVector({
                   strokeStyle: '#000',
-                  strokeWidth: 0.2,
-                  x: 50, y: s,
-                  a1: 90, l1: 700
+                  strokeWidth: 0.8,
+                  x: 200, y: s,
+                  a1: 90, l1: 2800
                 });
             }
-            for (var s = 50;s <=750;s=s+70) {
+            for (var s = 200;s <=3000;s=s+280) {
                 $('#CoordinateSystem').drawVector({
                   strokeStyle: '#000',
-                  strokeWidth: 0.3,
-                  x: s, y: 750,
-                  a1: 0, l1: 700
+                  strokeWidth: 1.2,
+                  x: s, y: 3000,
+                  a1: 0, l1: 2800
                 });
                 $('#CoordinateSystem').drawVector({
                   strokeStyle: '#000',
-                  strokeWidth: 0.3,
-                  x: 50, y: s,
-                  a1: 90, l1: 700
+                  strokeWidth: 1.2,
+                  x: 200, y: s,
+                  a1: 90, l1: 2800
                 });
             }
         }
