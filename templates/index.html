@@ -3,6 +3,9 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>未完成实验</title>
+     {% load staticfiles %}
+    <link rel="shortcut icon" href="{% static 'img/hit.ico' %}" type="image/x-icon" />
+    <link rel="icon" href="{% static 'img/hit.ico' %}" type="image/gif">
     <!-- 初始化CSS -->
     <link href="../static/plugin/swiper.css">
     <link rel="stylesheet" href="../static/plugin/res.css">
@@ -36,7 +39,7 @@
                     <a href="/index/">未完成实验({{ teachingCount.runCount }}个)</a>
                 </li>
                 <li class="navtip noborder">
-                    <a href="/completedexp/">完成实验({{ teachingCount.stopCount }}个)</a>
+                    <a href="/completedexp/">已完成实验({{ teachingCount.stopCount }}个)</a>
                 </li>
             </ul>
         </div>
