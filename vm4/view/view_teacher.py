@@ -209,8 +209,19 @@ def v_addexp(request):
     teachername = utils.getCookie(request, "teachername")
     teachingCount = getTeachingCount(teacherid)
     experimentList = ExperimentService.getAllExperiment()
+    # 获取用于菜单的实验列表
+    experimentMenuList = []
+    for experiment in experimentList:
+        experimentTemp = experiment.copy()
+        experimentName = experimentTemp["name"]
+        if len(experimentName) > 8:
+            experimentName = experimentName[0:10] + "..."
+        experimentTemp["name"] = experimentName
+        experimentMenuList.append(experimentTemp)
+
     response = render(request, "addexp.html",
-                      {"teachingCount": teachingCount, "experimentList": experimentList, "teachername": teachername})
+                      {"teachingCount": teachingCount, "experimentList": experimentList,
+                       "experimentMenuList": experimentMenuList, "teachername": teachername})
 
     return response
 
