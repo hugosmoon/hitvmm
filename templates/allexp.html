@@ -32,8 +32,8 @@
             <div class="navtop">
                 <div class="navtitname">实验作业</div>
                 <div class="navarrowbox">
-                    <img class="arrow" src="../static/img/up.png" alt="">
-                    <img class="arrow activearrow activearrow1" src="../static/img/down.png" alt="">
+                    <img class="arrow uparrow" src="../static/img/up.png" alt="">
+                    <img class="arrow activearrow activearrow1" src=" ../static/img/down.png" alt="">
                 </div>
             </div>
             <ul class="navcenter navcenter1">
@@ -79,16 +79,16 @@
                     <div class="unitwall unitwall2">
 
                         <div class="desbox">
-                            <div class="title">老师提示：</div>
+                            <div class="title">实验描述：</div>
                             <div class="txt">{{ experiment.desc }}</div>
                         </div>
                     </div>
 
                     <div class="unitftbg">
                         <ul class="btnwall">
-                            <li class="unitbtn allpreview" videos="{{ experiment.videos }}">实验预习</li>
+                            <li class="unitbtn allpreview" videos="{{ experiment.videos }}">教学视频</li>
+                            <li class="unitbtn alldownload" templateid="{{ experiment.templateid }}">报告模板下载</li>
                             <li class="unitbtn alloperation" experimentid="{{ experiment.url }}">实验操作</li>
-                            <li class="unitbtn alldownload" templateid="{{ experiment.templateid }}">默认报告模板下载</li>
                         </ul>
                     </div>
                 </div>

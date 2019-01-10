@@ -54,7 +54,7 @@
         </div>
         <div class="navwall navwall2">
             <div class="navtop">
-                <div class="navtitname">实验库</div>
+                <div class="navtitname" >实验库</div>
                 <div class="navarrowbox">
                     <img class="arrow uparrow2" src="../static/img/up.png" alt="">
                     <img class="arrow activearrow activearrow2" src="../static/img/down.png" alt="">
@@ -91,7 +91,7 @@
                     <div class="unitwall unitwall2">
 
                         <div class="desbox">
-                            <div class="title">老师提示：</div>
+                            <div class="title">实验描述：</div>
                             <div class="txt">{{ experiment.desc }}</div>
                         </div>
                     </div>
@@ -101,10 +101,10 @@
                             <li class="changevide2 unitbtn" experimentid="{{ experiment.id }}"
                                 videos="{{ experiment.videos }}">修改实验预习
                             </li>
-                            <li class="allteaoperation unitbtn" experimenturl="{{ experiment.url }}">实验操作</li>
                             <li class="updatamod unitbtn" experimentid="{{ experiment.id }}"
                                 templateid="{{ experiment.templateid }}">修改默认报告模板
                             </li>
+                            <li class="allteaoperation unitbtn" experimenturl="{{ experiment.url }}">实验操作</li>
                         </ul>
                     </div>
                 </div>
