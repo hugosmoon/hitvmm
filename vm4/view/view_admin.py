@@ -4,6 +4,7 @@ from django.shortcuts import HttpResponse
 from vm4.context.response import Response
 from vm4.service import AdminService
 from vm4.service import TeacherService
+from vm4.service import FilterInfoService
 from vm4.service import StudentService
 from vm4.view import utils
 from VMM import superadmin
@@ -13,6 +14,7 @@ import xlwt
 import os, uuid, json
 from django.http import FileResponse
 from django.utils.http import urlquote
+from django.forms.models import model_to_dict
 
 
 # 管理员登录页
@@ -155,8 +157,9 @@ def v_adduser(request):
         return getloginResponse(request)
     issuperadmin = utils.getCookie(request, "issuperadmin")
     adminname = utils.getCookie(request, "adminname")
-
-    return render(request, "adduser.html", {"issuperadmin": issuperadmin, "adminname": adminname})
+    filterInfoList = FilterInfoService.getFilterInfoList(None)
+    return render(request, "adduser.html",
+                  {"issuperadmin": issuperadmin, "adminname": adminname, "filterInfoList": filterInfoList})
 
 
 # 根据学生id删除学生
@@ -222,24 +225,16 @@ def addStudent(request):
         return HttpResponse(responseReturn.__str__())
     studentnum = utils.getParam(request, "studentnum")
     studentname = utils.getParam(request, "studentname")
-    teachername = utils.getParam(request, "addteachername")
-    teachernumber = utils.getParam(request, "addteachernumber")
-    if (studentname == "" or studentnum == "" or teachername == "" or teachernumber == ""):
+    filterinfoid = utils.getParam(request, "filterinfoid")
+    if (studentname == "" or studentnum == "" or filterinfoid == ""):
         responseReturn = Response("-1", "填写的信息不能为空！")
         return HttpResponse(responseReturn.__str__())
-    # teacher = TeacherService.getTeacherByNumber(teachernumber)
-    # if teacher is None :
-    #    responseReturn = Response("-1", "填写的指导老师不存在！")
-    #    return HttpResponse(responseReturn.__str__())
-    # if teacher["f_name"] != teachername:
-    #    responseReturn = Response("-1", "指导老师姓名有误！")
-    #    return HttpResponse(responseReturn.__str__())
     student = StudentService.getStudentByNum(studentnum)
     if student is not None:
         responseReturn = Response("-1", "此学生已经存在！")
         return HttpResponse(responseReturn.__str__())
 
-    StudentService.addStudent(studentname, studentnum, teachername, teachernumber)
+    StudentService.addStudent(studentname, studentnum, filterinfoid)
     responseReturn = Response(None, None)
     return HttpResponse(responseReturn.__str__())
 
@@ -342,14 +337,13 @@ def addBatchStudent(request):
         fp.write(chunk)
     fp.close()
 
-    studentList = getStudentListByExcel(stulistfilename)
+    studentList, executestate, failtext = getStudentListByExcel(stulistfilename)
+    if executestate == 1:
+        return HttpResponse(
+            "<script>if(confirm('" + failtext + "')){history.go(-1);location.reload()}else{history.go(-1);location.reload()}</script>")
 
     for student in studentList:
-        studentobj = None
-        studentobj = StudentService.getStudentByNum(student["number"])
-        if studentobj is None:
-            StudentService.addStudent(student["name"], student["number"], student["teachername"],
-                                      student["teachernumber"])
+        StudentService.addStudent(student["name"], student["number"], student["filterinfoid"])
 
     return HttpResponse(
         "<script>if(confirm('添加成功！')){history.go(-1);location.reload()}else{history.go(-1);location.reload()}</script>")
@@ -447,6 +441,8 @@ def getloginResponse(request):
 
 # 根据学生名单获取学生列表
 def getStudentListByExcel(filename):
+    executestate = 0  # 执行状态 0：成功，1：失败
+    failtext = ""  # 失败信息
     studentlist = []
     book = xlrd.open_workbook(CONSTANTS.STUDENTLISTURL_PRE + filename)
     sheet0 = book.sheet_by_index(0)
@@ -455,14 +451,27 @@ def getStudentListByExcel(filename):
         if i == 0:
             continue;
         row_data = sheet0.row_values(i)
+        registyear = str(int(sheet0.cell_value(i, 2)))
+        major = str(int(sheet0.cell_value(i, 3)))
+        classname = str(int(sheet0.cell_value(i, 4)))
+        filterinfo = FilterInfoService.getFilterInfo(registyear, major, classname)
+        if filterinfo is None:
+            executestate = 1
+            failtext = """班级不存在，入学年份：%s，院系：%s，班级：%s""" % (registyear, major, classname)
+            return studentlist, executestate, failtext
+
         student = {
             "name": sheet0.cell_value(i, 0),
             "number": str(int(sheet0.cell_value(i, 1))),
-            "teachername": sheet0.cell_value(i, 2),
-            "teachernumber": str(int(sheet0.cell_value(i, 3)))
+            "filterinfoid": filterinfo.id
         }
+        studentobj = StudentService.getStudentByNum(student["number"])
+        if studentobj is not None:
+            executestate = 1
+            failtext = """该学生已存在，姓名：%s，学号：%s""" % (student["name"], student["number"])
+            return studentlist, executestate, failtext
         studentlist.append(student)
-    return studentlist
+    return studentlist, executestate, failtext
 
 
 # 根据老师名单获取老师列表
@@ -500,6 +509,76 @@ def getAdminListByExcel(filename):
         adminlist.append(admin)
     return adminlist
 
-#设置学生基础信息
+
+# 设置学生基础信息
 def setBasicInformation(request):
-    return render(request, "set_basic_information.html")
+    adminid = utils.getCookie(request, "adminid")
+    if adminid == "" or adminid is None:
+        return getloginResponse(request)
+    filterInfoList = FilterInfoService.getFilterInfoList(None)
+    issuperadmin = utils.getCookie(request, "issuperadmin")
+    adminname = utils.getCookie(request, "adminname")
+    return render(request, "set_basic_information.html",
+                  {"filterInfoList": filterInfoList, "issuperadmin": issuperadmin, "adminname": adminname})
+
+
+# 添加过滤信息
+def addFilterInfo(request):
+    adminid = utils.getCookie(request, "adminid")
+    if adminid == "" or adminid is None:
+        responseReturn = Response(-2, "请登录")
+        return HttpResponse(responseReturn.__str__())
+    registyear = utils.getParam(request, "registyear")
+    major = utils.getParam(request, "major")
+    classname = utils.getParam(request, "classname")
+    if registyear is None or registyear == "":
+        responseReturn = Response(-1, "请输入入学年份~")
+        return HttpResponse(responseReturn.__str__())
+
+    if major is None or major == "":
+        responseReturn = Response(-1, "请输入院系~")
+        return HttpResponse(responseReturn.__str__())
+
+    if classname is None or classname == "":
+        responseReturn = Response(-1, "请输入班级~")
+        return HttpResponse(responseReturn.__str__())
+
+    filterinfo = FilterInfoService.getFilterInfo(registyear, major, classname)
+    if filterinfo is None:
+        filterinfoid = FilterInfoService.addFilterInfo(registyear, major, classname)
+        responseReturn = Response(None, None)
+        return HttpResponse(responseReturn.__str__())
+    else:
+        responseReturn = Response(-1, "已有此班级，请重新输入~")
+        return HttpResponse(responseReturn.__str__())
+
+
+# 删除过滤信息
+def delFilterInfo(request):
+    adminid = utils.getCookie(request, "adminid")
+    if adminid == "" or adminid is None:
+        responseReturn = Response(-2, "请登录")
+        return HttpResponse(responseReturn.__str__())
+
+    filterid = utils.getParam(request, "filterid")
+    if filterid == "" or filterid is None:
+        responseReturn = Response(-1, "请选择一个班级")
+        return HttpResponse(responseReturn.__str__())
+
+    filterinfo = FilterInfoService.getFilterInfoById(filterid);
+    if filterinfo is None:
+        responseReturn = Response(-1, "此班级不存在~")
+        return HttpResponse(responseReturn.__str__())
+
+    count = StudentService.getCountStudentByFilterInfo(filterid)
+    if count > 0:
+        responseReturn = Response(-1, "该班级下还有同学，不能删除哦~")
+        return HttpResponse(responseReturn.__str__())
+
+    filterdelinfo = FilterInfoService.delFilterInfo(filterid)
+    if filterdelinfo is None:
+        responseReturn = Response(-1, "删除失败，请重试！")
+        return HttpResponse(responseReturn.__str__())
+
+    responseReturn = Response(None, None)
+    return HttpResponse(responseReturn.__str__())

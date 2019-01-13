@@ -7,7 +7,50 @@ from django.forms.models import model_to_dict
 
 def getFilterInfoList(ids):
     try:
-        filterinfo = FilterInfo.objects.order_by('registyear').order_by('major').order_by('classname').get(id__in=ids)
+        if ids is None:
+            filterinfolist = FilterInfo.objects.order_by('-registyear', '-major', 'classname').filter(
+                isdelete=CONSTANTS.ISDELETE_NOT).all()
+
+        else:
+            filterinfolist = FilterInfo.objects.order_by('-registyear', '-major', 'classname').filter(
+                isdelete=CONSTANTS.ISDELETE_NOT, id__in=ids).all()
+    except:
+        return None
+    else:
+        return filterinfolist
+
+
+def getFilterInfo(registyear, major, classname):
+    try:
+        filterinfo = FilterInfo.objects.filter(isdelete=CONSTANTS.ISDELETE_NOT, registyear=registyear, major=major,
+                                               classname=classname).get()
+    except:
+        return None
+    else:
+        return filterinfo
+
+
+def addFilterInfo(registyear, major, classname):
+    now = utils.getNow()
+    filterinfo = FilterInfo(registyear=registyear, major=major, classname=classname, isdelete=CONSTANTS.ISDELETE_NOT,
+                            createtime=now, updatetime=now)
+    filterinfo.save()
+    return filterinfo.id
+
+
+def getFilterInfoById(filterid):
+    try:
+        filterinfo = FilterInfo.objects.filter(id=filterid, isdelete=CONSTANTS.ISDELETE_NOT).get()
+    except:
+        return None
+    else:
+        return filterinfo
+
+
+def delFilterInfo(filterid):
+    try:
+        filterinfo = FilterInfo.objects.filter(id=filterid, isdelete=CONSTANTS.ISDELETE_NOT).update(
+            isdelete=CONSTANTS.ISDELETE_YES)
     except:
         return None
     else:
