@@ -163,7 +163,8 @@ def v_adduser(request):
 def deleteStudentByid(request):
     adminid = utils.getCookie(request, "adminid")
     if adminid == "" or adminid is None:
-        return getloginResponse(request)
+        responseReturn = Response(-2, "请登录")
+        return HttpResponse(responseReturn.__str__())
     stuid = utils.getParam(request, "studentid")
     StudentService.deleteStudent(stuid)
     responseReturn = Response(None, None)
@@ -174,7 +175,7 @@ def deleteStudentByid(request):
 def resetTeacherPwd(request):
     adminid = utils.getCookie(request, "adminid")
     if adminid == "" or adminid is None:
-        responseReturn = Response("-1", "请登录")
+        responseReturn = Response(-2, "请登录")
         return HttpResponse(responseReturn.__str__())
     teacherid = utils.getParam(request, "teacherid")
     TeacherService.resetPassword(teacherid)
@@ -186,7 +187,8 @@ def resetTeacherPwd(request):
 def deleteTeacherByid(request):
     adminid = utils.getCookie(request, "adminid")
     if adminid == "" or adminid is None:
-        return getloginResponse(request)
+        responseReturn = Response(-2, "请登录")
+        return HttpResponse(responseReturn.__str__())
     teacherid = utils.getParam(request, "teacherid")
     TeacherService.deleteTeacher(teacherid)
     responseReturn = Response(None, None)
@@ -197,7 +199,7 @@ def deleteTeacherByid(request):
 def deleteAdminByid(request):
     adminid = utils.getCookie(request, "adminid")
     if adminid == "" or adminid is None:
-        responseReturn = Response("-1", "请登录！")
+        responseReturn = Response(-2, "请登录")
         return HttpResponse(responseReturn.__str__())
     issuperadmin = utils.getCookie(request, "issuperadmin")
     if issuperadmin != "1" or issuperadmin is None:
@@ -216,7 +218,7 @@ def deleteAdminByid(request):
 def addStudent(request):
     adminid = utils.getCookie(request, "adminid")
     if adminid == "" or adminid is None:
-        responseReturn = Response("-1", "请登录！")
+        responseReturn = Response(-2, "请登录")
         return HttpResponse(responseReturn.__str__())
     studentnum = utils.getParam(request, "studentnum")
     studentname = utils.getParam(request, "studentname")
@@ -246,7 +248,7 @@ def addStudent(request):
 def addTeacher(request):
     adminid = utils.getCookie(request, "adminid")
     if adminid == "" or adminid is None:
-        responseReturn = Response("-1", "请登录！")
+        responseReturn = Response(-2, "请登录")
         return HttpResponse(responseReturn.__str__())
     teachernum = utils.getParam(request, "teachernum")
     teachername = utils.getParam(request, "teachername")
@@ -266,7 +268,7 @@ def addTeacher(request):
 def addAdmin(request):
     adminid = utils.getCookie(request, "adminid")
     if adminid == "" or adminid is None:
-        responseReturn = Response("-1", "请登录！")
+        responseReturn = Response(-2, "请登录")
         return HttpResponse(responseReturn.__str__())
     teachernum = utils.getParam(request, "teachernum")
     teachername = utils.getParam(request, "teachername")
@@ -288,8 +290,12 @@ def addAdmin(request):
     responseReturn = Response(None, None)
     return HttpResponse(responseReturn.__str__())
 
-#获取列表模板
+
+# 获取列表模板
 def getListTemplate(request):
+    adminid = utils.getCookie(request, "adminid")
+    if adminid == "" or adminid is None:
+        return getloginResponse(request)
     type = utils.getParam(request, "type")
     if type is None or type == "":
         responseReturn = Response("-1", "！")
@@ -315,6 +321,9 @@ def getListTemplate(request):
 
 
 def addBatchStudent(request):
+    adminid = utils.getCookie(request, "adminid")
+    if adminid == "" or adminid is None:
+        return getloginResponse(request)
     file = request.FILES.get('file', None)
 
     stulistfilename = file.name
@@ -347,6 +356,9 @@ def addBatchStudent(request):
 
 
 def addBatchTeacher(request):
+    adminid = utils.getCookie(request, "adminid")
+    if adminid == "" or adminid is None:
+        return getloginResponse(request)
     file = request.FILES.get('file', None)
 
     teacherfilename = file.name
@@ -380,6 +392,9 @@ def addBatchTeacher(request):
 
 
 def addBatchAdmin(request):
+    adminid = utils.getCookie(request, "adminid")
+    if adminid == "" or adminid is None:
+        return getloginResponse(request)
     file = request.FILES.get('file', None)
 
     adminfilename = file.name

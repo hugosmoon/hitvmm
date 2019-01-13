@@ -82,8 +82,8 @@ def submintReport(reportid, filename):
 
 # 批阅报告
 def scoreReport(reportid, score):
-    report = Report.objects.filter(id=reportid, status=CONSTANTS.REPORT_STATUS_SUBMIT).update(score=score,
-                                                                                              updatetime=utils.getNow())
+    report = Report.objects.filter(id=reportid).update(score=score, status=CONSTANTS.REPORT_STATUS_SCORE,
+                                                       updatetime=utils.getNow())
     return report
 
 

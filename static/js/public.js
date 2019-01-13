@@ -25,7 +25,7 @@ var publicObj = {
     },
     rotue: function () {
         $(".adduserbox").bind('click', function () {
-            location.href = '/adduser/'
+            window.open('/adduser/')
         })
         $(".t_txt5").bind('click', function () {
             if (confirm("确认重置此教师的密码？")) {
@@ -37,7 +37,9 @@ var publicObj = {
                     function (data, status) {
                         dataObj = $.parseJSON(data)
                         code = dataObj.code;
-                        if (code != 0) {
+                        if (code == -2) {//未登录
+                            window.location = "/loginadmin/";
+                        } else if (code != 0) {
                             alert(dataObj.desc);
                         } else {
                             alert("修改成功！")
@@ -300,7 +302,9 @@ var publicObj = {
                         function (data, status) {
                             dataObj = $.parseJSON(data)
                             code = dataObj.code;
-                            if (code != 0) {
+                            if (code == -2) {//未登录
+                                window.location = "/loginadmin/";
+                            } else if (code != 0) {
                                 alert(dataObj.desc);
                             } else {
                                 alert("删除成功！")
@@ -331,7 +335,9 @@ var publicObj = {
                         function (data, status) {
                             dataObj = $.parseJSON(data)
                             code = dataObj.code;
-                            if (code != 0) {
+                            if (code == -2) {//未登录
+                                window.location = "/loginadmin/";
+                            } else if (code != 0) {
                                 alert(dataObj.desc);
                             } else {
                                 window.location.reload()
@@ -380,7 +386,9 @@ var publicObj = {
                         function (data, status) {
                             dataObj = $.parseJSON(data)
                             code = dataObj.code;
-                            if (code != 0) {
+                            if (code == -2) {//未登录
+                                window.location = "/loginadmin/";
+                            } else if (code != 0) {
                                 alert(dataObj.desc);
                             } else {
                                 window.location.reload()
@@ -523,7 +531,9 @@ var publicObj = {
                         function (data, status) {
                             dataObj = $.parseJSON(data)
                             code = dataObj.code;
-                            if (code != 0) {
+                            if (code == -2) {//未登录
+                                window.location = "/loginteacher/";
+                            } else if (code != 0) {
                                 alert(dataObj.desc);
                             } else {
                                 window.location.reload()
@@ -573,7 +583,9 @@ var publicObj = {
                 function (data, status) {
                     dataObj = $.parseJSON(data)
                     code = dataObj.code;
-                    if (code != 0) {
+                    if (code == -2) {//未登录
+                        window.location = "/loginteacher/";
+                    } else if (code != 0) {
                         alert(dataObj.desc);
                     } else {
                         alert("更改成功！")
@@ -612,7 +624,9 @@ var publicObj = {
                 }
                 dataObj = data
                 code = dataObj.code;
-                if (code != 0) {
+                if (code == -2) {//未登录
+                    window.location = "/loginteacher/";
+                } else if (code != 0) {
                     alert(dataObj.desc);
                     return;
                 }
@@ -682,7 +696,9 @@ var publicObj = {
                 function (data, status) {
                     dataObj = $.parseJSON(data)
                     code = dataObj.code;
-                    if (code != 0) {
+                    if (code == -2) {//未登录
+                        window.location = "/loginteacher/";
+                    } else if (code != 0) {
                         alert(dataObj.desc);
                         $('.popupbox').hide()
                         $('.popupwall5').hide()
@@ -788,7 +804,9 @@ var publicObj = {
                 function (data, status) {
                     dataObj = $.parseJSON(data)
                     code = dataObj.code;
-                    if (code != 0) {
+                    if (code == -2) {//未登录
+                        window.location = "/loginteacher/";
+                    } else if (code != 0) {
                         alert(dataObj.desc);
                     } else {
                         alert("更改成功！")
@@ -908,7 +926,9 @@ var publicObj = {
                 }
                 dataObj = data
                 code = dataObj.code;
-                if (code != 0) {
+                if (code == -2) {//未登录
+                    window.location = "/loginteacher/";
+                } else if (code != 0) {
                     alert(dataObj.desc);
                     return;
                 }
@@ -1022,7 +1042,9 @@ var publicObj = {
                 function (data, status) {
                     dataObj = $.parseJSON(data)
                     code = dataObj.code;
-                    if (code != 0) {
+                    if (code == -2) {//未登录
+                        window.location = "/loginteacher/";
+                    } else if (code != 0) {
                         alert(dataObj.desc);
                         $('.popupbox').hide()
                         $('.popupwall5').hide()
@@ -1095,7 +1117,9 @@ var publicObj = {
                 function (data, status) {
                     dataObj = $.parseJSON(data)
                     code = dataObj.code;
-                    if (code != 0) {
+                    if (code == -2) {//未登录
+                        window.location = "/loginteacher/";
+                    } else if (code != 0) {
                         alert(dataObj.desc);
                     } else {
                         window.location.reload()
@@ -1123,7 +1147,9 @@ var publicObj = {
                 function (data, status) {
                     dataObj = $.parseJSON(data)
                     code = dataObj.code;
-                    if (code != 0) {
+                    if (code == -2) {//未登录
+                        window.location = "/loginteacher/";
+                    } else if (code != 0) {
                         alert(dataObj.desc);
                     } else {
                         alert("修改成功")
@@ -1340,7 +1366,9 @@ var publicObj = {
                 }
                 dataObj = data
                 code = dataObj.code;
-                if (code != 0) {
+                if (code == -2) {//未登录
+                    window.location = "/loginteacher/";
+                } else if (code != 0) {
                     alert(dataObj.desc);
                 }
                 else {
@@ -1437,7 +1465,9 @@ var publicObj = {
                 }
                 dataObj = data
                 code = dataObj.code;
-                if (code != 0) {
+                if (code == -2) {//未登录
+                    window.location = "/loginteacher/";
+                } else if (code != 0) {
                     alert(dataObj.desc);
                     return;
                 }
