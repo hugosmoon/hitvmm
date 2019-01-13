@@ -57,11 +57,11 @@
     </div>
     <div class="imptbox imptbox2 imptbox4">
         <div class="tip">编号</div>
-        <input class="inp addnumber" type="text">
+        <input id="number_id" class="inp addnumber" type="text">
     </div>
     <div class="imptbox imptbox2 imptbox3">
         <div class="tip">学号</div>
-        <input class="inp addnumber" type="text">
+        <input id="student_id" class="inp addnumber" type="text">
     </div>
     <div class="imptbox imptbox2 imptbox3">
         <div class="tip3">基础信息</div>
@@ -70,7 +70,7 @@
 
     <div class="imptbox imptbox2 imptbox3">
         <div class="tip tip2">入学年份</div>
-        <select class="inp addnumber">
+        <select id="sele_registyear" class="inp addnumber">
             <option value="volvo">请选择</option>
             <option value="saab">2019年</option>
             <option value="opel">2018年</option>
@@ -79,19 +79,14 @@
     </div>
     <div class="imptbox imptbox2 imptbox3">
         <div class="tip">院系</div>
-        <select class="inp addnumber">
-            <option value="volvo">请选择</option>
-            <option value="saab">机电工程学院</option>
-            <option value="opel">材料工程学院</option>
+        <select id="sele_major" class="inp addnumber">
+            <option value="volvo">--</option>
         </select>
     </div>
     <div class="imptbox imptbox2 imptbox3">
         <div class="tip">班级</div>
-        <select class="inp addnumber">
-            <option value="volvo">请选择</option>
-            <option value="saab">1908105</option>
-            <option value="opel">1908103</option>
-            <option value="audi">1908106</option>
+        <select id="sele_classname" class="inp addnumber">
+            <option value="volvo">--</option>
         </select>
     </div>
 
@@ -176,8 +171,70 @@
     });
 </script>
 <script>
+    var filterid=0;
+    $("#sele_registyear").change(function() { set_arr_major($('#sele_registyear option:selected').val()); set_arr_classname()});
+    $("#sele_major").change(function() { set_arr_classname($('#sele_registyear option:selected').val(),$('#sele_major option:selected').val()); });
+    $("#sele_classname").change(function() {set_filterid($('#sele_registyear option:selected').val(),$('#sele_major option:selected').val(),$('#sele_classname option:selected').val());});
 
-    var filterInfoListJsonStr = $('<div>').html("{{ filterInfoListstr }}").text()
+
+    var filterInfoListJsonStr = $('<div>').html("{{ filterInfoListstr }}").text();
+    var a = JSON.parse(filterInfoListJsonStr)
+
+    var b = new Array();
+    for(var i = 0; i < a.length; i++){
+
+      if(b.indexOf(a[i].registyear)==-1){
+        b.push(a[i].registyear)
+      }
+
+    }
+    arr_registyear="<option value='-1'>请选择</option>";
+      for(j=0;j<b.length;j++){
+        arr_registyear+='<option value="'+b[j]+'">'+b[j]+'</option>'
+      }
+      $('#sele_registyear').empty().append(arr_registyear);
+
+
+    function set_arr_major(t_registyear) {
+        var c = new Array();
+        for(var i = 0; i < a.length; i++){
+            if(t_registyear==a[i].registyear&&c.indexOf(a[i].major)==-1){
+                c.push(a[i].major);
+            }
+        }
+        arr_major="<option value='-1'>请选择</option>";;
+          for(j=0;j<c.length;j++){
+            arr_major+='<option value="'+c[j]+'">'+c[j]+'</option>'
+          }
+          $('#sele_major').empty().append(arr_major);
+    }
+
+    function set_arr_classname(t_registyear,t_major) {
+        var c = new Array();
+        for(var i = 0; i < a.length; i++){
+            if(t_registyear==a[i].registyear&&t_major==a[i].major&&c.indexOf(a[i].classname)==-1){
+                c.push(a[i].classname);
+            }
+        }
+        arr_classname="<option value='-1'>请选择</option>";
+          for(j=0;j<c.length;j++){
+            arr_classname+='<option value="'+c[j]+'">'+c[j]+'</option>'
+          }
+          $('#sele_classname').empty().append(arr_classname);
+    }
+
+    function set_filterid(t_registyear,t_major,t_classname) {
+        for(var i = 0; i < a.length; i++){
+            if(t_registyear==a[i].registyear&&t_major==a[i].major&&t_classname==a[i].classname){
+                filterid=a[i].id;
+            }
+        }
+    }
+
+
+
+
+
 
 
     hide_show();
@@ -200,10 +257,11 @@
         type = $("#type").attr("attr")
         action = ""
         addname = $(".addname").val()
-        addnumber = $(".addnumber").val()
+        addnumber = $("#number_id").val()
+        studentid=$("#student_id").val()
         addteachername = $(".addteachername").val()
         addteachernumber = $(".addteachernumber").val()
-        if (addname == undefined || addname == "" || addnumber == undefined || addnumber == "") {
+        if (addname == undefined || addname == "" || studentid == undefined || studentid == "") {
             alert("填写的信息不能为空！")
             return
         }
@@ -212,15 +270,14 @@
             alert("请选择要添加的用户身份！")
             return
         } else if (type == 1) {
-            if (addteachername == undefined || addteachername == "" || addteachernumber == undefined || addteachernumber == "") {
+            if (filterid == undefined || filterid == "") {
                 alert("填写的信息不能为空！")
                 return
             }
             data = {
-                studentnum: addnumber,
+                studentnum: studentid,
                 studentname: addname,
-                addteachername: addteachername,
-                addteachernumber: addteachernumber
+                filterinfoid:filterid,
             }
             action = "/addStudent/"
         } else if (type == 2) {
