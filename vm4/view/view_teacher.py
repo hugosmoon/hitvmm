@@ -664,3 +664,17 @@ def updateExperimentTemplate(request):
     ExperimentService.updateExperimentTamplate(experimentid, templateid)
     return HttpResponse(
         "<script>if(confirm('上传成功')){history.go(-1);location.reload()}else{history.go(-1);location.reload()}</script>")
+
+# 修改实验描述
+def setdescription(request):
+    # 接收基础参数
+    if request.method == 'POST':
+        des_content = request.POST.get('des_content')
+        des_id = float(request.POST.get('des_id'))
+        status = ExperimentService.updateExperimentdescription(des_id, des_content);
+        if status is True:
+            return HttpResponse(True)
+    else:
+        return HttpResponse(False)
+
+

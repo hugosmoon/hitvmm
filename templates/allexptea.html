@@ -98,6 +98,9 @@
 
                     <div class="unitftbg">
                         <ul class="btnwall">
+                            <li class="changedescription unitbtn" experimentid="{{ experiment.id }}" experimentname="{{ experiment.name }}" experimentdesc="{{ experiment.desc }}">
+                                修改实验描述
+                            </li>
                             <li class="changevide2 unitbtn" experimentid="{{ experiment.id }}"
                                 videos="{{ experiment.videos }}">修改实验预习
                             </li>
@@ -255,6 +258,32 @@
         </form>
     </div>
 </div>
+
+
+
+
+//修改实验描述弹窗
+
+<div class="setdescription">
+    <div class="layer"></div>
+
+    <div class="popupwall popupwall5">
+        <img class="dele" src="../static/img/dele.png" alt="">
+
+        <div style="margin-left: 20px;margin-top: 40px;">
+
+
+
+            <div style="margin-top: 10px;width: 200px">
+                <input id="des_title" style="width: 400px;font-size: 15px;"></input>
+                <input id="des_id" type="hidden">
+                <textarea id="des_content" style="width: 650px;height: 350px"></textarea>
+            </div>
+            <div class="btn" style="margin-left: 282px;width: 100px" onclick="setdescription_sure()">保存</div>
+            </div>
+    </div>
+
+</div>
 </body>
 
 <!-- 引用插件 -->
@@ -279,6 +308,33 @@
 
     function beforeCheck() {
         return
+    }
+
+    function setdescription_sure(){
+
+            var form_data = new FormData();
+			form_data.append('des_id',($("#des_id").val()));
+			form_data.append('des_content',($("#des_content").val()));
+
+            $.ajax({
+                url:"/setdescription/",
+                type:'POST',
+                data: form_data,
+                processData: false,  // tell jquery not to process the data
+                contentType: false, // tell jquery not to set contentType
+                success: function(callback)
+                {
+                    console.log(callback);
+                    $(".setdescription").hide();
+                    $(".addstudent").hide();
+                    $(".popupbox").hide();
+                    alert("修改成功~");
+                    location.reload()
+
+
+                }
+            });
+
     }
 </script>
 </html>

@@ -69,3 +69,12 @@ def updateExperimentTamplate(experimentid, templateid):
         return None
     else:
         return experiment
+# 更新实验描述
+def updateExperimentdescription(experimentid,experimentdescription):
+    now = utils.getNow()
+    try:
+        experiment = Experiment.objects.filter(id=experimentid).update(desc=experimentdescription, updatetime=now)
+    except:
+        return None
+    else:
+        return True
