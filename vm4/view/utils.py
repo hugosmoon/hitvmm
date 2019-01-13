@@ -18,7 +18,7 @@ def getCookie(request, name):
 
 
 def setCookie(response, name, value):
-    response.set_cookie(name, bytes(value, 'utf-8').decode('ISO-8859-1'), max_age=60 * 60 * 2)
+    response.set_cookie(name, bytes(value, 'utf-8').decode('ISO-8859-1'), max_age=60 * 60 * 48)
 
 
 def getNowStr():
