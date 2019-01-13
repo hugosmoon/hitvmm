@@ -45,7 +45,7 @@
                         <div class="txt t_txt4">{{ report.updatetime|date:"Y-m-d H:i:s" }}</div>
                         <div class="txt t_txt5">{% if report.status == 0 %}未提交{% elif report.status == 1 %}
                             未批阅{% else %}已批阅{% endif %}</div>
-                        {% if report.f_status == 1 %}
+                        {% if report.status == 1 %}
                             <div class="txt t_txt6 approval" reporturl="{{ report.url }}"
                                  reportid="{{ report.id }}">批阅
                             </div>

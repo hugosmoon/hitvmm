@@ -54,7 +54,7 @@ def v_password(request):
 def editpassword(request):
     teacherid = utils.getCookie(request, "teacherid")
     if (teacherid is None) or teacherid == "":
-        responseReturn = Response(-1, "请登录")
+        responseReturn = Response(-2, "请登录")
         return HttpResponse(responseReturn.__str__())
     newpwd = utils.getParam(request, "newpwd")
     oldpwd = utils.getParam(request, "oldpwd")
@@ -164,7 +164,7 @@ def v_approval(request):
 def scoreReport(request):
     teacherid = utils.getCookie(request, "teacherid")
     if (teacherid is None) or teacherid == "":
-        responseReturn = Response(-1, "请登录")
+        responseReturn = Response(-2, "请登录")
         return HttpResponse(responseReturn.__str__())
     reportid = utils.getParam(request, "reportid")
     scorestr = utils.getParam(request, "score")
@@ -245,6 +245,10 @@ def getloginResponse(request):
 
 # 上传视频
 def uploadVideo(request):
+    teacherid = utils.getCookie(request, "teacherid")
+    if (teacherid is None) or teacherid == "":
+        responseReturn = Response(-2, "请登录")
+        return HttpResponse(responseReturn.__str__())
     experimentid = utils.getParam(request, "experimentid")
     file = request.FILES.get('file', None)
     name = utils.getParam(request, "name")
@@ -282,7 +286,7 @@ def uploadVideo(request):
 def uploadData(request):
     teacherid = utils.getCookie(request, "teacherid")
     if (teacherid is None) or teacherid == "":
-        responseReturn = Response(-1, "请登录")
+        responseReturn = Response(-2, "请登录")
         return HttpResponse(responseReturn.__str__())
     teachingid = utils.getParam(request, "teachingid")
     file = request.FILES.get('file', None)
@@ -308,7 +312,7 @@ def uploadData(request):
 def updateTeachingTemplate(request):
     teacherid = utils.getCookie(request, "teacherid")
     if (teacherid is None) or teacherid == "":
-        responseReturn = Response(-1, "请登录")
+        responseReturn = Response(-2, "请登录")
         return HttpResponse(responseReturn.__str__())
     teachingid = utils.getParam(request, "teachingid")
     experimentid = utils.getParam(request, "experimentid")
@@ -336,7 +340,7 @@ def updateTeachingTemplate(request):
 def deleteTeachingByid(request):
     teacherid = utils.getCookie(request, "teacherid")
     if (teacherid is None) or teacherid == "":
-        responseReturn = Response(-1, "请登录")
+        responseReturn = Response(-2, "请登录")
         return HttpResponse(responseReturn.__str__())
     teachingid = utils.getParam(request, "teachingid")
     TeachingService.deleteTeachingByid(teachingid)
@@ -348,7 +352,7 @@ def deleteTeachingByid(request):
 def updateTeachingVideo(request):
     teacherid = utils.getCookie(request, "teacherid")
     if (teacherid is None) or teacherid == "":
-        responseReturn = Response(-1, "请登录")
+        responseReturn = Response(-2, "请登录")
         return HttpResponse(responseReturn.__str__())
     teachingid = utils.getParam(request, "teachingid")
     videos = utils.getParam(request, "videos")
@@ -431,7 +435,7 @@ def downloadReportScoreList(request):
 def updateTeachingDeadline(request):
     teacherid = utils.getCookie(request, "teacherid")
     if (teacherid is None) or teacherid == "":
-        responseReturn = Response(-1, "请登录")
+        responseReturn = Response(-2, "请登录")
         return HttpResponse(responseReturn.__str__())
     teachingid = utils.getParam(request, "teachingid")
     deadlinestr = utils.getParam(request, "deadline") + " 00:00:00"
@@ -462,7 +466,8 @@ def downloadReport(request):
 def addexperiment(request):
     teacherid = utils.getCookie(request, "teacherid")
     if (teacherid is None) or teacherid == "":
-        responseReturn = Response(-1, "请登录")
+        responseReturn = Response(-2, "请登录")
+        return HttpResponse(responseReturn.__str__())
     experimentid = utils.getParam(request, "experimentid")
     deadlinestr = utils.getParam(request, "deadline") + " 00:00:00"
     templatetype = utils.getParam(request, "templatetype")
@@ -576,6 +581,10 @@ def addexperiment(request):
 
 # 根据学生名单获取学生列表
 def getStudentListByExcel(filename):
+    teacherid = utils.getCookie(request, "teacherid")
+    if (teacherid is None) or teacherid == "":
+        responseReturn = Response(-2, "请登录")
+        return HttpResponse(responseReturn.__str__())
     studentlist = []
     book = xlrd.open_workbook(CONSTANTS.STUDENTLISTURL_PRE + filename)
     sheet0 = book.sheet_by_index(0)
@@ -611,7 +620,7 @@ def getVideoById(request):
 def updateExperimentVideo(request):
     teacherid = utils.getCookie(request, "teacherid")
     if (teacherid is None) or teacherid == "":
-        responseReturn = Response(-1, "请登录")
+        responseReturn = Response(-2, "请登录")
         return HttpResponse(responseReturn.__str__())
     experimentid = utils.getParam(request, "experimentid")
     videos = utils.getParam(request, "videos")
@@ -634,7 +643,7 @@ def updateExperimentVideo(request):
 def updateExperimentTemplate(request):
     teacherid = utils.getCookie(request, "teacherid")
     if (teacherid is None) or teacherid == "":
-        responseReturn = Response(-1, "请登录")
+        responseReturn = Response(-2, "请登录")
         return HttpResponse(responseReturn.__str__())
     experimentid = utils.getParam(request, "experimentid")
     file = request.FILES.get('file', None)

@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>新增用户</title>
-     {% load staticfiles %}
-    <link rel="shortcut icon" href="{% static 'img/hit.ico' %}" type="image/x-icon" />
+    {% load staticfiles %}
+    <link rel="shortcut icon" href="{% static 'img/hit.ico' %}" type="image/x-icon"/>
     <link rel="icon" href="{% static 'img/hit.ico' %}" type="image/gif">
     <!-- 初始化CSS -->
     <link href="../static/plugin/swiper.css">
@@ -233,7 +233,9 @@
             function (data, status) {
                 dataObj = $.parseJSON(data)
                 code = dataObj.code;
-                if (code != 0) {
+                if (code == -2) {//未登录
+                    window.location = "/loginadmin/";
+                } else if (code != 0) {
                     alert(dataObj.desc);
                 } else {
                     alert("添加成功！")
