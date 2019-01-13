@@ -73,6 +73,7 @@ urlpatterns = [
     url(r'addTeacher/', view_admin.addTeacher),
     url(r'addAdmin/', view_admin.addAdmin),
     url(r'getlisttemplate/', view_admin.getListTemplate),
+    url(r'setBasicInformation/', view_admin.setBasicInformation),
 
 
     #experiment

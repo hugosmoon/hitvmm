@@ -484,3 +484,7 @@ def getAdminListByExcel(filename):
         }
         adminlist.append(admin)
     return adminlist
+
+#设置学生基础信息
+def setBasicInformation(request):
+    return render(request, "set_basic_information.html")
