@@ -1166,6 +1166,7 @@ var publicObj = {
     hidePopup: function () {
         var me = this
         $('.dele').bind('click', function () {
+            $('.addstudent').hide()
             $('.popupbox').hide()
             $('.popupwall').hide()
             $('.fileuploadname').html('')
@@ -1535,6 +1536,21 @@ var publicObj = {
                 $('.popupwall5').show()
             })
         });
+
+        //添加学生至实验学生名单
+        $(".change_student_list").each(function () {
+            $(this).unbind('click').bind('click', function () {
+                var experiment = $("#experimentid  option:selected")
+                var videostr = experiment.attr("videos");
+                if (videostr == undefined) {
+                    alert("请选择实验！")
+                    return
+                }
+                $('.addstudent').show()
+                $('.popupwall5').show()
+            })
+        });
+
         $("#experimentid").on('change', function () {
             var experiment = $("#experimentid  option:selected")
             $("#videoexperimentid").val(experiment.attr("value"))
