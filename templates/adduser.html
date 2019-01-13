@@ -177,13 +177,14 @@
 </script>
 <script>
 
-    var filterInfoListJsonStr = "{{ filterInfoListstr }}"
+    var filterInfoListJsonStr = $('<div>').html("{{ filterInfoListstr }}").text()
 
 
     hide_show();
 
     function hide_show() {
         tp = $("input[name='template']:checked").val();
+        $("#type").attr("attr", tp)
         if (tp == "1") {
             $(".imptbox3").show()
             $(".imptbox4").hide()

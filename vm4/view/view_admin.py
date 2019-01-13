@@ -165,7 +165,7 @@ def v_adduser(request):
         del dict["createtime"]
         del dict["updatetime"]
         filterInfoDictList.append(dict)
-    filterInfoListstr = json.dumps(filterInfoDictList)
+    filterInfoListstr = json.dumps(filterInfoDictList, ensure_ascii=False)
     return render(request, "adduser.html",
                   {"issuperadmin": issuperadmin, "adminname": adminname, "filterInfoList": filterInfoList,
                    "filterInfoListstr": filterInfoListstr})
