@@ -158,8 +158,17 @@ def v_adduser(request):
     issuperadmin = utils.getCookie(request, "issuperadmin")
     adminname = utils.getCookie(request, "adminname")
     filterInfoList = FilterInfoService.getFilterInfoList(None)
+    filterInfoDictList = []
+    for filterinfo in filterInfoList:
+        dict = model_to_dict(filterinfo)
+        del dict["isdelete"]
+        del dict["createtime"]
+        del dict["updatetime"]
+        filterInfoDictList.append(dict)
+    filterInfoListstr = json.dumps(filterInfoDictList)
     return render(request, "adduser.html",
-                  {"issuperadmin": issuperadmin, "adminname": adminname, "filterInfoList": filterInfoList})
+                  {"issuperadmin": issuperadmin, "adminname": adminname, "filterInfoList": filterInfoList,
+                   "filterInfoListstr": filterInfoListstr})
 
 
 # 根据学生id删除学生

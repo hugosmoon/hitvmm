@@ -39,12 +39,12 @@
             <lable>学生</lable>
         </div>
         <div class="templatebox1">
-            <input  id="user_identity"  value="2" class="rradio" type="radio" name="template"/>
+            <input id="user_identity" value="2" class="rradio" type="radio" name="template"/>
             <lable>教师</lable>
         </div>
         {% if issuperadmin == "1" %}
             <div class="templatebox1">
-                <input  id="user_identity"  value="3" class="rradio" type="radio" name="template"/>
+                <input id="user_identity" value="3" class="rradio" type="radio" name="template"/>
                 <lable>管理员</lable>
             </div>
         {% endif %}
@@ -71,8 +71,8 @@
     <div class="imptbox imptbox2 imptbox3">
         <div class="tip tip2">入学年份</div>
         <select class="inp addnumber">
-            <option value ="volvo">请选择</option>
-            <option value ="saab">2019年</option>
+            <option value="volvo">请选择</option>
+            <option value="saab">2019年</option>
             <option value="opel">2018年</option>
             <option value="audi">2017年</option>
         </select>
@@ -80,16 +80,16 @@
     <div class="imptbox imptbox2 imptbox3">
         <div class="tip">院系</div>
         <select class="inp addnumber">
-            <option value ="volvo">请选择</option>
-            <option value ="saab">机电工程学院</option>
+            <option value="volvo">请选择</option>
+            <option value="saab">机电工程学院</option>
             <option value="opel">材料工程学院</option>
         </select>
     </div>
     <div class="imptbox imptbox2 imptbox3">
         <div class="tip">班级</div>
         <select class="inp addnumber">
-            <option value ="volvo">请选择</option>
-            <option value ="saab">1908105</option>
+            <option value="volvo">请选择</option>
+            <option value="saab">1908105</option>
             <option value="opel">1908103</option>
             <option value="audi">1908106</option>
         </select>
@@ -176,10 +176,15 @@
     });
 </script>
 <script>
+
+    var filterInfoListJsonStr = "{{ filterInfoListstr }}"
+
+
     hide_show();
-    function hide_show(){
-        tp=$("input[name='template']:checked").val();
-        if(tp=="1"){
+
+    function hide_show() {
+        tp = $("input[name='template']:checked").val();
+        if (tp == "1") {
             $(".imptbox3").show()
             $(".imptbox4").hide()
         }
