@@ -220,10 +220,19 @@ def v_addexp(request):
             experimentName = experimentName[0:10] + "..."
         experimentTemp["name"] = experimentName
         experimentMenuList.append(experimentTemp)
+    filterInfoList = FilterInfoService.getFilterInfoList(None)
+    filterInfoDictList = []
+    for filterinfo in filterInfoList:
+        dict = model_to_dict(filterinfo)
+        del dict["isdelete"]
+        del dict["createtime"]
+        del dict["updatetime"]
+        filterInfoDictList.append(dict)
+    filterInfoListstr = json.dumps(filterInfoDictList, ensure_ascii=False)
 
     response = render(request, "addexp.html",
                       {"teachingCount": teachingCount, "experimentList": experimentList,
-                       "experimentMenuList": experimentMenuList, "teachername": teachername})
+                       "experimentMenuList": experimentMenuList, "teachername": teachername, "filterInfoListstr": filterInfoListstr})
 
     return response
 
