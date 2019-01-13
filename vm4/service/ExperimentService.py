@@ -4,7 +4,7 @@ import json
 from vm4.models import *
 from vm4.context import CONSTANTS
 from vm4.view import utils
-
+from django.forms.models import model_to_dict
 
 def getAllExperiment():
     try:

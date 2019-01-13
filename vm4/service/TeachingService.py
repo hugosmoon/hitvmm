@@ -8,7 +8,7 @@ from vm4.context import CONSTANTS
 import json
 from vm4.models import *
 from django.core.paginator import Paginator
-
+from django.forms.models import model_to_dict
 
 # 根据学生id获得教学
 def getTeachingByStu(stuid, type, index):

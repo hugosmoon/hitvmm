@@ -3,7 +3,7 @@ from vm4.context import CONSTANTS
 from vm4.view import utils
 from vm4.models import *
 from django.core.paginator import Paginator
-
+from django.forms.models import model_to_dict
 
 # 根据id获取教师
 def getTeacherById(teacherId):
