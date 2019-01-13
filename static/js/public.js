@@ -1023,6 +1023,38 @@ var publicObj = {
 
             })
         });
+        //修改实验描述
+        $(".changedescription").each(function () {
+            $(this).unbind('click').bind('click', function () {
+                // $("#videoexperimentid").val($(this).attr("experimentid"))
+                $("#des_title").val("修改 "+$(this).attr("experimentname")+" 的实验描述")
+                $("#des_content").val($(this).attr("experimentdesc"))
+                $("#des_id").val($(this).attr("experimentid"))
+
+
+                // var videostr = $(this).attr("videos");
+                // $(".videowall").html("")
+                // var videos = JSON.parse(videostr)
+                // for (var i = 0, len = videos.length; i < len; i++) {
+                //     var domStr = ' <div class="videobox" videoid = "' + videos[i].id + '">\n' +
+                //         '                   ' + videos[i].name + '\n' +
+                //         '                </div>'
+                //     $(".videowall").append(domStr)
+                // }
+                // $(".videobox").each(function () {
+                //     $(this).unbind('click').bind('click', function () {
+                //         $('.videobox').removeClass('selectvideobox')
+                //         $(this).addClass('selectvideobox')
+                //         me.videoDom = $(this)
+                //     })
+                // });
+
+                $('.setdescription').show()
+                $('.popupbox').show()
+                $('.popupwall5').show()
+
+            })
+        });
         $(".vbover3").unbind('click').bind("click", function () {
             videoitemlist = $(".videowall").children()
             var experimentid = $("#changevideoexperimentid").val()
@@ -1166,6 +1198,7 @@ var publicObj = {
     hidePopup: function () {
         var me = this
         $('.dele').bind('click', function () {
+            $('.setdescription').hide()
             $('.addstudent').hide()
             $('.popupbox').hide()
             $('.popupwall').hide()

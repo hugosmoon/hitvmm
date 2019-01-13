@@ -53,7 +53,8 @@ urlpatterns = [
     url(r'downloadReportScoreList/',view_teacher.downloadReportScoreList),
     url(r'uploadVideo/',view_teacher.uploadVideo),
     url(r'updateExperimentVideo/',view_teacher.updateExperimentVideo),
-    url(r'updateExperimentTemplate/',view_teacher.updateExperimentTemplate),
+    url(r'setdescription/',view_teacher.setdescription),
+
 
 
 
