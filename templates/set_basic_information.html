@@ -82,6 +82,8 @@
 <!-- 模块JS -->
 <script type="text/javascript" src="../static/js/index.js"></script>
 <script>
+    start_year="2019";
+    department="机电工程学院"
     $("#add1").click(add1);
     $("#add2").click(add2);
     $("#add3").click(add3);
@@ -96,7 +98,7 @@
                 '<td style="width: 250px;text-align:center;height: 35px;font-weight:bold;" ><input id="1" style="background-color:#f0f0f0; width:230px;height:25px"></td>'+
                 '<td style="width: 250px;text-align:center;height: 35px;font-weight:bold;" ><input id="2" style="background-color:#f0f0f0;width:230px;height:25px"></td>'+
                 '<td style="width: 250px;text-align:center;height: 35px;font-weight:bold;" ><input id="3" style="background-color:#f0f0f0;width:230px;height:25px"></td>'+
-                '<td style="width: 100px;text-align:center;height: 35px;font-weight:bold;" ><button onclick="save(1,this)">保存</button></td>'+
+                '<td style="width: 100px;text-align:center;height: 35px;font-weight:bold;" ><button onclick="save(1,this)">确定</button></td>'+
                 '<td style="width: 100px;text-align:center;height: 35px;font-weight:bold;" ><button onclick="del(this)">删除</button></td>'+
             '</tr>'+
             '</table>'+
@@ -117,7 +119,7 @@
                 '<td style="width: 250px;text-align:center;height: 35px;font-weight:bold;" ></td>' +
                 '<td style="width: 250px;text-align:center;height: 35px;font-weight:bold;" ><input id="2" style="background-color:#f0f0f0;width:230px;height:25px"></td>' +
                 '<td style="width: 250px;text-align:center;height: 35px;font-weight:bold;" ><input id="3" style="background-color:#f0f0f0;width:230px;height:25px"></td>' +
-                '<td style="width: 100px;text-align:center;height: 35px;font-weight:bold;" ><button onclick="save(2,this)">保存</button></td>' +
+                '<td style="width: 100px;text-align:center;height: 35px;font-weight:bold;" ><button onclick="save(2,this)">确定</button></td>' +
                 '<td style="width: 100px;text-align:center;height: 35px;font-weight:bold;" ><button onclick="del(this)">删除</button></td>' +
                 '</tr>' +
                 '</table>'
@@ -136,7 +138,7 @@
                     '<td style="width: 250px;text-align:center;height: 35px;font-weight:bold;" ></td>'+
                     '<td style="width: 250px;text-align:center;height: 35px;font-weight:bold;" ></td>'+
                     '<td style="width: 250px;text-align:center;height: 35px;font-weight:bold;" ><input id="3" style="background-color:#f0f0f0;width:230px;height:25px"></td>'+
-                    '<td style="width: 100px;text-align:center;height: 35px;font-weight:bold;" ><button onclick="save(3,this)">保存</button></td>'+
+                    '<td style="width: 100px;text-align:center;height: 35px;font-weight:bold;" ><button onclick="save(3,this)">确定</button></td>'+
                     '<td style="width: 100px;text-align:center;height: 35px;font-weight:bold;" ><button onclick="del(this)">删除</button></td>'+
                 '</tr>'+
             '</table>'
@@ -162,13 +164,15 @@
            $("#infor_table").append(
            '<table>'+
                '<tr>'+
-                '<td style="width: 250px;height: 35px;text-align:center;" >'+$("#1").val()+'</td>'+
-                '<td style="width: 250px;height: 35px;text-align:center;" >'+$("#2").val()+'</td>'+
-                '<td style="width: 250px;height: 35px;text-align:center;" >'+$("#3").val()+'</td>'+
+                '<td style="width: 250px;height: 35px;text-align:center;color:#00ee00"" >'+$("#1").val()+'</td>'+
+                '<td style="width: 250px;height: 35px;text-align:center;color:#00ee00"" >'+$("#2").val()+'</td>'+
+                '<td style="width: 250px;height: 35px;text-align:center; color:#00ee00" >'+$("#3").val()+'</td>'+
                 '<td style="width: 100px;height: 35px;text-align:center;" ><button onclick="del(this)">删除</button></td>'+
             '</tr>'+
         '</table >'
            );
+            start_year=$("#1").val();
+            department=$("#2").val();
 
         }
         else if(i==2){
@@ -179,13 +183,15 @@
            $("#infor_table").append(
            '<table>'+
                '<tr>'+
-                '<td style="width: 250px;height: 35px;text-align:center;" >-</td>'+
-                '<td style="width: 250px;height: 35px;text-align:center;" >'+$("#2").val()+'</td>'+
-                '<td style="width: 250px;height: 35px;text-align:center;" >'+$("#3").val()+'</td>'+
+                '<td style="width: 250px;height: 35px;text-align:center;color:#00ee00"" >'+start_year +'</td>'+
+                '<td style="width: 250px;height: 35px;text-align:center;color:#00ee00"" >'+$("#2").val()+'</td>'+
+                '<td style="width: 250px;height: 35px;text-align:center;color:#00ee00"" >'+$("#3").val()+'<td>'+
                 '<td style="width: 100px;height: 35px;text-align:center;" ><button onclick="del(this)">删除</button></td>'+
             '</tr>'+
         '</table >'
            );
+            department=$("#2").val();
+
 
         }
         else {
@@ -194,14 +200,14 @@
                 return false;
             }
             $("#infor_table").append(
-           '<table>'+
-               '<tr>'+
-                '<td style="width: 250px;height: 35px;text-align:center;" >-</td>'+
-                '<td style="width: 250px;height: 35px;text-align:center;" >-</td>'+
-                '<td style="width: 250px;height: 35px;text-align:center;" >'+$("#3").val()+'</td>'+
-                '<td style="width: 100px;height: 35px;text-align:center;" ><button onclick="del(this)">删除</button></td>'+
-            '</tr>'+
-        '</table >'
+               '<table>'+
+                   '<tr>'+
+                    '<td style="width: 250px;height: 35px;text-align:center;color:#00ee00"" >'+start_year +'</td>'+
+                    '<td style="width: 250px;height: 35px;text-align:center;color:#00ee00"" >'+department +'</td>'+
+                    '<td style="width: 250px;height: 35px;text-align:center;color:#00ee00"" >'+$("#3").val()+'</td>'+
+                    '<td style="width: 100px;height: 35px;text-align:center;" ><button onclick="del(this)">删除</button></td>'+
+                '</tr>'+
+                '</table >'
            );
 
         }
