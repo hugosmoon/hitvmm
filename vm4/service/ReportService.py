@@ -4,7 +4,7 @@ from vm4.context import CONSTANTS
 from vm4.view import utils
 from vm4.service import StudentService
 from vm4.models import *
-
+from django.forms.models import model_to_dict
 
 # 根据报告id获取报告
 def getReportById(reportid):

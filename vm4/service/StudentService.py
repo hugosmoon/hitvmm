@@ -3,6 +3,8 @@ from vm4.context import CONSTANTS
 from vm4.view import utils
 from vm4.models import *
 from django.core.paginator import Paginator
+from django.forms.models import model_to_dict
+from vm4.service import FilterInfoService
 
 
 # 根据学生编号和姓名获取学生
@@ -12,8 +14,7 @@ def getStudentByNumAndName(name, stunum):
     except:
         return None
     else:
-        return student;
-
+        return student
 
 # 根据学生编号获取学生
 def getStudentByNum(stunum):

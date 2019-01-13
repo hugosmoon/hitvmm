@@ -8,15 +8,16 @@ from vm4.service import TeachingService
 from vm4.service import ExperimentService
 from vm4.service import ReportService
 from vm4.service import TemplateService
+from vm4.service import FilterInfoService
 from vm4.context import CONSTANTS
 from django.http import FileResponse
 import os, uuid
 from django.utils.http import urlquote
 
 
-# 登录页面
 def v_login(request):
     return getloginResponse(request)
+# 登录页面
 
 
 # 登录接口
