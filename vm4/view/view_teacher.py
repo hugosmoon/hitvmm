@@ -478,6 +478,7 @@ def addexperiment(request):
     videoids = utils.getParam(request, "videos")
     point = utils.getParam(request, "point")
     remark = utils.getParam(request, "remark")
+    studentids = utils.getParam(request, "studentids")
     '''
         获得实验详情
     '''
@@ -541,39 +542,21 @@ def addexperiment(request):
         fp.close()
         dataurl = filename
     '''
-        获得学生名单文件
-    '''
-    stulistfile = request.FILES.get('stulistfile', None)
-    if stulistfile is None:
-        responseReturn = Response(-1, "请选择你要上传的学生名单！")
-        return HttpResponse(responseReturn.__str__())
-    stulistfilename = stulistfile.name
-    stulistfilesuffix = os.path.splitext(stulistfilename)[1]
-    if stulistfilesuffix != ".xsl" and stulistfilesuffix != ".xlsx":
-        responseReturn = Response(-1, "学生名单必须为excel格式")
-        return HttpResponse(responseReturn.__str__())
-
-    stulistfilename = str(uuid.uuid1()) + stulistfilesuffix
-    fp = open(os.path.join(CONSTANTS.STUDENTLISTURL_PRE + stulistfilename), 'wb+')
-    for chunk in stulistfile.chunks():  # 分块写入文件
-        fp.write(chunk)
-    fp.close()
-    '''
         获得学生名单
     '''
-    studentList = getStudentListByExcel(stulistfilename)
+    studentidList = studentids.split(",")
     # 添加
     teachingid = TeachingService.addTeaching(int(experimentid), deadline, teacherid, point, remark, dataurl,
-                                             stulistfilename, templateid, videos)
+                                             "", templateid, videos)
     if teachingid is None:
         responseReturn = Response(-1, "添加失败，请重试")
         return HttpResponse(responseReturn.__str__())
-    for student in studentList:
+    for id in studentidList:
         studentobj = None
-        studentobj = StudentService.getStudentByNumAndName(student["name"], student["number"])
+        studentobj = StudentService.getStudentById(id)
         if studentobj is None:
             TeachingService.deleteTeachingByid(teachingid)
-            responseReturn = Response(-1, """学生不存在，姓名:%s ，学号:%s""" % (student["name"], student["number"]))
+            responseReturn = Response(-1, "选择学生异常，请重试！")
             return HttpResponse(responseReturn.__str__())
         ReportService.addReport(teachingid, studentobj.id)
 

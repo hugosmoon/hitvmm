@@ -105,9 +105,9 @@
                     <div class="unitftbg">
                         <ul class="btnwall">
                             <li class="uteaupload unitbtn" teachingid="{{ teaching.id }}">上传实验数据</li>
-                            <li class="teastulist unitbtn" stulisturl="{{ teaching.stulisturl }}">
+                           {% comment %} <li class="teastulist unitbtn" stulisturl="{{ teaching.stulisturl }}">
                                 下载学生名单({{ teaching.stuCount }})
-                            </li>
+                            </li>{% endcomment %}
                             <li class="updatamod unitbtn" teachingid="{{ teaching.id }}"
                                 experimentid="{{ teaching.experimentid }}">实验报告模版更换
                             </li>
