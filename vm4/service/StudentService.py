@@ -115,6 +115,7 @@ def getCountStudentByNameAndNumber(name, stunum):
         return count
 
 
+# 根据班级id获取学生总数
 def getCountStudentByFilterInfo(filterinfoid):
     try:
         count = Student.objects.filter(filterinfoid=filterinfoid, isdelete=CONSTANTS.ISDELETE_NOT).count()
@@ -122,3 +123,13 @@ def getCountStudentByFilterInfo(filterinfoid):
         return 0
     else:
         return count
+
+
+# 根据班级id获取学生列表
+def getStudentListByFilterInfo(filterinfoid):
+    try:
+        studentList = Student.objects.filter(filterinfoid=filterinfoid, isdelete=CONSTANTS.ISDELETE_NOT).all()
+    except:
+        return None
+    else:
+        return studentList

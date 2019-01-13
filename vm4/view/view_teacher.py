@@ -9,6 +9,7 @@ from vm4.service import ExperimentService
 from vm4.service import ReportService
 from vm4.service import StudentService
 from vm4.service import TemplateService
+from vm4.service import FilterInfoService
 from vm4.service import VideoService
 from vm4.context import CONSTANTS
 from django.http import FileResponse
@@ -17,6 +18,7 @@ import xlwt
 import datetime
 import os, uuid, json
 from django.utils.http import urlquote
+from django.forms.models import model_to_dict
 
 
 # 教师登录
@@ -665,6 +667,7 @@ def updateExperimentTemplate(request):
     return HttpResponse(
         "<script>if(confirm('上传成功')){history.go(-1);location.reload()}else{history.go(-1);location.reload()}</script>")
 
+
 # 修改实验描述
 def setdescription(request):
     # 接收基础参数
@@ -678,3 +681,35 @@ def setdescription(request):
         return HttpResponse(False)
 
 
+# 根据班级获取学生
+def getStudentByFilterInfoId(request):
+    teacherid = utils.getCookie(request, "teacherid")
+    if (teacherid is None) or teacherid == "":
+        responseReturn = Response(-2, "请登录")
+        return HttpResponse(responseReturn.__str__())
+    filterid = utils.getParam(request, "filterid")
+    if (filterid == "" or filterid is None):
+        responseReturn = Response(-1, "请选择班级！")
+        return HttpResponse(responseReturn.__str__())
+    filterinfo = FilterInfoService.getFilterInfoById(filterid)
+    if filterinfo is None:
+        responseReturn = Response(-1, "班级不存在！")
+        return HttpResponse(responseReturn.__str__())
+    studentList = StudentService.getStudentListByFilterInfo(filterid)
+    if studentList is None:
+        responseReturn = Response(-1, "此班级没有学生！")
+        return HttpResponse(responseReturn.__str__())
+    studentDictList = []
+    for student in studentList:
+        dict = model_to_dict(student)
+        del dict["isdelete"]
+        del dict["createtime"]
+        del dict["updatetime"]
+        dict["registyear"] = filterinfo.registyear
+        dict["major"] = filterinfo.major
+        dict["classname"] = filterinfo.classname
+        studentDictList.append(dict)
+    studentDictListStr = json.dumps(studentDictList, ensure_ascii=False)
+    responseReturn = Response(None, None)
+    responseReturn.setRes(studentDictListStr)
+    return HttpResponse(responseReturn.__str__())

@@ -1027,7 +1027,7 @@ var publicObj = {
         $(".changedescription").each(function () {
             $(this).unbind('click').bind('click', function () {
                 // $("#videoexperimentid").val($(this).attr("experimentid"))
-                $("#des_title").val("修改 "+$(this).attr("experimentname")+" 的实验描述")
+                $("#des_title").val("修改 " + $(this).attr("experimentname") + " 的实验描述")
                 $("#des_content").val($(this).attr("experimentdesc"))
                 $("#des_id").val($(this).attr("experimentid"))
 
@@ -1573,12 +1573,6 @@ var publicObj = {
         //添加学生至实验学生名单
         $(".change_student_list").each(function () {
             $(this).unbind('click').bind('click', function () {
-                var experiment = $("#experimentid  option:selected")
-                var videostr = experiment.attr("videos");
-                if (videostr == undefined) {
-                    alert("请选择实验！")
-                    return
-                }
                 $('.addstudent').show()
                 $('.popupwall5').show()
             })

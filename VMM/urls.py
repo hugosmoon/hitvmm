@@ -54,6 +54,7 @@ urlpatterns = [
     url(r'uploadVideo/',view_teacher.uploadVideo),
     url(r'updateExperimentVideo/',view_teacher.updateExperimentVideo),
     url(r'setdescription/',view_teacher.setdescription),
+    url(r'getStudentByFilterInfoId/',view_teacher.getStudentByFilterInfoId),
 
 
 
