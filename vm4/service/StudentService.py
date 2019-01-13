@@ -10,7 +10,7 @@ from vm4.service import FilterInfoService
 # 根据学生编号和姓名获取学生
 def getStudentByNumAndName(name, stunum):
     try:
-        student = Student.objects.get(name=name, number=stunum)
+        student = Student.objects.get(name=name, number=stunum, isdelete=CONSTANTS.ISDELETE_NOT)
     except:
         return None
     else:
@@ -32,9 +32,9 @@ def getManyStudentByNameAndNumber(name, stunum, index):
     studentsearch = Student.objects
 
     if stunum is not None:
-        studentsearch = studentsearch.filter(number__contains=stunum)
+        studentsearch = studentsearch.filter(number__contains=stunum, isdelete=CONSTANTS.ISDELETE_NOT)
     if stunum is not None:
-        studentsearch = studentsearch.filter(name__contains=name)
+        studentsearch = studentsearch.filter(name__contains=name, isdelete=CONSTANTS.ISDELETE_NOT)
     studentsearch.order_by('createtime')
     try:
         studentList = studentsearch.all()
@@ -69,10 +69,10 @@ def getStudentById(stuid):
 
 
 # 添加学生
-def addStudent(name, number, teachername, teachernumber):
+def addStudent(name, number, filterinfoid):
     now = utils.getNow()
-    student = Student(name=name, number=number, teachername=teachername, teachernumber=teachernumber, createtime=now,
-                      updatetime=now)
+    student = Student(name=name, number=number, filterinfoid=filterinfoid, createtime=now,
+                      isdelete=CONSTANTS.ISDELETE_NOT, updatetime=now)
     student.save()
     return student.id
 
@@ -103,9 +103,9 @@ def getCountStudentByNameAndNumber(name, stunum):
     studentsearch = Student.objects
 
     if stunum is not None:
-        studentsearch = studentsearch.filter(number__contains=stunum)
+        studentsearch = studentsearch.filter(number__contains=stunum, isdelete=CONSTANTS.ISDELETE_NOT)
     if stunum is not None:
-        studentsearch = studentsearch.filter(name__contains=name)
+        studentsearch = studentsearch.filter(name__contains=name, isdelete=CONSTANTS.ISDELETE_NOT)
 
     try:
         count = studentsearch.count()

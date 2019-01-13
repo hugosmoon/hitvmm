@@ -24,8 +24,6 @@ class Student(models.Model):
     id = models.AutoField(primary_key=True, db_column="f_id")
     name = models.CharField(max_length=50, db_column="f_name")
     number = models.CharField(max_length=50, db_column="f_number")
-    teachername = models.CharField(max_length=50, db_column="f_teacher_name")
-    teachernumber = models.CharField(max_length=50, db_column="f_teacher_number")
     filterinfoid = models.IntegerField(db_column="f_filterinfo_id")
     isdelete = models.BooleanField(default=False, db_column="f_is_delete")
     createtime = models.DateTimeField(default=timezone.now, db_column="f_createtime")
