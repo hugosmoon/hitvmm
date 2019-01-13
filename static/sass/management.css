@@ -173,46 +173,56 @@
     color: #020035;
     text-decoration: underline; }
   .userlist .s_tit1 {
-    width: 50px;
+    width: 30px;
     margin-left: 51px;
-    margin-right: 43px; }
+    margin-right: 20px; }
   .userlist .s_tit2 {
     width: 90px;
-    margin-right: 43px; }
+    margin-right: 20px; }
   .userlist .s_tit3 {
     width: 100px;
-    margin-right: 43px; }
+    margin-right: 20px; }
   .userlist .s_tit4 {
     width: 90px;
-    margin-right: 43px; }
+    margin-right: 20px; }
   .userlist .s_tit5 {
     width: 100px;
-    margin-right: 43px; }
+    margin-right: 20px; }
   .userlist .s_tit6 {
-    width: 150px; }
+    width: 100px;
+  margin-right: 20px;}
+  .userlist .s_tit7 {
+    width: 150px;
+  margin-right: 20px;}
+  .userlist .s_tit8 {
+    width: 100px; }
+
   .userlist .s_txt1 {
-    width: 50px;
+    width: 30px;
     margin-left: 51px;
-    margin-right: 43px; }
+    margin-right: 20px; }
   .userlist .s_txt2 {
     width: 90px;
-    margin-right: 43px; }
+    margin-right: 20px; }
   .userlist .s_txt3 {
     width: 100px;
-    margin-right: 43px; }
+    margin-right: 20px; }
   .userlist .s_txt4 {
     width: 90px;
-    margin-right: 43px; }
+    margin-right: 20px; }
   .userlist .s_txt5 {
     width: 100px;
-    margin-right: 43px; }
+    margin-right: 20px; }
   .userlist .s_txt6 {
-    width: 150px;
-    margin-right: 43px; }
+    width: 100px;
+  margin-right: 20px;}
   .userlist .s_txt7 {
-    width: 60px;
+    width: 150px;
+  margin-right: 20px;}
+  .userlist .s_txt8 {
+    width: 100px;
     color: #0055ff;
     cursor: pointer; }
-  .userlist .s_txt7 > text:hover {
+  .userlist .s_txt8 > text:hover {
     color: #020035;
     text-decoration: underline; }

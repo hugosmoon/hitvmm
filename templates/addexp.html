@@ -87,7 +87,7 @@
                     实验名称：
                 </div>
                 <div class="right">
-                    <select id="experimentid" class="selctbox selctbox1" name="experimentid">
+                    <select style="width: 310px" id="experimentid" class="selctbox selctbox1" name="experimentid">
                         <option value="0" selected="selected">请选择实验名称</option>
                         {% for experiment in experimentList %}
                             <option value="{{ experiment.id }}" videos="{{ experiment.videos }}"
@@ -101,7 +101,7 @@
                     报告提交截止日期：
                 </div>
                 <div class="right right2">
-                    <div class="addcalendar" id="addcalendarhtml"></div>
+                    <div  style="width: 310px"  class="addcalendar" id="addcalendarhtml"></div>
                     <input id="addcalendar" type="hidden" name="deadline">
                 </div>
             </div>
@@ -167,14 +167,166 @@
                 <div class="left">
                     学生名单：
                 </div>
-                <div class="right right2">
-                    <div class="btn btn2 addexpteastulist">
-                        上传学生名单
-                        <input class="uploadfile" type="file" name="stulistfile" onchange="publicObj.upstulistFileup()">
+                <div class="right" >
+                    <br>
+                    <table border="1" cellspacing="10">
+                            <tr>
+                                <td style="width: 150px;height: 25px;text-align:center;font-weight:bold;" >
+                                    <select style="width: 130px;height: 25px;">
+                                      <option value ="volvo">全部入学年份</option>
+                                      <option value ="saab">2019年</option>
+                                      <option value="opel">2018年</option>
+                                      <option value="audi">2017年</option>
+                                    </select>
+                                </td>
+                                <td style="width: 150px;height: 25px;text-align:center;font-weight:bold;" >
+                                    <select style="width: 130px;height: 25px;">
+                                      <option value ="volvo">全部院系</option>
+                                      <option value ="saab">机电工程学院</option>
+                                      <option value="opel">材料工程学院</option>
+                                    </select>
+                                </td>
+                                <td style="width: 150px;height: 25px;text-align:center;font-weight:bold;" >
+                                    <select style="width: 130px;height: 25px;">
+                                      <option value ="volvo">全部班级</option>
+                                      <option value ="saab">1908105</option>
+                                      <option value="opel">1908103</option>
+                                      <option value="audi">1908106</option>
+                                    </select>
+                                </td>
+                                <td style="width: 150px;height: 25px;text-align:center;font-weight:bold;" >
+                                    全选 <input type="checkbox">
+                                </td>
+                            </tr>
+                        </table>
+                    <br>
+
+{#                    <div class="btn btn2 addexpteastulist">#}
+{#                        上传学生名单#}
+{#                        <input class="uploadfile" type="file" name="stulistfile" onchange="publicObj.upstulistFileup()">#}
+{#                    </div>#}
+{#                    <div class="btn btn2 addexpstudentdown">下载学生名单模板</div>#}
+{#                    <p class="filename upstulistname"></p>#}
+                    <div>
+                        <table border="1" cellspacing="10">
+                            <tr>
+                                <td style="width: 50px;height: 25px;text-align:center;font-weight:bold;" ></td>
+                                <td style="width: 100px;height: 25px;text-align:center;font-weight:bold;" >学号</td>
+                                <td style="width: 100px;height: 25px;text-align:center;font-weight:bold;" >姓名</td>
+                                <td style="width: 100px;height: 25px;text-align:center;font-weight:bold;" >入学年份</td>
+                                <td style="width: 100px;height: 25px;text-align:center;font-weight:bold;" >院系</td>
+                                <td style="width: 100px;height: 25px;text-align:center;font-weight:bold;" >班级</td>
+                                <td style="width: 100px;height: 25px;text-align:center;font-weight:bold;" ></td>
+                            </tr>
+                        </table>
+                        <table border="1" cellspacing="10">
+                            <tr>
+                                <td style="width: 50px;height: 25px;text-align:center;" >1</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" >20190001</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" >黄慧宇</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" >2019</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" >机电工程学院</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" >1908105</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" ><input type="checkbox" t="123"> </td>
+                            </tr>
+                             <tr>
+                                <td style="width: 50px;height: 25px;text-align:center;" >2</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" >20190001</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" >黄慧宇</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" >2019</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" >机电工程学院</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" >1908105</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" ><input type="checkbox" t="123"> </td>
+                            </tr>
+                             <tr>
+                                <td style="width: 50px;height: 25px;text-align:center;" >3</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" >20190001</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" >黄慧宇</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" >2019</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" >机电工程学院</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" >1908105</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" ><input type="checkbox" t="123"> </td>
+                            </tr>
+                             <tr>
+                                <td style="width: 50px;height: 25px;text-align:center;" >4</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" >20190001</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" >黄慧宇</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" >2019</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" >机电工程学院</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" >1908105</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" ><input type="checkbox" t="123"> </td>
+                            </tr>
+                             <tr>
+                                <td style="width: 50px;height: 25px;text-align:center;" >5</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" >20190001</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" >黄慧宇</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" >2019</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" >机电工程学院</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" >1908105</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" ><input type="checkbox" t="123"> </td>
+                            </tr>
+                             <tr>
+                                <td style="width: 50px;height: 25px;text-align:center;" >6</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" >20190001</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" >黄慧宇</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" >2019</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" >机电工程学院</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" >1908105</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" ><input type="checkbox" t="123"> </td>
+                            </tr>
+                             <tr>
+                                <td style="width: 50px;height: 25px;text-align:center;" >7</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" >20190001</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" >黄慧宇</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" >2019</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" >机电工程学院</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" >1908105</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" ><input type="checkbox" t="123"> </td>
+                            </tr>
+                             <tr>
+                                <td style="width: 50px;height: 25px;text-align:center;" >8</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" >20190001</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" >黄慧宇</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" >2019</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" >机电工程学院</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" >1908105</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" ><input type="checkbox" t="123"> </td>
+                            </tr>
+                             <tr>
+                                <td style="width: 50px;height: 25px;text-align:center;" >9</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" >20190001</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" >黄慧宇</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" >2019</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" >机电工程学院</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" >1908105</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" ><input type="checkbox" t="123"> </td>
+                            </tr>
+                             <tr>
+                                <td style="width: 50px;height: 25px;text-align:center;" >10</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" >20190001</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" >黄慧宇</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" >2019</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" >机电工程学院</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" >1908105</td>
+                                <td style="width: 100px;height: 25px;text-align:center;" ><input type="checkbox" t="123"> </td>
+                            </tr>
+
+                        </table>
+
                     </div>
-                    <div class="btn btn2 addexpstudentdown">下载学生名单模板</div>
-                    <p class="filename upstulistname"></p>
+                    <div>
+                         <center><button>上一页</button>
+                             <button>1</button>
+                             <button>2</button>
+                             <button>下一页</button> </center>
+                    </div>
+                     <div>
+<br>
+                         <center>当前共选择了99位同学</center>
+                         <br>
+                    </div>
                 </div>
+
             </div>
             <div class="addbox">
                 <div class="left">
