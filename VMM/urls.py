@@ -74,6 +74,8 @@ urlpatterns = [
     url(r'addAdmin/', view_admin.addAdmin),
     url(r'getlisttemplate/', view_admin.getListTemplate),
     url(r'setBasicInformation/', view_admin.setBasicInformation),
+    url(r'addFilterInfo/',view_admin.addFilterInfo),
+    url(r'delFilterInfo/',view_admin.delFilterInfo),
 
 
     #experiment

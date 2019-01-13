@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>设置基础信息</title>
-     {% load staticfiles %}
-    <link rel="shortcut icon" href="{% static 'img/hit.ico' %}" type="image/x-icon" />
+    {% load staticfiles %}
+    <link rel="shortcut icon" href="{% static 'img/hit.ico' %}" type="image/x-icon"/>
     <link rel="icon" href="{% static 'img/hit.ico' %}" type="image/gif">
     <!-- 初始化CSS -->
     <link href="../static/plugin/swiper.css">
@@ -27,47 +27,37 @@
 </div>
 <div class="wall2">
     <div id="infor_table">
-        <table >
+        <table>
             <tr>
-                <td style="width: 250px;height: 35px;text-align:center;font-weight:bold;" >入学年份</td>
-                <td style="width: 250px;height: 35px;text-align:center;font-weight:bold;" >院系</td>
-                <td style="width: 250px;height: 35px;text-align:center;font-weight:bold;" >班级</td>
+                <td style="width: 250px;height: 35px;text-align:center;font-weight:bold;">入学年份</td>
+                <td style="width: 250px;height: 35px;text-align:center;font-weight:bold;">院系</td>
+                <td style="width: 250px;height: 35px;text-align:center;font-weight:bold;">班级</td>
             </tr>
-            <tr>
-                <td style="width: 250px;height: 35px;text-align:center;" >2019</td>
-                <td style="width: 250px;height: 35px;text-align:center;" >机电工程学院</td>
-                <td style="width: 250px;height: 35px;text-align:center;" >1908105</td>
-                <td style="width: 100px;height: 35px;text-align:center;" ><button onclick="del(this)">删除</button></td>
-            </tr>
-             <tr>
-                <td style="width: 250px;height: 35px;text-align:center;;" >-</td>
-                <td style="width: 250px;height: 35px;text-align:center;" >-</td>
-                <td style="width: 250px;height: 35px;text-align:center;" >1908106</td>
-                 <td style="width: 100px;height: 35px;text-align:center;" ><button onclick="del(this)">删除</button></td>
-            </tr>
-            <tr>
-                <td style="width: 250px;height: 35px;text-align:center;;" >2018</td>
-                <td style="width: 250px;height: 35px;text-align:center;" >机电工程学院</td>
-                <td style="width: 250px;height: 35px;text-align:center;" >1808106</td>
-                <td style="width: 100px;height: 35px;text-align:center;" ><button onclick="del(this)">删除</button></td>
-            </tr>
-        </table >
-
+            {% for filterInfo in filterInfoList %}
+                <tr>
+                    <td style="width: 250px;height: 35px;text-align:center;">{{ filterInfo.registyear }}</td>
+                    <td style="width: 250px;height: 35px;text-align:center;">{{ filterInfo.major }}</td>
+                    <td style="width: 250px;height: 35px;text-align:center;">{{ filterInfo.classname }}</td>
+                    <td style="width: 100px;height: 35px;text-align:center;">
+                        <button onclick="deletfilter(this)" filterinfoid="{{ filterInfo.id }}">删除</button>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
     </div>
     <div id="infor">
     </div>
     <div>
-         <table >
-             <br>
+        <table>
+            <br>
             <tr>
-                <td style="width: 250px;text-align:center;height: 35px;font-weight:bold;" ><button id="add1">添加</button></td>
-                <td style="width: 250px;text-align:center;height: 35px;font-weight:bold;" ><button id="add2">添加</button></td>
-                <td style="width: 250px;text-align:center;height: 35px;font-weight:bold;" ><button id="add3">添加</button></td>
+                <td style="width: 250px;text-align:center;height: 35px;font-weight:bold;">
+                    <button id="add1">添加</button>
+                </td>
             </tr>
         </table>
     </div>
 
-    <center><button style=" margin-top: 30px; width: 100px;height: 25px">保存并返回</button></center>
 </div>
 </body>
 <!-- 引用插件 -->
@@ -82,37 +72,39 @@
 <!-- 模块JS -->
 <script type="text/javascript" src="../static/js/index.js"></script>
 <script>
-    start_year="2019";
-    department="机电工程学院"
+    start_year = "2019";
+    department = "机电工程学院"
     $("#add1").click(add1);
     $("#add2").click(add2);
     $("#add3").click(add3);
     //按钮可点击的状态
-    click_status=1;
+    click_status = 1;
+
     function add1() {
-        if (click_status==1){
+        if (click_status == 1) {
             $("#infor").append(
-            '<div>'+
-            '<table cellspacing="100">'+
-            '<tr>'+
-                '<td style="width: 250px;text-align:center;height: 35px;font-weight:bold;" ><input id="1" style="background-color:#f0f0f0; width:230px;height:25px"></td>'+
-                '<td style="width: 250px;text-align:center;height: 35px;font-weight:bold;" ><input id="2" style="background-color:#f0f0f0;width:230px;height:25px"></td>'+
-                '<td style="width: 250px;text-align:center;height: 35px;font-weight:bold;" ><input id="3" style="background-color:#f0f0f0;width:230px;height:25px"></td>'+
-                '<td style="width: 100px;text-align:center;height: 35px;font-weight:bold;" ><button onclick="save(1,this)">确定</button></td>'+
-                '<td style="width: 100px;text-align:center;height: 35px;font-weight:bold;" ><button onclick="del(this)">删除</button></td>'+
-            '</tr>'+
-            '</table>'+
-            '</div>'
+                '<div>' +
+                '<table cellspacing="100">' +
+                '<tr>' +
+                '<td style="width: 250px;text-align:center;height: 35px;font-weight:bold;" ><input id="1" style="background-color:#f0f0f0; width:230px;height:25px"></td>' +
+                '<td style="width: 250px;text-align:center;height: 35px;font-weight:bold;" ><input id="2" style="background-color:#f0f0f0;width:230px;height:25px"></td>' +
+                '<td style="width: 250px;text-align:center;height: 35px;font-weight:bold;" ><input id="3" style="background-color:#f0f0f0;width:230px;height:25px"></td>' +
+                '<td style="width: 100px;text-align:center;height: 35px;font-weight:bold;" ><button onclick="save(1,this)">确定</button></td>' +
+                '<td style="width: 100px;text-align:center;height: 35px;font-weight:bold;" ><button onclick="del(this)">删除</button></td>' +
+                '</tr>' +
+                '</table>' +
+                '</div>'
             )
         }
         else {
             alert("请先保存或删除您正在处理的信息")
         }
-       
-        click_status=0;
+
+        click_status = 0;
     }
+
     function add2() {
-        if (click_status==1) {
+        if (click_status == 1) {
             $("#infor").append(
                 '<table cellspacing="100">' +
                 '<tr>' +
@@ -128,91 +120,96 @@
         else {
             alert("请先保存或删除您正在处理的信息")
         }
-        click_status=0;
+        click_status = 0;
     }
+
     function add3() {
-        if (click_status==1) {
-            $("#infor").append(
-                '<table cellspacing="100">'+
-                '<tr>'+
-                    '<td style="width: 250px;text-align:center;height: 35px;font-weight:bold;" ></td>'+
-                    '<td style="width: 250px;text-align:center;height: 35px;font-weight:bold;" ></td>'+
-                    '<td style="width: 250px;text-align:center;height: 35px;font-weight:bold;" ><input id="3" style="background-color:#f0f0f0;width:230px;height:25px"></td>'+
-                    '<td style="width: 100px;text-align:center;height: 35px;font-weight:bold;" ><button onclick="save(3,this)">确定</button></td>'+
-                    '<td style="width: 100px;text-align:center;height: 35px;font-weight:bold;" ><button onclick="del(this)">删除</button></td>'+
-                '</tr>'+
-            '</table>'
+        if (click_status == 1) {
+            $("#infor").append(
+                '<table cellspacing="100">' +
+                '<tr>' +
+                '<td style="width: 250px;text-align:center;height: 35px;font-weight:bold;" ></td>' +
+                '<td style="width: 250px;text-align:center;height: 35px;font-weight:bold;" ></td>' +
+                '<td style="width: 250px;text-align:center;height: 35px;font-weight:bold;" ><input id="3" style="background-color:#f0f0f0;width:230px;height:25px"></td>' +
+                '<td style="width: 100px;text-align:center;height: 35px;font-weight:bold;" ><button onclick="save(3,this)">确定</button></td>' +
+                '<td style="width: 100px;text-align:center;height: 35px;font-weight:bold;" ><button onclick="del(this)">删除</button></td>' +
+                '</tr>' +
+                '</table>'
             )
         }
         else {
             alert("请先保存或删除您正在处理的信息")
         }
-        click_status=0;
+        click_status = 0;
     }
 
     function del(e) {
         $(e).parent().parent().remove();
-        click_status=1;
+        click_status = 1;
     }
-    function save(i,e) {
-        if(i==1){
 
-            if($("#1").val()==""||$("#2").val()==""||$("#3").val()==""){
-                alert("请完善信息~")
-                return false;
-            }
-           $("#infor_table").append(
-           '<table>'+
-               '<tr>'+
-                '<td style="width: 250px;height: 35px;text-align:center;color:#00ee00"" >'+$("#1").val()+'</td>'+
-                '<td style="width: 250px;height: 35px;text-align:center;color:#00ee00"" >'+$("#2").val()+'</td>'+
-                '<td style="width: 250px;height: 35px;text-align:center; color:#00ee00" >'+$("#3").val()+'</td>'+
-                '<td style="width: 100px;height: 35px;text-align:center;" ><button onclick="del(this)">删除</button></td>'+
-            '</tr>'+
-        '</table >'
-           );
-            start_year=$("#1").val();
-            department=$("#2").val();
-
+    function deletfilter(e) {
+        if (confirm("删除后不可恢复，你确定要删除么？")) {
+            var filterid = $(e).attr("filterinfoid")
+            $.post("/delFilterInfo/",
+                {
+                    filterid: filterid
+                },
+                function (data, status) {
+                    dataObj = $.parseJSON(data)
+                    code = dataObj.code;
+                    if (code == -2) {//未登录
+                        window.location = "/loginadmin/";
+                    } else if (code != 0) {
+                        alert(dataObj.desc);
+                    } else {
+                        del(e)
+                        alert("删除成功！")
+                    }
+                });
         }
-        else if(i==2){
-            if($("#2").val()==""||$("#3").val()==""){
+    }
+
+    function save(i, e) {
+        if (i == 1) {
+
+            var registyear = $("#1").val().replace(/\s+/g, "")
+            var major = $("#2").val().replace(/\s+/g, "")
+            var classname = $("#3").val().replace(/\s+/g, "")
+            if (registyear == "" || major == "" || classname == "") {
                 alert("请完善信息~")
                 return false;
             }
-           $("#infor_table").append(
-           '<table>'+
-               '<tr>'+
-                '<td style="width: 250px;height: 35px;text-align:center;color:#00ee00"" >'+start_year +'</td>'+
-                '<td style="width: 250px;height: 35px;text-align:center;color:#00ee00"" >'+$("#2").val()+'</td>'+
-                '<td style="width: 250px;height: 35px;text-align:center;color:#00ee00"" >'+$("#3").val()+'<td>'+
-                '<td style="width: 100px;height: 35px;text-align:center;" ><button onclick="del(this)">删除</button></td>'+
-            '</tr>'+
-        '</table >'
-           );
-            department=$("#2").val();
-
-
-        }
-        else {
-            if($("#3").val()==""){
-                alert("请完善信息~")
-                return false;
-            }
-            $("#infor_table").append(
-               '<table>'+
-                   '<tr>'+
-                    '<td style="width: 250px;height: 35px;text-align:center;color:#00ee00"" >'+start_year +'</td>'+
-                    '<td style="width: 250px;height: 35px;text-align:center;color:#00ee00"" >'+department +'</td>'+
-                    '<td style="width: 250px;height: 35px;text-align:center;color:#00ee00"" >'+$("#3").val()+'</td>'+
-                    '<td style="width: 100px;height: 35px;text-align:center;" ><button onclick="del(this)">删除</button></td>'+
-                '</tr>'+
-                '</table >'
-           );
+            $.post("/addFilterInfo/",
+                {
+                    registyear: registyear,
+                    major: major,
+                    classname: classname
+                },
+                function (data, status) {
+                    dataObj = $.parseJSON(data)
+                    code = dataObj.code;
+                    if (code == -2) {//未登录
+                        window.location = "/loginadmin/";
+                    } else if (code != 0) {
+                        alert(dataObj.desc);
+                    } else {
+                        alert("添加成功！")
+                        $("#infor_table").append(
+                            '<table>' +
+                            '<tr>' +
+                            '<td style="width: 250px;height: 35px;text-align:center;color:#00ee00"" >' + registyear + '</td>' +
+                            '<td style="width: 250px;height: 35px;text-align:center;color:#00ee00"" >' + major + '</td>' +
+                            '<td style="width: 250px;height: 35px;text-align:center; color:#00ee00" >' + classname + '</td>' +
+                            '<td style="width: 100px;height: 35px;text-align:center;" ><button onclick="deletfilter(this)">删除</button></td>' +
+                            '</tr>' +
+                            '</table >'
+                        );
+                    }
+                });
 
         }
         del(e);
-
     }
 </script>
 </html>

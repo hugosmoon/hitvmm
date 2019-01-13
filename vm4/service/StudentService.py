@@ -16,6 +16,7 @@ def getStudentByNumAndName(name, stunum):
     else:
         return student
 
+
 # 根据学生编号获取学生
 def getStudentByNum(stunum):
     try:
@@ -108,6 +109,15 @@ def getCountStudentByNameAndNumber(name, stunum):
 
     try:
         count = studentsearch.count()
+    except:
+        return 0
+    else:
+        return count
+
+
+def getCountStudentByFilterInfo(filterinfoid):
+    try:
+        count = Student.objects.filter(filterinfoid=filterinfoid, isdelete=CONSTANTS.ISDELETE_NOT).count()
     except:
         return 0
     else:
