@@ -460,9 +460,9 @@ def getStudentListByExcel(filename):
         if i == 0:
             continue;
         row_data = sheet0.row_values(i)
-        registyear = str(int(sheet0.cell_value(i, 2)))
-        major = str(int(sheet0.cell_value(i, 3)))
-        classname = str(int(sheet0.cell_value(i, 4)))
+        registyear = str(sheet0.cell_value(i, 2))
+        major = str(sheet0.cell_value(i, 3))
+        classname = str(sheet0.cell_value(i, 4))
         filterinfo = FilterInfoService.getFilterInfo(registyear, major, classname)
         if filterinfo is None:
             executestate = 1

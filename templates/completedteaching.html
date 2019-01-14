@@ -108,9 +108,9 @@
                     <div class="unitftbg">
                         <ul class="btnwall">
                             <li class="uteadownload unitbtn" dataurl="{{ teaching.dataurl }}">下载实验数据</li>
-                            <li class="teastulist unitbtn" stulisturl="{{ teaching.stulisturl }}">
+                           {% comment %} <li class="teastulist unitbtn" stulisturl="{{ teaching.stulisturl }}">
                                 下载学生名单({{ teaching.stuCount }})
-                            </li>
+                            </li>{% endcomment %}
                             <li class="downloaddatamod unitbtn" templateid="{{ teaching.templateid }}">下载实验报告模版</li>
                             <li class="preview unitbtn" videos="{{ teaching.videos }}">预习视频</li>
                             <li class="changedata unitbtn " deadline="{{ teaching.deadline|date:"Y/m/d" }}"
