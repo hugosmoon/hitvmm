@@ -146,7 +146,7 @@ def downloadData(request):
         return HttpResponse()
     fileurl = CONSTANTS.DATAURL_PRE + dataurl
     if os.path.exists(fileurl) != True:
-        return HttpResponse("未找到文件")
+        return HttpResponse("实验数据还没有上传~")
     file = open(fileurl, "rb")
     filename = file.name
     filesuffix = os.path.splitext(filename)[1]

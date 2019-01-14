@@ -119,11 +119,11 @@
                         <lable>其他模版</lable>
                     </div>
                     <div class="btn addepxupdatamod">
-                        上传模版文件
+                        选择模版文件
                         <input class="uploadfile" type="file" name="templatefile"
                                onchange="publicObj.addepxupdatamodFileup()">
                     </div>
-                    <p class="filename addepxupdatamodFileupname"></p>
+                    <p style="font-size: 12px;width: 250px;text-align: left;margin-left: 10px" class="filename addepxupdatamod addepxupdatamodFileupname"></p>
                 </div>
             </div>
             <div class="addbox">
@@ -137,9 +137,9 @@
                     </div>
                     <div class="templatebox">
                         <input class="rradio" type="radio" name="videotype" value="2">
-                        <lable>新增视频</lable>
+                        <lable>修改视频</lable>
                     </div>
-                    <div class="btn changevide">更改教学视频</div>
+                    <div id="changevideobutton" class="btn changevide">点击修改</div>
                     <input id="videosinputid" type="hidden" name="videos"/>
                 </div>
             </div>
@@ -157,8 +157,11 @@
                         <lable>现在上传</lable>
                     </div>
                     <div class="btn addexpupexpdata">
-                        上传实验数据
+                        选择数据文件
                         <input class="uploadfile" type="file" name="datafile" onchange="publicObj.updataradioFileup()">
+                    </div>
+                    <div style="margin-left: 10px;margin-top: 14px;font-size: 12px;" class="addexpupexpdata">
+                        <lable>文件大小不能超过3M</lable>
                     </div>
                     <p class="filename updataradioname"></p>
                 </div>
@@ -413,6 +416,41 @@
 <!-- 模块JS -->
 <script type="text/javascript" src="../static/js/public.js"></script>
 <script>
+    //页面加载时，根据选项不同判断视频按钮是否隐藏
+    changevideobutton_status()
+    function changevideobutton_status(){
+        if ($('input[name="videotype"]:checked').val()==1){
+        $("#changevideobutton").hide();
+        }
+        else {
+            $("#changevideobutton").show();
+        }
+    }
+    //当video状态切换时，判断视频按钮是否隐藏
+    $('input[name="videotype"]').change(function(){changevideobutton_status()});
+
+    //页面加载时，根据选项不同判断上传数据文件按钮是否隐藏
+    changedatabutton_status()
+    function changedatabutton_status(){
+        if ($('input[name="datatype"]:checked').val()==1){
+        $(".addexpupexpdata").hide();
+        }
+        else {
+            $(".addexpupexpdata").show();
+        }
+    }
+    //datatype切换时，按钮是否显示的逻辑在public.js中
+
+    changetemplatebutton_status()
+    function changetemplatebutton_status(){
+        if ($('input[name="templatetype"]:checked').val()==1){
+        $(".addepxupdatamod").hide();
+        }
+        else {
+            $(".addepxupdatamod").show();
+        }
+    }
+
     $("#selectted_student_list_titile").hide();
     //获取filterid
     var filterid = 0;
