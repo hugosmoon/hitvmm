@@ -15,10 +15,12 @@ Including another URLconf
     2. Add experiment URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url
+from django.views.static import serve
 from vm4.view import view_student
 from vm4.view import view_teacher
 from vm4.view import view_admin
 from vm4.view import view_experiment
+from vm4.context import CONSTANTS
 
 urlpatterns = [
     # student
@@ -56,6 +58,7 @@ urlpatterns = [
     url(r'updateExperimentVideo/', view_teacher.updateExperimentVideo),
     url(r'setdescription/', view_teacher.setdescription),
     url(r'getStudentByFilterInfoId/', view_teacher.getStudentByFilterInfoId),
+    url(r'^vieweport/(?P<path>.*)$', serve, {'document_root': CONSTANTS.REPORTURL_PRE}),
 
     # admin
     url(r'loginadmin/$', view_admin.v_login),

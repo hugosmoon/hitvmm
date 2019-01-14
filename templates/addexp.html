@@ -173,7 +173,7 @@
                     <div style="margin-top: -20px;margin-left: 150px" id="selectcount">当前共选择了0位同学</div>
                     <br>
 
-                    <div  id="selectted_student_list_titile">
+                    <div id="selectted_student_list_titile">
                         <table border="1" cellspacing="10">
                             <tr>
                                 <td style="width: 50px;height: 25px;text-align:center;font-weight:bold;"></td>
@@ -347,7 +347,7 @@
                 <table border="1" cellspacing="10">
                     <tr>
                         <td style="width: 170px;height: 25px;text-align:center;font-weight:bold;">
-                            <select  id="sele_registyear"  style="width: 130px;height: 25px;" id="registyear">
+                            <select id="sele_registyear" style="width: 130px;height: 25px;" id="registyear">
                                 <option value="volvo">全部入学年份</option>
                                 <option value="saab">2019年</option>
                                 <option value="opel">2018年</option>
@@ -355,7 +355,7 @@
                             </select>
                         </td>
                         <td style="width: 170px;height: 25px;text-align:center;font-weight:bold;">
-                            <select id="sele_major"  style="width: 130px;height: 25px;" id="major">
+                            <select id="sele_major" style="width: 130px;height: 25px;" id="major">
                                 <option value="volvo">--</option>
 
                             </select>
@@ -381,7 +381,8 @@
                         <td style="width: 100px;height: 25px;text-align:center;">入学年份</td>
                         <td style="width: 150px;height: 25px;text-align:center;">院系</td>
                         <td style="width: 100px;height: 25px;text-align:center;">班级</td>
-                        <td style="width: 100px;height: 25px;text-align:center;">全选 <input  id="select_all" type="checkbox"></td>
+                        <td style="width: 100px;height: 25px;text-align:center;">全选 <input id="select_all"
+                                                                                           type="checkbox"></td>
                     </tr>
                 </table>
             </div>
@@ -415,66 +416,72 @@
     $("#selectted_student_list_titile").hide();
     //获取filterid
     var filterid = 0;
-    $("#sele_registyear").change(function() { set_arr_major($('#sele_registyear option:selected').val()); set_arr_classname()});
-    $("#sele_major").change(function() { set_arr_classname($('#sele_registyear option:selected').val(),$('#sele_major option:selected').val()); });
-    $("#sele_classname").change(function() {set_filterid($('#sele_registyear option:selected').val(),$('#sele_major option:selected').val(),$('#sele_classname option:selected').val());});
+    $("#sele_registyear").change(function () {
+        set_arr_major($('#sele_registyear option:selected').val());
+        set_arr_classname()
+    });
+    $("#sele_major").change(function () {
+        set_arr_classname($('#sele_registyear option:selected').val(), $('#sele_major option:selected').val());
+    });
+    $("#sele_classname").change(function () {
+        set_filterid($('#sele_registyear option:selected').val(), $('#sele_major option:selected').val(), $('#sele_classname option:selected').val());
+    });
 
 
     var filterInfoListJsonStr = $('<div>').html("{{ filterInfoListstr }}").text();
     var a = JSON.parse(filterInfoListJsonStr)
 
     var b = new Array();
-    for(var i = 0; i < a.length; i++){
+    for (var i = 0; i < a.length; i++) {
 
-      if(b.indexOf(a[i].registyear)==-1){
-        b.push(a[i].registyear)
-      }
+        if (b.indexOf(a[i].registyear) == -1) {
+            b.push(a[i].registyear)
+        }
 
     }
-    arr_registyear="<option value='-1'>请选择</option>";
-      for(j=0;j<b.length;j++){
-        arr_registyear+='<option value="'+b[j]+'">'+b[j]+'</option>'
-      }
-      $('#sele_registyear').empty().append(arr_registyear);
+    arr_registyear = "<option value='-1'>请选择</option>";
+    for (j = 0; j < b.length; j++) {
+        arr_registyear += '<option value="' + b[j] + '">' + b[j] + '</option>'
+    }
+    $('#sele_registyear').empty().append(arr_registyear);
 
 
     function set_arr_major(t_registyear) {
         var c = new Array();
-        for(var i = 0; i < a.length; i++){
-            if(t_registyear==a[i].registyear&&c.indexOf(a[i].major)==-1){
+        for (var i = 0; i < a.length; i++) {
+            if (t_registyear == a[i].registyear && c.indexOf(a[i].major) == -1) {
                 c.push(a[i].major);
             }
         }
-        arr_major="<option value='-1'>请选择</option>";;
-          for(j=0;j<c.length;j++){
-            arr_major+='<option value="'+c[j]+'">'+c[j]+'</option>'
-          }
-          $('#sele_major').empty().append(arr_major);
+        arr_major = "<option value='-1'>请选择</option>";
+        ;
+        for (j = 0; j < c.length; j++) {
+            arr_major += '<option value="' + c[j] + '">' + c[j] + '</option>'
+        }
+        $('#sele_major').empty().append(arr_major);
     }
 
-    function set_arr_classname(t_registyear,t_major) {
+    function set_arr_classname(t_registyear, t_major) {
         var c = new Array();
-        for(var i = 0; i < a.length; i++){
-            if(t_registyear==a[i].registyear&&t_major==a[i].major&&c.indexOf(a[i].classname)==-1){
+        for (var i = 0; i < a.length; i++) {
+            if (t_registyear == a[i].registyear && t_major == a[i].major && c.indexOf(a[i].classname) == -1) {
                 c.push(a[i].classname);
             }
         }
-        arr_classname="<option value='-1'>请选择</option>";
-          for(j=0;j<c.length;j++){
-            arr_classname+='<option value="'+c[j]+'">'+c[j]+'</option>'
-          }
-          $('#sele_classname').empty().append(arr_classname);
+        arr_classname = "<option value='-1'>请选择</option>";
+        for (j = 0; j < c.length; j++) {
+            arr_classname += '<option value="' + c[j] + '">' + c[j] + '</option>'
+        }
+        $('#sele_classname').empty().append(arr_classname);
     }
 
-    function set_filterid(t_registyear,t_major,t_classname) {
-        for(var i = 0; i < a.length; i++){
-            if(t_registyear==a[i].registyear&&t_major==a[i].major&&t_classname==a[i].classname){
-                filterid=a[i].id;
+    function set_filterid(t_registyear, t_major, t_classname) {
+        for (var i = 0; i < a.length; i++) {
+            if (t_registyear == a[i].registyear && t_major == a[i].major && t_classname == a[i].classname) {
+                filterid = a[i].id;
             }
         }
     }
-
-
 
 
     $(".loginbtn").click(function () {
@@ -488,12 +495,13 @@
         return
     }
 
-    selectedstudentnumber=0;
+    selectedstudentnumber = 0;
+
     //添加学生确定执行
 
     function addstudent_sure() {
         var selectstudentlistelement = $('input[name="select_one_student"]:checked')
-        var existstudentlistelement = $('td[name="exist_student"]')
+        var existstudentlistelement = $('input[name="exist_student"]')
 
         var existstudentlist = []
         for (var i = 0; i < existstudentlistelement.length; i++) {
@@ -523,15 +531,13 @@
             }
         }
 
-        selectedstudentnumber=existstudentlist.length;
+        selectedstudentnumber = existstudentlist.length;
         $("#selectstudentlist").html("")
         $("#selectcount").html("当前共选择了" + selectedstudentnumber + "位同学")
 
-        if (existstudentlist.length>0) {
+        if (existstudentlist.length > 0) {
             $("#selectted_student_list_titile").show();
         }
-        //生成选择学生的ids
-        var strstudentids = ""
         for (var i = 0; i < existstudentlist.length; i++) {
 
             var existstudentstr = existstudentlist[i]
@@ -550,13 +556,10 @@
                 '</td>' +
                 '</tr>'
             $("#selectstudentlist").append(userhtml)
-            if (i == 0) {
-                strstudentids += existstudent.id;
-            } else {
-                strstudentids += "," + existstudent.id;
-            }
+
         }
-        $("#studentids").val(strstudentids)
+
+        $("#studentids").val(getstrstudentids())
 
         $(".addstudent").hide();
         $('.popupwall5').hide();
@@ -564,12 +567,12 @@
 
     function deletestu(e) {
         $(e).parent().parent().remove()
-        selectedstudentnumber-=1;
+        selectedstudentnumber -= 1;
         $("#selectcount").html("当前共选择了" + selectedstudentnumber + "位同学")
-        if(selectedstudentnumber<1){
+        if (selectedstudentnumber < 1) {
             $("#selectted_student_list_titile").hide();
         }
-
+        $("#studentids").val(getstrstudentids())
     }
 
     //全选与取消全选
@@ -630,10 +633,32 @@
 
     function delall() {
         $("#selectstudentlist").html("")
-        selectedstudentnumber=0;
+        selectedstudentnumber = 0;
         $("#selectcount").html("当前共选择了" + selectedstudentnumber + "位同学")
         $("#selectted_student_list_titile").hide();
+        $("#studentids").val(getstrstudentids())
     }
 
+    //生成选择学生的ids
+    function getstrstudentids() {
+
+        var strstudentids = ""
+        var existstudentlistelement = $('input[name="exist_student"]')
+        var existstudentlist = []
+        for (var i = 0; i < existstudentlistelement.length; i++) {
+            var studentstr = existstudentlistelement[i].getAttribute("studentstr")
+            var student = JSON.parse(studentstr.replace(/'/g, "\""))
+            existstudentlist.push(student)
+
+        }
+        for (var i = 0; i < existstudentlist.length; i++) {
+            if (i == 0) {
+                strstudentids += existstudentlist[i].id;
+            } else {
+                strstudentids += "," + existstudentlist[i].id;
+            }
+        }
+        return strstudentids
+    }
 </script>
 </html>
