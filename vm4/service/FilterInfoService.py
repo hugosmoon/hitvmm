@@ -19,7 +19,7 @@ def getFilterInfoList(ids):
     else:
         return filterinfolist
 
-
+#教研是否存在
 def getFilterInfo(registyear, major, classname):
     try:
         filterinfo = FilterInfo.objects.filter(isdelete=CONSTANTS.ISDELETE_NOT, registyear=registyear, major=major,
@@ -37,7 +37,7 @@ def addFilterInfo(registyear, major, classname):
     filterinfo.save()
     return filterinfo.id
 
-
+#通过filterid查询filter信息
 def getFilterInfoById(filterid):
     try:
         filterinfo = FilterInfo.objects.filter(id=filterid, isdelete=CONSTANTS.ISDELETE_NOT).get()

@@ -87,6 +87,15 @@ def v_studentmanagement(request):
                 i = 1
             countpage = count / 10 + i
         studentList = StudentService.getManyStudentByNameAndNumber(name, stunum, page)
+
+    for student in studentList:
+            filterinfo=FilterInfoService.getFilterInfoById(student.filterinfoid)
+            student.registyear=filterinfo.registyear
+            student.major = filterinfo.major
+            student.classname = filterinfo.classname
+
+
+
     param = "?"
     if stunum != "":
         param = param + "searchnum=" + stunum

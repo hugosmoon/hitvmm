@@ -67,9 +67,9 @@
                         <div class="txt s_txt1">{{ forloop.counter }}</div>
                         <div class="txt s_txt2">{{ student.name }}</div>
                         <div class="txt s_txt3">{{ student.number }}</div>
-                        <div class="txt s_txt4">{{ student.teachername }}</div>
-                        <div class="txt s_txt5">{{ student.teachernumber }}</div>
-                        <div class="txt s_txt6">{{ student.teachernumber }}</div>
+                        <div class="txt s_txt4">{{ student.registyear }}</div>
+                        <div class="txt s_txt5">{{ student.major }}</div>
+                        <div class="txt s_txt6">{{ student.classname }}</div>
                         <div class="txt s_txt7">{{ student.createtime|date:"Y-m-d H:i:s" }}</div>
                         <div class="txt s_txt8">
                             <text class="deleuser" studentid="{{ student.id }}">删除</text>
@@ -169,5 +169,6 @@
             }
         }
     });
+
 </script>
 </html>
