@@ -556,7 +556,6 @@
                 '</td>' +
                 '</tr>'
             $("#selectstudentlist").append(userhtml)
-
         }
 
         $("#studentids").val(getstrstudentids())
@@ -647,15 +646,30 @@
         var existstudentlist = []
         for (var i = 0; i < existstudentlistelement.length; i++) {
             var studentstr = existstudentlistelement[i].getAttribute("studentstr")
-            var student = JSON.parse(studentstr.replace(/'/g, "\""))
-            existstudentlist.push(student)
-
+            existstudentlist.push(studentstr)
         }
+        $("#selectstudentlist").html("")
         for (var i = 0; i < existstudentlist.length; i++) {
+            var studentstr = existstudentlist[i]
+            var student = JSON.parse(studentstr.replace(/'/g, "\""))
+            var userhtml =
+                '<tr>' +
+                '<input type="hidden" name="exist_student" studentstr="' + studentstr + '"/>' +
+                '<td style="width: 50px;height: 25px;text-align:center;">' + (i + 1) + '</td>' +
+                '<td style="width: 100px;height: 25px;text-align:center;">' + student.number + '</td>' +
+                '<td style="width: 100px;height: 25px;text-align:center;">' + student.name + '</td>' +
+                '<td style="width: 100px;height: 25px;text-align:center;">' + student.registyear + '</td>' +
+                '<td style="width: 100px;height: 25px;text-align:center;">' + student.major + '</td>' +
+                '<td style="width: 100px;height: 25px;text-align:center;">' + student.classname + '</td>' +
+                '<td style="width: 100px;height: 25px;text-align:center;">' +
+                '    <button onclick="deletestu(this,)">删除</button>' +
+                '</td>' +
+                '</tr>'
+            $("#selectstudentlist").append(userhtml)
             if (i == 0) {
-                strstudentids += existstudentlist[i].id;
+                strstudentids += student.id;
             } else {
-                strstudentids += "," + existstudentlist[i].id;
+                strstudentids += "," + student.id;
             }
         }
         return strstudentids
