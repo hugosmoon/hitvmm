@@ -261,7 +261,7 @@
         studentid=$("#student_id").val()
         addteachername = $(".addteachername").val()
         addteachernumber = $(".addteachernumber").val()
-        if (addname == undefined || addname == "" || studentid == undefined || studentid == "") {
+        if (addname == undefined || addname == "" || (studentid == undefined&&addnumber==undefined) || (studentid == ""&&addnumber=="")) {
             alert("填写的信息不能为空！")
             return
         }
