@@ -339,7 +339,6 @@ def addBatchStudent(request):
         return getloginResponse(request)
     file = request.FILES.get('file', None)
 
-    stulistfilename = file.name
     if file is None:
         return HttpResponse(
             "<script>if(confirm('请选择你要上传的学生名单！')){history.go(-1);location.reload()}else{history.go(-1);location.reload()}</script>")
@@ -373,7 +372,6 @@ def addBatchTeacher(request):
         return getloginResponse(request)
     file = request.FILES.get('file', None)
 
-    teacherfilename = file.name
     if file is None:
         return HttpResponse(
             "<script>if(confirm('请选择你要上传的教师名单！')){history.go(-1);location.reload()}else{history.go(-1);location.reload()}</script>")
@@ -409,7 +407,6 @@ def addBatchAdmin(request):
         return getloginResponse(request)
     file = request.FILES.get('file', None)
 
-    adminfilename = file.name
     if file is None:
         return HttpResponse(
             "<script>if(confirm('请选择你要上传的管理员名单！')){history.go(-1);location.reload()}else{history.go(-1);location.reload()}</script>")
