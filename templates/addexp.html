@@ -173,7 +173,7 @@
                     <div style="margin-top: -20px;margin-left: 150px" id="selectcount">当前共选择了0位同学</div>
                     <br>
 
-                    <div>
+                    <div  id="selectted_student_list_titile">
                         <table border="1" cellspacing="10">
                             <tr>
                                 <td style="width: 50px;height: 25px;text-align:center;font-weight:bold;"></td>
@@ -381,8 +381,7 @@
                         <td style="width: 100px;height: 25px;text-align:center;">入学年份</td>
                         <td style="width: 150px;height: 25px;text-align:center;">院系</td>
                         <td style="width: 100px;height: 25px;text-align:center;">班级</td>
-                        <td style="width: 100px;height: 25px;text-align:center;">全选 <input id="select_all"
-                                                                                           type="checkbox"></td>
+                        <td style="width: 100px;height: 25px;text-align:center;">全选 <input  id="select_all" type="checkbox"></td>
                     </tr>
                 </table>
             </div>
@@ -413,6 +412,7 @@
 <!-- 模块JS -->
 <script type="text/javascript" src="../static/js/public.js"></script>
 <script>
+    $("#selectted_student_list_titile").hide();
     //获取filterid
     var filterid = 0;
     $("#sele_registyear").change(function() { set_arr_major($('#sele_registyear option:selected').val()); set_arr_classname()});
@@ -488,7 +488,9 @@
         return
     }
 
+    selectedstudentnumber=0;
     //添加学生确定执行
+
     function addstudent_sure() {
         var selectstudentlistelement = $('input[name="select_one_student"]:checked')
         var existstudentlistelement = $('td[name="exist_student"]')
@@ -499,6 +501,7 @@
         }
 
         var selectstudentlist = []
+
         for (var i = 0; i < selectstudentlistelement.length; i++) {
             var studentstr = selectstudentlistelement[i].getAttribute("studentstr");
             selectstudentlist.push(studentstr);
@@ -520,8 +523,13 @@
             }
         }
 
+        selectedstudentnumber=existstudentlist.length;
         $("#selectstudentlist").html("")
-        $("#selectcount").html("当前共选择了" + existstudentlist.length + "位同学")
+        $("#selectcount").html("当前共选择了" + selectedstudentnumber + "位同学")
+
+        if (existstudentlist.length>0) {
+            $("#selectted_student_list_titile").show();
+        }
         //生成选择学生的ids
         var strstudentids = ""
         for (var i = 0; i < existstudentlist.length; i++) {
@@ -538,7 +546,7 @@
                 '<td style="width: 100px;height: 25px;text-align:center;">' + existstudent.major + '</td>' +
                 '<td style="width: 100px;height: 25px;text-align:center;">' + existstudent.classname + '</td>' +
                 '<td style="width: 100px;height: 25px;text-align:center;">' +
-                '    <button onclick="deletestu(this)">删除</button>' +
+                '    <button onclick="deletestu(this,)">删除</button>' +
                 '</td>' +
                 '</tr>'
             $("#selectstudentlist").append(userhtml)
@@ -556,6 +564,12 @@
 
     function deletestu(e) {
         $(e).parent().parent().remove()
+        selectedstudentnumber-=1;
+        $("#selectcount").html("当前共选择了" + selectedstudentnumber + "位同学")
+        if(selectedstudentnumber<1){
+            $("#selectted_student_list_titile").hide();
+        }
+
     }
 
     //全选与取消全选
@@ -616,6 +630,9 @@
 
     function delall() {
         $("#selectstudentlist").html("")
+        selectedstudentnumber=0;
+        $("#selectcount").html("当前共选择了" + selectedstudentnumber + "位同学")
+        $("#selectted_student_list_titile").hide();
     }
 
 </script>
