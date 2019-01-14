@@ -505,7 +505,7 @@
             var student = JSON.parse(studentstr.replace(/'/g, "\""))
             if (existstudentlist.length > 0) {
                 for (var j = 0; j < existstudentlist.length; j++) {
-                    var existstudentstr = existstudentlist[i]
+                    var existstudentstr = existstudentlist[j]
                     var existstudent = JSON.parse(existstudentstr.replace(/'/g, "\""))
                     if (student.id == existstudent.id) {
                         //如果有相同的学生则不添加
