@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>批阅报告</title>
-     {% load staticfiles %}
-    <link rel="shortcut icon" href="{% static 'img/hit.ico' %}" type="image/x-icon" />
+    {% load staticfiles %}
+    <link rel="shortcut icon" href="{% static 'img/hit.ico' %}" type="image/x-icon"/>
     <link rel="icon" href="{% static 'img/hit.ico' %}" type="image/gif">
     <!-- 初始化CSS -->
     <link rel="stylesheet" href="../static/plugin/res.css">
@@ -78,7 +78,10 @@
         <input type="hidden" id="preportid" value=""/>
         <!--实验报告-->
         <div id="reportbox" class="repotr">
-            <a id="reportalinkid" href=""></a>
+            <object id="reportobjectid" data="" type="application/pdf" width="100%" height="100%">
+                <iframe id="reportifreameid" src="" width="100%" height="100%"></iframe>
+            </object>
+
         </div>
 
         <div class="scorebox">

@@ -27,7 +27,7 @@ var publicObj = {
         $(".adduserbox").bind('click', function () {
             window.open('/adduser/')
         })
-        $(".t_txt5").bind('click', function () {
+        $(".resetpwd").bind('click', function () {
             if (confirm("确认重置此教师的密码？")) {
                 teacherid = $(this).attr("teacherid")
                 $.post("/resetteacherpwd/",
@@ -1114,10 +1114,9 @@ var publicObj = {
                 $("#preportid").attr("value", reportid)
                 var domain = document.domain;
                 var port = location.port;
-                // var reporturl = "http://" + domain + ":" + port + "/downloadReport/?reproturl=" + reporturl
-                // $("#reportifreameid").attr("src", "/downloadReport/?reproturl=" + reporturl)
-                $("#reportalinkid").href("/downloadReport/?reproturl=" + reporturl)
-
+                var reporturl = "http://" + domain + ":" + port + "/vieweport/" + reporturl
+                $("#reportifreameid").attr("src", reporturl)
+                $("#reportobjectid").attr("data", reporturl)
             })
         });
         $(".approvalcancle").bind("click", function () {

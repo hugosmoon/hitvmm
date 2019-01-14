@@ -6,6 +6,7 @@ from vm4.service import StudentService
 from vm4.models import *
 from django.forms.models import model_to_dict
 
+
 # 根据报告id获取报告
 def getReportById(reportid):
     try:
@@ -75,8 +76,8 @@ def getCountStuByTeachingidAndStatus(teachingid, status):
 
 # 提交报告
 def submintReport(reportid, filename):
-    report = Report.objects.filter(id=reportid, status=CONSTANTS.REPORT_STATUS_PENDING).update(url=filename,
-                                                                                               updatetime=utils.getNow())
+    report = Report.objects.filter(id=reportid).update(url=filename, status=CONSTANTS.REPORT_STATUS_SUBMIT,
+                                                       updatetime=utils.getNow())
     return report
 
 

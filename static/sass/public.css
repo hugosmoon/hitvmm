@@ -417,11 +417,11 @@ a:active {
   .popupbox .popupwall1 {
     display: none;
     position: absolute;
-    top: 209px;
-    left: 50%;
+    top: 80px;
+    left: 35%;
     margin-left: -305px;
-    width: 610px;
-    height: 550px;
+    width: 1200px;
+    height: 760px;
     background-color: #ffffff;
     border-radius: 4px;
     overflow: hidden; }
@@ -438,8 +438,8 @@ a:active {
       top: 13px;
       left: 131px; }
     .popupbox .popupwall1 .repotr {
-      width: 568px;
-      height: 377px;
+      width: 1100px;
+      height: 570px;
       background-color: #f7f7f7;
       border-radius: 2px;
       border: solid 1px #f0f0f0;
