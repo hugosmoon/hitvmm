@@ -4,6 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <title>已完成教学</title>
+     {% load staticfiles %}
+    <link rel="shortcut icon" href="{% static 'img/hit.ico' %}" type="image/x-icon" />
+    <link rel="icon" href="{% static 'img/hit.ico' %}" type="image/gif">
     <!-- 初始化CSS -->
     <link href="../static/plugin/swiper.css">
     <link rel="stylesheet" href="../static/plugin/res.css">
@@ -47,7 +50,7 @@
                     <a href="/completedteaching/">已完成教学({{ teachingCount.stopCount }}个)</a>
                 </li>
                 <li class="navtip navtip4 noborder">
-                    <a href="/addexp/">新增实验</a>
+                    <a href="/addexp/">新建实验教学</a>
                 </li>
             </ul>
         </div>
@@ -63,7 +66,7 @@
                 <li class="navtip navtip3">
                     <a href="/allexptea/">全部实验</a>
                 </li>
-                {% for experiment in experimentList %}
+                {% for experiment in experimentMenuList %}
                     <li class="navtip">
                         <a href="{{ experiment.url }}" target="_blank">{{ experiment.name }}</a>
                     </li>
@@ -105,11 +108,11 @@
                     <div class="unitftbg">
                         <ul class="btnwall">
                             <li class="uteadownload unitbtn" dataurl="{{ teaching.dataurl }}">下载实验数据</li>
-                            <li class="teastulist unitbtn" stulisturl="{{ teaching.stulisturl }}">
+                           {% comment %} <li class="teastulist unitbtn" stulisturl="{{ teaching.stulisturl }}">
                                 下载学生名单({{ teaching.stuCount }})
-                            </li>
+                            </li>{% endcomment %}
                             <li class="downloaddatamod unitbtn" templateid="{{ teaching.templateid }}">下载实验报告模版</li>
-                            <li class="changevide unitbtn" video="{{ teaching.videos }}">预习视频</li>
+                            <li class="preview unitbtn" videos="{{ teaching.videos }}">预习视频</li>
                             <li class="changedata unitbtn " deadline="{{ teaching.deadline|date:"Y/m/d" }}"
                                 teachingid="{{ teaching.id }}">报告提交日期更改
                             </li>
@@ -196,70 +199,6 @@
         <div class="btn cancle uteacancle">确定</div>
         <div class="btn sure uteasure">取消</div>
     </div>
-    <!--更换视频-->
-    <div class="popupwall popupwall5">
-        <img class="dele" src="../static/img/dele.png" alt="">
-        <div class="videowall">
-
-            <div class="videobox">
-                <div class="v_top">我是一个没有我是一个没有</div>
-                <div class="v_mid"></div>
-                <div class="v_bot">
-                    <div class="v_btn v_dele">删除</div>
-                    <div class="v_btn v_change">更换</div>
-                </div>
-            </div>
-            <div class="videobox">
-                <div class="v_top">我是一个没有我是一个没有</div>
-                <div class="v_mid"></div>
-                <div class="v_bot">
-                    <div class="v_btn v_dele">删除</div>
-                    <div class="v_btn v_change">更换</div>
-                </div>
-            </div>
-            <div class="videobox">
-                <div class="v_top">我是一个没有我是一个没有</div>
-                <div class="v_mid"></div>
-                <div class="v_bot">
-                    <div class="v_btn v_dele">删除</div>
-                    <div class="v_btn v_change">更换</div>
-                </div>
-            </div>
-            <div class="videobox">
-                <div class="v_top">我是一个没有我是一个没有</div>
-                <div class="v_mid"></div>
-                <div class="v_bot">
-                    <div class="v_btn v_dele">删除</div>
-                    <div class="v_btn v_change">更换</div>
-                </div>
-            </div>
-            <div class="videobox">
-                <div class="v_top">我是一个没有我是一个没有</div>
-                <div class="v_mid"></div>
-                <div class="v_bot">
-                    <div class="v_btn v_dele">删除</div>
-                    <div class="v_btn v_change">更换</div>
-                </div>
-            </div>
-            <div class="videobox">
-                <div class="v_top">我是一个没有我是一个没有</div>
-                <div class="v_mid"></div>
-                <div class="v_bot">
-                    <div class="v_btn v_dele">删除</div>
-                    <div class="v_btn v_change">更换</div>
-                </div>
-            </div>
-            <div class="videobox">
-                <div class="v_top">我是一个没有我是一个没有</div>
-                <div class="v_mid"></div>
-                <div class="v_bot">
-                    <div class="v_btn v_dele">删除</div>
-                    <div class="v_btn v_change">更换</div>
-                </div>
-            </div>
-        </div>
-
-    </div>
     <!--学生提交报告-->
     <div class="popupwall popupwall6">
         <div class="popuptop">
@@ -292,17 +231,17 @@
         </div>
         <div class="btn sure">确定</div>
     </div>
-    <!--观看视频-->
+   <!--观看视频-->
     <div class="popupwall popupwall9">
         <img class="dele" src="../static/img/dele.png" alt="">
-        <div class="v_name">我是一个没有名字的视频，我是个没有名字。</div>
-        <div class="vbox"></div>
-        <div class="vchangebox">
-            <div class="vchange">
-                <div class="v_svideo"></div>
-                <div class="v_svideoname">我是一个没有..我是一个没有..</div>
+        <div id="videoname" class="v_name"></div>
+        <div class="vbox">
+            <div class="videobox">
+                <video id="video" style="width:100%;;height:auto" controls>
+                </video>
             </div>
-
+        </div>
+        <div class="vchangebox">
         </div>
     </div>
 </div>

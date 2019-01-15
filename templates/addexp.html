@@ -4,6 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <title>添加实验教学</title>
+    {% load staticfiles %}
+    <link rel="shortcut icon" href="{% static 'img/hit.ico' %}" type="image/x-icon"/>
+    <link rel="icon" href="{% static 'img/hit.ico' %}" type="image/gif">
     <!-- 初始化CSS -->
     <link href="../static/plugin/swiper.css">
     <link rel="stylesheet" href="../static/plugin/res.css">
@@ -47,7 +50,7 @@
                     <a href="/completedteaching/">已完成教学({{ teachingCount.stopCount }}个)</a>
                 </li>
                 <li class="navtip navtip4 noborder">
-                    <a href="/addexp/">新增实验</a>
+                    <a href="/addexp/">新建实验教学</a>
                 </li>
             </ul>
         </div>
@@ -63,7 +66,7 @@
                 <li class="navtip navtip3">
                     <a href="/allexptea/">全部实验</a>
                 </li>
-                {% for experiment in experimentList %}
+                {% for experiment in experimentMenuList %}
                     <li class="navtip">
                         <a href="{{ experiment.url }}" target="_blank">{{ experiment.name }}</a>
                     </li>
@@ -84,7 +87,7 @@
                     实验名称：
                 </div>
                 <div class="right">
-                    <select id="experimentid" class="selctbox selctbox1" name="experimentid">
+                    <select style="width: 310px" id="experimentid" class="selctbox selctbox1" name="experimentid">
                         <option value="0" selected="selected">请选择实验名称</option>
                         {% for experiment in experimentList %}
                             <option value="{{ experiment.id }}" videos="{{ experiment.videos }}"
@@ -98,7 +101,7 @@
                     报告提交截止日期：
                 </div>
                 <div class="right right2">
-                    <div class="addcalendar" id="addcalendarhtml"></div>
+                    <div style="width: 310px" class="addcalendar" id="addcalendarhtml"></div>
                     <input id="addcalendar" type="hidden" name="deadline">
                 </div>
             </div>
@@ -116,16 +119,16 @@
                         <lable>其他模版</lable>
                     </div>
                     <div class="btn addepxupdatamod">
-                        上传模版文件
+                        选择模版文件
                         <input class="uploadfile" type="file" name="templatefile"
                                onchange="publicObj.addepxupdatamodFileup()">
                     </div>
-                    <p class="filename addepxupdatamodFileupname"></p>
+                    <p style="font-size: 12px;width: 250px;text-align: left;margin-left: 10px" class="filename addepxupdatamod addepxupdatamodFileupname"></p>
                 </div>
             </div>
             <div class="addbox">
                 <div class="left">
-                    实验报告视频：
+                    实验教学视频：
                 </div>
                 <div class="right right2">
                     <div class="templatebox">
@@ -134,9 +137,9 @@
                     </div>
                     <div class="templatebox">
                         <input class="rradio" type="radio" name="videotype" value="2">
-                        <lable>新增视频</lable>
+                        <lable>修改视频</lable>
                     </div>
-                    <div class="btn changevide">更改预习视频</div>
+                    <div id="changevideobutton" class="btn changevide">点击修改</div>
                     <input id="videosinputid" type="hidden" name="videos"/>
                 </div>
             </div>
@@ -154,24 +157,54 @@
                         <lable>现在上传</lable>
                     </div>
                     <div class="btn addexpupexpdata">
-                        上传实验数据
+                        选择数据文件
                         <input class="uploadfile" type="file" name="datafile" onchange="publicObj.updataradioFileup()">
+                    </div>
+                    <div style="margin-left: 10px;margin-top: 14px;font-size: 12px;" class="addexpupexpdata">
+                        <lable>文件大小不能超过3M</lable>
                     </div>
                     <p class="filename updataradioname"></p>
                 </div>
             </div>
+            <input id="studentids" name="studentids" type="hidden" value="">
             <div class="addbox">
                 <div class="left">
                     学生名单：
                 </div>
-                <div class="right right2">
-                    <div class="btn btn2 addexpteastulist">
-                        上传学生名单
-                        <input class="uploadfile" type="file" name="stulistfile" onchange="publicObj.upstulistFileup()">
+                <div class="right">
+                    <div style="margin-left: 12px" class="btn change_student_list">添加学生</div>
+                    <div style="margin-top: -20px;margin-left: 150px" id="selectcount">当前共选择了0位同学</div>
+                    <br>
+
+                    <div id="selectted_student_list_titile">
+                        <table border="1" cellspacing="10">
+                            <tr>
+                                <td style="width: 50px;height: 25px;text-align:center;font-weight:bold;"></td>
+                                <td style="width: 100px;height: 25px;text-align:center;font-weight:bold;">学号</td>
+                                <td style="width: 100px;height: 25px;text-align:center;font-weight:bold;">姓名</td>
+                                <td style="width: 100px;height: 25px;text-align:center;font-weight:bold;">入学年份</td>
+                                <td style="width: 100px;height: 25px;text-align:center;font-weight:bold;">院系</td>
+                                <td style="width: 100px;height: 25px;text-align:center;font-weight:bold;">班级</td>
+                                <td style="width: 100px;height: 25px;text-align:center;font-weight:bold;">
+                                    <button type="button" onClick="delall()">全部删除</button>
+                                </td>
+                            </tr>
+                        </table>
+                        <div style="height:250px; overflow:auto;">
+                            <table border="1" cellspacing="10">
+                                <tbody id="selectstudentlist">
+
+                                </tbody>
+
+                            </table>
+                        </div>
                     </div>
-                    <div class="btn btn2 addexpstudentdown">下载学生名单模板</div>
-                    <p class="filename upstulistname"></p>
+
+                    <div>
+                        <br>
+                    </div>
                 </div>
+
             </div>
             <div class="addbox">
                 <div class="left">
@@ -304,6 +337,73 @@
         </form>
     </div>
 </div>
+
+<!--添加学生弹窗-->
+<div class="addstudent">
+    <div class="layer"></div>
+
+    <div class="popupwall popupwall5">
+        <img class="dele" src="../static/img/dele.png" alt="">
+
+        <div style="margin-left: 20px;margin-top: 40px;">
+            <div style="margin-bottom: 20px;">
+                <table border="1" cellspacing="10">
+                    <tr>
+                        <td style="width: 170px;height: 25px;text-align:center;font-weight:bold;">
+                            <select id="sele_registyear" style="width: 130px;height: 25px;" id="registyear">
+                                <option value="volvo">全部入学年份</option>
+                                <option value="saab">2019年</option>
+                                <option value="opel">2018年</option>
+                                <option value="audi">2017年</option>
+                            </select>
+                        </td>
+                        <td style="width: 170px;height: 25px;text-align:center;font-weight:bold;">
+                            <select id="sele_major" style="width: 130px;height: 25px;" id="major">
+                                <option value="volvo">--</option>
+
+                            </select>
+                        </td>
+                        <td style="width: 170px;height: 25px;text-align:center;font-weight:bold;">
+                            <select id="sele_classname" style="width: 130px;height: 25px;" id="classname">
+                                <option value="volvo">--</option>
+                            </select>
+                        </td>
+                        <td style="width: 170px;height: 25px;text-align:center;font-weight:bold;">
+                            <button onclick="getStudentList()" style="width: 130px;height: 25px;">筛选</button>
+
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div style="margin-top: 10px;">
+                <table border="1" cellspacing="10">
+                    <tr>
+                        <td style="width: 50px;height: 25px;text-align:center;">序号</td>
+                        <td style="width: 100px;height: 25px;text-align:center;">学号</td>
+                        <td style="width: 100px;height: 25px;text-align:center;">姓名</td>
+                        <td style="width: 100px;height: 25px;text-align:center;">入学年份</td>
+                        <td style="width: 150px;height: 25px;text-align:center;">院系</td>
+                        <td style="width: 100px;height: 25px;text-align:center;">班级</td>
+                        <td style="width: 100px;height: 25px;text-align:center;">全选 <input id="select_all"
+                                                                                           type="checkbox"></td>
+                    </tr>
+                </table>
+            </div>
+            <div style="margin-top: 10px; height:670px; overflow:auto;">
+
+                <table border="1" cellspacing="10">
+                    <tbody id="studentlist"></tbody>
+
+                </table>
+
+            </div>
+            <div style="margin-top: 10px;margin-left: 282px;width: 200px" id="selectcount2">当前共选择了0位同学</div>
+            <div class="btn" style="margin-left: 315px;width: 100px" onclick="addstudent_sure()">确定</div>
+        </div>
+    </div>
+
+</div>
+
 <!-- 引用插件 -->
 <script src="../static/plugin/md5.js"></script>
 <script src="../static/plugin/jquery.js"></script>
@@ -316,6 +416,112 @@
 <!-- 模块JS -->
 <script type="text/javascript" src="../static/js/public.js"></script>
 <script>
+    //页面加载时，根据选项不同判断视频按钮是否隐藏
+    changevideobutton_status()
+    function changevideobutton_status(){
+        if ($('input[name="videotype"]:checked').val()==1){
+        $("#changevideobutton").hide();
+        }
+        else {
+            $("#changevideobutton").show();
+        }
+    }
+    //当video状态切换时，判断视频按钮是否隐藏
+    $('input[name="videotype"]').change(function(){changevideobutton_status()});
+
+    //页面加载时，根据选项不同判断上传数据文件按钮是否隐藏
+    changedatabutton_status()
+    function changedatabutton_status(){
+        if ($('input[name="datatype"]:checked').val()==1){
+        $(".addexpupexpdata").hide();
+        }
+        else {
+            $(".addexpupexpdata").show();
+        }
+    }
+    //datatype切换时，按钮是否显示的逻辑在public.js中
+
+    changetemplatebutton_status()
+    function changetemplatebutton_status(){
+        if ($('input[name="templatetype"]:checked').val()==1){
+        $(".addepxupdatamod").hide();
+        }
+        else {
+            $(".addepxupdatamod").show();
+        }
+    }
+
+    $("#selectted_student_list_titile").hide();
+    //获取filterid
+    var filterid = 0;
+    $("#sele_registyear").change(function () {
+        set_arr_major($('#sele_registyear option:selected').val());
+        set_arr_classname()
+    });
+    $("#sele_major").change(function () {
+        set_arr_classname($('#sele_registyear option:selected').val(), $('#sele_major option:selected').val());
+    });
+    $("#sele_classname").change(function () {
+        set_filterid($('#sele_registyear option:selected').val(), $('#sele_major option:selected').val(), $('#sele_classname option:selected').val());
+    });
+
+
+    var filterInfoListJsonStr = $('<div>').html("{{ filterInfoListstr }}").text();
+    var a = JSON.parse(filterInfoListJsonStr)
+
+    var b = new Array();
+    for (var i = 0; i < a.length; i++) {
+
+        if (b.indexOf(a[i].registyear) == -1) {
+            b.push(a[i].registyear)
+        }
+
+    }
+    arr_registyear = "<option value='-1'>请选择</option>";
+    for (j = 0; j < b.length; j++) {
+        arr_registyear += '<option value="' + b[j] + '">' + b[j] + '</option>'
+    }
+    $('#sele_registyear').empty().append(arr_registyear);
+
+
+    function set_arr_major(t_registyear) {
+        var c = new Array();
+        for (var i = 0; i < a.length; i++) {
+            if (t_registyear == a[i].registyear && c.indexOf(a[i].major) == -1) {
+                c.push(a[i].major);
+            }
+        }
+        arr_major = "<option value='-1'>请选择</option>";
+        ;
+        for (j = 0; j < c.length; j++) {
+            arr_major += '<option value="' + c[j] + '">' + c[j] + '</option>'
+        }
+        $('#sele_major').empty().append(arr_major);
+    }
+
+    function set_arr_classname(t_registyear, t_major) {
+        var c = new Array();
+        for (var i = 0; i < a.length; i++) {
+            if (t_registyear == a[i].registyear && t_major == a[i].major && c.indexOf(a[i].classname) == -1) {
+                c.push(a[i].classname);
+            }
+        }
+        arr_classname = "<option value='-1'>请选择</option>";
+        for (j = 0; j < c.length; j++) {
+            arr_classname += '<option value="' + c[j] + '">' + c[j] + '</option>'
+        }
+        $('#sele_classname').empty().append(arr_classname);
+    }
+
+    function set_filterid(t_registyear, t_major, t_classname) {
+        for (var i = 0; i < a.length; i++) {
+            if (t_registyear == a[i].registyear && t_major == a[i].major && t_classname == a[i].classname) {
+                filterid = a[i].id;
+            }
+        }
+    }
+
+
     $(".loginbtn").click(function () {
         $.cookie('teacherid', '', {expires: -1, path: '/'});
         $.cookie('teachernumber', '', {expires: -1, path: '/'});
@@ -325,6 +531,186 @@
 
     function beforeCheck() {
         return
+    }
+
+    selectedstudentnumber = 0;
+
+    //添加学生确定执行
+
+    function addstudent_sure() {
+        var selectstudentlistelement = $('input[name="select_one_student"]:checked')
+        var existstudentlistelement = $('input[name="exist_student"]')
+
+        var existstudentlist = []
+        for (var i = 0; i < existstudentlistelement.length; i++) {
+            existstudentlist.push(existstudentlistelement[i].getAttribute("studentstr"))
+        }
+
+        var selectstudentlist = []
+
+        for (var i = 0; i < selectstudentlistelement.length; i++) {
+            var studentstr = selectstudentlistelement[i].getAttribute("studentstr");
+            selectstudentlist.push(studentstr);
+            var student = JSON.parse(studentstr.replace(/'/g, "\""))
+            if (existstudentlist.length > 0) {
+                for (var j = 0; j < existstudentlist.length; j++) {
+                    var existstudentstr = existstudentlist[j]
+                    var existstudent = JSON.parse(existstudentstr.replace(/'/g, "\""))
+                    if (student.id == existstudent.id) {
+                        //如果有相同的学生则不添加
+                        break;
+                    }
+                    if (j == existstudentlist.length - 1) {
+                        existstudentlist.push(studentstr)
+                    }
+                }
+            } else {
+                existstudentlist.push(studentstr)
+            }
+        }
+
+        selectedstudentnumber = existstudentlist.length;
+        $("#selectstudentlist").html("")
+        $("#selectcount").html("当前共选择了" + selectedstudentnumber + "位同学")
+
+        if (existstudentlist.length > 0) {
+            $("#selectted_student_list_titile").show();
+        }
+        for (var i = 0; i < existstudentlist.length; i++) {
+
+            var existstudentstr = existstudentlist[i]
+            var existstudent = JSON.parse(existstudentstr.replace(/'/g, "\""))
+            var userhtml =
+                '<tr>' +
+                '<input type="hidden" name="exist_student" studentstr="' + existstudentlist[i] + '"/>' +
+                '<td style="width: 50px;height: 25px;text-align:center;">' + (i + 1) + '</td>' +
+                '<td style="width: 100px;height: 25px;text-align:center;">' + existstudent.number + '</td>' +
+                '<td style="width: 100px;height: 25px;text-align:center;">' + existstudent.name + '</td>' +
+                '<td style="width: 100px;height: 25px;text-align:center;">' + existstudent.registyear + '</td>' +
+                '<td style="width: 100px;height: 25px;text-align:center;">' + existstudent.major + '</td>' +
+                '<td style="width: 100px;height: 25px;text-align:center;">' + existstudent.classname + '</td>' +
+                '<td style="width: 100px;height: 25px;text-align:center;">' +
+                '    <button onclick="deletestu(this,)">删除</button>' +
+                '</td>' +
+                '</tr>'
+            $("#selectstudentlist").append(userhtml)
+        }
+
+        $("#studentids").val(getstrstudentids())
+
+        $(".addstudent").hide();
+        $('.popupwall5').hide();
+    }
+
+    function deletestu(e) {
+        $(e).parent().parent().remove()
+        selectedstudentnumber -= 1;
+        $("#selectcount").html("当前共选择了" + selectedstudentnumber + "位同学")
+        if (selectedstudentnumber < 1) {
+            $("#selectted_student_list_titile").hide();
+        }
+        $("#studentids").val(getstrstudentids())
+    }
+
+    //全选与取消全选
+    $('#select_all').click(function () {
+        if ($(this).is(':checked')) {
+            $('input[name="select_one_student"]').each(function () {
+                $(this).prop("checked", true);
+            });
+        } else {
+            $('input[name="select_one_student"]').each(function () {
+                $(this).removeAttr("checked", false);
+            });
+        }
+        $("#selectcount2").html("当前共选择了" + $('input[name="select_one_student"]:checked').length + "位同学")
+    });
+
+    function getStudentList() {
+        $("#studentlist").html("")
+
+
+        $.post("/getStudentByFilterInfoId/",
+            {
+                filterid: filterid
+            },
+            function (data, status) {
+                dataObj = $.parseJSON(data)
+                code = dataObj.code;
+                if (code == -2) {//未登录
+                    window.location = "/loginteacher/";
+                } else if (code != 0) {
+                    alert(dataObj.desc);
+                } else {
+                    var res = dataObj.res;
+                    var studentlist = JSON.parse(res)
+                    for (var i = 0; i < studentlist.length; i++) {
+                        var userhtml = '<tr>' +
+                            '<td style="width: 50px;height: 25px;text-align:center;">' + (i + 1) + '</td>' +
+                            '<td style="width: 100px;height: 25px;text-align:center;">' + studentlist[i]["number"] + '</td>' +
+                            '<td style="width: 100px;height: 25px;text-align:center;">' + studentlist[i]["name"] + '</td>' +
+                            '<td style="width: 100px;height: 25px;text-align:center;">' + studentlist[i]["registyear"] + '</td>' +
+                            '<td style="width: 150px;height: 25px;text-align:center;">' + studentlist[i]["major"] + '</td>' +
+                            '<td style="width: 100px;height: 25px;text-align:center;">' + studentlist[i]["classname"] + '</td>' +
+                            '<td style="width: 100px;height: 25px;text-align:center;">' +
+                            '<input name="select_one_student"type="checkbox" studentstr="' + JSON.stringify(studentlist[i]).replace(/\"/g, "'") + '">' +
+                            '</td>' +
+                            '</tr>'
+                        $("#studentlist").append(userhtml)
+                    }
+
+                    $("input[name=select_one_student]").click(function () {
+                        $("#selectcount2").html("当前共选择了" + $('input[name="select_one_student"]:checked').length + "位同学")
+                    })
+                }
+            });
+
+
+    }
+
+    function delall() {
+        $("#selectstudentlist").html("")
+        selectedstudentnumber = 0;
+        $("#selectcount").html("当前共选择了" + selectedstudentnumber + "位同学")
+        $("#selectted_student_list_titile").hide();
+        $("#studentids").val(getstrstudentids())
+    }
+
+    //生成选择学生的ids
+    function getstrstudentids() {
+
+        var strstudentids = ""
+        var existstudentlistelement = $('input[name="exist_student"]')
+        var existstudentlist = []
+        for (var i = 0; i < existstudentlistelement.length; i++) {
+            var studentstr = existstudentlistelement[i].getAttribute("studentstr")
+            existstudentlist.push(studentstr)
+        }
+        $("#selectstudentlist").html("")
+        for (var i = 0; i < existstudentlist.length; i++) {
+            var studentstr = existstudentlist[i]
+            var student = JSON.parse(studentstr.replace(/'/g, "\""))
+            var userhtml =
+                '<tr>' +
+                '<input type="hidden" name="exist_student" studentstr="' + studentstr + '"/>' +
+                '<td style="width: 50px;height: 25px;text-align:center;">' + (i + 1) + '</td>' +
+                '<td style="width: 100px;height: 25px;text-align:center;">' + student.number + '</td>' +
+                '<td style="width: 100px;height: 25px;text-align:center;">' + student.name + '</td>' +
+                '<td style="width: 100px;height: 25px;text-align:center;">' + student.registyear + '</td>' +
+                '<td style="width: 100px;height: 25px;text-align:center;">' + student.major + '</td>' +
+                '<td style="width: 100px;height: 25px;text-align:center;">' + student.classname + '</td>' +
+                '<td style="width: 100px;height: 25px;text-align:center;">' +
+                '    <button onclick="deletestu(this,)">删除</button>' +
+                '</td>' +
+                '</tr>'
+            $("#selectstudentlist").append(userhtml)
+            if (i == 0) {
+                strstudentids += student.id;
+            } else {
+                strstudentids += "," + student.id;
+            }
+        }
+        return strstudentids
     }
 </script>
 </html>

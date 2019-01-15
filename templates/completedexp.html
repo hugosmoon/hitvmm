@@ -4,6 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <title>已完成实验</title>
+     {% load staticfiles %}
+    <link rel="shortcut icon" href="{% static 'img/hit.ico' %}" type="image/x-icon" />
+    <link rel="icon" href="{% static 'img/hit.ico' %}" type="image/gif">
     <!-- 初始化CSS -->
     <link href="../static/plugin/swiper.css">
     <link rel="stylesheet" href="../static/plugin/res.css">
@@ -54,7 +57,7 @@
                 <li class="navtip">
                     <a href="/allexp/">全部实验</a>
                 </li>
-                {% for experiment in experimentList %}
+                {% for experiment in experimentMenuList %}
                     <li class="navtip">
                         <a href="{{ experiment.url }}" target="_blank">{{ experiment.name }}</a>
                     </li>

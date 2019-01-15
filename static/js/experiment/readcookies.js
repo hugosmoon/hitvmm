@@ -1,4 +1,5 @@
 workpiece_material=($.cookie('workpiece_material'));
+
 workpiece_r=parseFloat($.cookie('workpiece_r'));
 workpiece_l=parseFloat($.cookie('workpiece_l'));
 

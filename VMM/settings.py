@@ -24,7 +24,7 @@ SECRET_KEY = '4xt0bmlp365k03+)w3@6va^2e!*&9k&c+(z8_)n^&9x^u+-jix'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['39.105.8.210','127.0.0.1',"www.vm4.com"]
 
 # Application definition
 
@@ -129,3 +129,21 @@ LANGUAGE_CODE = 'zh-hans'
 TIME_ZONE = 'Asia/Shanghai'
 
 DEFAULT_CHARSET = 'utf-8'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console':{
+            'level':'DEBUG',
+            'class':'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django.db.backends': {
+            'handlers': ['console'],
+            'propagate': True,
+            'level':'DEBUG',
+        },
+    }
+}

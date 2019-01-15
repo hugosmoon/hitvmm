@@ -4,6 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <title>全部实验</title>
+     {% load staticfiles %}
+    <link rel="shortcut icon" href="{% static 'img/hit.ico' %}" type="image/x-icon" />
+    <link rel="icon" href="{% static 'img/hit.ico' %}" type="image/gif">
     <!-- 初始化CSS -->
     <link href="../static/plugin/swiper.css">
     <link rel="stylesheet" href="../static/plugin/res.css">
@@ -45,13 +48,13 @@
                     <a href="/completedteaching/">已完成教学({{ teachingCount.stopCount }}个)</a>
                 </li>
                 <li class="navtip navtip4 noborder">
-                    <a href="/addexp/">新增实验</a>
+                    <a href="/addexp/">新建实验教学</a>
                 </li>
             </ul>
         </div>
         <div class="navwall navwall2">
             <div class="navtop">
-                <div class="navtitname">实验库</div>
+                <div class="navtitname" >实验库</div>
                 <div class="navarrowbox">
                     <img class="arrow uparrow2" src="../static/img/up.png" alt="">
                     <img class="arrow activearrow activearrow2" src="../static/img/down.png" alt="">
@@ -61,7 +64,7 @@
                 <li class="navtip navtip3">
                     <a href="/allexptea/">全部实验</a>
                 </li>
-                {% for experiment in experimentList %}
+                {% for experiment in experimentMenuList %}
                     <li class="navtip">
                         <a href="{{ experiment.url }}" target="_blank">{{ experiment.name }}</a>
                     </li>
@@ -88,16 +91,23 @@
                     <div class="unitwall unitwall2">
 
                         <div class="desbox">
-                            <div class="title">老师提示：</div>
+                            <div class="title">实验描述：</div>
                             <div class="txt">{{ experiment.desc }}</div>
                         </div>
                     </div>
 
                     <div class="unitftbg">
                         <ul class="btnwall">
-                            <li class="allteapreview unitbtn" videos="{{ experiment.videos }}">实验预习</li>
+                            <li class="changedescription unitbtn" experimentid="{{ experiment.id }}" experimentname="{{ experiment.name }}" experimentdesc="{{ experiment.desc }}">
+                                修改实验描述
+                            </li>
+                            <li class="changevide2 unitbtn" experimentid="{{ experiment.id }}"
+                                videos="{{ experiment.videos }}">修改实验预习
+                            </li>
+                            <li class="updatamod unitbtn" experimentid="{{ experiment.id }}"
+                                templateid="{{ experiment.templateid }}">修改默认报告模板
+                            </li>
                             <li class="allteaoperation unitbtn" experimenturl="{{ experiment.url }}">实验操作</li>
-                            <li class="allteadownload unitbtn" template="{{ experiment.template }}">默认报告模板下载</li>
                         </ul>
                     </div>
                 </div>
@@ -137,11 +147,17 @@
             <img class="dele" src="../static/img/dele.png" alt="">
         </div>
         <!--提示文案-->
-        <div class="popupmid popupmid1">提交报告必须为EXCEL格式，文件大小在3M以内。</div>
-        <div class="popupmid popupmid2">提交报告必须为WORD格式，文件大小在3M以内。</div>
-        <div class="popupmid popupmid3">学生名单必须为符合名单模板并且为EXCEL格式，文件大小在3M以内。</div>
-        <div class="btn cancle">选择文件</div>
-        <div class="btn sure">确认上传</div>
+        <div class="popupmid popupmid1">实验数据必须为EXCEL格式，文件大小在3M以内。</div>
+        <div class="popupmid popupmid2">报告模板必须为WORD格式，文件大小在3M以内。</div>
+        <form id="uploadfile" action="" method="post" enctype="multipart/form-data">
+            <div class="btn cancle">
+                选择文件
+                <input class="uploadfile" type="file" name="file" onchange="publicObj.fileUpLoad()"/>
+            </div>
+            <input class="btn sure fileupload" type="submit" class="btn btn-default" value="确认上传"/>
+            <input id="experimentid" type="hidden" name="experimentid" value=""/>
+        </form>
+        <div class="fileuploadname"></div>
     </div>
     <!--删除实验教学-->
     <div class="popupwall popupwall3">
@@ -153,39 +169,21 @@
         <div class="btn cancle">确定</div>
         <div class="btn sure">取消</div>
     </div>
-
-    <!--修改提交日期-->
-    <div class="popupwall popupwall4">
-        <div class="popuptop">
-            <img class="logo" src="../static/img/logo.png" alt="">
-            <img class="dele" src="../static/img/dele.png" alt="">
-        </div>
-        <select name="" id="" class="selectbox selectbox1">
-            <option value="">2018年</option>
-            <option value="">2017年</option>
-        </select>
-        <select name="" id="" class="selectbox selectbox2">
-            <option value="">12月</option>
-            <option value="">11月</option>
-        </select>
-        <select name="" id="" class="selectbox selectbox3">
-            <option value="">18日</option>
-            <option value="">17日</option>
-        </select>
-        <div class="btn cancle">确定</div>
-        <div class="btn sure">取消</div>
-    </div>
     <!--更换视频-->
     <div class="popupwall popupwall5">
         <img class="dele" src="../static/img/dele.png" alt="">
-        <div id="videoname" class="v_name">我是一个没有名字的视频，我是个没有名字。</div>
-        <div class="vbox">
-            <div class="videobox">
-                <video id="video" controls>
-                </video>
+        <input type="hidden" id="changevideoexperimentid">
+        <div class="videowall2">
+            <div class="videowall">
             </div>
         </div>
-        <div class="vchangebox">
+
+        <div class="vbtnbox">
+            <div class="vbtn preadd2">前方添加</div>
+            <div class="vbtn changvideo2">更改</div>
+            <div class="vbtn cvdele2">删除</div>
+            <div class="vbtn behindadd2">后方添加</div>
+            <div class="vbtn vbover3">完成</div>
         </div>
     </div>
     <!--学生提交报告-->
@@ -233,6 +231,58 @@
         <div class="vchangebox">
         </div>
     </div>
+    <!--修改视频时上传文件-->
+    <div class="popupwall popupwall2_2">
+        <div class="popuptop">
+            <img class="logo" src="../static/img/logo.png" alt="">
+            <img class="changevdele" src="../static/img/dele.png" alt="">
+        </div>
+        <!--提示文案-->
+        <div class="popupmid ">视频名称</div>
+        <input type="hidden" id="addvideotype" value="0">
+        <form id="addvideo" action="/addexperiment/" method="post" enctype="multipart/form-data">
+            <input id="videoexperimentid" type="hidden" name="experimentid" value=""/>
+            <!--说明框-->
+            <textarea class="shuomingbox" name="name"></textarea>
+            <!--提交-->
+            <div class="btn changevideofile">
+                选择文件
+                <input class="uploadfile" type="file" name="file" onchange="publicObj.updataChangeVideo()">
+            </div>
+            <div class="btn cancle changvideocancle">
+                取消
+            </div>
+            <div class="btn sure changvideosure2">确认上传</div>
+
+            <div class="videofileuploadname"></div>
+        </form>
+    </div>
+</div>
+
+
+
+
+//修改实验描述弹窗
+
+<div class="setdescription">
+    <div class="layer"></div>
+
+    <div class="popupwall popupwall5">
+        <img class="dele" src="../static/img/dele.png" alt="">
+
+        <div style="margin-left: 20px;margin-top: 40px;">
+
+
+
+            <div style="margin-top: 10px;width: 200px">
+                <input id="des_title" style="width: 400px;font-size: 15px;"></input>
+                <input id="des_id" type="hidden">
+                <textarea id="des_content" style="width: 650px;height: 350px"></textarea>
+            </div>
+            <div class="btn" style="margin-left: 282px;width: 100px" onclick="setdescription_sure()">保存</div>
+            </div>
+    </div>
+
 </div>
 </body>
 
@@ -244,6 +294,7 @@
 <script src="../static/plugin/fastclick.js"></script>
 <script src="../static/plugin/laypage/laypage.js"></script>
 <script src="../static/plugin/zane-calendar.min.js"></script>
+<script src="../static/plugin/jquery.form.js"></script>
 <script src="../static/js/public.js"></script>
 <!-- 模块JS -->
 <script type="text/javascript" src="../static/js/index.js"></script>
@@ -255,5 +306,35 @@
         $(location).attr('href', '/loginteacher/');
     });
 
+    function beforeCheck() {
+        return
+    }
+
+    function setdescription_sure(){
+
+            var form_data = new FormData();
+			form_data.append('des_id',($("#des_id").val()));
+			form_data.append('des_content',($("#des_content").val()));
+
+            $.ajax({
+                url:"/setdescription/",
+                type:'POST',
+                data: form_data,
+                processData: false,  // tell jquery not to process the data
+                contentType: false, // tell jquery not to set contentType
+                success: function(callback)
+                {
+                    console.log(callback);
+                    $(".setdescription").hide();
+                    $(".addstudent").hide();
+                    $(".popupbox").hide();
+                    alert("修改成功~");
+                    location.reload()
+
+
+                }
+            });
+
+    }
 </script>
 </html>

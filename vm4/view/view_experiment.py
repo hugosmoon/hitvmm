@@ -30,6 +30,8 @@ def expsetting(request,id):
         return render(request, "experiment/experiment5/expsetting.html")
     elif id == '6':
         return render(request, "experiment/experiment6/expsetting.html")
+    elif id == '7':
+        return render(request, "experiment/experiment7/expsetting.html")
     elif id == '8':
         return render(request, "experiment/experiment8/expsetting.html")
 
@@ -49,6 +51,8 @@ def expoperation(request,id):
         return render(request, "experiment/experiment5/expoperation.html")
     elif id == '6':
         return render(request, "experiment/experiment6/expoperation.html")
+    elif id == '7':
+        return render(request, "experiment/experiment7/expoperation.html")
     elif id == '8':
         return render(request, "experiment/experiment8/expoperation.html")
 
@@ -170,6 +174,7 @@ def cutting_temp_cal(request):
         rake_angle = (request.POST.get('rake_angle'))
         tool_cutting_edge_inclination_angle = (request.POST.get('tool_cutting_edge_inclination_angle'))
         corner_radius = (request.POST.get('corner_radius'))
+        cutting_fluid=request.POST.get('cutting_fluid')
 
 
     else:
@@ -182,6 +187,7 @@ def cutting_temp_cal(request):
     k_workpiece_material = 0
 
     x=0.26+feed_rate*0.15
+    cutting_fluid_arg=1;
 
 
     # 主偏角
@@ -208,6 +214,8 @@ def cutting_temp_cal(request):
     elif (rake_angle == "20"):
         k_rake_angle = 1
 
+
+
     #根据工件材料确定参数
     if (workpiece_material == "45_steel"):
         k_workpiece_material = 1
@@ -218,7 +226,13 @@ def cutting_temp_cal(request):
     elif (workpiece_material == "malleable_cast_iron"):
         k_workpiece_material = 0.85
 
-    temp=(random.uniform(0.9, 1.1))*k0*k_tool_cutting_edge_angle*k_rake_angle*k_workpiece_material*math.pow(cutting_speed,x)*math.pow(cutting_depth,0.04)*math.pow(feed_rate,0.14)
+    # 切削液条件
+    if cutting_fluid=="water_based_cutting_fluid":
+        cutting_fluid_arg=0.55
+    elif cutting_fluid=="oil_based_cutting_fluid":
+        cutting_fluid_arg = 0.88
+
+    temp=(random.uniform(0.9, 1.1))*k0*k_tool_cutting_edge_angle*k_rake_angle*k_workpiece_material*math.pow(cutting_speed,x)*math.pow(cutting_depth,0.04)*math.pow(feed_rate,0.14)*cutting_fluid_arg
 
     return HttpResponse(temp)
 

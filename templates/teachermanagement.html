@@ -4,6 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <title>教师用户管理</title>
+     {% load staticfiles %}
+    <link rel="shortcut icon" href="{% static 'img/hit.ico' %}" type="image/x-icon" />
+    <link rel="icon" href="{% static 'img/hit.ico' %}" type="image/gif">
     <!-- 初始化CSS -->
     <link href="../static/plugin/swiper.css">
     <link rel="stylesheet" href="../static/plugin/res.css">
@@ -61,7 +64,7 @@
                         <div class="txt t_txt2">{{ teacher.name }}</div>
                         <div class="txt t_txt3">{{ teacher.number }}</div>
                         <div class="txt t_txt4">{{ teacher.createtime|date:"Y-m-d H:i:s" }}</div>
-                        <div class="txt t_txt5" teacherid="{{ teacher.id }}">
+                        <div class="txt t_txt5 resetpwd" teacherid="{{ teacher.id }}">
                             <text>重置密码</text>
                         </div>
                         <div class="txt t_txt6 deletea" teacherid="{{ teacher.id }}">

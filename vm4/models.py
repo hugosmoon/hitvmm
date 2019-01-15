@@ -24,8 +24,7 @@ class Student(models.Model):
     id = models.AutoField(primary_key=True, db_column="f_id")
     name = models.CharField(max_length=50, db_column="f_name")
     number = models.CharField(max_length=50, db_column="f_number")
-    teachername = models.CharField(max_length=50, db_column="f_teacher_name")
-    teachernumber = models.CharField(max_length=50, db_column="f_teacher_number")
+    filterinfoid = models.IntegerField(db_column="f_filterinfo_id")
     isdelete = models.BooleanField(default=False, db_column="f_is_delete")
     createtime = models.DateTimeField(default=timezone.now, db_column="f_createtime")
     updatetime = models.DateTimeField(default=timezone.now, db_column="f_updatetime")
@@ -34,11 +33,24 @@ class Student(models.Model):
         db_table = "t_student"
 
 
+class FilterInfo(models.Model):
+    id = models.AutoField(primary_key=True, db_column="f_id")
+    registyear = models.CharField(max_length=50, db_column="f_regist_year")
+    major = models.CharField(max_length=50, db_column="f_major")
+    classname = models.CharField(max_length=50, db_column="f_class_name")
+    isdelete = models.BooleanField(default=False, db_column="f_is_delete")
+    createtime = models.DateTimeField(default=timezone.now, db_column="f_createtime")
+    updatetime = models.DateTimeField(default=timezone.now, db_column="f_updatetime")
+
+    class Meta:
+        db_table = "t_filterinfo"
+
+
 class Teacher(models.Model):
     id = models.AutoField(primary_key=True, db_column="f_id")
     name = models.CharField(max_length=50, db_column="f_name")
     number = models.CharField(max_length=50, db_column="f_number")
-    password = models.CharField(max_length=50, db_column="f_password")
+    password = models.CharField(max_length=100, db_column="f_password")
     isdelete = models.BooleanField(default=False, db_column="f_is_delete")
     createtime = models.DateTimeField(default=timezone.now, db_column="f_createtime")
     updatetime = models.DateTimeField(default=timezone.now, db_column="f_updatetime")
@@ -69,7 +81,7 @@ class Teaching(models.Model):
     stulisturl = models.CharField(max_length=255, db_column="f_stulist_url")
     templateid = models.IntegerField(db_column="f_template_id")
     videos = models.CharField(max_length=255, db_column="f_videos")
-    status = models.IntegerField(db_column="f_status",default=0)
+    status = models.IntegerField(db_column="f_status", default=0)
     isdelete = models.BooleanField(default=False, db_column="f_is_delete")
     createtime = models.DateTimeField(default=timezone.now, db_column="f_createtime")
     updatetime = models.DateTimeField(default=timezone.now, db_column="f_updatetime")

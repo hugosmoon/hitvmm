@@ -3,6 +3,9 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>未完成实验</title>
+     {% load staticfiles %}
+    <link rel="shortcut icon" href="{% static 'img/hit.ico' %}" type="image/x-icon" />
+    <link rel="icon" href="{% static 'img/hit.ico' %}" type="image/gif">
     <!-- 初始化CSS -->
     <link href="../static/plugin/swiper.css">
     <link rel="stylesheet" href="../static/plugin/res.css">
@@ -36,7 +39,7 @@
                     <a href="/index/">未完成实验({{ teachingCount.runCount }}个)</a>
                 </li>
                 <li class="navtip noborder">
-                    <a href="/completedexp/">完成实验({{ teachingCount.stopCount }}个)</a>
+                    <a href="/completedexp/">已完成实验({{ teachingCount.stopCount }}个)</a>
                 </li>
             </ul>
         </div>
@@ -52,7 +55,7 @@
                 <li class="navtip">
                     <a href="/allexp/">全部实验</a>
                 </li>
-                {% for experiment in experimentList %}
+                {% for experiment in experimentMenuList %}
                     <li class="navtip">
                         <a href="{{ experiment.url }}" target="_blank">{{ experiment.name }}</a>
                     </li>
@@ -163,7 +166,7 @@
         <div id="videoname" class="v_name"></div>
         <div class="vbox">
             <div class="videobox">
-                <video id="video" controls>
+                <video id="video" style="width:100%;;height:auto" controls>
                 </video>
             </div>
         </div>

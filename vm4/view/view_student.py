@@ -8,14 +8,16 @@ from vm4.service import TeachingService
 from vm4.service import ExperimentService
 from vm4.service import ReportService
 from vm4.service import TemplateService
+from vm4.service import FilterInfoService
 from vm4.context import CONSTANTS
 from django.http import FileResponse
 import os, uuid
+from django.utils.http import urlquote
 
 
-# 登录页面
 def v_login(request):
     return getloginResponse(request)
+# 登录页面
 
 
 # 登录接口
@@ -55,9 +57,19 @@ def v_index(request):
         countpage = count / 10 + i
     teachingRunList = TeachingService.getTeachingByStu(stuid, CONSTANTS.TEACHING_IS_RUNNING, page)
     experimentList = ExperimentService.getAllExperiment()
+    # 获取用于菜单的实验列表
+    experimentMenuList = []
+    for experiment in experimentList:
+        experimentTemp = experiment.copy()
+        experimentName = experimentTemp["name"]
+        if len(experimentName) > 8:
+            experimentName = experimentName[0:10] + "..."
+        experimentTemp["name"] = experimentName
+        experimentMenuList.append(experimentTemp)
+
     teachingCount = getTeachingCount(stuid)
     return render(request, "index.html",
-                  {"teachingList": teachingRunList, "countpage": countpage,
+                  {"teachingList": teachingRunList, "countpage": countpage, "experimentMenuList": experimentMenuList,
                    "experimentList": experimentList, "teachingCount": teachingCount, "stuname": stuname})
 
 
@@ -81,9 +93,19 @@ def v_completedexp(request):
         countpage = count / 10 + i
     teachingRunList = TeachingService.getTeachingByStu(stuid, CONSTANTS.TEACHING_IS_STOP, page)
     experimentList = ExperimentService.getAllExperiment()
+    # 获取用于菜单的实验列表
+    experimentMenuList = []
+    for experiment in experimentList:
+        experimentTemp = experiment.copy()
+        experimentName = experimentTemp["name"]
+        if len(experimentName) > 8:
+            experimentName = experimentName[0:10] + "..."
+        experimentTemp["name"] = experimentName
+        experimentMenuList.append(experimentTemp)
+
     teachingCount = getTeachingCount(stuid)
     return render(request, "completedexp.html",
-                  {"teachingList": teachingRunList, "countpage": countpage,
+                  {"teachingList": teachingRunList, "countpage": countpage, "experimentMenuList": experimentMenuList,
                    "experimentList": experimentList, "teachingCount": teachingCount, "stuname": stuname})
 
 
@@ -95,8 +117,18 @@ def v_allexperiment(request):
     stuname = utils.getCookie(request, "stuname")
     teachingCount = getTeachingCount(stuid)
     experimentList = ExperimentService.getAllExperiment()
-    return render(request, "allexp.html",
-                  {"experimentList": experimentList, "teachingCount": teachingCount, "stuname": stuname})
+    # 获取用于菜单的实验列表
+    experimentMenuList = []
+    for experiment in experimentList:
+        experimentTemp = experiment.copy()
+        experimentName = experimentTemp["name"]
+        if len(experimentName) > 8:
+            experimentName = experimentName[0:10] + "..."
+        experimentTemp["name"] = experimentName
+        experimentMenuList.append(experimentTemp)
+
+    return render(request, "allexp.html", {"experimentList": experimentList, "experimentMenuList": experimentMenuList,
+                                           "teachingCount": teachingCount, "stuname": stuname})
 
 
 # 获取未完成实验和已完成实验数量
@@ -114,13 +146,14 @@ def downloadData(request):
         return HttpResponse()
     fileurl = CONSTANTS.DATAURL_PRE + dataurl
     if os.path.exists(fileurl) != True:
-        return HttpResponse("未找到文件")
+        return HttpResponse("实验数据还没有上传~")
     file = open(fileurl, "rb")
     filename = file.name
     filesuffix = os.path.splitext(filename)[1]
     response = FileResponse(file)
     response['Content-Type'] = 'application/octet-stream'
-    response['Content-Disposition'] = 'attachment;filename="实验数据' + filesuffix + '"'
+    response['Content-Disposition'] = 'attachment;filename="%s"' % (urlquote("实验数据" + filesuffix))
+
     return response
 
 
@@ -138,7 +171,7 @@ def downloadTemplate(request):
     filesuffix = os.path.splitext(filename)[1]
     response = FileResponse(file)
     response['Content-Type'] = 'application/octet-stream'
-    response['Content-Disposition'] = 'attachment;filename="实验模板' + filesuffix + '"'
+    response['Content-Disposition'] = 'attachment;filename="%s"' % (urlquote("实验模板" + filesuffix))
     return response
 
 

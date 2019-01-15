@@ -10,13 +10,20 @@ def getParam(request, name):
 
 
 def getCookie(request, name):
-    return request.COOKIES.get(name).encode("iso-8859-1").decode('utf8')
+    value = request.COOKIES.get(name)
+    if value is None:
+        return value
+    else:
+        return value.encode("iso-8859-1").decode('utf8')
 
-def setCookie(response , name ,value):
-    response.set_cookie(name, bytes(value, 'utf-8').decode('ISO-8859-1'),max_age=60*60*2)
+
+def setCookie(response, name, value):
+    response.set_cookie(name, bytes(value, 'utf-8').decode('ISO-8859-1'), max_age=60 * 60 * 48)
+
 
 def getNowStr():
     return datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
 
 def getNow():
     return datetime.datetime.now()

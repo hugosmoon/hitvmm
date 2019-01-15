@@ -1,4 +1,4 @@
-@charset "UTF-8";
+wall5@charset "UTF-8";
 body, html {
   position: relative; }
 
@@ -417,11 +417,11 @@ a:active {
   .popupbox .popupwall1 {
     display: none;
     position: absolute;
-    top: 209px;
-    left: 50%;
+    top: 80px;
+    left: 35%;
     margin-left: -305px;
-    width: 610px;
-    height: 550px;
+    width: 1200px;
+    height: 760px;
     background-color: #ffffff;
     border-radius: 4px;
     overflow: hidden; }
@@ -438,8 +438,8 @@ a:active {
       top: 13px;
       left: 131px; }
     .popupbox .popupwall1 .repotr {
-      width: 568px;
-      height: 377px;
+      width: 1100px;
+      height: 570px;
       background-color: #f7f7f7;
       border-radius: 2px;
       border: solid 1px #f0f0f0;
@@ -1009,6 +1009,213 @@ a:active {
           -o-text-overflow: ellipsis;
           white-space: nowrap;
           text-align: center; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.addstudent {
+  display: none;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0; }
+  .addstudent .layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: black;
+    opacity: .8;
+    width: 100%;
+    height: 100%; }
+  .addstudent .popupwall {
+    position: absolute;
+    background-color: #ffffff;
+    border-radius: 4px; }
+    .addstudent .popupwall .btn {
+      cursor: pointer;
+      position: absolute;
+      bottom: 30px;
+      -webkit-box-sizing: border-box;
+              box-sizing: border-box;
+      line-height: 33px;
+      border-radius: 2px;
+      border: solid 1px #cbd6ee;
+      font-size: 15px;
+      text-align: center; }
+    .addstudent .popupwall .btn:hover {
+      background: url("../img/btnbg2.png");
+      background-size: 100% 100%;
+      color: #fff; }
+
+
+  .addstudent .popupwall5 {
+    display: none;
+    width: 750px;
+    height: 900px;
+    background-color: #ffffff;
+    position: absolute;
+    top: 20px;
+    left: 25%;
+    margin-left: 0px;
+    overflow: hidden; }
+    .addstudent .popupwall5 .dele {
+      width: 12px;
+      height: 12px;
+      position: absolute;
+      right: 22px;
+      top: 13px; }
+
+
+
+
+
+
+
+
+
+
+
+
+.setdescription {
+  display: none;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0; }
+  .setdescription .layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: black;
+    opacity: .8;
+    width: 100%;
+    height: 100%; }
+  .setdescription .popupwall {
+    position: absolute;
+    background-color: #ffffff;
+    border-radius: 4px; }
+    .setdescription .popupwall .btn {
+      cursor: pointer;
+      position: absolute;
+      bottom: 30px;
+      -webkit-box-sizing: border-box;
+              box-sizing: border-box;
+      line-height: 33px;
+      border-radius: 2px;
+      border: solid 1px #cbd6ee;
+      font-size: 15px;
+      text-align: center; }
+    .setdescription .popupwall .btn:hover {
+      background: url("../img/btnbg2.png");
+      background-size: 100% 100%;
+      color: #fff; }
+
+
+  .setdescription .popupwall5 {
+    display: none;
+    width: 700px;
+    height: 500px;
+    background-color: #ffffff;
+    position: absolute;
+    top: 20px;
+    left: 30%;
+    margin-left: 0px;
+    overflow: hidden; }
+    .setdescription .popupwall5 .dele {
+      width: 12px;
+      height: 12px;
+      position: absolute;
+      right: 22px;
+      top: 13px; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .selectvideobox {
   background: #000 !important;

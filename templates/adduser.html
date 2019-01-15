@@ -4,6 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <title>新增用户</title>
+    {% load staticfiles %}
+    <link rel="shortcut icon" href="{% static 'img/hit.ico' %}" type="image/x-icon"/>
+    <link rel="icon" href="{% static 'img/hit.ico' %}" type="image/gif">
     <!-- 初始化CSS -->
     <link href="../static/plugin/swiper.css">
     <link rel="stylesheet" href="../static/plugin/res.css">
@@ -32,16 +35,16 @@
     <div class="tit">用户身份</div>
     <div class="users">
         <div class="templatebox1">
-            <input value="1" class="rradio" type="radio" name="template"/>
+            <input checked="checked" id="user_identity" value="1" class="rradio" type="radio" name="template"/>
             <lable>学生</lable>
         </div>
         <div class="templatebox1">
-            <input value="2" class="rradio" type="radio" name="template"/>
+            <input id="user_identity" value="2" class="rradio" type="radio" name="template"/>
             <lable>教师</lable>
         </div>
         {% if issuperadmin == "1" %}
             <div class="templatebox1">
-                <input value="3" class="rradio" type="radio" name="template"/>
+                <input id="user_identity" value="3" class="rradio" type="radio" name="template"/>
                 <lable>管理员</lable>
             </div>
         {% endif %}
@@ -52,20 +55,43 @@
         <div class="tip">姓名</div>
         <input class="inp addname" type="text">
     </div>
-    <div class="imptbox imptbox2">
+    <div class="imptbox imptbox2 imptbox4">
         <div class="tip">编号</div>
-        <input class="inp addnumber" type="text">
+        <input id="number_id" class="inp addnumber" type="text">
     </div>
-    <div class="imptbox imptbox2 imptbox3" style="display: none">
-        <div class="tip tip2">指导教师姓名</div>
-        <input class="inp addteachername" type="text">
+    <div class="imptbox imptbox2 imptbox3">
+        <div class="tip">学号</div>
+        <input id="student_id" class="inp addnumber" type="text">
     </div>
-    <div class="imptbox imptbox2 imptbox4" style="display: none">
-        <div class="tip tip2">指导教师编号</div>
-        <input class="inp addteachernumber" type="text">
+    <div class="imptbox imptbox2 imptbox3">
+        <div class="tip3">基础信息</div>
+        <a class="tip4" href="/setBasicInformation">配置基础信息>></a>
     </div>
+
+    <div class="imptbox imptbox2 imptbox3">
+        <div class="tip tip2">入学年份</div>
+        <select id="sele_registyear" class="inp addnumber">
+            <option value="volvo">请选择</option>
+            <option value="saab">2019年</option>
+            <option value="opel">2018年</option>
+            <option value="audi">2017年</option>
+        </select>
+    </div>
+    <div class="imptbox imptbox2 imptbox3">
+        <div class="tip">院系</div>
+        <select id="sele_major" class="inp addnumber">
+            <option value="volvo">--</option>
+        </select>
+    </div>
+    <div class="imptbox imptbox2 imptbox3">
+        <div class="tip">班级</div>
+        <select id="sele_classname" class="inp addnumber">
+            <option value="volvo">--</option>
+        </select>
+    </div>
+
     <div class="btnbox">
-        <div class="btn sure">确认添加</div>
+        <div class="btn sure sureadd">确认添加</div>
     </div>
 
 </div>
@@ -92,7 +118,7 @@
         </div>
         <!--提示文案-->
         <div class="popupmid popupmid3">名单必须为符合名单模板并且为EXCEL格式，文件大小在3M以内。</div>
-        <form action="" method="post" enctype="multipart/form-data">
+        <form id="uploadfile" action="" method="post" enctype="multipart/form-data">
             <input id="type" type="hidden" name="type">
             <div class="btn cancle">
                 选择文件
@@ -145,25 +171,97 @@
     });
 </script>
 <script>
-    $(".rradio").unbind("click").bind("click", function () {
-        type = $(this).attr("value")
-        $("#type").attr("attr", type)
-        if (type == 1) {
+    var filterid=0;
+    $("#sele_registyear").change(function() { set_arr_major($('#sele_registyear option:selected').val()); set_arr_classname()});
+    $("#sele_major").change(function() { set_arr_classname($('#sele_registyear option:selected').val(),$('#sele_major option:selected').val()); });
+    $("#sele_classname").change(function() {set_filterid($('#sele_registyear option:selected').val(),$('#sele_major option:selected').val(),$('#sele_classname option:selected').val());});
+
+
+    var filterInfoListJsonStr = $('<div>').html("{{ filterInfoListstr }}").text();
+    var a = JSON.parse(filterInfoListJsonStr)
+
+    var b = new Array();
+    for(var i = 0; i < a.length; i++){
+
+      if(b.indexOf(a[i].registyear)==-1){
+        b.push(a[i].registyear)
+      }
+
+    }
+    arr_registyear="<option value='-1'>请选择</option>";
+      for(j=0;j<b.length;j++){
+        arr_registyear+='<option value="'+b[j]+'">'+b[j]+'</option>'
+      }
+      $('#sele_registyear').empty().append(arr_registyear);
+
+
+    function set_arr_major(t_registyear) {
+        var c = new Array();
+        for(var i = 0; i < a.length; i++){
+            if(t_registyear==a[i].registyear&&c.indexOf(a[i].major)==-1){
+                c.push(a[i].major);
+            }
+        }
+        arr_major="<option value='-1'>请选择</option>";;
+          for(j=0;j<c.length;j++){
+            arr_major+='<option value="'+c[j]+'">'+c[j]+'</option>'
+          }
+          $('#sele_major').empty().append(arr_major);
+    }
+
+    function set_arr_classname(t_registyear,t_major) {
+        var c = new Array();
+        for(var i = 0; i < a.length; i++){
+            if(t_registyear==a[i].registyear&&t_major==a[i].major&&c.indexOf(a[i].classname)==-1){
+                c.push(a[i].classname);
+            }
+        }
+        arr_classname="<option value='-1'>请选择</option>";
+          for(j=0;j<c.length;j++){
+            arr_classname+='<option value="'+c[j]+'">'+c[j]+'</option>'
+          }
+          $('#sele_classname').empty().append(arr_classname);
+    }
+
+    function set_filterid(t_registyear,t_major,t_classname) {
+        for(var i = 0; i < a.length; i++){
+            if(t_registyear==a[i].registyear&&t_major==a[i].major&&t_classname==a[i].classname){
+                filterid=a[i].id;
+            }
+        }
+    }
+
+
+
+
+
+
+
+    hide_show();
+
+    function hide_show() {
+        tp = $("input[name='template']:checked").val();
+        $("#type").attr("attr", tp)
+        if (tp == "1") {
             $(".imptbox3").show()
-            $(".imptbox4").show()
-        } else {
-            $(".imptbox3").hide()
             $(".imptbox4").hide()
         }
-    });
-    $(".sure").unbind("click").bind("click", function () {
+        else {
+            $(".imptbox4").show()
+            $(".imptbox3").hide()
+        }
+    }
+
+    $(".rradio").unbind("click").bind("click", hide_show);
+    $(".sureadd").unbind("click").bind("click", function () {
         type = $("#type").attr("attr")
         action = ""
         addname = $(".addname").val()
-        addnumber = $(".addnumber").val()
+        addnumber = $("#number_id").val()
+        studentid=$("#student_id").val()
         addteachername = $(".addteachername").val()
         addteachernumber = $(".addteachernumber").val()
-        if (addname == undefined || addname == "" || addnumber == undefined || addnumber == "") {
+        if (addname == undefined || addname == "" || (studentid == undefined&&addnumber==undefined) || (studentid == ""&&addnumber=="")) {
             alert("填写的信息不能为空！")
             return
         }
@@ -172,15 +270,14 @@
             alert("请选择要添加的用户身份！")
             return
         } else if (type == 1) {
-            if (addteachername == undefined || addteachername == "" || addteachernumber == undefined || addteachernumber == "") {
+            if (filterid == undefined || filterid == "") {
                 alert("填写的信息不能为空！")
                 return
             }
             data = {
-                studentnum: addnumber,
+                studentnum: studentid,
                 studentname: addname,
-                addteachername: addteachername,
-                addteachernumber: addteachernumber
+                filterinfoid:filterid,
             }
             action = "/addStudent/"
         } else if (type == 2) {
@@ -199,7 +296,9 @@
             function (data, status) {
                 dataObj = $.parseJSON(data)
                 code = dataObj.code;
-                if (code != 0) {
+                if (code == -2) {//未登录
+                    window.location = "/loginadmin/";
+                } else if (code != 0) {
                     alert(dataObj.desc);
                 } else {
                     alert("添加成功！")
