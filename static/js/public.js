@@ -204,7 +204,6 @@ var publicObj = {
                 $('.popupwall6').show()
                 reportid = $(this).attr("reportid")
                 $(".reportid").attr("value", reportid)
-                location.reload()
             })
         });
         //报告模板下载
