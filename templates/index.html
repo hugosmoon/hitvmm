@@ -62,6 +62,15 @@
                 {% endfor %}
             </ul>
         </div>
+
+        <div style="cursor: pointer" class="navwall navwall2 imagedraw">
+            <div class="navtop">
+                <div class="navtitname">图象绘制</div>
+            </div>
+
+        </div>
+
+
     </div>
     <div class="list">
         <div id="allunitwall" class="allunitwall">
@@ -189,6 +198,7 @@
 <!-- 模块JS -->
 <script type="text/javascript" src="../static/js/index.js"></script>
 <script>
+
     $(".loginbtn").click(function () {
         $.cookie('stuid', '', {expires: -1, path: '/'});
         $.cookie('stuname', '', {expires: -1, path: '/'});

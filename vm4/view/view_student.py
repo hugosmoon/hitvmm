@@ -184,12 +184,12 @@ def submitReport(request):
     file = request.FILES.get('file', None)
     if file is None:
         return HttpResponse(
-            "<script>if(confirm('上传的文件为空')){history.go(-1);location.reload()}else{history.go(-1);location.reload()}</script>")
+            "<script>if(confirm('上传的文件为空')){location.href='/index/';}else{location.href='/index/';}</script>")
     filename = file.name
     filesuffix = os.path.splitext(filename)[1]
     if filesuffix != ".pdf":
         return HttpResponse(
-            "<script>if(confirm('实验报告的格式必须为pdf')){history.go(-1);location.reload()}else{history.go(-1);location.reload()}</script>")
+            "<script>if(confirm('实验报告的格式必须为pdf')){location.href='/index/';}else{location.href='/index/';}</script>")
     filename = str(uuid.uuid1()) + ".pdf"
     fp = open(os.path.join(CONSTANTS.REPORTURL_PRE, filename), 'wb+')
     for chunk in file.chunks():  # 分块写入文件
@@ -197,7 +197,7 @@ def submitReport(request):
     fp.close()
     ReportService.submintReport(reportid, filename)
     return HttpResponse(
-        "<script>if(confirm('上传成功')){history.go(-1);location.reload()}else{history.go(-1);location.reload()}</script>")
+        "<script>if(confirm('上传成功')){location.href='/index/';}else{location.href='/index/';}</script>")
 
 
 # 获取登录页response

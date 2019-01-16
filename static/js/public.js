@@ -68,6 +68,9 @@ var publicObj = {
         $(".changepsw").unbind("click").bind('click', function () {
             location.href = '/password/'
         })
+        $(".imagedraw").unbind("click").bind('click', function () {
+            location.href = '/experiment/image_draw/'
+        })
     },
     switchNavigaTion: function () {
         $(".activearrow1").unbind("click").bind('click', function () {

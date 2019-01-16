@@ -46,7 +46,7 @@ def adminlogin(request):
         responseReturn = Response(None, None)
         response = HttpResponse(responseReturn.__str__())
         utils.setCookie(response, "issuperadmin", "0")
-        utils.setCookie(response, "adminid", admin.id)
+        utils.setCookie(response, "adminid", str(admin.id))
         utils.setCookie(response, "adminname", teacher.name)
         return response
     else:
@@ -89,12 +89,10 @@ def v_studentmanagement(request):
         studentList = StudentService.getManyStudentByNameAndNumber(name, stunum, page)
 
     for student in studentList:
-            filterinfo=FilterInfoService.getFilterInfoById(student.filterinfoid)
-            student.registyear=filterinfo.registyear
-            student.major = filterinfo.major
-            student.classname = filterinfo.classname
-
-
+        filterinfo = FilterInfoService.getFilterInfoById(student.filterinfoid)
+        student.registyear = filterinfo.registyear
+        student.major = filterinfo.major
+        student.classname = filterinfo.classname
 
     param = "?"
     if stunum != "":
@@ -290,8 +288,8 @@ def addAdmin(request):
         return HttpResponse(responseReturn.__str__())
     teacher = TeacherService.getTeacherByNumber(teachernum)
     if teacher is None:
-        responseReturn = Response("-1", "此教师不存在，请先添加教师！")
-        return HttpResponse(responseReturn.__str__())
+        teacherid = TeacherService.addTeacher(teachername, teachernum)
+        teacher = TeacherService.getTeacherById(teacherid)
     if teacher.name != teachername:
         responseReturn = Response("-1", "教师姓名与教师编号不符，请确认！")
         return HttpResponse(responseReturn.__str__())
@@ -427,9 +425,8 @@ def addBatchAdmin(request):
     for admin in adminlist:
         teacher = TeacherService.getTeacherByNumber(admin["number"])
         if teacher is None:
-            return HttpResponse(
-                "<script>if(confirm('此教师" + admin[
-                    "number"] + "不存在，请先添加教师！')){history.go(-1);location.reload()}else{history.go(-1);location.reload()}</script>")
+            teacherid = TeacherService.addTeacher(teachername, teachernum)
+            teacher = TeacherService.getTeacherById(teacherid)
         if teacher.name != admin["name"]:
             return HttpResponse(
                 "<script>if(confirm('教师姓名" + admin["name"] + "与教师编号" + admin[
