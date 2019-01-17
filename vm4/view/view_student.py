@@ -41,7 +41,7 @@ def stulogin(request):
 def v_index(request):
     stuid = utils.getCookie(request, "stuid")
     if (stuid is None) or stuid == "":
-        return (request)
+        return getloginResponse(request)
     stuname = utils.getCookie(request, "stuname")
     page = utils.getParam(request, "page")
     if (page is None) or page == "":
