@@ -41,7 +41,7 @@ def stulogin(request):
 def v_index(request):
     stuid = utils.getCookie(request, "stuid")
     if (stuid is None) or stuid == "":
-        return getloginResponse(request)
+        return (request)
     stuname = utils.getCookie(request, "stuname")
     page = utils.getParam(request, "page")
     if (page is None) or page == "":
@@ -200,7 +200,7 @@ def submitReport(request):
         "<script>if(confirm('上传成功')){location.href='/index/';}else{location.href='/index/';}</script>")
 
 
-# 获取登录页response
+# 获取登录页responsegetloginResponse
 def getloginResponse(request):
     response = render(request, "login.html")
     response.delete_cookie("stuid")

@@ -2,7 +2,12 @@
 from django.shortcuts import render,HttpResponse
 import math
 import random
-from vm4.models import Student
+
+from django.shortcuts import render
+from django.shortcuts import HttpResponse
+
+from vm4.view import utils
+
 
 
 def experiment1(request):
@@ -18,43 +23,51 @@ def expoperation(request):
 def expoperation2(request):
     return render(request,"experiment/expoperation2.html")
 def expsetting(request,id):
+    stuid = utils.getCookie(request, "stuid")
+    if (stuid is None) or stuid == "":
+        return (request)
+    stuname = utils.getCookie(request, "stuname")
     if id == '1':
-        return render(request, "experiment/experiment1/expsetting.html")
+        return render(request, "experiment/experiment1/expsetting.html",{"stuname": stuname})
     elif id == '2':
-        return render(request, "experiment/experiment2/expsetting.html")
+        return render(request, "experiment/experiment2/expsetting.html",{"stuname": stuname})
     elif id == '3':
-        return render(request, "experiment/experiment3/expsetting.html")
+        return render(request, "experiment/experiment3/expsetting.html"),{"stuname": stuname}
     elif id == '4':
-        return render(request, "experiment/experiment4/expsetting.html")
+        return render(request, "experiment/experiment4/expsetting.html",{"stuname": stuname})
     elif id == '5':
-        return render(request, "experiment/experiment5/expsetting.html")
+        return render(request, "experiment/experiment5/expsetting.html",{"stuname": stuname})
     elif id == '6':
-        return render(request, "experiment/experiment6/expsetting.html")
+        return render(request, "experiment/experiment6/expsetting.html",{"stuname": stuname})
     elif id == '7':
-        return render(request, "experiment/experiment7/expsetting.html")
+        return render(request, "experiment/experiment7/expsetting.html",{"stuname": stuname})
     elif id == '8':
-        return render(request, "experiment/experiment8/expsetting.html")
+        return render(request, "experiment/experiment8/expsetting.html",{"stuname": stuname})
 
 def expsetting2(request):
     return render(request,"experiment/expsetting2.html")
 
 def expoperation(request,id):
+    stuid = utils.getCookie(request, "stuid")
+    if (stuid is None) or stuid == "":
+        return (request)
+    stuname = utils.getCookie(request, "stuname")
     if id == '1':
-        return render(request, "experiment/experiment1/expoperation.html")
+        return render(request, "experiment/experiment1/expoperation.html",{"stuname": stuname})
     elif id=='2':
-        return render(request, "experiment/experiment2/expoperation.html")
+        return render(request, "experiment/experiment2/expoperation.html",{"stuname": stuname})
     elif id=='3':
-        return render(request, "experiment/experiment3/expoperation.html")
+        return render(request, "experiment/experiment3/expoperation.html",{"stuname": stuname})
     elif id=='4':
-        return render(request, "experiment/experiment4/expoperation.html")
+        return render(request, "experiment/experiment4/expoperation.html",{"stuname": stuname})
     elif id == '5':
-        return render(request, "experiment/experiment5/expoperation.html")
+        return render(request, "experiment/experiment5/expoperation.html",{"stuname": stuname})
     elif id == '6':
-        return render(request, "experiment/experiment6/expoperation.html")
+        return render(request, "experiment/experiment6/expoperation.html",{"stuname": stuname})
     elif id == '7':
-        return render(request, "experiment/experiment7/expoperation.html")
+        return render(request, "experiment/experiment7/expoperation.html",{"stuname": stuname})
     elif id == '8':
-        return render(request, "experiment/experiment8/expoperation.html")
+        return render(request, "experiment/experiment8/expoperation.html",{"stuname": stuname})
 
 def image_draw(request):
     return render(request,"experiment/image_draw.html")
@@ -253,3 +266,10 @@ def cutting_roughness_cal(request):
 
         return HttpResponse(R)
 
+#获取登录页responsegetloginResponse
+def getloginResponse(request):
+    response = render(request, "login.html")
+    response.delete_cookie("stuid")
+    response.delete_cookie("stuname")
+    response.delete_cookie("stunum")
+    return response
