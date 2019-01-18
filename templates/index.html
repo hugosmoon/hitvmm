@@ -7,17 +7,18 @@
     <link rel="shortcut icon" href="{% static 'img/hit.ico' %}" type="image/x-icon" />
     <link rel="icon" href="{% static 'img/hit.ico' %}" type="image/gif">
     <!-- 初始化CSS -->
-    <link href="../static/plugin/swiper.css">
-    <link rel="stylesheet" href="../static/plugin/res.css">
-    <link rel="stylesheet" href="plugin/plyr.css">
-    <link rel="stylesheet" type="text/css" href="../static/sass/public.css">
+    <link href="{% static 'plugin/swiper.css' %}">
+
+    <link rel="stylesheet" href="{% static 'plugin/res.css' %}">
+    <link rel="stylesheet" href="{% static '/plugin/plyr.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static '/sass/public.css' %}">
     <!-- 模块css -->
-    <link rel="stylesheet" type="text/css" href="../static/sass/index.css">
+    <link rel="stylesheet" type="text/css" href="{% static '/sass/index.css' %}">
 </head>
 <body>
 <div class="topwall">
     <div class="top">
-        <img class="l_float logo" src="../static/img/logo.png" alt="">
+        <img class="l_float logo" src="{% static 'img/logo.png' %}" alt="">
         <div class="l_float title">机械制造虚拟实验室</div>
         <div class="l_float userlog"></div>
         <div class="l_float username">{{ stuname }}</div>
@@ -30,8 +31,8 @@
             <div class="navtop">
                 <div class="navtitname">实验作业</div>
                 <div class="navarrowbox">
-                    <img class="arrow uparrow" src="../static/img/up.png" alt="">
-                    <img class="arrow activearrow activearrow1" src=" ../static/img/down.png" alt="">
+                    <img class="arrow uparrow" src="{% static '/img/up.png' %}" alt="">
+                    <img class="arrow activearrow activearrow1" src="{% static '/img/down.png' %}" alt="">
                 </div>
             </div>
             <ul class="navcenter navcenter1">
@@ -47,8 +48,8 @@
             <div class="navtop">
                 <div class="navtitname">实验库</div>
                 <div class="navarrowbox">
-                    <img class="arrow uparrow2" src="../static/img/up.png" alt="">
-                    <img class="arrow activearrow activearrow2" src="../static/img/down.png" alt="">
+                    <img class="arrow uparrow2" src="{% static '/img/up.png' %}" alt="">
+                    <img class="arrow activearrow activearrow2" src="{% static '/img/down.png' %}" alt="">
                 </div>
             </div>
             <ul class="navcenter navcenter2">
@@ -221,5 +222,29 @@
             }
         }
     });
+    //
+//                       _oo0oo_
+//                      o8888888o
+//                      88" . "88
+//                      (| -_- |)
+//                      0\  =  /0
+//                    ___/`---'\___
+//                  .' \\|     |// '.
+//                 / \\|||  :  |||// \
+//                / _||||| -:- |||||- \
+//               |   | \\\  -  /// |   |
+//               | \_|  ''\---/''  |_/ |
+//               \  .-\__  '-'  ___/-. /
+//             ___'. .'  /--.--\  `. .'___
+//          ."" '<  `.___\_<|>_/___.' >' "".
+//         | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+//         \  \ `_.   \_ __\ /__ _/   .-` /  /
+//     =====`-.____`.___ \_____/___.-`___.-'=====
+//                       `=---='
+//     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+//               佛祖保佑         永无BUG
 </script>
 </html>

@@ -25,7 +25,7 @@ def expoperation2(request):
 def expsetting(request,id):
     stuid = utils.getCookie(request, "stuid")
     if (stuid is None) or stuid == "":
-        return (request)
+        return getloginResponse(request)
     stuname = utils.getCookie(request, "stuname")
     if id == '1':
         return render(request, "experiment/experiment1/expsetting.html",{"stuname": stuname})
@@ -50,7 +50,7 @@ def expsetting2(request):
 def expoperation(request,id):
     stuid = utils.getCookie(request, "stuid")
     if (stuid is None) or stuid == "":
-        return (request)
+        return getloginResponse(request)
     stuname = utils.getCookie(request, "stuname")
     if id == '1':
         return render(request, "experiment/experiment1/expoperation.html",{"stuname": stuname})

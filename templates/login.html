@@ -6,15 +6,16 @@
     <title>登录</title>
     {% load staticfiles %}
     <link rel="shortcut icon" href="{% static 'img/hit.ico' %}" type="image/x-icon" />
-    <link rel="icon" href="{% static 'img/hit.ico' %}" type="image/gif">    <!-- 初始化CSS -->
-    <link rel="stylesheet" href="../static/plugin/res.css">
-    <link rel="stylesheet" href="../static/sass/public.css">
+    <link rel="icon" href="{% static 'img/hit.ico' %}" type="image/gif">
+    <!-- 初始化CSS -->
+    <link rel="stylesheet" href="{% static '/plugin/res.css' %}"
+    <link rel="stylesheet" href="{% static '/sass/public.css' %}"
     <!-- 模块css -->
     <link rel="stylesheet" type="text/css" href="{% static 'sass/login.css' %}">
 </head>
 <body>
 <div id="loginwall">
-    <img src="../static/img/logo.png" class="logo">
+    <img src="{% static '/img/logo.png'%}" class="logo">
     <div class="loginbox">
         <div class="infor title title1">机械制造虚拟实验室</div>
         <div class="infor title title2">哈尔滨工业大学(深圳)</div>
@@ -28,14 +29,14 @@
 </body>
 
 <!-- 引用插件 -->
-<script src="../static/plugin/jquery.js"></script>
-<script src="../static/plugin/jqCookies.js"></script>
-<script src="../static/plugin/config.js"></script>
-<script src="../static/js/public.js"></script>
-<script src="../static/plugin/laypage/laypage.js"></script>
-<script src="../static/plugin/zane-calendar.min.js"></script>
+<script src="{% static '/plugin/jquery.js' %}"></script>
+<script src="{% static '/plugin/jqCookies.js' %}"></script>
+<script src="{% static '/plugin/config.js' %}"></script>
+<script src="{% static '/js/public.js' %}"></script>
+<script src="{% static '/plugin/laypage/laypage.js' %}"></script>
+<script src="{% static '/plugin/zane-calendar.min.js' %}"></script>
 <!-- 模块JS -->
-<script type="text/javascript" src="../static/js/index.js"></script>
+<script type="text/javascript" src="{% static '/js/index.js' %}"></script>
 <script>
     $(".login").click(function () {
         var stuid = $(".iptusierid").val();
