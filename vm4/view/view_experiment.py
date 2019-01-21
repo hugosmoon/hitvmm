@@ -3,6 +3,8 @@ from django.shortcuts import render,HttpResponse
 import math
 import random
 
+from vm4.service import StudentService
+
 from django.shortcuts import render
 from django.shortcuts import HttpResponse
 
@@ -27,22 +29,23 @@ def expsetting(request,id):
     if (stuid is None) or stuid == "":
         return getloginResponse(request)
     stuname = utils.getCookie(request, "stuname")
+    stunumber = StudentService.getStudentById(stuid).number
     if id == '1':
-        return render(request, "experiment/experiment1/expsetting.html",{"stuname": stuname})
+        return render(request, "experiment/experiment1/expsetting.html",{"stuname": stuname,"stunumber":stunumber})
     elif id == '2':
-        return render(request, "experiment/experiment2/expsetting.html",{"stuname": stuname})
+        return render(request, "experiment/experiment2/expsetting.html",{"stuname": stuname,"stunumber":stunumber})
     elif id == '3':
-        return render(request, "experiment/experiment3/expsetting.html"),{"stuname": stuname}
+        return render(request, "experiment/experiment3/expsetting.html"),{"stuname": stuname,"stunumber":stunumber}
     elif id == '4':
-        return render(request, "experiment/experiment4/expsetting.html",{"stuname": stuname})
+        return render(request, "experiment/experiment4/expsetting.html",{"stuname": stuname,"stunumber":stunumber})
     elif id == '5':
-        return render(request, "experiment/experiment5/expsetting.html",{"stuname": stuname})
+        return render(request, "experiment/experiment5/expsetting.html",{"stuname": stuname,"stunumber":stunumber})
     elif id == '6':
-        return render(request, "experiment/experiment6/expsetting.html",{"stuname": stuname})
+        return render(request, "experiment/experiment6/expsetting.html",{"stuname": stuname,"stunumber":stunumber})
     elif id == '7':
-        return render(request, "experiment/experiment7/expsetting.html",{"stuname": stuname})
+        return render(request, "experiment/experiment7/expsetting.html",{"stuname": stuname,"stunumber":stunumber})
     elif id == '8':
-        return render(request, "experiment/experiment8/expsetting.html",{"stuname": stuname})
+        return render(request, "experiment/experiment8/expsetting.html",{"stuname": stuname,"stunumber":stunumber})
 
 def expsetting2(request):
     return render(request,"experiment/expsetting2.html")
@@ -52,25 +55,31 @@ def expoperation(request,id):
     if (stuid is None) or stuid == "":
         return getloginResponse(request)
     stuname = utils.getCookie(request, "stuname")
+    stunumber = StudentService.getStudentById(stuid).number
     if id == '1':
-        return render(request, "experiment/experiment1/expoperation.html",{"stuname": stuname})
+        return render(request, "experiment/experiment1/expoperation.html",{"stuname": stuname,"stunumber":stunumber})
     elif id=='2':
-        return render(request, "experiment/experiment2/expoperation.html",{"stuname": stuname})
+        return render(request, "experiment/experiment2/expoperation.html",{"stuname": stuname,"stunumber":stunumber})
     elif id=='3':
-        return render(request, "experiment/experiment3/expoperation.html",{"stuname": stuname})
+        return render(request, "experiment/experiment3/expoperation.html",{"stuname": stuname,"stunumber":stunumber})
     elif id=='4':
-        return render(request, "experiment/experiment4/expoperation.html",{"stuname": stuname})
+        return render(request, "experiment/experiment4/expoperation.html",{"stuname": stuname,"stunumber":stunumber})
     elif id == '5':
-        return render(request, "experiment/experiment5/expoperation.html",{"stuname": stuname})
+        return render(request, "experiment/experiment5/expoperation.html",{"stuname": stuname,"stunumber":stunumber})
     elif id == '6':
-        return render(request, "experiment/experiment6/expoperation.html",{"stuname": stuname})
+        return render(request, "experiment/experiment6/expoperation.html",{"stuname": stuname,"stunumber":stunumber})
     elif id == '7':
-        return render(request, "experiment/experiment7/expoperation.html",{"stuname": stuname})
+        return render(request, "experiment/experiment7/expoperation.html",{"stuname": stuname,"stunumber":stunumber})
     elif id == '8':
-        return render(request, "experiment/experiment8/expoperation.html",{"stuname": stuname})
+        return render(request, "experiment/experiment8/expoperation.html",{"stuname": stuname,"stunumber":stunumber})
 
 def image_draw(request):
-    return render(request,"experiment/image_draw.html")
+    stuid = utils.getCookie(request, "stuid")
+    if (stuid is None) or stuid == "":
+        return getloginResponse(request)
+    stuname = utils.getCookie(request, "stuname")
+    stunumber = StudentService.getStudentById(stuid).number
+    return render(request,"experiment/image_draw.html",{"stuname": stuname,"stunumber":stunumber})
 
 
 # 计算切削力

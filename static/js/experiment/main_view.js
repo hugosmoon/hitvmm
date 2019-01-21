@@ -633,6 +633,17 @@ function text_view(expoeration_order,workpiece_material,workpiece_r,workpiece_l,
         text: xianshicanshu,
     });
 
+    stunumber=$("#stunumber").val();
+    stuname=$("#stuname").val();
+    $('#text').drawText({
+    fillStyle: 'rgb(80, 80, 80)',
+    fromCenter: false,
+    align: 'left',
+        x: 920, y: 100,
+        fontSize: 64,
+        fontFamily: "微软雅黑",
+        text: "姓名："+stuname+"\n\n学号："+ stunumber,
+    });
 
 
 
