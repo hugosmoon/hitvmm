@@ -8,7 +8,7 @@
     <link rel="shortcut icon" href="{% static 'img/hit.ico' %}" type="image/x-icon" />
     <link rel="icon" href="{% static 'img/hit.ico' %}" type="image/gif">
     <!-- 初始化CSS -->
-    <link href="{% static 'plugin/swiper.css' %}">
+    <link rel="stylesheet" href="{% static 'plugin/swiper.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'plugin/res.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'sass/public.css' %}">
     <link rel="stylesheet" href="{% static 'plugin/zane-calendar.min.css' %}">
@@ -28,7 +28,7 @@
         <img class="l_float logo" src="../../../static/img/logo.png" alt="">
         <div class="l_float title">机械制造虚拟实验室</div>
         <div class="l_float userlog"></div>
-        <div class="l_float username">王小明</div>
+        <div class="l_float username">{{ stuname }}</div>
         <div class="l_float loginbtn">退出登录</div>
     </div>
 </div>
