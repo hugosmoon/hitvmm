@@ -72,6 +72,8 @@ def expoperation(request,id):
         return render(request, "experiment/experiment7/expoperation.html",{"stuname": stuname,"stunumber":stunumber})
     elif id == '8':
         return render(request, "experiment/experiment8/expoperation.html",{"stuname": stuname,"stunumber":stunumber})
+    elif id == '9':
+        return render(request, "experiment/experiment9/expoperation.html",{"stuname": stuname,"stunumber":stunumber})
 
 def image_draw(request):
     stuid = utils.getCookie(request, "stuid")
