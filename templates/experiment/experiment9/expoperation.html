@@ -41,10 +41,10 @@
         <div class="left" >
             <div style="border:2px solid #777;" class="boximg boximg1" id="WebGL-output">
             </div>
-            <div class="boximg boximg2" style="border:2px solid #777; height: 400px">
+            <div class="boximg boximg2" style="border:2px solid #777; height: 200px">
 
                 <div class="rightboximg" >
-                    <canvas id="text" width="1600" height="800" style="width: 800px;height: 400px; " download='exp_data.png'> </canvas>
+                    <canvas id="text" width="1600" height="400" style="width: 800px;height: 200px; " download='exp_data.png'> </canvas>
                 </div>
             </div>
             <div class="boximg boximg3">
@@ -70,7 +70,7 @@
                     <div class="scale">
 
                         <form>
-                            <input type="range" value="825" step="1" min="300" max="6000" id="rot_speed_scale"/>
+                            <input type="range" value="825" step="1" min="300" max="3000" id="rot_speed_scale"/>
 
                         </form>
                         <p name="scaleShow" for="scale" id="rot_speed">830 r/min</p>
@@ -133,6 +133,7 @@
 
     //目标孔径
     var aperture=$('#aperture').val();
+    var aperture_agu="--";
     //主轴转速
     var rot_speed =$('#rot_speed_scale').val();
 
@@ -332,6 +333,8 @@
                         status=0;
                         $('#start').text("启动机床");
                         button_status=1;
+                        var dd=0.05+0.02*(rot_speed/3000);
+                        aperture_agu=getNumberInNormalDistribution(parseFloat(aperture),dd).toFixed(2);
                     }
 
                 }
@@ -378,6 +381,7 @@
     $('#rot_speed_scale').bind('input propertychange', range);
 
     function range() {
+
         $('#cutting_depth').html($('#cutting_depth_scale').val()+'mm');
         $('#feed_rate').html($('#aperture').val()+'mm');
         $('#rot_speed').html($('#rot_speed_scale').val()+'r/min');
@@ -386,6 +390,7 @@
         aperture=$('#aperture').val();
         re_render_bioler();
         re_render_cube();
+        measuring("--");
     }
 
 
@@ -393,6 +398,7 @@
 
     var button_status=1;
     $('#start').on("click",function(){
+        measuring("--");
         cutting_depth=parseFloat($("#cutting_depth_scale").val());
         feed_rate=parseFloat($("#feed_rate_scale").val());
         rot_speed=parseFloat($("#rot_speed_scale").val());
@@ -409,6 +415,7 @@
             button_status=1;
             status=0;
         }
+
 
     });
 
@@ -438,7 +445,33 @@ function goto_draw(){
 
 
 //生成测量数据
-function measuring(){
+
+function getNumberInNormalDistribution(mean,std_dev){
+    return mean+(uniform2NormalDistribution()*std_dev);
+}
+
+function uniform2NormalDistribution(){
+    var sum=0.0;
+    for(var i=0; i<20; i++){
+        sum=sum+Math.random();
+    }
+    return sum-10.0;
+}
+
+function show_rand() {
+
+    if(aperture_agu=="--"){
+        measuring(aperture_agu)
+    }
+    else {
+        measuring(parseFloat(aperture_agu))
+    }
+
+
+}
+
+//渲染实验结果
+function measuring(aperture_agu){
     // 清空画布
     $('#text').clearCanvas();
 
@@ -455,31 +488,26 @@ function measuring(){
     fromCenter: false,
     align: 'left',
         x: 40, y: 40,
-        fontSize: 24,
+        fontSize: 32,
         fontFamily: "微软雅黑",
-        text: "你好",
+        text: "加工形式：钻床-内孔加工"+"\n\n主轴转速："+rot_speed+" r/min\n\n目标孔径："+parseFloat(aperture).toFixed(2)+" mm\n\n实测孔径："+aperture_agu+" mm",
+    });
+
+    stunumber=$("#stunumber").val();
+    stuname=$("#stuname").val();
+    $('#text').drawText({
+    fillStyle: 'rgb(80, 80, 80)',
+    fromCenter: false,
+    align: 'left',
+        x: 1200, y: 30,
+        fontSize: 32,
+        fontFamily: "微软雅黑",
+        text: "姓名："+stuname+"\n\n学号："+ stunumber,
     });
 
 }
-measuring();
 
-function getNumberInNormalDistribution(mean,std_dev){
-    return mean+(uniform2NormalDistribution()*std_dev);
-}
-
-function uniform2NormalDistribution(){
-    var sum=0.0;
-    for(var i=0; i<20; i++){
-        sum=sum+Math.random();
-    }
-    return sum-10.0;
-}
-
-function show_rand() {
-    alert(getNumberInNormalDistribution(10,0.3))
-
-}
-
+measuring("--");
 
 </script>
 </html>
