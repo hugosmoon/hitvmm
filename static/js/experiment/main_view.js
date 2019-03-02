@@ -42,6 +42,7 @@ var d=80;
 cutting_force=0;
 cutting_temp=0;
 cutting_r=0;
+diameter=0;
 
 //_______________________________________________________________________________
 //停止渲染
@@ -556,11 +557,13 @@ function text_view(expoeration_order,workpiece_material,workpiece_r,workpiece_l,
         cutting_temp=parseFloat(cutting_temp).toFixed(1);
 
         cutting_r=parseFloat(cutting_r).toFixed(3);
+        diameter=parseFloat(diameter).toFixed(3);
     }
     else {
         cutting_force=0;
         cutting_temp="--";
         cutting_r="--";
+        diameter="--"
     }
     var xianshicanshu ="--"
     if (cut_cal_status=="force") {
@@ -571,6 +574,9 @@ function text_view(expoeration_order,workpiece_material,workpiece_r,workpiece_l,
     }
     if (cut_cal_status=="r") {
         xianshicanshu="表面粗糙度："+cutting_r
+    }
+    if (cut_cal_status=="d") {
+        xianshicanshu="刀尖处工件直径："+diameter+" mm"
     }
 
 
@@ -627,7 +633,7 @@ function text_view(expoeration_order,workpiece_material,workpiece_r,workpiece_l,
     fillStyle: 'rgb(197, 136, 84)',
     fromCenter: false,
     align: 'left',
-        x: 920, y: 1432,
+        x: 720, y: 1432,
         fontSize: 64,
         fontFamily: "微软雅黑",
         text: xianshicanshu,
