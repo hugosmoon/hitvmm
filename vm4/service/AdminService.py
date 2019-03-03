@@ -5,6 +5,7 @@ from vm4.view import utils
 from vm4.models import *
 from django.forms.models import model_to_dict
 
+
 def getAdminByTeacherId(teacherid):
     try:
         admin = Admin.objects.filter(teacherid=teacherid, isdelete=CONSTANTS.ISDELETE_NOT).get()
@@ -38,12 +39,11 @@ def getAllAdmin():
 
 def deleteAmin(adminid):
     try:
-        admin = Admin.objects.filter(id=adminid, isdelete=CONSTANTS.ISDELETE_NOT)
+        admin = Admin.objects.filter(id=int(adminid), isdelete=CONSTANTS.ISDELETE_NOT).update(
+            isdelete=CONSTANTS.ISDELETE_YES)
     except:
         return None
     else:
-        admin.isdelete = CONSTANTS.ISDELETE_YES
-        admin.save()
         return admin
 
 
