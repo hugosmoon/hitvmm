@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>切削用量对切削力的影响</title>
+    <title>外圆加工误差分析</title>
     {% load staticfiles %}
     <link rel="shortcut icon" href="{% static 'img/hit.ico' %}" type="image/x-icon" />
     <link rel="icon" href="{% static 'img/hit.ico' %}" type="image/gif">
@@ -34,11 +34,11 @@
 </div>
 
 <div class="wall4">
-    <div class="addnewexptit">切削用量对切削力的影响</div>
+    <div class="addnewexptit">外圆加工误差分析</div>
     <div class="addnewexpschedulebox">
         <div class="addnewexpschedule selsct">基础参数设置</div>
         <div class="line">-></div>
-        <div class="addnewexpschedule">切削用量对切削力的影响</div>
+        <div class="addnewexpschedule">外圆加工误差分析</div>
 
     </div>
     <div class="addexpbox">
@@ -219,7 +219,7 @@
 
     function next_step() {
         if(set_agu_cookie()){
-            $(location).attr('href', "{% url 'expoperation' 1 %}");
+            $(location).attr('href', "{% url 'expoperation' 10 %}");
         }
 
 
@@ -239,5 +239,6 @@
         return 1;
 
     }
+
 </script>
 </html>

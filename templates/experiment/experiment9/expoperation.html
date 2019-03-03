@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+
+<head>
+    <meta charset="UTF-8">
+    <title>内孔加工误差分析</title>
+    {% load staticfiles %}
+    <link rel="shortcut icon" href="{% static 'img/hit.ico' %}" type="image/x-icon" />
+    <link rel="icon" href="{% static 'img/hit.ico' %}" type="image/gif">
+    <!-- 初始化CSS -->
+    <link href="{% static 'plugin/swiper.css' %}">
+    <link rel="stylesheet" href="{% static 'plugin/res.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'sass/public.css' %}">
+    <link rel="stylesheet" href="{% static 'plugin/zane-calendar.min.css' %}">
+    <!-- 模块css -->
+<link rel="stylesheet" type="text/css" href="{% static 'sass/expsetting.css' %}">
+    <style>
+        .navtip4 > a {
+            color: #0055ff !important;
+        }
+    </style>
+
+</head>
+<body>
+<input type="hidden" id="stunumber" value="{{ stunumber }}"/>
+<input type="hidden" id="stuname" value="{{ stuname }}"/>
+<div class="topwall">
+    <div class="top2">
+        <img class="l_float logo" src="../../../static/img/logo.png" alt="">
+        <div class="l_float title">机械制造虚拟实验室</div>
+        <div class="l_float userlog"></div>
+        <div class="l_float username">{{ stuname }}</div>
+        <div class="l_float loginbtn">退出登录</div>
+    </div>
+</div>
+
+<div class="wall5">
+    <div class="addnewexptit">内孔加工误差分析</div>
+    <br>
+    <div class="operationbox">
+        <div class="left" >
+            <div style="border:2px solid #777;" class="boximg boximg1" id="WebGL-output">
+            </div>
+            <div class="boximg boximg2" style="border:2px solid #777; height: 200px">
+                <div class="rightboximg" >
+                    <canvas id="text" width="1600" height="400" style="width: 800px;height: 200px; " download='exp_data.png'> </canvas>
+                </div>
+            </div>
+            <div class="boximg boximg3">
+{#                <canvas id="cal" width="800" height="300" style="border:2px solid #777;"> </canvas>#}
+            </div>
+        </div>
+        <div class="right">
+            <div class="rangebox">
+                <p class="rutit">加工形式</p>
+                <div class="runitbox">
+                    <div class="rtit">钻床内孔加工</div>
+                    <br>
+                </div>
+            </div>
+
+            <!--刻度尺-->
+            <div class="rangebox">
+                <p class="rutit">加工参数</p>
+                <div class="runitbox">
+                    <div class="rtit">机床主轴转速：</div><br>
+                    <div class="scale">
+
+                        <form>
+                            <input type="range" value="825" step="1" min="300" max="3000" id="rot_speed_scale"/>
+
+                        </form>
+                        <p name="scaleShow" for="scale" id="rot_speed">830 r/min</p>
+                    </div>
+                </div>
+
+
+                <div class="runitbox">
+                    <div class="rtit">目标孔径：</div><br>
+                    <div class="scale">
+
+                        <form>
+                            <input type="range" value="10" step="0.5" min="8" max="12" id="aperture"/>
+
+                        </form>
+                        <p name="scaleShow" for="scale" id="feed_rate">10 mm</p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="obtnbox">
+                <div id="start" class="obtn bunt start" style="background:#0099FF;color:#FFFFFF;">启动机床</div>
+                <div id="re_start" class="obtn bunt start" style="background:#FF0000;color:#FFFFFF;" onclick="location.reload()">实验复位</div>
+            </div>
+            <div class="obtnbox">
+                <div id="measuring" class="obtn bunt save" onclick="show_rand();">生成测量数据</div>
+                <div id="save_img" class="obtn bunt save">保存数据</div>
+                </div>
+            </div>
+        </div>
+
+</div>
+<div class="footer">
+    <div class="fbox">
+        <div class="tip1">地址：深圳市南山区桃源街道深圳大学城哈尔滨工业大学校区</div>
+        <div class="tip2">邮编：518055</div>
+        <div class="tip3">网站版权所有 ©2018 哈尔滨工业大学(深圳)</div>
+        <div class="tip4">粤ICP 备15069706号-1</div>
+    </div>
+
+</div>
+</body>
+<!-- 引用插件 -->
+<script src="{% static 'plugin/jquery.js' %}"></script>
+<script src="{% static 'plugin/config.js' %}"></script>
+<script src="{% static 'plugin/jquery.cookie.js' %}"></script>
+<script src="{% static 'js/experiment/jcanvas.js' %}"></script>
+<script src="{% static 'js/experiment/readcookies.js' %}"></script>
+
+<script src="{% static 'plugin/md5.js' %}"></script>
+<script src="{% static 'js/experiment/main_view.js' %}"></script>
+<script src="{% static 'js/libs/three.js' %}"></script>
+<script src="{% static 'js/libs/STLLoader.js' %}"></script>
+<script src="{% static 'js/libs/ThreeBSP.js' %}"></script>
+<script src="{% static 'js/libs/stats.js' %}"></script>
+<script src="{% static 'js/libs/dat.gui.js' %}"></script>
+
+<script type="text/javascript">
+    var status=0;
+
+    //目标孔径
+    var aperture=$('#aperture').val();
+    var aperture_agu="--";
+    //主轴转速
+    var rot_speed =$('#rot_speed_scale').val();
+
+    // once everything is loaded, we run our Three.js stuff.
+
+        var stats = initStats();
+
+        // create a scene, that will hold all our elements such as objects, cameras and lights.
+        var scene = new THREE.Scene();
+
+        // create a camera, which defines where we're looking at.
+        var camera = new THREE.OrthographicCamera(-200, 200, 100, -100, -160, 500);
+
+        // create a render and set the size
+        var webGLRenderer = new THREE.WebGLRenderer();
+        webGLRenderer.setClearColor(new THREE.Color(0x111111, 1.0));
+        // webGLRenderer.setSize(window.innerWidth/2, window.innerHeight/2);
+        webGLRenderer.setSize(800, 400);
+        webGLRenderer.shadowMapEnabled = true;
+
+        // position and point the camera to the center of the scene
+        camera.position.x = 50;
+        camera.position.y = 50;
+        camera.position.z = 70;
+        camera.lookAt(scene.position);
+        scene.add(camera);
+
+        // add spotlight for the shadows
+        var spotLight = new THREE.DirectionalLight(0xffffff);
+        spotLight.position.set(30, 40, 50);
+        spotLight.intensity = 1;
+        scene.add(spotLight);
+
+        // add the output of the renderer to the html element
+        document.getElementById("WebGL-output").appendChild(webGLRenderer.domElement);
+
+        // call the render function
+        var step = 0;
+
+
+        var loader = new THREE.STLLoader();
+        var group = new THREE.Object3D();
+        loader.load("{% static 'models/8.STL' %}", function (geometry) {
+            // console.log(geometry);
+            var mat = new THREE.MeshLambertMaterial({color: 0xbbbbbb});
+
+            geometry.center();
+            group = new THREE.Mesh(geometry, mat);
+            group.rotation.x = -0.5 * Math.PI;
+            // group.rotation.z = * Math.PI;
+            // group.position.x = -(loader.boundingBox.max.x - loader.boundingBox.min.x) / 2;
+            // group.position.x=-100;
+            // group.position.z=30;
+            group.position.y=20;
+            // group.position.z=50;
+            group.scale.set(aperture/8, aperture/8, 1);
+            scene.add(group);
+        });
+
+        //重新绘制钻头
+        function re_render_bioler(){
+            scene.remove(group);
+            group.scale.set(aperture/8, aperture/8, 1);
+            scene.add(group);
+
+        }
+
+
+
+        // 绘制工件
+        var cubeGeometry = new THREE.BoxGeometry(100, 20, 100);
+        var cubeMaterial = new THREE.MeshLambertMaterial({color: 0x666666});
+        var cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+        cube.castShadow = true;
+        cube.position.x = 0;
+        cube.position.y = -60;
+
+        //创建孔
+        var cylinderGeometry = new THREE.CylinderGeometry(4.5, 4.5, 100,100);
+        var cylinderMaterial = new THREE.MeshLambertMaterial({color: 0xffffff});
+        var cylinder = new THREE.Mesh(cylinderGeometry, cylinderMaterial);
+        // var cylinder = createMesh(new THREE.CylinderGeometry(20, 20, 20));
+        cylinder.position.y=-60;
+        var b=new ThreeBSP(cylinder);
+        // add the sphere to the scene
+        // scene.add(cylinder);
+        var c=new ThreeBSP(cube);
+        var d=c.toMesh(cubeMaterial);
+        scene.add(d);
+
+        //重新绘制孔
+        function re_render_cube(){
+
+            cylinder = new THREE.Mesh(cylinderGeometry, cylinderMaterial);
+            cylinder.position.y=-60;
+            cylinder.scale.set(aperture/8, aperture/8, aperture/8);
+            b=new ThreeBSP(cylinder);
+
+        }
+
+        var loader1 = new THREE.STLLoader();
+        var group1 = new THREE.Object3D();
+        loader1.load("{% static 'models/daobing.stl' %}", function (geometry) {
+            // console.log(geometry);
+            var mat = new THREE.MeshLambertMaterial({color: 0x777777});
+
+            geometry.center();
+            group1 = new THREE.Mesh(geometry, mat);
+            // group1.rotation.x = -0.5 * Math.PI;
+            // group.rotation.z = * Math.PI;
+            // group.position.x = -(loader.boundingBox.max.x - loader.boundingBox.min.x) / 2;
+            // group1.position.x=-100;
+            // group1.position.z=30;
+            group1.position.y=90;
+            group1.scale.set(0.6, 0.6, 0.6);
+
+            scene.add(group1);
+        });
+
+        var cylinderGeometry2 = new THREE.CylinderGeometry(25, 25, 200,100);
+        var cylinderMaterial2 = new THREE.MeshLambertMaterial({color: 0x999999});
+        var cylinder2 = new THREE.Mesh(cylinderGeometry2, cylinderMaterial2);
+        // var cylinder = createMesh(new THREE.CylinderGeometry(20, 20, 20));
+        cylinder2.position.y=177;
+        scene.add(cylinder2);
+
+        var count=0;
+        var dri_nu=0;
+        var depth=0;
+        var dri_status=1;
+        var Displacement=0;
+        var disp=0;
+
+        render();
+
+
+        function render() {
+            stats.update();
+            if (status==1) {
+                requestAnimationFrame(render_drilling);
+            }else {
+                requestAnimationFrame(render);
+            }
+
+            // render using requestAnimationFrame
+            webGLRenderer.render(scene, camera);
+        }
+
+
+        function render_drilling() {
+            stats.update();
+
+
+
+
+
+                if(dri_status==1){
+                    if(count<100){
+                        count+=0.5;
+                    }
+                    else {
+
+                        if(depth<30){
+                            depth+=0.05;
+                        }
+                        else {
+
+                            dri_nu+=1;
+                            dri_status=0;
+                            scene.remove(d);
+                            d=new ThreeBSP(d).subtract(b).toMesh(cubeMaterial);
+                            scene.add(d);
+                        }
+
+                    }
+
+                }
+
+                else if(dri_status==0) {
+                    if (depth>0){
+                        depth=depth-0.2;
+                    }
+                    else {
+                        dri_status=2;
+                    }
+
+                }
+
+                else {
+                    if(count>0){
+                        count=count-0.5;
+
+                    }
+                    else {
+
+                        dri_status=1;
+                        status=0;
+                        $('#start').text("启动机床");
+                        button_status=1;
+                        var dd=0.15+0.15*(rot_speed/3000);
+                        aperture_agu=parseFloat(getNumberInNormalDistribution(parseFloat(aperture),dd).toFixed(2)).toFixed(2);
+                    }
+
+                }
+
+            group.rotation.z += -0.02*count*(rot_speed/300);
+            group1.rotation.y += -0.02*count*(rot_speed/300);
+            group.position.y=20-depth;
+            group1.position.y=90-depth;
+            cylinder2.position.y=177-depth;
+
+            // render using requestAnimationFrame
+            if (status==1) {
+                requestAnimationFrame(render_drilling);
+            }else {
+                requestAnimationFrame(render);
+            }
+            webGLRenderer.render(scene, camera);
+        }
+
+        function initStats() {
+            var stats = new Stats();
+            // stats.setMode(0); // 0: fps, 1: ms
+            // Align top-left
+            // stats.domElement.style.position = 'absolute';
+            // stats.domElement.style.left = '0px';
+            // stats.domElement.style.top = '0px';
+            // document.getElementById("Stats-output").appendChild(stats.domElement);
+
+            return stats;
+        }
+        function reset() {
+            scene.remove(d);
+            d=new ThreeBSP(cube).toMesh(cubeMaterial);
+            scene.add(d);
+
+        }
+
+    //页面加载时匹配文字和滑条值
+    range();
+
+    //监听range的变化
+    $('#cutting_depth_scale').bind('input propertychange', range);
+    $('#aperture').bind('input propertychange', range);
+    $('#rot_speed_scale').bind('input propertychange', range);
+
+    function range() {
+
+        $('#cutting_depth').html($('#cutting_depth_scale').val()+'mm');
+        $('#feed_rate').html($('#aperture').val()+'mm');
+        $('#rot_speed').html($('#rot_speed_scale').val()+'r/min');
+
+        rot_speed=$('#rot_speed_scale').val();
+        aperture=$('#aperture').val();
+        re_render_bioler();
+        re_render_cube();
+        measuring("--");
+    }
+
+
+
+
+    var button_status=1;
+    $('#start').on("click",function(){
+        measuring("--");
+        cutting_depth=parseFloat($("#cutting_depth_scale").val());
+        feed_rate=parseFloat($("#feed_rate_scale").val());
+        rot_speed=parseFloat($("#rot_speed_scale").val());
+
+
+        if (button_status==1){
+            $('#start').text("暂停");
+            button_status=0;
+            reset();
+            status=1;
+        }
+        else {
+            $('#start').text("继续");
+            button_status=1;
+            status=0;
+        }
+
+
+    });
+
+
+
+
+$('#save_img').on("click",function(){
+    file_name=(new Date()).valueOf()+".png"
+    exportCanvasAsPNG("text",file_name);
+})
+
+function exportCanvasAsPNG(id, fileName) {
+        var canvasElement = document.getElementById(id);
+        var MIME_TYPE = "image/png";
+        var imgURL = canvasElement.toDataURL(MIME_TYPE);
+        var dlLink = document.createElement('a');
+        dlLink.download = fileName;
+        dlLink.href = imgURL;
+        dlLink.dataset.downloadurl = [MIME_TYPE, dlLink.download, dlLink.href].join(':');
+        document.body.appendChild(dlLink);
+        dlLink.click();
+        document.body.removeChild(dlLink);
+    }
+function goto_draw(){
+        window.open("{% url 'image_draw' %}");
+    }
+
+
+//生成测量数据
+
+function getNumberInNormalDistribution(mean,std_dev){
+    return mean+(uniform2NormalDistribution()*std_dev);
+}
+
+function uniform2NormalDistribution(){
+    var sum=0.0;
+    for(var i=0; i<12; i++){
+        sum=sum+Math.random();
+    }
+    return sum-6.0;
+}
+
+function show_rand() {
+
+    if(aperture_agu=="--"){
+        measuring(aperture_agu)
+    }
+    else {
+        measuring(parseFloat(aperture_agu))
+    }
+
+
+}
+
+//渲染实验结果
+function measuring(aperture_agu){
+    // 清空画布
+    $('#text').clearCanvas();
+
+    //绘制网格
+    $('#text').drawRect({
+      fillStyle: 'rgb(20, 20, 30)',
+      fromCenter:false,
+      x: 0, y: 0,
+      width: 2000,
+      height: 2000
+    });
+    $('#text').drawText({
+    fillStyle: 'rgb(255, 255, 255)',
+    fromCenter: false,
+    align: 'left',
+        x: 40, y: 40,
+        fontSize: 32,
+        fontFamily: "微软雅黑",
+        text: "加工形式：钻床-内孔加工"+"\n\n主轴转速："+rot_speed+" r/min\n\n目标孔径："+parseFloat(aperture).toFixed(2)+" mm\n\n实测孔径："+aperture_agu+" mm",
+    });
+
+    stunumber=$("#stunumber").val();
+    stuname=$("#stuname").val();
+    $('#text').drawText({
+    fillStyle: 'rgb(80, 80, 80)',
+    fromCenter: false,
+    align: 'left',
+        x: 1200, y: 30,
+        fontSize: 32,
+        fontFamily: "微软雅黑",
+        text: "姓名："+stuname+"\n\n学号："+ stunumber,
+    });
+
+}
+
+measuring("--");
+
+</script>
+</html>

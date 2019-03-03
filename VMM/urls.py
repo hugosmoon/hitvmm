@@ -103,4 +103,5 @@ urlpatterns = [
     url(r'experiment/cutting_temp_cal/', view_experiment.cutting_temp_cal, name='cutting_temp_cal'),
     # 实现表面粗糙度计算
     url(r'experiment/cutting_roughness_cal/', view_experiment.cutting_roughness_cal, name='cutting_roughness_cal'),
+
 ]

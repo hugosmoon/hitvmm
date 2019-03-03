@@ -26,7 +26,7 @@
         <input type="text" class="infor iptusierid">
         <text class="infor tip name">密码</text>
         <input type="password" class="infor iptname">
-        <div class="login">登录</div>
+        <div class="login" style="width: 200px;margin-right: 35px;">登录</div>
     </div>
 </div>
 </body>
@@ -60,5 +60,27 @@
                 }
             });
     });
+
+    $(document).keyup(function(e){
+          var key = e.which;
+          if(key==13) {
+              var userid = $(".iptusierid").val();
+              var name = $(".iptname").val();
+              $.post("/login/teacher/",
+                  {
+                      teaid: userid,
+                      passwd: sha256_digest(name)
+                  },
+                  function (data, status) {
+                      dataObj = $.parseJSON(data)
+                      code = dataObj.code;
+                      if (code != 0) {
+                          alert(dataObj.desc);
+                      } else {
+                          $(location).attr('href', '/undoneteaching/');
+                      }
+                  });
+          }
+        });
 </script>
 </html>

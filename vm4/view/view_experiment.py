@@ -24,6 +24,7 @@ def expoperation(request):
     return render(request, "experiment/experiment1/expoperation.html")
 def expoperation2(request):
     return render(request,"experiment/expoperation2.html")
+
 def expsetting(request,id):
     stuid = utils.getCookie(request, "stuid")
     if (stuid is None) or stuid == "":
@@ -35,7 +36,7 @@ def expsetting(request,id):
     elif id == '2':
         return render(request, "experiment/experiment2/expsetting.html",{"stuname": stuname,"stunumber":stunumber})
     elif id == '3':
-        return render(request, "experiment/experiment3/expsetting.html"),{"stuname": stuname,"stunumber":stunumber}
+        return render(request, "experiment/experiment3/expsetting.html",{"stuname": stuname,"stunumber":stunumber})
     elif id == '4':
         return render(request, "experiment/experiment4/expsetting.html",{"stuname": stuname,"stunumber":stunumber})
     elif id == '5':
@@ -46,6 +47,8 @@ def expsetting(request,id):
         return render(request, "experiment/experiment7/expsetting.html",{"stuname": stuname,"stunumber":stunumber})
     elif id == '8':
         return render(request, "experiment/experiment8/expsetting.html",{"stuname": stuname,"stunumber":stunumber})
+    elif id == '10':
+        return render(request, "experiment/experiment10/expsetting.html",{"stuname": stuname,"stunumber":stunumber})
 
 def expsetting2(request):
     return render(request,"experiment/expsetting2.html")
@@ -72,6 +75,10 @@ def expoperation(request,id):
         return render(request, "experiment/experiment7/expoperation.html",{"stuname": stuname,"stunumber":stunumber})
     elif id == '8':
         return render(request, "experiment/experiment8/expoperation.html",{"stuname": stuname,"stunumber":stunumber})
+    elif id == '9':
+        return render(request, "experiment/experiment9/expoperation.html",{"stuname": stuname,"stunumber":stunumber})
+    elif id == '10':
+        return render(request, "experiment/experiment10/expoperation.html",{"stuname": stuname,"stunumber":stunumber})
 
 def image_draw(request):
     stuid = utils.getCookie(request, "stuid")

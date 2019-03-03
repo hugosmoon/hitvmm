@@ -10,6 +10,7 @@ from vm4.models import *
 from django.core.paginator import Paginator
 from django.forms.models import model_to_dict
 
+
 # 根据学生id获得教学
 def getTeachingByStu(stuid, type, index):
     reportList = ReportService.getReportByStuId(stuid)
@@ -19,7 +20,7 @@ def getTeachingByStu(stuid, type, index):
             break
         teachingIds.append(reportList[i].teachingid)
     try:
-        teachinglist = Teaching.objects.filter(id__in=teachingIds, status=type).all()
+        teachinglist = Teaching.objects.filter(id__in=teachingIds, status=type, isdelete=CONSTANTS.ISDELETE_NOT).all()
     except:
         return None
     else:
@@ -88,7 +89,7 @@ def getCountPageByStu(stuid, type):
     if teachingIds.__len__() == 0:
         return 0
 
-    count = Teaching.objects.filter(id__in=teachingIds, status=type).count()
+    count = Teaching.objects.filter(id__in=teachingIds, status=type, isdelete=CONSTANTS.ISDELETE_NOT).count()
     return count
 
 
@@ -144,7 +145,7 @@ def getTeachingByTea(teaid, type, index):
                 video = VideoService.getVideoById(id)
                 video.url = "/getVideoById/?videourl=" + video.url
                 videoobj = {
-                    "id":video.id,
+                    "id": video.id,
                     "url": video.url,
                     "name": video.name
                 }
@@ -227,8 +228,8 @@ def updateTeachingDeadlineById(teachingid, deadline):
 def addTeaching(experimentid, deadline, teacherid, point, remark, dataurl, stulisturl, templateid, videos):
     now = utils.getNow()
     teaching = Teaching(experimentid=experimentid, deadline=deadline, teacherid=teacherid, point=point, remark=remark,
-                       dataurl=dataurl, stulisturl=stulisturl, templateid=templateid, videos=videos,
-                       status=CONSTANTS.TEACHING_IS_RUNNING, isdelete=CONSTANTS.ISDELETE_NOT, createtime=now,
-                       updatetime=now)
+                        dataurl=dataurl, stulisturl=stulisturl, templateid=templateid, videos=videos,
+                        status=CONSTANTS.TEACHING_IS_RUNNING, isdelete=CONSTANTS.ISDELETE_NOT, createtime=now,
+                        updatetime=now)
     teaching.save()
     return teaching.id
