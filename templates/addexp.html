@@ -21,7 +21,7 @@
     </style>
 
 </head>
-<body>
+<body style="height: 1200px">
 <div class="topwall">
     <div class="top">
         <img class="l_float logo" src="../static/img/logo.png" alt="">
@@ -66,11 +66,11 @@
                 <li class="navtip navtip3">
                     <a href="/allexptea/">全部实验</a>
                 </li>
-                {% for experiment in experimentMenuList %}
-                    <li class="navtip">
-                        <a href="{{ experiment.url }}" target="_blank">{{ experiment.name }}</a>
-                    </li>
-                {% endfor %}
+{#                {% for experiment in experimentMenuList %}#}
+{#                    <li class="navtip">#}
+{#                        <a href="{{ experiment.url }}" target="_blank">{{ experiment.name }}</a>#}
+{#                    </li>#}
+{#                {% endfor %}#}
             </ul>
         </div>
         <div class="navwall navwall3 changepsw">

@@ -8,10 +8,12 @@
     <link rel="shortcut icon" href="{% static 'img/hit.ico' %}" type="image/x-icon" />
     <link rel="icon" href="{% static 'img/hit.ico' %}" type="image/gif">
     <!-- 初始化CSS -->
-    <link rel="stylesheet" href="{% static '/plugin/res.css' %}"
-    <link rel="stylesheet" href="{% static '/sass/public.css' %}"
+    <link rel="stylesheet" href="{% static '/plugin/res.css' %}">
+     <link rel="stylesheet" href="{% static '/sass/public.css' %}">
     <!-- 模块css -->
     <link rel="stylesheet" type="text/css" href="{% static 'sass/login.css' %}">
+
+
 </head>
 <body>
 <div id="loginwall">
@@ -23,9 +25,11 @@
         <input type="text" class="infor iptusierid">
         <text class="infor tip name">姓名</text>
         <input type="text" class="infor iptname">
-        <div class="login">登录</div>
+        <br>
+        <div  class="login" style="width: 200px;margin-right: 35px;">登录</div>
     </div>
 </div>
+
 </body>
 
 <!-- 引用插件 -->
@@ -57,5 +61,28 @@
                 }
             });
     });
+
+    $(document).keyup(function(e){
+          var key = e.which;
+          if(key==13){
+            var stuid = $(".iptusierid").val();
+            var stuname = $(".iptname").val();
+                $.post("/login/stu/",
+                    {
+                        stuid: stuid,
+                        stuname: stuname
+                    },
+                    function (data, status) {
+                        dataObj = $.parseJSON(data)
+                        code = dataObj.code;
+                        if(code != 0){
+                            alert(dataObj.desc);
+                        }else
+                        {
+                            $(location).attr('href', '/index/');
+                        }
+                    });
+          }
+        });
 </script>
 </html>

@@ -24,7 +24,7 @@
             <input type="text" class="infor iptusierid">
             <text class="infor tip name">密码</text>
             <input type="password" class="infor iptname">
-            <div class="login adminlogin">登录</div>
+            <div class="login adminlogin" style="width: 200px;margin-right: 35px;">登录</div>
         </div>
     </div>
 </body>
@@ -39,4 +39,30 @@
 <script src="../static/js/public.js"></script>
 <!-- 模块JS -->
 <script type="text/javascript" src="../static/js/index.js"></script>
+<script>
+    $(document).keyup(function(e){
+          var key = e.which;
+          if(key==13){
+            var adminid = $(".iptusierid").val();
+            var adminpwd = $(".iptname").val();
+            $.post("/login/admin/",
+                {
+                    adminid: adminid,
+                    adminpwd: sha256_digest(adminpwd)
+                },
+                function (data, status) {
+                    dataObj = $.parseJSON(data)
+                    code = dataObj.code;
+                    if (code != 0) {
+                        alert(dataObj.desc);
+                    } else {
+                        $(location).attr('href', '/studentmanagement/');
+                    }
+                });
+            }
+        });
+
+
+
+</script>
 </html>
