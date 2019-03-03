@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>实验操作</title>
+    <title>外圆加工误差分析</title>
     {% load staticfiles %}
     <link rel="shortcut icon" href="{% static 'img/hit.ico' %}" type="image/x-icon" />
     <link rel="icon" href="{% static 'img/hit.ico' %}" type="image/gif">
@@ -35,11 +35,11 @@
 </div>
 
 <div class="wall5">
-    <div class="addnewexptit">外圆及内孔的加工误差分析</div>
+    <div class="addnewexptit">外圆加工误差分析</div>
     <div class="addnewexpschedulebox">
         <div class="addnewexpschedule selsct">基础参数设置</div>
         <div class="line selsct">-></div>
-        <div class="addnewexpschedule selsct">外圆及内孔的加工误差分析</div>
+        <div class="addnewexpschedule selsct">外圆加工误差分析</div>
 
     </div>
     <div class="operationbox">
@@ -244,7 +244,7 @@
                 url="{% url 'cutting_temp_cal'%}"
             }
             if (cal_order=="d") {
-                diameter=parseFloat(workpiece_r*2-cutting_depth*2+0.05*(1-2*Math.random())).toFixed(3);
+                diameter=parseFloat(workpiece_r*2-cutting_depth*2+0.05*(parseFloat(getNumberInNormalDistribution(0,0.3)))).toFixed(3);
             }
             var form_data = new FormData();
 			form_data.append('workpiece_material',workpiece_material);
@@ -302,6 +302,16 @@ function goto_draw(){
         window.open("{% url 'image_draw' %}");
     }
 
+function getNumberInNormalDistribution(mean,std_dev){
+    return mean+(uniform2NormalDistribution()*std_dev);
+}
 
+function uniform2NormalDistribution(){
+    var sum=0.0;
+    for(var i=0; i<12; i++){
+        sum=sum+Math.random();
+    }
+    return sum-6.0;
+}
 </script>
 </html>

@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>实验操作</title>
+    <title>内孔加工误差分析</title>
     {% load staticfiles %}
     <link rel="shortcut icon" href="{% static 'img/hit.ico' %}" type="image/x-icon" />
     <link rel="icon" href="{% static 'img/hit.ico' %}" type="image/gif">
@@ -35,14 +35,13 @@
 </div>
 
 <div class="wall5">
-    <div class="addnewexptit">外圆及内孔的加工误差分析</div>
+    <div class="addnewexptit">内孔加工误差分析</div>
     <br>
     <div class="operationbox">
         <div class="left" >
             <div style="border:2px solid #777;" class="boximg boximg1" id="WebGL-output">
             </div>
             <div class="boximg boximg2" style="border:2px solid #777; height: 200px">
-
                 <div class="rightboximg" >
                     <canvas id="text" width="1600" height="400" style="width: 800px;height: 200px; " download='exp_data.png'> </canvas>
                 </div>
@@ -54,10 +53,10 @@
         <div class="right">
             <div class="rangebox">
                 <p class="rutit">加工形式</p>
-                <select style="margin-top:10px;margin-bottom: 20px;width: 330px;height: 30px;" class="selctbox selctbox1" name="" id="processing_form">
-                        <option value="45">钻床-内孔加工</option>
-                        <option value="60">车床-外圆加工</option>
-                </select>
+                <div class="runitbox">
+                    <div class="rtit">钻床内孔加工</div>
+                    <br>
+                </div>
             </div>
 
             <!--刻度尺-->
@@ -331,7 +330,7 @@
                         status=0;
                         $('#start').text("启动机床");
                         button_status=1;
-                        var dd=0.05+0.02*(rot_speed/3000);
+                        var dd=0.15+0.15*(rot_speed/3000);
                         aperture_agu=parseFloat(getNumberInNormalDistribution(parseFloat(aperture),dd).toFixed(2)).toFixed(2);
                     }
 
@@ -450,10 +449,10 @@ function getNumberInNormalDistribution(mean,std_dev){
 
 function uniform2NormalDistribution(){
     var sum=0.0;
-    for(var i=0; i<20; i++){
+    for(var i=0; i<12; i++){
         sum=sum+Math.random();
     }
-    return sum-10.0;
+    return sum-6.0;
 }
 
 function show_rand() {
