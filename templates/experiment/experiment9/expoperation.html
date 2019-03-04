@@ -233,7 +233,7 @@
 
         var loader1 = new THREE.STLLoader();
         var group1 = new THREE.Object3D();
-        loader1.load("{% static 'models/daobing.stl' %}", function (geometry) {
+        loader1.load("{% static 'models/daobing.STL' %}", function (geometry) {
             // console.log(geometry);
             var mat = new THREE.MeshLambertMaterial({color: 0x777777});
 
@@ -282,33 +282,23 @@
 
         function render_drilling() {
             stats.update();
-
-
-
-
-
                 if(dri_status==1){
                     if(count<100){
                         count+=0.5;
                     }
                     else {
-
                         if(depth<30){
                             depth+=0.05;
                         }
                         else {
-
                             dri_nu+=1;
                             dri_status=0;
                             scene.remove(d);
                             d=new ThreeBSP(d).subtract(b).toMesh(cubeMaterial);
                             scene.add(d);
                         }
-
                     }
-
                 }
-
                 else if(dri_status==0) {
                     if (depth>0){
                         depth=depth-0.2;
