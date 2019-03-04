@@ -135,7 +135,7 @@ def v_teachermanagement(request):
     else:
         page = int(page)
     if (teachernum == "" or teachernum is None) and (teachername == "" or teachername is None):
-        count = TeacherService.getCountTeacher()
+        count = TeacherService.getCountTeacher(None, None)
         countpage = 0
         i = 0
         if count > 0:
@@ -144,7 +144,7 @@ def v_teachermanagement(request):
             countpage = count / 10 + i
         teacherList = TeacherService.getTeacherByPage(None, None, page)
     else:
-        count = TeacherService.getCountTeacher()
+        count = TeacherService.getCountTeacher(teachername, teachernum)
         countpage = 0
         i = 0
         if count > 0:
@@ -424,6 +424,8 @@ def addBatchAdmin(request):
 
     for admin in adminlist:
         teacher = TeacherService.getTeacherByNumber(admin["number"])
+        teachername = admin["name"]
+        teachernum = admin["number"]
         if teacher is None:
             teacherid = TeacherService.addTeacher(teachername, teachernum)
             teacher = TeacherService.getTeacherById(teacherid)
