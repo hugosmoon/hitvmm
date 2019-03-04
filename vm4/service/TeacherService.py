@@ -5,6 +5,7 @@ from vm4.models import *
 from django.core.paginator import Paginator
 from django.forms.models import model_to_dict
 
+
 # 根据id获取教师
 def getTeacherById(teacherId):
     try:
@@ -66,6 +67,7 @@ def getTeacherByPage(name, number, index):
     except:
         return None
     else:
+        teacherList = removeAdminTeacher(teacherList)
         paginator = Paginator(teacherList, 10)
         teacherPageList = paginator.page(index)
         return teacherPageList
@@ -94,10 +96,26 @@ def deleteTeacher(teacherid):
 
 
 # 获取教师总数
-def getCountTeacher():
+def getCountTeacher(name, number):
+    teachersearch = Teacher.objects.filter(isdelete=CONSTANTS.ISDELETE_NOT)
+    if name is not None:
+        teachersearch = teachersearch.filter(name__contains=name)
+    if number is not None:
+        teachersearch = teachersearch.filter(number__contains=number)
     try:
-        count = Teacher.objects.filter(isdelete=CONSTANTS.ISDELETE_NOT).count()
+        teacherList = teachersearch.all()
     except:
-        return 0
+        return None
     else:
-        return count
+        teacherList = removeAdminTeacher(teacherList)
+        return len(teacherList)
+
+
+def removeAdminTeacher(teacherQuerySet):
+    teacherList = list(teacherQuerySet)
+    adminList = Admin.objects.filter(isdelete=CONSTANTS.ISDELETE_NOT).all()
+    for admin in adminList:
+        for teacher in teacherList:
+            if admin.teacherid == teacher.id:
+                teacherList.remove(teacher)
+    return teacherList
