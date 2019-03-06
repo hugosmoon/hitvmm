@@ -33,6 +33,8 @@
             <li class="topnav "><a href="/teachermanagement/">教师用户</a></li>
             {% if issuperadmin == "1" %}
                 <li class="topnav"><a href="/adminmanagement/">管理员用户</a></li>
+            {% else %}
+                <li class="topnav"><a target="_blank" href="/passwordadmin/">修改密码</a></li>
             {% endif %}
         </ul>
         <div class="line line1"></div>
@@ -178,9 +180,9 @@
             }
             if (!first) { //一定要加此判断，否则初始时会无限刷新
                 if (param != "?") {
-                    location.href = param+'&page=' + e.curr;
-                }else{
-                    location.href = param+'page=' + e.curr;
+                    location.href = param + '&page=' + e.curr;
+                } else {
+                    location.href = param + 'page=' + e.curr;
                 }
             }
         }

@@ -1220,6 +1220,35 @@ var publicObj = {
                 });
 
         })
+        $(".adminpwsure").bind('click', function () {
+            var oldpwd = $(".oldpwd").val();
+            var newpwd = $(".newpwd").val();
+            var newpwd2 = $(".newpwd2").val();
+            if (newpwd != newpwd2) {
+                alert("两次输入的密码不一致!");
+            }
+            $.post("/adminpasswordedit/",
+                {
+                    oldpwd: sha256_digest(oldpwd),
+                    newpwd: sha256_digest(newpwd)
+                },
+                function (data, status) {
+                    dataObj = $.parseJSON(data)
+                    code = dataObj.code;
+                    if (code == -2) {//未登录
+                        window.location = "/loginadmin/";
+                    } else if (code != 0) {
+                        alert(dataObj.desc);
+                    } else {
+                        alert("修改成功")
+                        $.cookie('issuperadmin', '', {expires: -1, path: '/'});
+                        $.cookie('adminid', '', {expires: -1, path: '/'});
+                        $.cookie('adminname', '', {expires: -1, path: '/'});
+                        location.href = '/loginadmin/'
+                    }
+                });
+
+        })
     },
     // 关闭弹窗
     hidePopup: function () {

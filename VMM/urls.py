@@ -81,6 +81,8 @@ urlpatterns = [
     url(r'addBatchStudent/', view_admin.addBatchStudent),
     url(r'addBatchTeacher/', view_admin.addBatchTeacher),
     url(r'addBatchAdmin/', view_admin.addBatchAdmin),
+    url(r'passwordadmin/', view_admin.v_adminpassword),
+    url(r'adminpasswordedit/', view_admin.adminpasswordedit),
 
     # experiment
     url(r'experiment/experiment1/', view_experiment.experiment1),
