@@ -178,6 +178,14 @@ def v_adduser(request):
                    "filterInfoListstr": filterInfoListstr})
 
 
+def v_adminpassword(request):
+    adminid = utils.getCookie(request, "adminid")
+    if adminid == "" or adminid is None:
+        return getloginResponse(request)
+    adminname = utils.getCookie(request, "adminname")
+    return render(request, "adminpassword.html", {"adminname": adminname})
+
+
 # 根据学生id删除学生
 def deleteStudentByid(request):
     adminid = utils.getCookie(request, "adminid")
@@ -594,5 +602,31 @@ def delFilterInfo(request):
         responseReturn = Response(-1, "删除失败，请重试！")
         return HttpResponse(responseReturn.__str__())
 
+    responseReturn = Response(None, None)
+    return HttpResponse(responseReturn.__str__())
+
+
+# 修改管理员密码
+def adminpasswordedit(request):
+    adminid = utils.getCookie(request, "adminid")
+    if (adminid is None) or adminid == "":
+        responseReturn = Response(-2, "请登录")
+        return HttpResponse(responseReturn.__str__())
+    newpwd = utils.getParam(request, "newpwd")
+    oldpwd = utils.getParam(request, "oldpwd")
+    admin = AdminService.getAdminById(adminid)
+    teacher = TeacherService.getTeacherById(admin.teacherid)
+    if oldpwd != teacher.password:
+        responseReturn = Response("-1", "原密码输入有误")
+        return HttpResponse(responseReturn)
+    teacher.password = newpwd
+    teacher.updatetime = utils.getNow()
+    result = TeacherService.editPassword(admin.teacherid, newpwd)
+    if result is not None:
+        responseReturn = Response(None, None)
+    else:
+        responseReturn = Response("-1", "网络忙，请稍后重试！")
+    response = HttpResponse(responseReturn.__str__())
+    return response
     responseReturn = Response(None, None)
     return HttpResponse(responseReturn.__str__())

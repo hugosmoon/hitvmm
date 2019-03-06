@@ -15,6 +15,15 @@ def getAdminByTeacherId(teacherid):
         return admin
 
 
+def getAdminById(adminid):
+    try:
+        admin = Admin.objects.filter(id=adminid, isdelete=CONSTANTS.ISDELETE_NOT).get()
+    except:
+        return None
+    else:
+        return admin
+
+
 def getAllAdmin():
     try:
         adminList = Admin.objects.filter(isdelete=CONSTANTS.ISDELETE_NOT).all()
