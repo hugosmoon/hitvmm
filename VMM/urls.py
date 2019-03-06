@@ -60,6 +60,7 @@ urlpatterns = [
     url(r'updateExperimentVideo/', view_teacher.updateExperimentVideo),
     url(r'setdescription/', view_teacher.setdescription),
     url(r'getStudentByFilterInfoId/', view_teacher.getStudentByFilterInfoId),
+    url(r'updateExperimentTemplate/', view_teacher.updateExperimentTemplate),
     url(r'^vieweport/(?P<path>.*)$', serve, {'document_root': CONSTANTS.REPORTURL_PRE}),
 
     # admin
