@@ -21,6 +21,8 @@ from vm4.view import view_teacher
 from vm4.view import view_admin
 from vm4.view import view_experiment
 from vm4.context import CONSTANTS
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
 
 urlpatterns = [
     # student
@@ -107,3 +109,5 @@ urlpatterns = [
     url(r'experiment/cutting_roughness_cal/', view_experiment.cutting_roughness_cal, name='cutting_roughness_cal'),
 
 ]
+
+urlpatterns += staticfiles_urlpatterns()
