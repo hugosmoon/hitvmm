@@ -484,7 +484,7 @@ def getStudentListByExcel(filename):
 
         student = {
             "name": sheet0.cell_value(i, 0),
-            "number": str(int(sheet0.cell_value(i, 1))),
+            "number": str(sheet0.cell_value(i, 1)),
             "filterinfoid": filterinfo.id
         }
         studentobj = StudentService.getStudentByNum(student["number"])
