@@ -6,6 +6,7 @@ from vm4.service import AdminService
 from vm4.service import TeacherService
 from vm4.service import FilterInfoService
 from vm4.service import StudentService
+from vm4.service import TeachingService
 from vm4.view import utils
 from VMM import superadmin
 from vm4.context import CONSTANTS
@@ -217,6 +218,10 @@ def deleteTeacherByid(request):
         responseReturn = Response(-2, "请登录")
         return HttpResponse(responseReturn.__str__())
     teacherid = utils.getParam(request, "teacherid")
+    count = TeachingService.getCountByTea(teacherid)
+    if count > 0:
+        responseReturn = Response("-1", "该教师下有未删除的实验教学")
+        return HttpResponse(responseReturn.__str__())
     TeacherService.deleteTeacher(teacherid)
     responseReturn = Response(None, None)
     return HttpResponse(responseReturn.__str__())
@@ -233,6 +238,11 @@ def deleteAdminByid(request):
         responseReturn = Response("-1", "您不是超级管理员，没有删除管理员的权限！")
         return HttpResponse(responseReturn.__str__())
     deleteadminid = utils.getParam(request, "adminid")
+    deleteAdmin = AdminService.getAdminById(deleteadminid)
+    count = TeachingService.getCountByTea(deleteAdmin.teacherid)
+    if count > 0:
+        responseReturn = Response("-1", "该教师下有未删除的实验教学")
+        return HttpResponse(responseReturn.__str__())
     admin = AdminService.deleteAmin(deleteadminid)
     if admin is None:
         responseReturn = Response("-1", "删除失败！")

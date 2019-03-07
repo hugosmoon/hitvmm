@@ -102,6 +102,14 @@ def getCountPageByTea(teaid, type):
     else:
         return count
 
+# 获得此教师的报告总数
+def getCountByTea(teaid):
+    try:
+        count = Teaching.objects.filter(teacherid=teaid, isdelete=CONSTANTS.ISDELETE_NOT).count()
+    except:
+        return 0
+    else:
+        return count
 
 # 获得此教师特定类型的报告分页
 def getTeachingByTea(teaid, type, index):
