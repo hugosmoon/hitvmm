@@ -187,7 +187,7 @@ def cutting_force_cal(request):
     k_corner_radius=1
 
     #计算切削力
-    cutting_force=(random.uniform(0.9, 1.1))*9.81*c_fc*(math.pow(cutting_depth,x_fc))*(math.pow(feed_rate,y_fc))*k_tool_cutting_edge_angle*k_rake_angle*k_tool_cutting_edge_inclination_angle*k_corner_radius*k_strength*k_cutting_speed
+    cutting_force=(random.uniform(0.98, 1.02))*9.81*c_fc*(math.pow(cutting_depth,x_fc))*(math.pow(feed_rate,y_fc))*k_tool_cutting_edge_angle*k_rake_angle*k_tool_cutting_edge_inclination_angle*k_corner_radius*k_strength*k_cutting_speed
 
     return HttpResponse(cutting_force)
 
@@ -261,7 +261,7 @@ def cutting_temp_cal(request):
     elif cutting_fluid=="oil_based_cutting_fluid":
         cutting_fluid_arg = 0.88
 
-    temp=(random.uniform(0.9, 1.1))*k0*k_tool_cutting_edge_angle*k_rake_angle*k_workpiece_material*math.pow(cutting_speed,x)*math.pow(cutting_depth,0.04)*math.pow(feed_rate,0.14)*cutting_fluid_arg
+    temp=(random.uniform(0.97, 1.03))*k0*k_tool_cutting_edge_angle*k_rake_angle*k_workpiece_material*math.pow(cutting_speed,x)*math.pow(cutting_depth,0.04)*math.pow(feed_rate,0.14)*cutting_fluid_arg
 
     return HttpResponse(temp)
 
@@ -276,7 +276,7 @@ def cutting_roughness_cal(request):
         tool_minor_cutting_edge_angle = float(request.POST.get('tool_minor_cutting_edge_angle'))
         corner_radius = float(request.POST.get('corner_radius'))
 
-        R=(random.uniform(1, 1.4))*(math.pow(feed_rate, 2)/(8*corner_radius))*(1/((1/(math.tan(tool_cutting_edge_angle)))+(1/(math.tan(tool_minor_cutting_edge_angle)))))*math.pow(cutting_depth, 0.04)*(1+1/(math.pow((cutting_speed-30), 2)+1))
+        R=(random.uniform(1, 1.3))*(math.pow(feed_rate, 2)/(8*corner_radius))*(1/((1/(math.tan(tool_cutting_edge_angle)))+(1/(math.tan(tool_minor_cutting_edge_angle)))))*math.pow(cutting_depth, 0.04)*(1+1/(math.pow((cutting_speed-30), 2)+1))
         # R=(random.uniform(1, 1.4))*(math.pow(feed_rate, 2)/(8*corner_radius))
         # R=corner_radius
 
