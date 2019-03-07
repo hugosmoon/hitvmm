@@ -55,6 +55,9 @@
 
 .title3 {
   letter-spacing: 1px; }
+.title4 {
+  font-size: 22px;
+  letter-spacing: 1px; }
 
 .tip {
   left: 50px;
@@ -92,7 +95,8 @@
   line-height: 31px;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#191747), to(#191747)), -webkit-gradient(linear, left top, left bottom, from(#191747), to(#191747));
   background-image: linear-gradient(#191747, #191747), linear-gradient(#191747, #191747);
-  background-blend-mode: normal, normal;
+  background-blend-mode: normal,
+ normal;
   border-radius: 4px;
   color: #fffefe;
   font-size: 16px;
