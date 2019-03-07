@@ -111,7 +111,7 @@
     font-size: 14px;
     line-height: 42px; }
   .userlist .txt1 {
-    margin-left: 90px;
+    margin-left: 30px;
     margin-right: 95px;
     width: 50px; }
   .userlist .txt2 {
@@ -174,7 +174,7 @@
     text-decoration: underline; }
   .userlist .s_tit1 {
     width: 30px;
-    margin-left: 51px;
+    margin-left: 31px;
     margin-right: 20px; }
   .userlist .s_tit2 {
     width: 90px;
@@ -183,10 +183,10 @@
     width: 100px;
     margin-right: 20px; }
   .userlist .s_tit4 {
-    width: 90px;
+    width: 60px;
     margin-right: 20px; }
   .userlist .s_tit5 {
-    width: 100px;
+    width: 200px;
     margin-right: 20px; }
   .userlist .s_tit6 {
     width: 100px;
@@ -195,11 +195,11 @@
     width: 150px;
   margin-right: 20px;}
   .userlist .s_tit8 {
-    width: 100px; }
+    width: 50px; }
 
   .userlist .s_txt1 {
     width: 30px;
-    margin-left: 51px;
+    margin-left: 31px;
     margin-right: 20px; }
   .userlist .s_txt2 {
     width: 90px;
@@ -208,10 +208,10 @@
     width: 100px;
     margin-right: 20px; }
   .userlist .s_txt4 {
-    width: 90px;
+    width: 60px;
     margin-right: 20px; }
   .userlist .s_txt5 {
-    width: 100px;
+    width: 200px;
     margin-right: 20px; }
   .userlist .s_txt6 {
     width: 100px;
@@ -220,7 +220,7 @@
     width: 150px;
   margin-right: 20px;}
   .userlist .s_txt8 {
-    width: 100px;
+    width: 50px;
     color: #0055ff;
     cursor: pointer; }
   .userlist .s_txt8 > text:hover {
