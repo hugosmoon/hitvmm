@@ -4,6 +4,7 @@ from vm4.context import CONSTANTS
 from vm4.view import utils
 from vm4.models import *
 from django.forms.models import model_to_dict
+from django.db import transaction
 
 
 def getAdminByTeacherId(teacherid):
@@ -48,8 +49,12 @@ def getAllAdmin():
 
 def deleteAmin(adminid):
     try:
-        admin = Admin.objects.filter(id=int(adminid), isdelete=CONSTANTS.ISDELETE_NOT).update(
-            isdelete=CONSTANTS.ISDELETE_YES)
+        admin1 = Admin.objects.filter(id=adminid, isdelete=CONSTANTS.ISDELETE_NOT).get()
+        with transaction.atomic():
+            admin = Admin.objects.filter(id=int(adminid), isdelete=CONSTANTS.ISDELETE_NOT).update(
+                isdelete=CONSTANTS.ISDELETE_YES)
+            teacher = Teacher.objects.filter(id=admin1.teacherid, isdelete=CONSTANTS.ISDELETE_NOT).update(
+                isdelete=CONSTANTS.ISDELETE_YES)
     except:
         return None
     else:
