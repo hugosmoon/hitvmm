@@ -20,12 +20,14 @@ from vm4.view import view_student
 from vm4.view import view_teacher
 from vm4.view import view_admin
 from vm4.view import view_experiment
+from vm4 import views
 from vm4.context import CONSTANTS
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 
 urlpatterns = [
     # student
+    url('^/?$', view_student.v_login),
     url(r'login/$', view_student.v_login),
     url(r'login/stu/', view_student.stulogin),
     url(r'index/', view_student.v_index),
@@ -109,6 +111,14 @@ urlpatterns = [
     # 实现表面粗糙度计算
     url(r'experiment/cutting_roughness_cal/', view_experiment.cutting_roughness_cal, name='cutting_roughness_cal'),
 
+    #404
+    url(r'404/', views.page_not_found),
+    #500
+    url(r'500/', views.page_error),
+
 ]
 
 urlpatterns += staticfiles_urlpatterns()
+
+handler404 = views.page_not_found
+handler500 = views.page_error
