@@ -479,7 +479,7 @@ def getStudentListByExcel(filename):
         filterinfo = FilterInfoService.getFilterInfo(registyear, major, classname)
         if filterinfo is None:
             executestate = 1
-            failtext = """班级不存在，入学年份：%s，院系：%s，班级：%s""" % (registyear, major, classname)
+            failtext = """班级不存在，入学年份：%s，专业：%s，班级：%s""" % (registyear, major, classname)
             return studentlist, executestate, failtext
 
         student = {
@@ -558,7 +558,7 @@ def addFilterInfo(request):
         return HttpResponse(responseReturn.__str__())
 
     if major is None or major == "":
-        responseReturn = Response(-1, "请输入院系~")
+        responseReturn = Response(-1, "请输入专业~")
         return HttpResponse(responseReturn.__str__())
 
     if classname is None or classname == "":
