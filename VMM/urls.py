@@ -16,6 +16,8 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.views.static import serve
+from django.views import static
+from django.conf import settings
 from vm4.view import view_student
 from vm4.view import view_teacher
 from vm4.view import view_admin
@@ -23,7 +25,6 @@ from vm4.view import view_experiment
 from vm4 import views
 from vm4.context import CONSTANTS
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-
 
 urlpatterns = [
     # student
@@ -111,11 +112,12 @@ urlpatterns = [
     # 实现表面粗糙度计算
     url(r'experiment/cutting_roughness_cal/', view_experiment.cutting_roughness_cal, name='cutting_roughness_cal'),
 
-    #404
+    # 404
     url(r'404/', views.page_not_found),
-    #500
+    # 500
     url(r'500/', views.page_error),
-
+    url(r'^static/(?P<path>.*)$', static.serve,
+        {'document_root': settings.STATIC_ROOT}, name='static'),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

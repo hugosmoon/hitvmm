@@ -22,9 +22,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '4xt0bmlp365k03+)w3@6va^2e!*&9k&c+(z8_)n^&9x^u+-jix'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['39.105.8.210', '127.0.0.1', "www.vm4.com", "0.0.0.0", "219.223.251.55"]
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -119,9 +119,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = 'static'
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, "/static/"),
 )
 
 LANGUAGE_CODE = 'zh-hans'
@@ -134,16 +134,16 @@ LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'handlers': {
-        'console': {
-            'level': 'INFO',
-            'class': 'logging.StreamHandler',
+        'console':{
+            'level':'INFO',
+            'class':'logging.StreamHandler',
         },
     },
     'loggers': {
         'django.db.backends': {
             'handlers': ['console'],
             'propagate': True,
-            'level': 'INFO',
+            'level':'INFO',
         },
     }
 }
