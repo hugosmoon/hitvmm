@@ -147,3 +147,6 @@ LOGGING = {
         },
     }
 }
+
+handler404 = 'vm4.views.page_not_found'
+handler500 = 'vm4.views.page_error'

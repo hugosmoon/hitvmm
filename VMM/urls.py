@@ -112,15 +112,8 @@ urlpatterns = [
     # 实现表面粗糙度计算
     url(r'experiment/cutting_roughness_cal/', view_experiment.cutting_roughness_cal, name='cutting_roughness_cal'),
 
-    # 404
-    url(r'404/', views.page_not_found),
-    # 500
-    url(r'500/', views.page_error),
     url(r'^static/(?P<path>.*)$', static.serve,
         {'document_root': settings.STATIC_ROOT}, name='static'),
 ]
 
 urlpatterns += staticfiles_urlpatterns()
-
-handler404 = views.page_not_found
-handler500 = views.page_error
