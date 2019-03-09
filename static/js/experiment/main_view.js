@@ -556,13 +556,15 @@ function text_view(expoeration_order,workpiece_material,workpiece_r,workpiece_l,
 
         cutting_temp=parseFloat(cutting_temp).toFixed(1);
 
-        cutting_r=parseFloat(cutting_r).toFixed(3);
+        cutting_r1=(parseFloat(cutting_r)*1000.0).toFixed(0);
+
+
         diameter=parseFloat(diameter).toFixed(3);
     }
     else {
         cutting_force=0;
         cutting_temp="--";
-        cutting_r="--";
+        cutting_r1="--";
         diameter="--"
     }
     var xianshicanshu ="--"
@@ -573,7 +575,10 @@ function text_view(expoeration_order,workpiece_material,workpiece_r,workpiece_l,
         xianshicanshu="切削温度："+cutting_temp+" °C"
     }
     if (cut_cal_status=="r") {
-        xianshicanshu="表面粗糙度："+cutting_r
+        // alert(cutting_r1);
+        // alert(cutting_r1);
+        xianshicanshu="表面粗糙度："+cutting_r1+" µm"
+        // xianshicanshu=cutting_r;
     }
     if (cut_cal_status=="d") {
         xianshicanshu="刀尖处工件直径："+diameter+" mm"
