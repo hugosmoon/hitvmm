@@ -42,7 +42,7 @@ urlpatterns = [
     url(r'loginteacher/$', view_teacher.v_login),
     url(r'login/teacher/', view_teacher.teacherlogin),
     url(r'password/$', view_teacher.v_password),
-    url(r'passwordedit/', view_teacher.editpassword),
+    url(r'^teapasswordedit/', view_teacher.editpassword),
     url(r'undoneteaching/', view_teacher.v_undoneteaching),
     url(r'allexptea/', view_teacher.v_allexperiment),
     url(r'uploadData/', view_teacher.uploadData),

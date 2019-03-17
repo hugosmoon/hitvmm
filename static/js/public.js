@@ -1198,7 +1198,7 @@ var publicObj = {
             if (newpwd != newpwd2) {
                 alert("两次输入的密码不一致!");
             }
-            $.post("/passwordedit/",
+            $.post("/teapasswordedit/",
                 {
                     oldpwd: sha256_digest(oldpwd),
                     newpwd: sha256_digest(newpwd)
