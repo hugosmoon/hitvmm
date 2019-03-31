@@ -133,6 +133,8 @@
             </div>
         <div class="obtnbox">
                 <div id="save_img" class="obtn bunt save">保存数据</div>
+                <div class="obtn bunt save" style="background:#FF0000;color:#FFFFFF;" onclick="location.href='/experiment/expsetting/1'">返回基础参数设置</div>
+
             </div>
         </div>
 
@@ -160,6 +162,7 @@
 
 <script src="{% static 'js/experiment/jcanvas.js' %}"></script>
 <script src="{% static 'js/experiment/readcookies.js' %}"></script>
+<script src="{% static 'js/loginout.js' %}"></script>
 
 
 <script>
@@ -300,6 +303,7 @@ function exportCanvasAsPNG(id, fileName) {
 function goto_draw(){
         window.open("{% url 'image_draw' %}");
     }
+
 
 
 </script>

@@ -23,6 +23,7 @@
 //
 //               佛祖保佑         永无BUG
 //
+
 var publicObj = {
     dataObjKind: 0,
     addepxupdatamodObj: '',
@@ -1657,6 +1658,7 @@ var publicObj = {
             $("#videosinputid").attr("value", videoids);
         })
     }
+
 
 }
 publicObj.init();
