@@ -581,7 +581,7 @@ function text_view(expoeration_order,workpiece_material,workpiece_r,workpiece_l,
         // xianshicanshu=cutting_r;
     }
     if (cut_cal_status=="d") {
-        xianshicanshu="刀尖处工件直径："+diameter+" mm"
+        xianshicanshu="加工精度：h7\n\n刀尖处工件直径："+diameter+" mm"
     }
 
 
@@ -590,7 +590,7 @@ function text_view(expoeration_order,workpiece_material,workpiece_r,workpiece_l,
     render_text+=("\n工件已被加工长度："+fabrication_length.toFixed(1)+" mm\n\n");
     render_text+=("机床主轴实时转速："+rot_speed_view.toFixed(1)+" r/min\n\n");
     render_text+=("工件材料："+workpiece_material+" \n\n");
-    render_text+=("工件半径："+workpiece_r+"mm\n\n");
+    render_text+=("工件直径："+workpiece_r*2+"mm\n\n");
     render_text+=("进给量："+feed_rate+"mm/r\n\n");
     render_text+=("背吃刀量："+cutting_depth+"mm\n\n");
     render_text+=("刀具材料："+"硬质合金（YT15） \n\n");
@@ -638,7 +638,7 @@ function text_view(expoeration_order,workpiece_material,workpiece_r,workpiece_l,
     fillStyle: 'rgb(197, 136, 84)',
     fromCenter: false,
     align: 'left',
-        x: 720, y: 1432,
+        x: 720, y: 1332,
         fontSize: 64,
         fontFamily: "微软雅黑",
         text: xianshicanshu,

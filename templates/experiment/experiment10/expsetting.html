@@ -65,11 +65,11 @@
                     </select>
                 </div>
                 <div class="rightbox lastrightbox">
-                    <p class="rightboxleft">工件半径</p>
+                    <p class="rightboxleft">工件直径</p>
                     <div class="scale">
 
                         <form oninput="scaleShow.value=parseInt(scale.value)">
-                            <input type="range" value="75" step="1" min="50" max="100" id="workpiece_r_scale" onchange="range()"/>
+                            <input type="range" value="75" step="0.5" min="25" max="50" id="workpiece_r_scale" onchange="range()"/>
 
                         </form>
                         <p class="setting" name="scaleShow" for="scale" id="workpiece_r">75mm</p>
@@ -214,7 +214,7 @@
 
     function range() {
         $('#workpiece_l').html($('#workpiece_l_scale').val()+'mm');
-        $('#workpiece_r').html($('#workpiece_r_scale').val()+'mm');
+        $('#workpiece_r').html($('#workpiece_r_scale').val()*2+'mm');
 
     }
 

@@ -19,7 +19,6 @@
             color: #0055ff !important;
         }
     </style>
-
 </head>
 <body>
 <input type="hidden" id="stunumber" value="{{ stunumber }}"/>
@@ -35,7 +34,7 @@
 </div>
 
 <div class="wall5">
-    <div class="addnewexptit">内孔加工误差分析</div>
+    <div class="addnewexptit">内孔加工误差分析22</div>
     <br>
     <div class="operationbox">
         <div class="left" >
@@ -67,7 +66,7 @@
                     <div class="scale">
 
                         <form>
-                            <input type="range" value="825" step="1" min="300" max="3000" id="rot_speed_scale"/>
+                            <input type="range" value="250" step="1" min="100" max="400" id="rot_speed_scale"/>
 
                         </form>
                         <p name="scaleShow" for="scale" id="rot_speed">830 r/min</p>
@@ -174,27 +173,28 @@
 
         var loader = new THREE.STLLoader();
         var group = new THREE.Object3D();
-        loader.load("{% static 'models/8.STL' %}", function (geometry) {
+        loader.load("{% static 'models/16.STL' %}", function (geometry) {
             // console.log(geometry);
             var mat = new THREE.MeshLambertMaterial({color: 0xbbbbbb});
 
             geometry.center();
             group = new THREE.Mesh(geometry, mat);
-            group.rotation.x = -0.5 * Math.PI;
+            group.rotation.z = 0.5 * Math.PI;
             // group.rotation.z = * Math.PI;
             // group.position.x = -(loader.boundingBox.max.x - loader.boundingBox.min.x) / 2;
             // group.position.x=-100;
             // group.position.z=30;
             group.position.y=20;
             // group.position.z=50;
-            group.scale.set(aperture/8, aperture/8, 1);
+            {#group.scale.set(0.5, 0.5, 0.5);#}
+            group.scale.set(0.6,aperture/16,aperture/16);
             scene.add(group);
         });
 
         //重新绘制钻头
         function re_render_bioler(){
             scene.remove(group);
-            group.scale.set(aperture/8, aperture/8, 1);
+            group.scale.set(0.6,aperture/16,aperture/16);
             scene.add(group);
 
         }
@@ -210,9 +210,10 @@
         cube.position.y = -60;
 
         //创建孔
-        var cylinderGeometry = new THREE.CylinderGeometry(4.5, 4.5, 100,100);
+        var cylinderGeometry = new THREE.CylinderGeometry(4.2, 4.2, 100,100);
         var cylinderMaterial = new THREE.MeshLambertMaterial({color: 0xffffff});
         var cylinder = new THREE.Mesh(cylinderGeometry, cylinderMaterial);
+        cylinder.scale.set(aperture/8, aperture/8, aperture/8);
         // var cylinder = createMesh(new THREE.CylinderGeometry(20, 20, 20));
         cylinder.position.y=-60;
         var b=new ThreeBSP(cylinder);
@@ -220,7 +221,8 @@
         // scene.add(cylinder);
         var c=new ThreeBSP(cube);
         var d=c.toMesh(cubeMaterial);
-        scene.add(d);
+        var workpiece=new ThreeBSP(d).subtract(b).toMesh(cubeMaterial);
+        scene.add(workpiece);
 
         //重新绘制孔
         function re_render_cube(){
@@ -269,7 +271,7 @@
 
 
         function render() {
-            stats.update();
+
             if (status==1) {
                 requestAnimationFrame(render_drilling);
             }else {
@@ -321,14 +323,25 @@
                         status=0;
                         $('#start').text("启动机床");
                         button_status=1;
-                        var dd=0.15+0.15*(rot_speed/3000);
-                        aperture_agu=parseFloat(getNumberInNormalDistribution(parseFloat(aperture),dd).toFixed(2)).toFixed(2);
+                        var kongjingzhongjianzhi,xigema;
+
+                        if(parseFloat(aperture)>10){
+                            kongjingzhongjianzhi=parseFloat(aperture)+0.009;
+                            xigema=0.003;
+
+                        }
+                        else {
+                            kongjingzhongjianzhi=parseFloat(aperture)+0.0075;
+                            xigema=0.0025;
+                        }
+                        aperture_agu=parseFloat(getNumberInNormalDistribution(kongjingzhongjianzhi,xigema).toFixed(3)).toFixed(3);
                     }
 
                 }
 
-            group.rotation.z += -0.02*count*(rot_speed/300);
-            group1.rotation.y += -0.02*count*(rot_speed/300);
+            var random=(1);
+            group.rotation.y += -0.003*count*(rot_speed/300)*random;
+            group1.rotation.y += -0.003*count*(rot_speed/300)*random;
             group.position.y=20-depth;
             group1.position.y=90-depth;
             cylinder2.position.y=177-depth;
@@ -356,6 +369,8 @@
         function reset() {
             scene.remove(d);
             d=new ThreeBSP(cube).toMesh(cubeMaterial);
+            d=new ThreeBSP(d).subtract(b).toMesh(cubeMaterial);
+
             scene.add(d);
 
         }
@@ -379,6 +394,12 @@
         re_render_bioler();
         re_render_cube();
         measuring("--");
+
+        {#var allChildren = scene.children;#}
+        {#var lastObject = allChildren[allChildren.length - 1];#}
+        scene.remove(workpiece);
+        workpiece =new ThreeBSP(d).subtract(b).toMesh(cubeMaterial);
+        scene.add(workpiece);
     }
 
 
@@ -478,7 +499,7 @@ function measuring(aperture_agu){
         x: 40, y: 40,
         fontSize: 32,
         fontFamily: "微软雅黑",
-        text: "加工形式：钻床-内孔加工"+"\n\n主轴转速："+rot_speed+" r/min\n\n目标孔径："+parseFloat(aperture).toFixed(2)+" mm\n\n实测孔径："+aperture_agu+" mm",
+        text: "加工形式：钻床-内孔加工"+"\n\n主轴转速："+rot_speed+" r/min\n\n目标孔径："+parseFloat(aperture).toFixed(3)+"mm\n\n加工精度：H7"+" \n\n实测孔径："+aperture_agu+" mm",
     });
 
     stunumber=$("#stunumber").val();

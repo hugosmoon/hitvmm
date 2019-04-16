@@ -70,7 +70,7 @@
                     <div class="uleft">工件参数  -</div>
                     <div class="uright">
                         <div class="utxt">工件材料：<a id="workpiece_material_text"></a></div>
-                        <div class="utxt">工件半径：<a id="workpiece_r_text"></a> mm</div>
+                        <div class="utxt">工件直径：<a id="workpiece_r_text"></a> mm</div>
                         <div class="utxt">工件长度：<a id="workpiece_l_text"></a> mm</div>
                     </div>
                 </div>
@@ -179,7 +179,7 @@
 
 
     $("#workpiece_material_text").html(workpiece_material)
-    $("#workpiece_r_text").html(workpiece_r)
+    $("#workpiece_r_text").html(workpiece_r*2)
     $("#workpiece_l_text").html(workpiece_l)
     $("#tool_cutting_edge_angle_text").html(tool_cutting_edge_angle)
     $("#tool_minor_cutting_edge_angle_text").html(tool_minor_cutting_edge_angle)
@@ -246,7 +246,16 @@
                 url="{% url 'cutting_temp_cal'%}"
             }
             if (cal_order=="d") {
-                diameter=parseFloat(workpiece_r*2-cutting_depth*2+0.05*(parseFloat(getNumberInNormalDistribution(0,0.3)))).toFixed(3);
+                var kongjingzhongjianzhi,xigema;
+                if(workpiece_r>80){
+                    kongjingzhongjianzhi=0.0175;
+                    xigema=0.0058;
+                }
+                else {
+                    kongjingzhongjianzhi=0.015;
+                    xigema=0.005;
+                }
+                diameter=parseFloat(workpiece_r*2-cutting_depth*2-(parseFloat(getNumberInNormalDistribution(kongjingzhongjianzhi,xigema)))).toFixed(3);
             }
             var form_data = new FormData();
 			form_data.append('workpiece_material',workpiece_material);
