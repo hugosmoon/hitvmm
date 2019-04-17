@@ -34,7 +34,7 @@
 </div>
 
 <div class="wall5">
-    <div class="addnewexptit">内孔加工误差分析22</div>
+    <div class="addnewexptit">内孔加工误差分析</div>
     <br>
     <div class="operationbox">
         <div class="left" >
@@ -53,7 +53,7 @@
             <div class="rangebox">
                 <p class="rutit">加工形式</p>
                 <div class="runitbox">
-                    <div class="rtit">钻床内孔加工</div>
+                    <div class="rtit">铰孔加工</div>
                     <br>
                 </div>
             </div>
@@ -184,7 +184,7 @@
             // group.position.x = -(loader.boundingBox.max.x - loader.boundingBox.min.x) / 2;
             // group.position.x=-100;
             // group.position.z=30;
-            group.position.y=20;
+            group.position.y=10;
             // group.position.z=50;
             {#group.scale.set(0.5, 0.5, 0.5);#}
             group.scale.set(0.6,aperture/16,aperture/16);
@@ -342,7 +342,7 @@
             var random=(1);
             group.rotation.y += -0.003*count*(rot_speed/300)*random;
             group1.rotation.y += -0.003*count*(rot_speed/300)*random;
-            group.position.y=20-depth;
+            group.position.y=10-depth;
             group1.position.y=90-depth;
             cylinder2.position.y=177-depth;
 
