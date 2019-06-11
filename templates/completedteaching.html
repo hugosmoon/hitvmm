@@ -86,7 +86,7 @@
                 <div class="unitbox">
                     <div class="unittopbg">
                         <div class="desbox">
-                            <div class="title">实验作业：</div>
+                            <div class="title">实验名称：</div>
                             <div class="txt">{{ teaching.f_experiment_name }}</div>
                         </div>
                         <div class="desbox">
@@ -96,7 +96,7 @@
                     </div>
                     <div class="unitwall">
                         <div class="desbox">
-                            <div class="title">老师提示：</div>
+                            <div class="title">教师提示：</div>
                             <div class="txt">{{ teaching.point }}</div>
                         </div>
                         <div class="desbox">
@@ -120,14 +120,14 @@
                                 <li class="downloadscore unitbtn lastbtn" teachingid="{{ teaching.id }}">下载学生成绩</li>
                                 <li class="unitbtn otherbtn otherbtn1">
                                     <a href="/approval/?teachingid={{ teaching.id }}">
-                                        <text>已批阅完</text>
+                                        <text>批阅完成</text>
                                         实验报告({{ teaching.complapprepcount }}/{{ teaching.stuCount }})
                                     </a>
                                 </li>
                             {% else %}
                                 <li class="unitbtn otherbtn otherbtn2">
                                     <a href="/approval/?teachingid={{ teaching.id }}">
-                                        <text>未批阅完</text>
+                                        <text>批阅未完成</text>
                                         实验报告({{ teaching.complapprepcount }}/{{ teaching.stuCount }})
                                         <a/>
                                 </li>
