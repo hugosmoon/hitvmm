@@ -102,6 +102,7 @@ def getCountPageByTea(teaid, type):
     else:
         return count
 
+
 # 获得此教师的报告总数
 def getCountByTea(teaid):
     try:
@@ -110,6 +111,7 @@ def getCountByTea(teaid):
         return 0
     else:
         return count
+
 
 # 获得此教师特定类型的报告分页
 def getTeachingByTea(teaid, type, index):
@@ -166,10 +168,10 @@ def getTeachingByTea(teaid, type, index):
             submitcount = ReportService.getCountStuByTeachingidAndStatus(teaching.id,
                                                                          CONSTANTS.REPORT_STATUS_SUBMIT)
             teachingDict["complapprepcount"] = complapprepcount
-            if submitcount > 0:
-                teachingDict["f_report_status"] = 1
-            else:
+            if complapprepcount == stuCount:
                 teachingDict["f_report_status"] = 2
+            else:
+                teachingDict["f_report_status"] = 1
             teachingDictPageList.append(teachingDict)
         return teachingDictPageList
 
