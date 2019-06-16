@@ -1052,6 +1052,40 @@ var publicObj = {
 
             })
         });
+        $(".changepoint").each(function () {
+            $(this).unbind('click').bind('click', function () {
+                $("#pointtxt").val($(this).attr("point"))
+                $("#udpatepointid").val($(this).attr("teachingid"))
+
+                $('.popupbox').show()
+                $('.popupwall10').show()
+            })
+        });
+        $(".updatepointsure").bind("click", function () {
+            teachingid = $("#udpatepointid").val()
+            point = $("#pointtxt").val()
+            $.post("/updateTeachingPoint/",
+                {
+                    teachingid: teachingid,
+                    point: point
+                },
+                function (data, status) {
+                    dataObj = $.parseJSON(data)
+                    code = dataObj.code;
+                    if (code == -2) {//未登录
+                        window.location = "/loginteacher/";
+                    } else if (code != 0) {
+                        alert(dataObj.desc);
+                    } else {
+                        alert("更改成功！")
+                        window.location.reload()
+                    }
+                });
+        })
+        $(".updatepointcancle").bind("click", function () {
+            $('.popupbox').hide()
+            $('.popupwall').hide()
+        })
         //修改实验描述
         $(".changedescription").each(function () {
             $(this).unbind('click').bind('click', function () {

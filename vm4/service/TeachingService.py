@@ -234,6 +234,17 @@ def updateTeachingDeadlineById(teachingid, deadline):
         return teacher
 
 
+# 更新实验教学报告提交日期
+def updateTeachingPointById(teachingid, point):
+    now = utils.getNow()
+    try:
+        teacher = Teaching.objects.filter(id=teachingid).update(point=point, updatetime=now)
+    except:
+        return None
+    else:
+        return teacher
+
+
 # 添加实验教学
 def addTeaching(experimentid, deadline, teacherid, point, remark, dataurl, stulisturl, templateid, videos):
     now = utils.getNow()
