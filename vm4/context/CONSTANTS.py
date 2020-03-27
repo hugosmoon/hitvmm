@@ -15,7 +15,7 @@ TEACHING_IS_RUNNING = 0
 TEACHING_IS_STOP = 1
 
 #实验数据存放路径前缀
-DATAURL_PRE = "/usr/local/vmmfile/experimentaldata/"
+DATAURL_PRE = "/usr/local/vmmfile/experimenttemplate/"
 #实验报告模板存放路径前缀
 TEMPLATEURL_PRE = "/usr/local/vmmfile/experimenttemplate/"
 #实验报告存放路径前缀
