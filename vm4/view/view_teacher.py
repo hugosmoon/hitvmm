@@ -530,7 +530,7 @@ def addexperiment(request):
             responseReturn = Response(-1, "模板必须为word格式！")
             return HttpResponse(responseReturn.__str__())
         filename = str(uuid.uuid1()) + filesuffix
-        fp = open(os.path.join(CONSTANTS.DATAURL_PRE, filename), 'wb+')
+        fp = open(os.path.join(CONSTANTS.TEMPLATEURL_PRE, filename), 'wb+')
         for chunk in templatefile.chunks():  # 分块写入文件
             fp.write(chunk)
         fp.close()
@@ -545,7 +545,7 @@ def addexperiment(request):
 
     '''
         获得实验数据
-    '''
+i    '''
     if datatype == "1":  # 稍后上传
         dataurl = "none"
     else:  # 上传实验数据
