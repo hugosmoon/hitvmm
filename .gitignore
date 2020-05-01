@@ -1,0 +1,6 @@
+#pychache
+vm4/__pycache__/
+vm4/context/__pycache__/
+vm4/service/__pycache__/
+VMM/__pycache__/
+vm4/view/__pycache__/
