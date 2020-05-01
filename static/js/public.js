@@ -501,7 +501,7 @@ var publicObj = {
                 window.open("/downloadStudentList/?stulisturl=" + stulisturl);
             })
         });
-        $(".updatamod").each(function () {
+        $(".updatamod2").each(function () {
             $(this).unbind('click').bind('click', function () {
                 $('.popupbox').show()
                 $('.popupwall2').show()
