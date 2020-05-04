@@ -25,106 +25,52 @@
         <div class="l_float loginbtn">退出登录</div>
     </div>
 </div>
-<div class="wall">
-    <div class="navbox">
-        <div class="navwall navwall1">
-            <div class="navtop">
-                <div class="navtitname">实验作业</div>
-                <div class="navarrowbox">
-                    <img class="arrow uparrow" src="{% static '/img/up.png' %}" alt="">
-                    <img class="arrow activearrow activearrow1" src="{% static '/img/down.png' %}" alt="">
-                </div>
-            </div>
-            <ul class="navcenter navcenter1">
-                <li class="navtip slectnav">
-                    <a href="/index/">未完成实验({{ teachingCount.runCount }}个)</a>
-                </li>
-                <li class="navtip noborder">
-                    <a href="/completedexp/">已完成实验({{ teachingCount.stopCount }}个)</a>
-                </li>
-            </ul>
-        </div>
-        <div class="navwall navwall2">
-            <div class="navtop">
-                <div class="navtitname">实验库</div>
-                <div class="navarrowbox">
-                    <img class="arrow uparrow2" src="{% static '/img/up.png' %}" alt="">
-                    <img class="arrow activearrow activearrow2" src="{% static '/img/down.png' %}" alt="">
-                </div>
-            </div>
-            <ul class="navcenter navcenter2">
-                <li class="navtip">
-                    <a href="/allexp/">全部实验</a>
-                </li>
-                {% for experiment in experimentMenuList %}
-                    <li class="navtip">
-                        <a href="{{ experiment.url }}" target="_blank">{{ experiment.name }}</a>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
-
-        <div style="cursor: pointer" class="navwall navwall2 imagedraw">
-            <div class="navtop">
-                <div class="navtitname">图象绘制</div>
-            </div>
-
-        </div>
-
-
+<div style="width: 1000px;min-height: 0px;margin: 0 auto;margin-top: 31px;display: -webkit-box;display: -ms-flexbox;display: flex;padding-top: 1px; ">
+    <p style="font-size: large;color: rgb(12, 24, 49);font-weight: bold;">虚拟实验</p>
+</div>
+<div style="width: 1000px;min-height: 0px;margin: 0 auto;margin-top: 31px;display: -webkit-box;display: -ms-flexbox;display: flex;padding-top: 1px; ">
+    <!-- <h1>虚拟实验</h1><br><br> -->
+    <div style="background-color: rgb(0, 255, 255); width: 490px;height: 90px;text-align: center;">
+        <br><br>
+        <p style="font-size: large;color: rgb(12, 24, 49);">切削用量对切削力的影响</p>
     </div>
-    <div class="list">
-        <div id="allunitwall" class="allunitwall">
-            {% for teaching in teachingList %}
-                <div class="unitbox">
-                    <div class="unittopbg">
-                        <div class="desbox">
-                            <div class="title">实验作业：</div>
-                            <div class="txt">{{ teaching.f_experiment_name }}</div>
-                        </div>
-                        <div class="desbox">
-                            <div class="title">指导老师：</div>
-                            <div class="txt" teacherid="{{ teaching.f_teacher_id }}">{{ teaching.f_teacher_name }}</div>
-                        </div>
-                    </div>
-                    <div class="unitwall">
-                        <div class="desbox">
-                            <div class="title">报告提交：</div>
-                            <div class="txt">{{ teaching.deadline|date:"Y" }}年{{ teaching.deadline|date:"m" }}月{{ teaching.deadline|date:"d" }}日之前</div>
-                        </div>
-                        <div class="desbox">
-                            <div class="title">老师提示：</div>
-                            <div class="txt">{{ teaching.point }}</div>
-                        </div>
-                    </div>
-
-                    <div class="unitftbg">
-                        <ul class="btnwall">
-                            <li class="unitbtn preview" videos="{{ teaching.videos }}">实验预习</li>
-                            <li class="unitbtn datadownload" dataurl="{{ teaching.dataurl }}">实验数据下载</li>
-                            <li class="unitbtn operation" experimentid="{{ teaching.f_experiment_url }}">虚拟实验操作</li>
-                            <li class="unitbtn templatedownload" templateid="{{ teaching.templateid }}">报告模板下载</li>
-                            {% if teaching.f_report_status == 0 %}
-                                <li class="unitbtn lastbtn submit" reportid="{{ teaching.f_report_id }}">提交实验报告</li>
-                            {% elif teaching.f_report_status == 1 %}
-                                <li class="unitbtn lastbtn submit" reportid="{{ teaching.f_report_id }}">重新提交报告</li>
-                            {% endif %}
-                        </ul>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-        <!--分页-->
-        <div id="pagebox"></div>
+    <div style="background-color:white; width: 20px;height: 90px;">
     </div>
-
+    <div style="background-color: cyan; width: 490px;height: 90px;text-align: center;">
+        <br><br>
+        <p style="font-size: large;color: rgb(12, 24, 49);">切削用量对切削温度的影响</p>
+    </div>
+</div>
+<div style="width: 1000px;min-height: 0px;margin: 0 auto;margin-top: 20px;display: -webkit-box;display: -ms-flexbox;display: flex;padding-top: 1px; ">
+    <!-- <h1>虚拟实验</h1><br><br> -->
+    <div style="background-color: rgb(0, 255, 255); width: 490px;height: 90px;text-align: center;">
+        <br><br>
+        <p style="font-size: large;color: rgb(12, 24, 49);">切削用量对切削力的影响</p>
+    </div>
+    <div style="background-color:white; width: 20px;height: 90px;">
+    </div>
+    <div style="background-color: rgb(0, 255, 255); width: 490px;height: 90px;text-align: center;">
+        <br><br>
+        <p style="font-size: large;color: rgb(12, 24, 49);">刀具角度</p>
+    </div>
+</div>
+<div style="width: 1000px;min-height: 0px;margin: 0 auto;margin-top: 31px;display: -webkit-box;display: -ms-flexbox;display: flex;padding-top: 1px; ">
+    <p style="font-size: large;color: rgb(12, 24, 49);font-weight: bold;">工具</p>
+</div>
+<div style="width: 1000px;min-height: 0px;margin: 0 auto;margin-top: 20px;display: -webkit-box;display: -ms-flexbox;display: flex;padding-top: 1px; ">
+    <!-- <h1>虚拟实验</h1><br><br> -->
+    <div style="background-color: rgb(0, 255, 255); width: 490px;height: 90px;text-align: center;">
+        <br><br>
+        <p style="font-size: large;color: rgb(12, 24, 49);"><a href="/experiment/image_draw/">曲线绘制</a></p>
+    </div>
+    <div style="background-color:white; width: 20px;height: 90px;">
+    </div>
 </div>
 <div class="footer">
     <div class="fbox">
-        <div class="tip1">地址：深圳市南山区桃源街道深圳大学城哈尔滨工业大学校区</div>
-        <div class="tip2">邮编：518055</div>
-        <div class="tip3">网站版权所有 ©2018 哈尔滨工业大学(深圳)</div>
-        <div class="tip4">粤ICP 备15069706号-1</div>
+        
+        <div class="tip1">网站版权所有 ©2020 哈尔滨工业大学</div>
+        
     </div>
 </div>
 <!--弹窗-->
