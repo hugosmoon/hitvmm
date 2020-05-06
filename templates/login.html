@@ -45,7 +45,7 @@
     $(".login").click(function () {
         var stuid = $(".iptusierid").val();
         var stuname = $(".iptname").val();
-        $.post("/login/stu/",
+        $.post("/jxzz_1/login/stu/",
             {
                 stuid: stuid,
                 stuname: stuname
@@ -57,7 +57,7 @@
                     alert(dataObj.desc);
                 }else
                 {
-                    $(location).attr('href', '/index/');
+                    $(location).attr('href', '/jxzz_1/index/');
                 }
             });
     });
@@ -67,7 +67,7 @@
           if(key==13){
             var stuid = $(".iptusierid").val();
             var stuname = $(".iptname").val();
-                $.post("/login/stu/",
+                $.post("/jxzz_1/login/stu/",
                     {
                         stuid: stuid,
                         stuname: stuname
@@ -79,7 +79,7 @@
                             alert(dataObj.desc);
                         }else
                         {
-                            $(location).attr('href', '/index/');
+                            $(location).attr('href', '/jxzz_1/index/');
                         }
                     });
           }

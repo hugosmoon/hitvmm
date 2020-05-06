@@ -28,9 +28,9 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 urlpatterns = [
     # student
     url('^/?$', view_student.v_login),
-    url(r'login/$', view_student.v_login),
-    url(r'login/stu/', view_student.stulogin),
-    url(r'index/', view_student.v_index),
+    url(r'jxzz_1/login/$', view_student.v_login),
+    url(r'jxzz_1/login/stu/', view_student.stulogin),
+    url(r'jxzz_1/index/', view_student.v_index),
     url(r'completedexp/', view_student.v_completedexp),
     url(r'allexp/$', view_student.v_allexperiment),
     url(r'submitReport/', view_student.submitReport),
@@ -102,7 +102,7 @@ urlpatterns = [
     # experiment
     url(r'experiment/expsetting/(?P<id>[0-9]+)$', view_experiment.expsetting, name='expsetting'),
     url(r'experiment/expoperation/(?P<id>[0-9]+)$', view_experiment.expoperation, name='expoperation'),
-    url(r'experiment/image_draw/', view_experiment.image_draw, name='image_draw'),
+    url(r'jxzz_1/experiment/image_draw/', view_experiment.image_draw, name='image_draw'),
 
     # 实现切削力计算
     url(r'experiment/cutting_force_cal/', view_experiment.cutting_force_cal, name='cutting_force_cal'),
