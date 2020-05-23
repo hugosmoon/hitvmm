@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>进行中教学</title>
-     {% load staticfiles %}
-    <link rel="shortcut icon" href="{% static 'img/hit.ico' %}" type="image/x-icon" />
+    {% load staticfiles %}
+    <link rel="shortcut icon" href="{% static 'img/hit.ico' %}" type="image/x-icon"/>
     <link rel="icon" href="{% static 'img/hit.ico' %}" type="image/gif">
     <!-- 初始化CSS -->
     <link rel="stylesheet" href="../static/plugin/res.css">
@@ -63,11 +63,11 @@
                 <li class="navtip navtip3">
                     <a href="/allexptea/">全部实验</a>
                 </li>
-{#                {% for experiment in experimentMenuList %}#}
-{#                    <li class="navtip">#}
-{#                        <a href="{{ experiment.url }}" target="_blank">{{ experiment.name }}</a>#}
-{#                    </li>#}
-{#                {% endfor %}#}
+                {#                {% for experiment in experimentMenuList %}#}
+                {#                    <li class="navtip">#}
+                {#                        <a href="{{ experiment.url }}" target="_blank">{{ experiment.name }}</a>#}
+                {#                    </li>#}
+                {#                {% endfor %}#}
             </ul>
         </div>
         <div class="navwall navwall3 changepsw">
@@ -93,7 +93,7 @@
                     </div>
                     <div class="unitwall">
                         <div class="desbox">
-                            <div class="title">老师提示：</div>
+                            <div class="title">教师提示：</div>
                             <div class="txt">{{ teaching.point }}</div>
                         </div>
                         <div class="desbox">
@@ -105,7 +105,7 @@
                     <div class="unitftbg">
                         <ul class="btnwall">
                             <li class="uteaupload unitbtn" teachingid="{{ teaching.id }}">上传实验数据</li>
-                           {% comment %} <li class="teastulist unitbtn" stulisturl="{{ teaching.stulisturl }}">
+                            {% comment %} <li class="teastulist unitbtn" stulisturl="{{ teaching.stulisturl }}">
                                 下载学生名单({{ teaching.stuCount }})
                             </li>{% endcomment %}
                             <li class="updatamod2 unitbtn" teachingid="{{ teaching.id }}"
@@ -113,6 +113,9 @@
                             </li>
                             <li class="changevide2 unitbtn" teachingid="{{ teaching.id }}"
                                 experimentid="{{ teaching.experimentid }}" videos="{{ teaching.videos }}">更换预习视频
+                            </li>
+                            <li class="changepoint unitbtn" teachingid="{{ teaching.id }}" point="{{ teaching.point }}">
+                                更换教师提示
                             </li>
                             <li class="changedata unitbtn lastbtn" deadline="{{ teaching.deadline|date:"Y/m/d" }}"
                                 teachingid="{{ teaching.id }}">
@@ -170,6 +173,19 @@
         <input type="hidden" id="udpatedeadlineid" value="">
         <div class="btn cancle updatedeadlinesure">确定</div>
         <div class="btn sure updatedeadlinecancle">取消</div>
+    </div>
+    <!--修改教师提示-->
+    <div class="popupwall popupwall10">
+        <div class="popuptop">
+            <img class="logo" src="../static/img/logo.png" alt="">
+            <img class="dele" src="../static/img/dele.png" alt="">
+        </div>
+        <textarea class="txtare" name="point" id="pointtxt">
+
+        </textarea>
+        <input type="hidden" id="udpatepointid" value="">
+        <div class="btn cancle updatepointsure">确定</div>
+        <div class="btn sure updatepointcancle">取消</div>
     </div>
     <!--更换视频-->
     <div class="popupwall popupwall5">

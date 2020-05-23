@@ -232,7 +232,8 @@ def v_addexp(request):
 
     response = render(request, "addexp.html",
                       {"teachingCount": teachingCount, "experimentList": experimentList,
-                       "experimentMenuList": experimentMenuList, "teachername": teachername, "filterInfoListstr": filterInfoListstr})
+                       "experimentMenuList": experimentMenuList, "teachername": teachername,
+                       "filterInfoListstr": filterInfoListstr})
 
     return response
 
@@ -452,6 +453,19 @@ def updateTeachingDeadline(request):
     deadlinestr = utils.getParam(request, "deadline") + " 00:00:00"
     deadline = datetime.datetime.strptime(deadlinestr, "%Y-%m-%d %H:%M:%S")
     TeachingService.updateTeachingDeadlineById(teachingid, deadline)
+    responseReturn = Response(None, None)
+    return HttpResponse(responseReturn.__str__())
+
+
+# 更新实验教学教师提示
+def updateTeachingPoint(request):
+    teacherid = utils.getCookie(request, "teacherid")
+    if (teacherid is None) or teacherid == "":
+        responseReturn = Response(-2, "请登录")
+        return HttpResponse(responseReturn.__str__())
+    teachingid = utils.getParam(request, "teachingid")
+    point = utils.getParam(request, "point")
+    TeachingService.updateTeachingPointById(teachingid, point)
     responseReturn = Response(None, None)
     return HttpResponse(responseReturn.__str__())
 

@@ -50,6 +50,7 @@ urlpatterns = [
     url(r'deleteTeachingByid/', view_teacher.deleteTeachingByid),
     url(r'updateTeachingVideo/', view_teacher.updateTeachingVideo),
     url(r'updateTeachingDeadline/', view_teacher.updateTeachingDeadline),
+    url(r'updateTeachingPoint/', view_teacher.updateTeachingPoint),
     url(r'completedteaching/', view_teacher.v_completedteaching),
     url(r'approval/', view_teacher.v_approval),
     url(r'downloadStudentList/', view_teacher.downloadStudentList),
